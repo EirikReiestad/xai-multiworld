@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "multigrid"
+version = "0.1.0"
+description = ""
+authors = ["Eirik Reiestad <eirik@reiestad.no>"]
+readme = "readme.md"
+packages = [{ include = "multigrid", from = "." }]
+
+[tool.poetry.dependencies]
+
+python = "^3.11"
+numpy = "^2.1.3"
+gymnasium = "^1.0.0"
+torch = "^2.5.1"
+aenum = "^3.1.15"
+pygame = "^2.6.1"
+pettingzoo = "^1.24.3"
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
