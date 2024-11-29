@@ -199,7 +199,7 @@ class MultiAgentEnv(gym.Env, ABC):
         raise NotImplementedError
 
     def _get_frame(self, highlight: bool, tile_size: int) -> np.ndarray:
-        return self._full_render(highlight, tile_size)
+        return self._get_full_render(highlight, tile_size)
 
     def _gen_obs(self) -> dict[AgentID, ObsType]:
         direction = self._agent_states.dir
@@ -215,7 +215,7 @@ class MultiAgentEnv(gym.Env, ABC):
 
         return observations
 
-    def _full_render(self, highlight: bool, tile_size: int) -> np.ndarray:
+    def _get_full_render(self, highlight: bool, tile_size: int) -> np.ndarray:
         obs_shape = self.agents[0].observation_space["image"].shape[:-1]
         vis_mask = np.zeros((self._num_agents, *obs_shape), dtype=bool)
         for i, agent_obs in self._gen_obs().items():

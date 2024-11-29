@@ -1,5 +1,4 @@
 import functools
-from typing import Any
 from ..core.constants import Direction
 
 

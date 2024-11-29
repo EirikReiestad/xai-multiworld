@@ -61,3 +61,10 @@ class Direction(enum.IntEnum):
         Return the vector corresponding to this ``Direction``.
         """
         return DIR_TO_VEC[self]
+
+    @staticmethod
+    def sample(n: np.int_):
+        """
+        Sample a random direction.
+        """
+        return np.random.choice(list(Direction), size=n)
