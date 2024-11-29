@@ -17,3 +17,5 @@ class Grid:
             (width, height, WorldObject.dim), dtype=int
         )
         self.state[...] = WorldObject.empty()
+
+    def render

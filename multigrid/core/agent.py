@@ -1,10 +1,12 @@
-from multigrid.core.world_object import WorldObject
 import numpy as np
-from numpy.typing import NDArray as ndarray
 from gymnasium import spaces
+from numpy.typing import ArrayLike
+from numpy.typing import NDArray as ndarray
+
 from multigrid.core.action import Action
-from multigrid.core.constants import Direction, Type, Color
-from multigrid.utils.property_alias import PropertyAlias
+from multigrid.core.constants import Color, Direction, Type
+from multigrid.core.world_object import WorldObject
+from multigrid.utils.misc import PropertyAlias, front_pos
 
 
 class Agent:
@@ -34,7 +36,21 @@ class Agent:
     def action_space(self):
         pass
 
+    color = PropertyAlias("state", "color", doc="Alias for :attr:`AgentState.color`.")
     dir = PropertyAlias("state", "dir", doc="Alias for :attr:`AgentState.dir`.")
+    pos = PropertyAlias("state", "pos", doc="Alias for :attr:`AgentState.pos`.")
+    terminated = PropertyAlias(
+        "state", "terminated", doc="Alias for :attr:`AgentState.terminated`."
+    )
+    carrying = PropertyAlias(
+        "state", "carrying", doc="Alias for :attr:`AgentState.carrying`."
+    )
+
+    @property
+    def front_pos(self) -> tuple[int, int]:
+        agent_dir = self.state._view[AgentState.DIR]
+        agent_pos = self.state._view[AgentState.POS]
+        return front_pos(*agent_pos, agent_dir)
 
 
 class AgentState(np.ndarray):
@@ -54,7 +70,7 @@ class AgentState(np.ndarray):
         # Set default values
         obj[..., AgentState.TYPE] = Type.agent
         obj[..., AgentState.COLOR].flat = Color.cycle(np.prod(dims))
-        obj[..., AgentState.DIR] = -1
+        obj[..., AgentState.DIR] = 0  # TODO: Random start direction
         obj[..., AgentState.POS] = (-1, -1)
 
         # Other attributes
@@ -73,8 +89,19 @@ class AgentState(np.ndarray):
             out._terminated = self._terminated[idx, ...]
         return out
 
-    def reset(self):
-        pass
+    @property
+    def color(self) -> Color | ndarray[np.str_]:
+        """
+        Return the agent color.
+        """
+        return Color.from_index(self._view[..., AgentState.COLOR])
+
+    @color.setter
+    def color(self, value: str):
+        """
+        Set the agent color.
+        """
+        self[..., AgentState.COLOR] = np.vectorize(lambda c: Color(c).to_index())(value)
 
     @property
     def dir(self) -> Direction | ndarray[np.int_]:
@@ -86,6 +113,21 @@ class AgentState(np.ndarray):
         self._view[..., AgentState.DIR] = value
 
     @property
+    def pos(self) -> tuple[int, int] | ndarray[np.int_]:
+        """
+        Return the agent's (x, y) position.
+        """
+        out = self._view[..., AgentState.POS]
+        return tuple(out) if out.ndim == 1 else out
+
+    @pos.setter
+    def pos(self, value: list[int]):
+        """
+        Set the agent's (x, y) position.
+        """
+        self[..., AgentState.POS] = value
+
+    @property
     def terminated(self) -> bool | ndarray[np.bool]:
         out = self._terminated
         return out.item() if out.ndim == 0 else out
@@ -94,3 +136,22 @@ class AgentState(np.ndarray):
     def terminated(self, value: bool | ndarray[np.bool]):
         self[..., AgentState.TERMINATED] = value
         self._terminated[...] = value
+
+    @property
+    def carrying(self) -> WorldObject | None | ndarray[np.object_]:
+        """
+        Return the object the agent is carrying.
+        """
+        out = self._carried_obj
+        return out.item() if out.ndim == 0 else out
+
+    @carrying.setter
+    def carrying(self, obj: WorldObject | None):
+        """
+        Set the object the agent is carrying.
+        """
+        self[..., AgentState.CARRYING] = WorldObject.empty() if obj is None else obj
+        if isinstance(obj, (WorldObject, type(None))):
+            self._carried_obj[...].fill(obj)
+        else:
+            self._carried_obj[...] = obj
