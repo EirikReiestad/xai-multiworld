@@ -6,9 +6,12 @@ from multigrid.utils.enum import IndexedEnum
 TILE_PIXELS = 32
 
 COLORS = {
-    "red": (255, 0, 0),
-    "green": (0, 255, 0),
-    "black": (0, 0, 0),
+    "red": np.array([255, 0, 0]),
+    "green": np.array([0, 255, 0]),
+    "blue": np.array([0, 0, 255]),
+    "purple": np.array([112, 39, 195]),
+    "yellow": np.array([255, 255, 0]),
+    "grey": np.array([100, 100, 100]),
 }
 
 DIR_TO_VEC = [
@@ -36,6 +39,10 @@ class Type(str, IndexedEnum):
 class Color(str, IndexedEnum):
     red = "red"
     green = "green"
+    blue = "blue"
+    purple = "purple"
+    yellow = "yellow"
+    grey = "grey"
     black = "black"
 
     @staticmethod
@@ -43,7 +50,13 @@ class Color(str, IndexedEnum):
         """
         Cycle through the available colors.
         """
-        return tuple(Color.from_index(i % len(Color)) for i in range(int(n)))
+        return tuple(Color.from_index(i % len("Color")) for i in range(int(n)))
+
+    def rgb(self) -> ndarray[np.uint8]:
+        """
+        Return the RGB value of this ``Color``.
+        """
+        return COLORS[self]
 
 
 class Direction(enum.IntEnum):

@@ -1,12 +1,12 @@
 import numpy as np
 from gymnasium import spaces
-from numpy.typing import ArrayLike
 from numpy.typing import NDArray as ndarray
 
 from multigrid.core.action import Action
 from multigrid.core.constants import Color, Direction, Type
 from multigrid.core.world_object import WorldObject
 from multigrid.utils.misc import PropertyAlias, front_pos
+from multigrid.utils.rendering import point_in_triangle, rotate_fn, fill_coords
 
 
 class Agent:
@@ -52,6 +52,16 @@ class Agent:
         agent_pos = self.state._view[AgentState.POS]
         return front_pos(*agent_pos, agent_dir)
 
+    def render(self, img: ndarray[np.uint8]):
+        """
+        Render the agent on the image.
+        """
+        tri_fn = point_in_triangle((0.12, 0.19), (0.87, 0.50), (0.12, 0.81))
+
+        # Rotate agent based on direction
+        tri_fn = rotate_fn(tri_fn, cx=0.5, cy=0.5, theta=0.5 * np.pi * self.state.dir)
+        fill_coords(img, tri_fn, self.state.color.rgb())
+
 
 class AgentState(np.ndarray):
     TYPE = 0
@@ -74,7 +84,7 @@ class AgentState(np.ndarray):
         obj[..., AgentState.POS] = (-1, -1)
 
         # Other attributes
-        obj._carried_obj = np.zeros(dims, dtype=object)  # Object references
+        obj._carried_obj = np.empty(dims, dtype=object)  # Object references
         obj._terminated = np.zeros(dims, dtype=bool)  # Cache for faster access
         obj._view = obj.view(
             np.ndarray
