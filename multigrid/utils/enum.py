@@ -1,12 +1,12 @@
-import enum
+import aenum as enum
+from typing import Any
 import functools
-from numpy.typing import NDArray as ndarray
+from numpy.typing import NDArray
 import numpy as np
-from typing import Type
 
 
 @functools.cache
-def _enum_array(enum_cls: Type[enum.Enum]) -> ndarray:
+def _enum_array(enum_cls: enum.EnumMeta) -> NDArray:
     """
     Return an array of all values of the given enum.
 
@@ -40,7 +40,16 @@ class IndexedEnum(enum.Enum):
         return self.to_index()
 
     @classmethod
-    def from_index(cls, index: int) -> enum.Enum | ndarray:
+    def add_item(cls, name: str, value: Any):
+        """
+        Add a new enumeration member.
+        """
+        enum.extend_enum(cls, name, value)
+        _enum_array.cache_clear()
+        _enum_index.cache_clear()
+
+    @classmethod
+    def from_index(cls, index: int) -> enum.Enum | NDArray:
         """
         Get the enumeration member corresponding to a given index.
         """

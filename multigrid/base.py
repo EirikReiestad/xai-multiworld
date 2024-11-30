@@ -1,7 +1,7 @@
 from abc import ABC
 from collections import defaultdict
 from itertools import repeat
-from typing import Any, SupportsFloat
+from typing import Any, Literal, SupportsFloat
 
 import gymnasium as gym
 import numpy as np
@@ -20,18 +20,20 @@ ObsType = dict[str, Any]
 
 class MultiAgentEnv(gym.Env, ABC):
     metadata = {
-        "render.modes": ["human", "rgb_array"],
+        "render_modes": ["human", "rgb_array"],
+        "render_fps": 20,
     }
 
     def __init__(
         self,
         agents: int = 1,
-        width: int = 10,
+        width: int = 20,
         height: int = 10,
         max_steps: int = 100,
         highlight: bool = False,
         tile_size=TILE_PIXELS,
-        screen_size: int = 800,
+        screen_size: int | tuple[int, int] | None = None,
+        render_mode: Literal["human", "render_mode"] = "human",
     ):
         gym.Env.__init__(self)
         ABC.__init__(self)
@@ -41,23 +43,32 @@ class MultiAgentEnv(gym.Env, ABC):
         self._height = height
         self._highlight = highlight
         self._tile_size = tile_size
-        self._screen_size = screen_size
         self._render_size = None
         self._window = None
         self._clock = None
         self._step_count = 0
         self._max_steps = max_steps
+        self.render_mode = render_mode
+
+        if screen_size is None:
+            screen_size = (width * tile_size, height * tile_size)
+        elif isinstance(screen_size, int):
+            screen_size = (screen_size, screen_size)
+            tile_size = min(screen_size) // max(width, height)
+        self._screen_size = screen_size
+        assert isinstance(screen_size, tuple)
 
         self._agent_states = AgentState(agents)
         self.agents: list[Agent] = []
         for i in range(self._num_agents):
             agent = Agent(i)
             self.agents.append(agent)
-        self._gen_grid()
+        self.grid = Grid(width, height)
         if not hasattr(self, "grid"):
             self.grid = Grid(width, height)
 
     def reset(self, seed=None):
+        self._gen_grid(self._width, self._height)
         pass
 
     def step(
@@ -93,10 +104,7 @@ class MultiAgentEnv(gym.Env, ABC):
 
         if self.render_mode == "human":
             img = np.transpose(img, axes=(1, 0, 2))
-            screen_size = (
-                self._screen_size * min(img.shape[0] / img.shape[1], 1.0),
-                self._screen_size * min(img.shape[1] / img.shape[0], 1.0),
-            )
+            screen_size = tuple(map(int, self._screen_size))
             if self._render_size is None:
                 self._render_size = img.shape[2]
             if self._window is None:
@@ -117,7 +125,8 @@ class MultiAgentEnv(gym.Env, ABC):
             pg.display.flip()
         elif self.render_mode == "rgb_array":
             return img
-        raise ValueError("Invalid render mode")
+        else:
+            raise ValueError("Invalid render mode", self.render_mode)
 
     def _handle_actions(
         self, actions: dict[AgentID, Action]
@@ -195,7 +204,7 @@ class MultiAgentEnv(gym.Env, ABC):
 
         return rewards
 
-    def _gen_grid(self):
+    def _gen_grid(self, width: int, height: int):
         raise NotImplementedError
 
     def _get_frame(self, highlight: bool, tile_size: int) -> np.ndarray:
