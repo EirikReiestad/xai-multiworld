@@ -3,7 +3,7 @@ import functools
 from typing import Union
 
 import numpy as np
-from numpy.typing import ArrayLike, NDArray
+from numpy.typing import NDArray
 
 from multigrid.core.constants import Color, Type
 from multigrid.utils.rendering import fill_coords, point_in_rect

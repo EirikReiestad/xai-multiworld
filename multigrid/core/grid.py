@@ -5,6 +5,7 @@ from multigrid.core.constants import TILE_PIXELS
 
 import numpy as np
 from numpy.typing import NDArray
+from multigrid.utils.position import Position
 
 from multigrid.core.world_object import WorldObject
 
@@ -19,8 +20,8 @@ class Grid:
     def __init__(self, width: int, height: int):
         assert width >= 3
         assert height >= 3
-        self._width = width
-        self._height = height
+        self.width = width
+        self.height = height
 
         self._world_objects: dict[
             tuple[int, int], WorldObject
@@ -79,7 +80,7 @@ class Grid:
         highlight_mask: NDArray[np.bool_] | None = None,
     ) -> NDArray[np.uint8]:
         if highlight_mask is None:
-            highlight_mask = np.zeros(shape=(self._width, self._height), dtype=bool)
+            highlight_mask = np.zeros(shape=(self.width, self.height), dtype=bool)
 
         # Get agent locations
         # For overlapping agents, non-terminated agents is prioritized
@@ -88,19 +89,20 @@ class Grid:
             location_to_agent[tuple(agent.pos)] = agent
 
         # Initialize pixel array
-        width_px = self._width * tile_size
-        height_px = self._height * tile_size
+        width_px = self.width * tile_size
+        height_px = self.height * tile_size
         img = np.zeros((height_px, width_px, 3), dtype=np.uint8)
 
         # Render the grid
-        for j in range(0, self._height):
-            for i in range(0, self._width):
+        for j in range(0, self.height):
+            for i in range(0, self.width):
+                pos = Position(i, j)  # x, y
                 assert highlight_mask is not None
-                cell = self.get(i, j)
+                cell = self.get(*pos())
                 tile_img = Grid.render_tile(
                     cell,
-                    agent=location_to_agent.get((i, j)),
-                    highlight=highlight_mask[i, j],
+                    agent=location_to_agent.get(pos()),
+                    highlight=highlight_mask[*pos()],
                     tile_size=tile_size,
                 )
                 ymin = j * tile_size
@@ -113,7 +115,12 @@ class Grid:
 
         return img
 
+    def in_bounds(self, x: int, y: int) -> bool:
+        return 0 <= x < self.width and 0 <= y < self.height
+
     def get(self, x: int, y: int) -> WorldObject | None:
+        if not self.in_bounds(x, y):
+            return None
         if (x, y) not in self._world_objects:
             self._world_objects[x, y] = WorldObject.from_array(self.state[x, y])
         return self._world_objects[x, y]
@@ -125,3 +132,7 @@ class Grid:
             self.state[x, y] = WorldObject.empty()
         else:
             raise TypeError(f"Cannot set grid value to {type(obj)}")
+
+    @property
+    def size(self) -> tuple[int, int]:
+        return self.width, self.height
