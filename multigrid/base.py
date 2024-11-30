@@ -1,7 +1,8 @@
+import math
 from abc import ABC
 from collections import defaultdict
 from itertools import repeat
-from typing import Any, Literal, SupportsFloat
+from typing import Any, Callable, Literal, SupportsFloat
 
 import gymnasium as gym
 import numpy as np
@@ -12,6 +13,8 @@ from multigrid.core.action import Action
 from multigrid.core.agent import Agent, AgentState
 from multigrid.core.constants import TILE_PIXELS, Type
 from multigrid.core.grid import Grid
+from multigrid.core.world_object import WorldObject
+from multigrid.utils import observation
 from multigrid.utils.observation import gen_obs_grid_encoding
 
 AgentID = str
@@ -27,13 +30,15 @@ class MultiAgentEnv(gym.Env, ABC):
     def __init__(
         self,
         agents: int = 1,
-        width: int = 20,
-        height: int = 10,
+        width: int = 5,
+        height: int = 5,
         max_steps: int = 100,
         highlight: bool = False,
         tile_size=TILE_PIXELS,
         screen_size: int | tuple[int, int] | None = None,
         render_mode: Literal["human", "render_mode"] = "human",
+        success_termination_mode: Literal["all", "any"] = "all",
+        failure_termination_mode: Literal["all", "any"] = "any",
     ):
         gym.Env.__init__(self)
         ABC.__init__(self)
@@ -49,6 +54,8 @@ class MultiAgentEnv(gym.Env, ABC):
         self._step_count = 0
         self._max_steps = max_steps
         self.render_mode = render_mode
+        self._success_termination_mode = success_termination_mode
+        self._failure_termination_mode = failure_termination_mode
 
         if screen_size is None:
             screen_size = (width * tile_size, height * tile_size)
@@ -67,9 +74,37 @@ class MultiAgentEnv(gym.Env, ABC):
         if not hasattr(self, "grid"):
             self.grid = Grid(width, height)
 
-    def reset(self, seed=None):
+    def reset(
+        self, seed: int | None = None, **kwargs
+    ) -> tuple[
+        dict[AgentID, ObsType],
+        dict[AgentID, dict[str, Any]],
+    ]:
+        super().reset(seed=seed, **kwargs)
+
+        # Reset agents
+        self.agent_states = AgentState(self._num_agents)
+        for agent in self.agents:
+            agent.state = self._agent_states[agent.index]
+            agent.reset()
+
         self._gen_grid(self._width, self._height)
-        pass
+
+        assert np.all(self.agent_states.pos >= (0, 0))
+        assert np.all(self.agent_states.pos < self.grid.size)
+
+        for agent in self.agents:
+            start_cell = self.grid.get(*agent.state.pos)
+            assert start_cell is None or start_cell.can_overlap()
+
+        self._step_count = 0
+
+        observations = self._gen_obs()
+
+        if self.render_mode == "human":
+            self.render()
+
+        return observations, defaultdict(dict)
 
     def step(
         self, actions: dict[AgentID, Action]
@@ -128,6 +163,28 @@ class MultiAgentEnv(gym.Env, ABC):
         else:
             raise ValueError("Invalid render mode", self.render_mode)
 
+    @property
+    def observation_space(self) -> spaces.Dict:
+        """
+        Returns
+        -------
+        spaces.Dict[AgentID, spaces.Space]
+            A dictionary of observation spaces for each agent
+        """
+        return spaces.Dict(
+            {agent.index: agent.observation_space for agent in self.agents}
+        )
+
+    @property
+    def action_space(self) -> spaces.Dict:
+        """
+        Returns
+        -------
+        spaces.Dict[AgentID, spaces.Space]
+            A dictionary of action spaces for each agent
+        """
+        return spaces.Dict({agent.index: agent.action_space for agent in self.agents})
+
     def _handle_actions(
         self, actions: dict[AgentID, Action]
     ) -> dict[AgentID, SupportsFloat]:
@@ -155,6 +212,9 @@ class MultiAgentEnv(gym.Env, ABC):
             # Move forward
             elif action == Action.forward:
                 fwd_pos = agent.front_pos
+                if not self.grid.in_bounds(*fwd_pos):
+                    continue
+
                 fwd_obj = self.grid.get(*fwd_pos)
 
                 if fwd_obj is None or fwd_obj.can_overlap():
@@ -168,6 +228,7 @@ class MultiAgentEnv(gym.Env, ABC):
                 if fwd_obj is not None:
                     if fwd_obj.type == Type.goal:
                         self._on_success(agent, rewards, {})
+                break
 
             elif action == Action.pickup:
                 fwd_pos = agent.front_pos
@@ -260,24 +321,138 @@ class MultiAgentEnv(gym.Env, ABC):
         )
         return img
 
-    @property
-    def observation_space(self) -> spaces.Dict:
+    def _on_success(
+        self,
+        agent: Agent,
+        rewards: dict[AgentID, SupportsFloat],
+        terminations: dict[AgentID, bool],
+    ):
         """
-        Returns
-        -------
-        spaces.Dict[AgentID, spaces.Space]
-            A dictionary of observation spaces for each agent
+        Callback when an agent completes its mission
         """
-        return spaces.Dict(
-            {agent.index: agent.observation_space for agent in self.agents}
-        )
+        if self._success_termination_mode == "any":
+            self._agent_states.terminated = True  # Terminate all agents
+            for i in range(self._num_agents):
+                terminations[str(i)] = True
+        else:
+            agent.state.terminated = True  # Terminate only the agent
+            terminations[str(agent.index)] = True
 
-    @property
-    def action_space(self) -> spaces.Dict:
+        if self._joint_reward:
+            for i in range(self._num_agents):
+                rewards[str(i)] = self._reward()  # Reward all agents
+        else:
+            rewards[str(agent.index)] = self._reward()
+
+    def _on_failure(
+        self,
+        agent: Agent,
+        rewards: dict[AgentID, SupportsFloat],
+        terminations: dict[AgentID, bool],
+    ):
+        if self._failure_termination_mode == "any":
+            self._agent_states.terminated = True
+            for i in range(self._num_agents):
+                terminations[str(i)] = True
+        else:
+            agent.state.terminated = True
+            terminations[str(agent.index)] = True
+
+    def _is_done(self) -> bool:
+        truncated = self._step_count >= self._max_steps
+        return truncated or all(self._agent_states.terminated)
+
+    def _reward(self) -> float:
+        return 1.0 - 0.9 * (self._step_count / self._max_steps)
+
+    def _place_object(
+        self,
+        obj: WorldObject | None,
+        top: tuple[int, int] | None = None,
+        size: tuple[int, int] | None = None,
+        reject_fn: Callable[["MultiGridEnv", tuple[int, int]], bool] | None = None,
+        max_tries=math.inf,
+    ) -> tuple[int, int]:
         """
-        Returns
-        -------
-        spaces.Dict[AgentID, spaces.Space]
-            A dictionary of action spaces for each agent
+        Place an object at an empty position in the grid.
+
+        Parameters
+        ----------
+        obj: WorldObj
+            Object to place in the grid
+        top: tuple[int, int]
+            Top-left position of the rectangular area where to place the object
+        size: tuple[int, int]
+            Width and height of the rectangular area where to place the object
+        reject_fn: Callable(env, pos) -> bool
+            Function to filter out potential positions
+        max_tries: int
+            Maximum number of attempts to place the object
         """
-        return spaces.Dict({agent.index: agent.action_space for agent in self.agents})
+        if top is None:
+            top = (0, 0)
+        else:
+            top = (max(top[0], 0), max(top[1], 0))
+
+        if size is None:
+            size = (self.grid.width, self.grid.height)
+
+        num_tries = 0
+
+        while True:
+            # This is to handle with rare cases where rejection sampling
+            # gets stuck in an infinite loop
+            if num_tries > max_tries:
+                raise RecursionError("rejection sampling failed in place_obj")
+
+            num_tries += 1
+
+            pos = (
+                self._rand_int(top[0], min(top[0] + size[0], self.grid.width)),
+                self._rand_int(top[1], min(top[1] + size[1], self.grid.height)),
+            )
+
+            # Don't place the object on top of another object
+            if self.grid.get(*pos) is not None:
+                continue
+
+            # Don't place the object where agents are
+            if np.bitwise_and.reduce(self.agent_states.pos == pos, axis=1).any():
+                continue
+
+            # Check if there is a filtering criterion
+            if reject_fn and reject_fn(self, pos):
+                continue
+
+            break
+
+        self.grid.set(pos[0], pos[1], obj)
+
+        if obj is not None:
+            obj.init_pos = pos
+            obj.cur_pos = pos
+
+        return pos
+
+    def put_obj(self, obj: WorldObject, i: int, j: int):
+        """
+        Put an object at a specific position in the grid.
+        """
+        self.grid.set(i, j, obj)
+        obj.init_pos = (i, j)
+        obj.cur_pos = (i, j)
+
+    def place_agent(
+        self, agent: Agent, top=None, size=None, rand_dir=True, max_tries=math.inf
+    ) -> tuple[int, int]:
+        """
+        Set agent starting point at an empty position in the grid.
+        """
+        agent.state.pos = (-1, -1)
+        pos = self._place_object(None, top, size, max_tries=max_tries)
+        agent.state.pos = pos
+
+        if rand_dir:
+            agent.state.dir = self._rand_int(0, 4)
+
+        return pos

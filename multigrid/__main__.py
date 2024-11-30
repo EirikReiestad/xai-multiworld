@@ -4,7 +4,7 @@ import logging
 
 logging.basicConfig(level=logging.INFO)
 
-env = EmptyEnv(1)
+env = EmptyEnv(10)
 
 for t in count():
     logging.info(f"step: {t}")

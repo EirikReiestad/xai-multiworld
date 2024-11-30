@@ -81,7 +81,7 @@ class AgentState(np.ndarray):
         obj[..., AgentState.TYPE] = Type.agent
         obj[..., AgentState.COLOR].flat = Color.cycle(np.prod(dims))
         obj[..., AgentState.DIR] = 0  # TODO: Random start direction
-        obj[..., AgentState.POS] = (-1, -1)
+        obj[..., AgentState.POS] = (0, 0)
 
         # Other attributes
         obj._carried_obj = np.empty(dims, dtype=object)  # Object references
