@@ -7,6 +7,7 @@ from multigrid.core.constants import Color, Direction, Type
 from multigrid.core.world_object import WorldObject
 from multigrid.utils.misc import PropertyAlias, front_pos
 from multigrid.utils.rendering import point_in_triangle, rotate_fn, fill_coords
+from multigrid.utils.position import Position
 
 
 class Agent:
@@ -31,10 +32,10 @@ class Agent:
         self.action_space = spaces.Discrete(len(Action))
 
     def reset(self):
-        pass
-
-    def action_space(self):
-        pass
+        self.state.pos = (-1, -1)
+        self.state.dir = -1
+        self.state.terminated = False
+        self.state.carrying = None
 
     color = PropertyAlias("state", "color", doc="Alias for :attr:`AgentState.color`.")
     dir = PropertyAlias("state", "dir", doc="Alias for :attr:`AgentState.dir`.")
@@ -47,10 +48,11 @@ class Agent:
     )
 
     @property
-    def front_pos(self) -> tuple[int, int]:
+    def front_pos(self) -> Position:
         agent_dir = self.state._view[AgentState.DIR]
         agent_pos = self.state._view[AgentState.POS]
-        return front_pos(*agent_pos, agent_dir)
+        fwd_pos = front_pos(*agent_pos, agent_dir)
+        return Position(*fwd_pos)
 
     def render(self, img: ndarray[np.uint8]):
         """
@@ -80,8 +82,8 @@ class AgentState(np.ndarray):
         # Set default values
         obj[..., AgentState.TYPE] = Type.agent
         obj[..., AgentState.COLOR].flat = Color.cycle(np.prod(dims))
-        obj[..., AgentState.DIR] = 0  # TODO: Random start direction
-        obj[..., AgentState.POS] = (0, 0)
+        obj[..., AgentState.DIR] = -1
+        obj[..., AgentState.POS] = (-1, -1)
 
         # Other attributes
         obj._carried_obj = np.empty(dims, dtype=object)  # Object references
@@ -123,18 +125,23 @@ class AgentState(np.ndarray):
         self._view[..., AgentState.DIR] = value
 
     @property
-    def pos(self) -> tuple[int, int] | ndarray[np.int_]:
+    def pos(self) -> Position:
         """
         Return the agent's (x, y) position.
         """
         out = self._view[..., AgentState.POS]
-        return tuple(out) if out.ndim == 1 else out
+        if out.ndim == 1:
+            return Position(*out)
+        pos = Position.from_list(out)
+        return (pos) if pos.ndim == 1 else pos
 
     @pos.setter
-    def pos(self, value: list[int]):
+    def pos(self, value: Position | list[int]):
         """
         Set the agent's (x, y) position.
         """
+        if isinstance(value, Position):
+            value = list(value())
         self[..., AgentState.POS] = value
 
     @property

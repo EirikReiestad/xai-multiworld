@@ -9,7 +9,12 @@ from multigrid.utils.position import Position
 
 from multigrid.core.world_object import WorldObject
 
-from multigrid.utils.rendering import downsample, fill_coords, point_in_rect
+from multigrid.utils.rendering import (
+    downsample,
+    fill_coords,
+    point_in_rect,
+    highlight_img,
+)
 
 from .agent import Agent
 
@@ -86,7 +91,7 @@ class Grid:
         # For overlapping agents, non-terminated agents is prioritized
         location_to_agent: dict[tuple[Any, Any], Optional[Agent]] = {}
         for agent in sorted(agents, key=lambda x: not x.terminated):
-            location_to_agent[tuple(agent.pos)] = agent
+            location_to_agent[agent.pos()] = agent
 
         # Initialize pixel array
         width_px = self.width * tile_size
@@ -98,7 +103,7 @@ class Grid:
             for i in range(0, self.width):
                 pos = Position(i, j)  # x, y
                 assert highlight_mask is not None
-                cell = self.get(*pos())
+                cell = self.get(pos)
                 tile_img = Grid.render_tile(
                     cell,
                     agent=location_to_agent.get(pos()),
@@ -115,21 +120,23 @@ class Grid:
 
         return img
 
-    def in_bounds(self, x: int, y: int) -> bool:
-        return 0 <= x < self.width and 0 <= y < self.height
+    def in_bounds(self, pos: Position | list[Position]) -> bool | list[bool]:
+        if isinstance(pos, Position):
+            return 0 <= pos.x < self.width and 0 <= pos.y < self.height
+        return [0 <= p.x < self.width and 0 <= p.y < self.height for p in pos]
 
-    def get(self, x: int, y: int) -> WorldObject | None:
-        if not self.in_bounds(x, y):
+    def get(self, pos: Position) -> WorldObject | None:
+        if not self.in_bounds(pos):
             return None
-        if (x, y) not in self._world_objects:
-            self._world_objects[x, y] = WorldObject.from_array(self.state[x, y])
-        return self._world_objects[x, y]
+        if pos() not in self._world_objects:
+            self._world_objects[*pos()] = WorldObject.from_array(self.state[*pos()])
+        return self._world_objects[*pos()]
 
-    def set(self, x: int, y: int, obj: WorldObject | None):
+    def set(self, pos: Position, obj: WorldObject | None):
         if isinstance(obj, WorldObject):
-            self.state[x, y] = obj
+            self.state[*pos()] = obj
         elif obj is None:
-            self.state[x, y] = WorldObject.empty()
+            self.state[*pos()] = WorldObject.empty()
         else:
             raise TypeError(f"Cannot set grid value to {type(obj)}")
 

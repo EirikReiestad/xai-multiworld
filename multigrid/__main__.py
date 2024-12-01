@@ -6,9 +6,13 @@ logging.basicConfig(level=logging.INFO)
 
 env = EmptyEnv(10)
 
-for t in count():
-    logging.info(f"step: {t}")
+for e in count():
+    logging.info(f"Episode: {e}")
     env.reset()
-    actions = env.action_space.sample()
-    env.step(actions)
-    env.render()
+    for t in count():
+        logging.info(f"step: {t}")
+        actions = env.action_space.sample()
+        obs, rewards, terms, truncs, infos = env.step(actions)
+        if all(terms.values()) or all(truncs.values()):
+            break
+        env.render()

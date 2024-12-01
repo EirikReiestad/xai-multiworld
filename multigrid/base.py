@@ -1,6 +1,7 @@
 import math
 from abc import ABC
 from collections import defaultdict
+from collections.abc import Iterable
 from itertools import repeat
 from typing import Any, Callable, Literal, SupportsFloat
 
@@ -16,12 +17,14 @@ from multigrid.core.grid import Grid
 from multigrid.core.world_object import WorldObject
 from multigrid.utils import observation
 from multigrid.utils.observation import gen_obs_grid_encoding
+from multigrid.utils.position import Position
+from multigrid.utils.random import RandomMixin
 
 AgentID = str
 ObsType = dict[str, Any]
 
 
-class MultiAgentEnv(gym.Env, ABC):
+class MultiAgentEnv(gym.Env, RandomMixin, ABC):
     metadata = {
         "render_modes": ["human", "rgb_array"],
         "render_fps": 20,
@@ -30,8 +33,8 @@ class MultiAgentEnv(gym.Env, ABC):
     def __init__(
         self,
         agents: int = 1,
-        width: int = 5,
-        height: int = 5,
+        width: int = 10,
+        height: int = 10,
         max_steps: int = 100,
         highlight: bool = False,
         tile_size=TILE_PIXELS,
@@ -42,6 +45,7 @@ class MultiAgentEnv(gym.Env, ABC):
     ):
         gym.Env.__init__(self)
         ABC.__init__(self)
+        RandomMixin.__init__(self, self.np_random)
         assert agents > 0, "Number of agents must be greater than 0"
         self._num_agents = agents
         self._width = width
@@ -87,14 +91,15 @@ class MultiAgentEnv(gym.Env, ABC):
         for agent in self.agents:
             agent.state = self._agent_states[agent.index]
             agent.reset()
+            agent.state.pos = self.place_agent(agent)
 
         self._gen_grid(self._width, self._height)
 
-        assert np.all(self.agent_states.pos >= (0, 0))
-        assert np.all(self.agent_states.pos < self.grid.size)
+        # These fields should be defined by _gen_grid
+        assert np.all([self.grid.in_bounds(self._agent_states.pos)])
 
         for agent in self.agents:
-            start_cell = self.grid.get(*agent.state.pos)
+            start_cell = self.grid.get(agent.state.pos)
             assert start_cell is None or start_cell.can_overlap()
 
         self._step_count = 0
@@ -212,15 +217,13 @@ class MultiAgentEnv(gym.Env, ABC):
             # Move forward
             elif action == Action.forward:
                 fwd_pos = agent.front_pos
-                if not self.grid.in_bounds(*fwd_pos):
+                if not self.grid.in_bounds(fwd_pos):
                     continue
 
-                fwd_obj = self.grid.get(*fwd_pos)
+                fwd_obj = self.grid.get(fwd_pos)
 
                 if fwd_obj is None or fwd_obj.can_overlap():
-                    agent_present = np.bitwise_and.reduce(
-                        self._agent_states.pos == fwd_pos, axis=1
-                    ).any()
+                    agent_present = np.array(self._agent_states.pos == fwd_pos).any()
                     if agent_present:
                         continue
 
@@ -232,7 +235,7 @@ class MultiAgentEnv(gym.Env, ABC):
 
             elif action == Action.pickup:
                 fwd_pos = agent.front_pos
-                fwd_obj = self.grid.get(*fwd_pos)
+                fwd_obj = self.grid.get(fwd_pos)
 
                 if fwd_obj is not None and fwd_obj.can_pickup():
                     if agent.state.carrying is None:
@@ -241,7 +244,7 @@ class MultiAgentEnv(gym.Env, ABC):
 
             elif action == Action.drop:
                 fwd_pos = agent.front_pos
-                fwd_obj = self.grid.get(*fwd_pos)
+                fwd_obj = self.grid.get(fwd_pos)
 
                 if agent.state.carrying is not None and fwd_obj is None:
                     agent_present = np.bitwise_and.reduce(
@@ -254,7 +257,7 @@ class MultiAgentEnv(gym.Env, ABC):
 
             elif action == Action.toggle:
                 fwd_pos = agent.front_pos
-                fwd_obj = self.grid.get(*fwd_pos)
+                fwd_obj = self.grid.get(fwd_pos)
                 if fwd_obj is not None:
                     fwd_obj.toggle(self, agent, fwd_pos)
 
@@ -299,7 +302,7 @@ class MultiAgentEnv(gym.Env, ABC):
             f_vec = agent.state.dir.to_vec()
             r_vec = np.array((f_vec[1], -f_vec[0]))
             top_left = (
-                agent.state.pos
+                agent.state.pos()
                 + f_vec * (agent.view_size - 1)
                 - r_vec * (agent.view_size // 2)
             )
@@ -372,7 +375,7 @@ class MultiAgentEnv(gym.Env, ABC):
         size: tuple[int, int] | None = None,
         reject_fn: Callable[["MultiGridEnv", tuple[int, int]], bool] | None = None,
         max_tries=math.inf,
-    ) -> tuple[int, int]:
+    ) -> Position:
         """
         Place an object at an empty position in the grid.
 
@@ -407,26 +410,26 @@ class MultiAgentEnv(gym.Env, ABC):
 
             num_tries += 1
 
-            pos = (
+            pos = Position(
                 self._rand_int(top[0], min(top[0] + size[0], self.grid.width)),
                 self._rand_int(top[1], min(top[1] + size[1], self.grid.height)),
             )
 
             # Don't place the object on top of another object
-            if self.grid.get(*pos) is not None:
+            if self.grid.get(pos) is not None:
                 continue
 
             # Don't place the object where agents are
-            if np.bitwise_and.reduce(self.agent_states.pos == pos, axis=1).any():
+            if np.array(self.agent_states.pos == pos).any():
                 continue
 
             # Check if there is a filtering criterion
-            if reject_fn and reject_fn(self, pos):
+            if reject_fn and reject_fn(self, pos()):
                 continue
 
             break
 
-        self.grid.set(pos[0], pos[1], obj)
+        self.grid.set(pos, obj)
 
         if obj is not None:
             obj.init_pos = pos
@@ -444,11 +447,11 @@ class MultiAgentEnv(gym.Env, ABC):
 
     def place_agent(
         self, agent: Agent, top=None, size=None, rand_dir=True, max_tries=math.inf
-    ) -> tuple[int, int]:
+    ) -> Position:
         """
         Set agent starting point at an empty position in the grid.
         """
-        agent.state.pos = (-1, -1)
+        agent.state.pos = Position(-1, -1)
         pos = self._place_object(None, top, size, max_tries=max_tries)
         agent.state.pos = pos
 
