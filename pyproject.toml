@@ -10,11 +10,12 @@ packages = [{ include = "multigrid", from = "." }]
 
 python = "^3.11"
 numpy = "^2.1.3"
-gymnasium = "^1.0.0"
 torch = "^2.5.1"
 aenum = "^3.1.15"
 pygame = "^2.6.1"
-pettingzoo = "^1.24.3"
+pettingzoo = "^1.24.0"
+supersuit = "^3.9.3"
+ray = { version = "2.7.0", extras = ["tune", "rllib"] }
 
 [tool.pyright]
 venvPath = "."

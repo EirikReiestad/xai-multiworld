@@ -2,10 +2,11 @@ import numpy as np
 from numpy.typing import NDArray as ndarray
 
 from multigrid.core.agent import AgentState
-from multigrid.core.constants import Color, Direction, Type
-from multigrid.core.world_object import WorldObject
+from multigrid.core.constants import Color, Direction, WorldObjectType
+from multigrid.core.world_object import WorldObject, Wall
 
-UNSEEN_ENCODING = WorldObject(Type.unseen, Color.from_index(0)).encode()
+WALL_ENCODING = Wall().encode()
+UNSEEN_ENCODING = WorldObject(WorldObjectType.unseen, Color.from_index(0)).encode()
 ENCODE_DIM = WorldObject.dim
 
 GRID_ENCODING_IDX = slice(None)
@@ -16,8 +17,11 @@ AGENT_TERMINATED_IDX = AgentState.TERMINATED
 AGENT_CARRYING_IDX = AgentState.CARRYING
 AGENT_ENCODING_IDX = AgentState.ENCODING
 
-TYPE = int(Type.wall)
-BOX = int(Type.box)
+TYPE = WorldObject.TYPE
+STATE = WorldObject.STATE
+
+WALL = int(WorldObjectType.wall)
+BOX = int(WorldObjectType.box)
 
 RIGHT = int(Direction.right)
 LEFT = int(Direction.left)
@@ -26,12 +30,18 @@ DOWN = int(Direction.down)
 
 
 def gen_obs_grid_encoding(
-    grid_state: ndarray[np.int_], agent_state: ndarray[np.int_], agent_view_size: int
+    grid_state: ndarray[np.int_],
+    agent_state: ndarray[np.int_],
+    agent_view_size: int,
+    see_through_walls: bool,
 ) -> ndarray[np.int_]:
     obs_grid = gen_obs_grid(grid_state, agent_state, agent_view_size)
     # Generate and apply visability mask
     vis_mask = get_vis_mask(obs_grid)
+    # print(vis_mask)
     num_agents = len(agent_state)
+    if see_through_walls:
+        return obs_grid
     for agent in range(num_agents):
         for i in range(agent_view_size):
             for j in range(agent_view_size):
@@ -62,7 +72,7 @@ def gen_obs_grid(
             if agent_terminated[agent]:
                 continue
             x, y = agent_pos[agent]
-            grid_encoding[x, y, GRID_ENCODING_IDX] = agent_grid[agent]
+            grid_encoding[y, x, GRID_ENCODING_IDX] = agent_grid[agent]
     else:
         grid_encoding = grid_state[..., GRID_ENCODING_IDX]
 
@@ -71,11 +81,13 @@ def gen_obs_grid(
 
     # Population observation grid
     num_left_rotations = (agent_dir + 1) % 4
-    obs_grid = np.empty((num_agents, obs_width, obs_height, ENCODE_DIM), dtype=np.int_)
+    obs_grid = np.empty(
+        (num_agents, obs_height, obs_width, ENCODE_DIM), dtype=np.int_
+    )  # Note that we use height - width instead of width - height because of the way numpy is indexed
     for agent in range(num_agents):
-        for i in range(obs_width):
-            for j in range(obs_height):
-                x, y = topX[agent] - i, topY[agent] - j
+        for j in range(obs_height):
+            for i in range(obs_width):
+                x, y = topX[agent] + i, topY[agent] + j
                 # Rotated relative coordinates for observation grid
                 if num_left_rotations[agent] == 0:
                     i_rot, j_rot = i, j
@@ -90,33 +102,94 @@ def gen_obs_grid(
 
                 # Set observation grid
                 if 0 <= x < grid_state.shape[0] and 0 <= y < grid_state.shape[1]:
-                    obs_grid[agent, i_rot, j_rot] = grid_encoding[x, y]
+                    obs_grid[agent, j_rot, i_rot] = grid_encoding[x, y]
                 else:
-                    obs_grid[agent, i_rot, j_rot] = UNSEEN_ENCODING
-    obs_grid[:, obs_width // 2, obs_height - 1] = agent_carrying
+                    obs_grid[agent, j_rot, i_rot] = WALL_ENCODING
+
+    # Make it so the agent sees what it is carrying
+    obs_grid[:, obs_height - 1, obs_width // 2] = agent_carrying
     return obs_grid
 
 
-def get_vis_mask(obs_grid: ndarray[np.int_]) -> ndarray[np.bool_]:
-    num_agents, obs_width, obs_height, _ = obs_grid.shape
-    vis_mask = np.zeros((num_agents, obs_width, obs_height), dtype=np.bool_)
-    vis_mask[:, obs_width // 2, obs_height - 1] = True  # Agent relative position
+def see_behind(world_object: ndarray[np.int_] | None) -> bool:
+    """
+    Can an agent see behind this object?
+
+    Parameters
+    ----------
+    world_obj : ndarray[int] of shape (encode_dim,)
+        World object encoding
+    """
+    if world_object is None:
+        return True
+    if world_object[TYPE] == WALL:
+        return False
+
+    return True
+
+
+def get_see_behind_mask(grid_array: ndarray[np.int_]) -> ndarray[np.bool_]:
+    """
+    Return boolean mask indicating which grid locations can be seen through.
+
+    Parameters
+    ----------
+    grid_array : ndarray[int] of shape (num_agents, width, height, dim)
+        Grid object array for each agent
+
+    Returns
+    -------
+    see_behind_mask : ndarray[bool] of shape (width, height)
+        Boolean visibility mask
+    """
+    num_agents, height, width = grid_array.shape[:3]
+    see_behind_mask = np.zeros((num_agents, height, width), dtype=np.bool_)
     for agent in range(num_agents):
-        for j in range(obs_height - 1, -1, -1):
-            # Forward pass
-            for i in range(obs_width - 1):
-                if vis_mask[agent, i, j]:
-                    vis_mask[agent, i + 1, j] = True
-                    if j > 0:
-                        vis_mask[agent, i + 1, j - 1] = True
-                        vis_mask[agent, i, j - 1] = True
-            # Backward pass
-            for i in range(obs_width - 1, 0, -1):
-                if vis_mask[agent, i, j]:
-                    vis_mask[agent, i - 1, j] = True
-                    if j > 0:
-                        vis_mask[agent, i - 1, j - 1] = True
-                        vis_mask[agent, i, j - 1] = True
+        for i in range(height):
+            for j in range(width):
+                see_behind_mask[agent, i, j] = see_behind(grid_array[agent, i, j])
+
+    return see_behind_mask
+
+
+def get_vis_mask(obs_grid: ndarray[np.int_]) -> ndarray[np.bool_]:
+    """
+    Generate a boolean mask indicating which grid locations are visible to each agent.
+
+    Parameters
+    ----------
+    obs_grid : ndarray[int] of shape (num_agents, width, height, dim)
+        Grid object array for each agent observation
+
+    Returns
+    -------
+    vis_mask : ndarray[bool] of shape (num_agents, width, height)
+        Boolean visibility mask for each agent
+    """
+    num_agents, height, width = obs_grid.shape[:3]
+    see_behind_mask = get_see_behind_mask(obs_grid)
+    vis_mask = np.zeros((num_agents, width, height), dtype=np.bool_)
+    vis_mask[:, height - 1, width // 2] = True  # agent relative position
+
+    for agent in range(num_agents):
+        for j in range(height - 1, -1, -1):
+            # Right propegate
+            for i in range(width // 2, width):
+                if not vis_mask[agent, j, i] or not see_behind_mask[agent, j, i]:
+                    continue
+                vis_mask[agent, j - 1, i] = True
+                if i + 1 < width:
+                    vis_mask[agent, j - 1, i + 1] = True
+                    vis_mask[agent, j, i + 1] = True
+            # Left propegate
+            for i in range(width // 2, -1, -1):
+                if not vis_mask[agent, j, i] or not see_behind_mask[agent, j, i]:
+                    continue
+                vis_mask[agent, j - 1, i] = True
+                if i - 1 >= 0:
+                    vis_mask[agent, j - 1, i - 1] = True
+                    vis_mask[agent, j, i - 1] = True
+
     return vis_mask
 
 

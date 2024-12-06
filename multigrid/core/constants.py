@@ -26,7 +26,7 @@ DIR_TO_VEC = [
 ]
 
 
-class Type(str, IndexedEnum):
+class WorldObjectType(str, IndexedEnum):
     unseen = "unseen"
     empty = "empty"
     wall = "wall"
@@ -81,3 +81,13 @@ class Direction(enum.IntEnum):
         Sample a random direction.
         """
         return np.random.choice(list(Direction), size=n)
+
+
+class State(str, IndexedEnum):
+    """
+    Enumeration of object states.
+    """
+
+    open = "open"
+    closed = "closed"
+    locked = "locked"

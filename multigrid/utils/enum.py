@@ -49,7 +49,7 @@ class IndexedEnum(enum.Enum):
         _enum_index.cache_clear()
 
     @classmethod
-    def from_index(cls, index: int) -> enum.Enum | NDArray:
+    def from_index(cls, index: int) -> str:
         """
         Get the enumeration member corresponding to a given index.
         """

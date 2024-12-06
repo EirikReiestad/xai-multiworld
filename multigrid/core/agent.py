@@ -3,7 +3,7 @@ from gymnasium import spaces
 from numpy.typing import NDArray as ndarray
 
 from multigrid.core.action import Action
-from multigrid.core.constants import Color, Direction, Type
+from multigrid.core.constants import Color, Direction, WorldObjectType
 from multigrid.core.world_object import WorldObject
 from multigrid.utils.misc import PropertyAlias, front_pos
 from multigrid.utils.rendering import point_in_triangle, rotate_fn, fill_coords
@@ -16,6 +16,7 @@ class Agent:
         assert view_size % 2 == 1, "View size must be odd for agent observation."
         assert view_size > 1, "View size must be greater than 1 for agent observation."
         self.view_size = view_size
+        self.see_through_walls = see_through_walls
         self.state = AgentState()
 
         self.observation_space = spaces.Dict(
@@ -80,7 +81,7 @@ class AgentState(np.ndarray):
         obj = np.zeros(dims + (cls.dim,), dtype=np.int_).view(cls)
 
         # Set default values
-        obj[..., AgentState.TYPE] = Type.agent
+        obj[..., AgentState.TYPE] = WorldObjectType.agent
         obj[..., AgentState.COLOR].flat = Color.cycle(np.prod(dims))
         obj[..., AgentState.DIR] = -1
         obj[..., AgentState.POS] = (-1, -1)

@@ -31,7 +31,6 @@ class Position:
         return self.x >= other.x and self.y >= other.y
 
     def __lt__(self, other: tuple[int, int]) -> bool:
-        print(other, "TEST")
         """Less than comparison."""
         return self.x < other[0] and self.y < other[1]
 
@@ -52,3 +51,7 @@ class Position:
     def to_list(self) -> list[tuple[int, int]]:
         """Return the position as a list."""
         return [(self.x, self.y)]
+
+    def to_numpy(self) -> tuple[np.int_, np.int_]:
+        """Return the position as a numpy array."""
+        return (np.int_(self.x), np.int_(self.y))
