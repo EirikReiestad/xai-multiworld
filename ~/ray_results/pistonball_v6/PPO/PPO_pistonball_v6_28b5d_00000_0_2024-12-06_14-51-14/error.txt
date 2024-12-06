@@ -1,0 +1,26 @@
+Failure # 1 (occurred at 2024-12-06_14-51-22)
+The actor died because of an error raised in its creation task, [36mray::PPO.__init__()[39m (pid=77093, ip=10.22.116.191, actor_id=de602b76290a3a25c8e78f6d01000000, repr=PPO)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/algorithms/algorithm.py", line 517, in __init__
+    super().__init__(
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/tune/trainable/trainable.py", line 185, in __init__
+    self.setup(copy.deepcopy(self.config))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/algorithms/algorithm.py", line 639, in setup
+    self.workers = WorkerSet(
+                   ^^^^^^^^^^
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/evaluation/worker_set.py", line 182, in __init__
+    raise e
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/evaluation/worker_set.py", line 157, in __init__
+    self._setup(
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/evaluation/worker_set.py", line 227, in _setup
+    self.add_workers(
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/evaluation/worker_set.py", line 593, in add_workers
+    raise result.get()
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/utils/actor_manager.py", line 481, in __fetch_result
+    result = ray.get(r)
+             ^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^
+ray.exceptions.RayActorError: The actor died unexpectedly before finishing this task.

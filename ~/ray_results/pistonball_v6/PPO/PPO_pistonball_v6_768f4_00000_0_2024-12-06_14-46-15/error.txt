@@ -1,0 +1,69 @@
+Failure # 1 (occurred at 2024-12-06_14-46-21)
+The actor died because of an error raised in its creation task, [36mray::PPO.__init__()[39m (pid=75642, ip=10.22.116.191, actor_id=9432671bdcd317f0f915c65901000000, repr=PPO)
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/evaluation/worker_set.py", line 227, in _setup
+    self.add_workers(
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/evaluation/worker_set.py", line 593, in add_workers
+    raise result.get()
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/utils/actor_manager.py", line 481, in __fetch_result
+    result = ray.get(r)
+             ^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^
+ray.exceptions.RayActorError: The actor died because of an error raised in its creation task, [36mray::RolloutWorker.__init__()[39m (pid=75692, ip=10.22.116.191, actor_id=0992f230996d9b87b9998a2401000000, repr=<ray.rllib.evaluation.rollout_worker.RolloutWorker object at 0x7f291a27ab50>)
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/utils/pre_checks/env.py", line 320, in check_multiagent_environments
+    _check_if_element_multi_agent_dict(env, reset_obs, "reset()")
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/utils/pre_checks/env.py", line 785, in _check_if_element_multi_agent_dict
+    raise ValueError(error)
+ValueError: The element returned by reset() has agent_ids that are not the names of the agents in the env. 
+Agent_ids in this MultiAgentDict: ['piston_0', 'piston_1', 'piston_2', 'piston_3', 'piston_4', 'piston_5', 'piston_6', 'piston_7', 'piston_8', 'piston_9', 'piston_10', 'piston_11', 'piston_12', 'piston_13', 'piston_14', 'piston_15', 'piston_16', 'piston_17', 'piston_18', 'piston_19']
+Agent_ids in this env:[]. You likely need to add the private attribute `_agent_ids` to your env, which is a set containing the ids of agents supported by your env.
+
+During handling of the above exception, another exception occurred:
+
+[36mray::RolloutWorker.__init__()[39m (pid=75692, ip=10.22.116.191, actor_id=0992f230996d9b87b9998a2401000000, repr=<ray.rllib.evaluation.rollout_worker.RolloutWorker object at 0x7f291a27ab50>)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/evaluation/rollout_worker.py", line 404, in __init__
+    check_env(self.env, self.config)
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/utils/pre_checks/env.py", line 96, in check_env
+    raise ValueError(
+ValueError: Traceback (most recent call last):
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/utils/pre_checks/env.py", line 81, in check_env
+    check_multiagent_environments(env)
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/utils/pre_checks/env.py", line 320, in check_multiagent_environments
+    _check_if_element_multi_agent_dict(env, reset_obs, "reset()")
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/utils/pre_checks/env.py", line 785, in _check_if_element_multi_agent_dict
+    raise ValueError(error)
+ValueError: The element returned by reset() has agent_ids that are not the names of the agents in the env. 
+Agent_ids in this MultiAgentDict: ['piston_0', 'piston_1', 'piston_2', 'piston_3', 'piston_4', 'piston_5', 'piston_6', 'piston_7', 'piston_8', 'piston_9', 'piston_10', 'piston_11', 'piston_12', 'piston_13', 'piston_14', 'piston_15', 'piston_16', 'piston_17', 'piston_18', 'piston_19']
+Agent_ids in this env:[]. You likely need to add the private attribute `_agent_ids` to your env, which is a set containing the ids of agents supported by your env.
+
+The above error has been found in your environment! We've added a module for checking your custom environments. It may cause your experiment to fail if your environment is not set up correctly. You can disable this behavior via calling `config.environment(disable_env_checking=True)`. You can run the environment checking module standalone by calling ray.rllib.utils.check_env([your env]).
+
+During handling of the above exception, another exception occurred:
+
+[36mray::PPO.__init__()[39m (pid=75642, ip=10.22.116.191, actor_id=9432671bdcd317f0f915c65901000000, repr=PPO)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/algorithms/algorithm.py", line 517, in __init__
+    super().__init__(
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/tune/trainable/trainable.py", line 185, in __init__
+    self.setup(copy.deepcopy(self.config))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/algorithms/algorithm.py", line 639, in setup
+    self.workers = WorkerSet(
+                   ^^^^^^^^^^
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/evaluation/worker_set.py", line 179, in __init__
+    raise e.args[0].args[2]
+ValueError: Traceback (most recent call last):
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/utils/pre_checks/env.py", line 81, in check_env
+    check_multiagent_environments(env)
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/utils/pre_checks/env.py", line 320, in check_multiagent_environments
+    _check_if_element_multi_agent_dict(env, reset_obs, "reset()")
+  File "/home/eirik/.cache/pypoetry/virtualenvs/multigrid-oou1xvh3-py3.11/lib/python3.11/site-packages/ray/rllib/utils/pre_checks/env.py", line 785, in _check_if_element_multi_agent_dict
+    raise ValueError(error)
+ValueError: The element returned by reset() has agent_ids that are not the names of the agents in the env. 
+Agent_ids in this MultiAgentDict: ['piston_0', 'piston_1', 'piston_2', 'piston_3', 'piston_4', 'piston_5', 'piston_6', 'piston_7', 'piston_8', 'piston_9', 'piston_10', 'piston_11', 'piston_12', 'piston_13', 'piston_14', 'piston_15', 'piston_16', 'piston_17', 'piston_18', 'piston_19']
+Agent_ids in this env:[]. You likely need to add the private attribute `_agent_ids` to your env, which is a set containing the ids of agents supported by your env.
+
+The above error has been found in your environment! We've added a module for checking your custom environments. It may cause your experiment to fail if your environment is not set up correctly. You can disable this behavior via calling `config.environment(disable_env_checking=True)`. You can run the environment checking module standalone by calling ray.rllib.utils.check_env([your env]).
