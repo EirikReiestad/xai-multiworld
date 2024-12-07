@@ -210,6 +210,27 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
         raise NotImplementedError
 
 
+class Goal(WorldObject):
+    """
+    Goal object an agent may be searching for.
+    """
+
+    def __new__(cls, color: str = Color.green):
+        return super().__new__(cls, color=color)
+
+    def can_overlap(self) -> bool:
+        """
+        :meta private:
+        """
+        return True
+
+    def render(self, img):
+        """
+        :meta private:
+        """
+        fill_coords(img, point_in_rect(0, 1, 0, 1), self.color.rgb())
+
+
 class Floor(WorldObject):
     """
     Colored floor tile an agent can walk over.
