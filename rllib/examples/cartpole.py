@@ -9,4 +9,4 @@ dqn_config = DQNConfig().environment(env=cartpole)
 dqn = DQN(dqn_config)
 dqn = SingleAlgorithm(dqn)
 
-dqn.train()
+dqn.learn()
