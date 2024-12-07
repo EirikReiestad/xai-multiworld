@@ -25,12 +25,20 @@ class Algorithm(Environment, WandB, ABC):
         self._config = config
         self._build_environment()
 
-    def train(self, steps: float = np.inf):
+        self._steps = 0
+
+    def learn(self, steps: float = np.inf):
         for i in count():
+            self._env.reset()
+            self.collect_rollouts()
+            if self._steps >= steps:
+                break
+
+    def collect_rollouts(self):
+        for t in count():
+            self._steps += 1
             observation, rewards, terminations, truncations, infos = self.step()
             if all(terminations.values()) or all(truncations.values()):
-                self._env.reset()
-            if i >= steps:
                 break
 
     def step(
