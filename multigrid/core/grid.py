@@ -1,19 +1,18 @@
 from collections import defaultdict
 from typing import Any, Iterable, Optional
 
-from multigrid.core.constants import TILE_PIXELS
-
 import numpy as np
 from numpy.typing import NDArray
-from multigrid.utils.position import Position
 
+from multigrid.core.constants import TILE_PIXELS
 from multigrid.core.world_object import WorldObject
-
+from multigrid.utils.position import Position
+from multigrid.utils.random import RandomMixin
 from multigrid.utils.rendering import (
     downsample,
     fill_coords,
-    point_in_rect,
     highlight_img,
+    point_in_rect,
 )
 
 from .agent import Agent
@@ -151,6 +150,14 @@ class Grid:
             self.state[pos.x, pos.y] = WorldObject.empty()
         else:
             raise TypeError(f"Cannot set grid value to {type(obj)}")
+
+    def get_placeable_positions(self) -> list[Position]:
+        return [
+            Position(x, y)
+            for x in range(self.width)
+            for y in range(self.height)
+            if (obj := self.get(Position(x, y))) is None or obj.can_overlap()
+        ]
 
     @property
     def size(self) -> tuple[int, int]:

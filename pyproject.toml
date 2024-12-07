@@ -16,6 +16,7 @@ pygame = "^2.6.1"
 pettingzoo = "^1.24.0"
 supersuit = "^3.9.3"
 ray = { version = "2.7.0", extras = ["tune", "rllib"] }
+wandb = "^0.19.0"
 
 [tool.pyright]
 venvPath = "."
