@@ -5,7 +5,7 @@ import gymnasium as gym
 
 
 class AlgorithmConfig(ABC):
-    def __init__(self, algorithm=Literal["DQN"]):
+    def __init__(self, algorithm: Literal["DQN"]):
         self._algorithm = algorithm
         self._environment: Optional[gym.Env] = None
 
