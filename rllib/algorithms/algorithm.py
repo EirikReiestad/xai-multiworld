@@ -1,9 +1,10 @@
-from abc import ABC
+from abc import ABC, abstractmethod
 from itertools import count
 from rllib.algorithms.algorithm_config import AlgorithmConfig
 from rllib.core.environment import Environment
 from rllib.core.wandb import WandB
 from multigrid.base import AgentID, ObsType
+from multigrid.core.action import Action, int_to_action
 from typing import Any, SupportsFloat
 import numpy as np
 import logging
@@ -29,20 +30,47 @@ class Algorithm(Environment, WandB, ABC):
 
     def learn(self, steps: float = np.inf):
         for i in count():
-            self._env.reset()
             self.collect_rollouts()
             if self._steps >= steps:
                 break
 
     def collect_rollouts(self):
+        observations, _ = self._env.reset()
         for t in count():
             self._steps += 1
-            observation, rewards, terminations, truncations, infos = self.step()
+            actions = self.predict(observations)
+            next_observations, rewards, terminations, truncations, infos = self.step(
+                actions
+            )
+            self.train_step(
+                observations,
+                next_observations,
+                actions,
+                rewards,
+                terminations,
+                truncations,
+                infos,
+            )
+            # NOTE: You should use the most recent observation
+            observations = next_observations
             if all(terminations.values()) or all(truncations.values()):
                 break
 
-    def step(
+    @abstractmethod
+    def train_step(
         self,
+        observations: dict[AgentID, ObsType],
+        next_observations: dict[AgentID, ObsType],
+        actions: dict[AgentID, int],
+        rewards: dict[AgentID, SupportsFloat],
+        terminations: dict[AgentID, bool],
+        truncations: dict[AgentID, bool],
+        infos: dict[AgentID, dict[str, Any]],
+    ):
+        raise NotImplementedError
+
+    def step(
+        self, actions: dict[AgentID, int]
     ) -> tuple[
         dict[AgentID, ObsType],
         dict[AgentID, SupportsFloat],
@@ -50,10 +78,11 @@ class Algorithm(Environment, WandB, ABC):
         dict[AgentID, bool],
         dict[AgentID, dict[str, Any]],
     ]:
-        random_action = self._env.action_space.sample()
-        observation, rewards, terminations, truncations, infos = self._env.step(
-            random_action
-        )
+        observation, rewards, terminations, truncations, infos = self._env.step(actions)
         self._render()
 
         return observation, rewards, terminations, truncations, infos
+
+    @abstractmethod
+    def predict(self, observation: dict[AgentID, ObsType]) -> dict[AgentID, int]:
+        raise NotImplementedError

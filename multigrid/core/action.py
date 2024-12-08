@@ -1,4 +1,5 @@
 import enum
+from multigrid.utils.typing import AgentID
 
 
 class Action(enum.IntEnum):
@@ -13,3 +14,10 @@ class Action(enum.IntEnum):
     drop = enum.auto()  #: Drop an object
     toggle = enum.auto()  #: Toggle / activate an object
     done = enum.auto()  #: Done completing task
+
+
+def int_to_action(actions: dict[AgentID, Action | int]) -> dict[AgentID, Action]:
+    """
+    Convert integer action to Action.
+    """
+    return {agent_id: Action(action) for agent_id, action in actions.items()}
