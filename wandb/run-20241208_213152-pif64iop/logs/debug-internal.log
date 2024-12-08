@@ -1,0 +1,11 @@
+{"time":"2024-12-08T21:31:52.02433104+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-08T21:31:52.024363908+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241208_213152-pif64iop/logs/debug-core.log"}
+{"time":"2024-12-08T21:31:52.128126161+01:00","level":"INFO","msg":"created new stream","id":"pif64iop"}
+{"time":"2024-12-08T21:31:52.128170687+01:00","level":"INFO","msg":"stream: started","id":"pif64iop"}
+{"time":"2024-12-08T21:31:52.128205093+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"pif64iop"}
+{"time":"2024-12-08T21:31:52.128262282+01:00","level":"INFO","msg":"sender: started","stream_id":"pif64iop"}
+{"time":"2024-12-08T21:31:52.128329208+01:00","level":"INFO","msg":"handler: started","stream_id":"pif64iop"}
+{"time":"2024-12-08T21:31:52.549923337+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-08T21:31:56.884243825+01:00","level":"INFO","msg":"stream: closing","id":"pif64iop"}
+{"time":"2024-12-08T21:31:56.884300239+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-08T21:31:56.885140979+01:00","level":"INFO","msg":"Stopped system monitor"}

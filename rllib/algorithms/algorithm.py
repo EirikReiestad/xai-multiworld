@@ -26,18 +26,18 @@ class Algorithm(Environment, WandB, ABC):
         self._config = config
         self._build_environment()
 
-        self._steps = 0
+        self._steps_done = 0
 
     def learn(self, steps: float = np.inf):
         for i in count():
             self.collect_rollouts()
-            if self._steps >= steps:
+            if self._steps_done >= steps:
                 break
 
     def collect_rollouts(self):
         observations, _ = self._env.reset()
         for t in count():
-            self._steps += 1
+            self._steps_done += 1
             actions = self.predict(observations)
             next_observations, rewards, terminations, truncations, infos = self.step(
                 actions

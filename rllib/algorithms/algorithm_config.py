@@ -39,7 +39,7 @@ class AlgorithmConfig(ABC):
     def wandb(
         self,
         project: str,
-        run_name: str,
+        run_name: str | None = None,
         reinit: bool = True,
         tags: list[str] = [],
         dir: str = ".",
@@ -49,6 +49,7 @@ class AlgorithmConfig(ABC):
         self._wandb_reinit = reinit
         self._wandb_tags = tags
         self._wandb_dir = dir
+        return self
 
     def build(self) -> "AlgorithmConfig":
         if self._environment is None:

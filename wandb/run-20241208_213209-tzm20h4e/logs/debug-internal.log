@@ -1,0 +1,12 @@
+{"time":"2024-12-08T21:32:09.328927721+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-08T21:32:09.328952291+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241208_213209-tzm20h4e/logs/debug-core.log"}
+{"time":"2024-12-08T21:32:09.433189006+01:00","level":"INFO","msg":"created new stream","id":"tzm20h4e"}
+{"time":"2024-12-08T21:32:09.433242745+01:00","level":"INFO","msg":"stream: started","id":"tzm20h4e"}
+{"time":"2024-12-08T21:32:09.433302908+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"tzm20h4e"}
+{"time":"2024-12-08T21:32:09.433302902+01:00","level":"INFO","msg":"sender: started","stream_id":"tzm20h4e"}
+{"time":"2024-12-08T21:32:09.433355593+01:00","level":"INFO","msg":"handler: started","stream_id":"tzm20h4e"}
+{"time":"2024-12-08T21:32:09.843242563+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-08T21:32:39.845318501+01:00","level":"INFO","msg":"stream: closing","id":"tzm20h4e"}
+{"time":"2024-12-08T21:32:39.845365064+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-08T21:32:39.845771351+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-08T21:32:40.572107673+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}

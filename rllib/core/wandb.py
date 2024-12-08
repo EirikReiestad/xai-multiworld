@@ -23,3 +23,8 @@ class WandB(ABC):
             tags=tags,
             dir=dir,
         )
+
+    def log(self, data: dict):
+        if self._api is None:
+            return
+        wandb.log(data)

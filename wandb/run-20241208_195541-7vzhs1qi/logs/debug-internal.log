@@ -1,0 +1,16 @@
+{"time":"2024-12-08T19:55:41.797021066+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-08T19:55:41.797033129+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241208_195541-7vzhs1qi/logs/debug-core.log"}
+{"time":"2024-12-08T19:55:41.901052771+01:00","level":"INFO","msg":"created new stream","id":"7vzhs1qi"}
+{"time":"2024-12-08T19:55:41.901092645+01:00","level":"INFO","msg":"stream: started","id":"7vzhs1qi"}
+{"time":"2024-12-08T19:55:41.901184885+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"7vzhs1qi"}
+{"time":"2024-12-08T19:55:41.90121277+01:00","level":"INFO","msg":"handler: started","stream_id":"7vzhs1qi"}
+{"time":"2024-12-08T19:55:41.9012247+01:00","level":"INFO","msg":"sender: started","stream_id":"7vzhs1qi"}
+{"time":"2024-12-08T19:55:42.209488374+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-08T19:55:43.137096743+01:00","level":"INFO","msg":"stream: closing","id":"7vzhs1qi"}
+{"time":"2024-12-08T19:55:43.137147921+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-08T19:55:43.137870182+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-08T19:55:43.760937241+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-08T19:55:43.98429739+01:00","level":"INFO","msg":"handler: closed","stream_id":"7vzhs1qi"}
+{"time":"2024-12-08T19:55:43.984364097+01:00","level":"INFO","msg":"sender: closed","stream_id":"7vzhs1qi"}
+{"time":"2024-12-08T19:55:43.984364525+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"7vzhs1qi"}
+{"time":"2024-12-08T19:55:43.984463864+01:00","level":"INFO","msg":"stream: closed","id":"7vzhs1qi"}

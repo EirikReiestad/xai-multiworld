@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/home/eirik/Projects/multigrid/rllib/examples/cartpole.py", line 12, in <module>
+    dqn.learn()
+  File "/home/eirik/Projects/multigrid/rllib/wrappers/single_algorithm.py", line 19, in learn
+    self._algorithm.learn(steps)
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 33, in learn
+    self.collect_rollouts()
+  File "/home/eirik/Projects/multigrid/rllib/wrappers/single_algorithm.py", line 45, in collect_rollouts
+    self.log("total_reward", total_reward)
+TypeError: WandB.log() takes 2 positional arguments but 3 were given

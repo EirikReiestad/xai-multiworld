@@ -1,0 +1,12 @@
+{"time":"2024-12-08T20:09:05.036403783+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-08T20:09:05.036428768+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241208_200905-ayakzppq/logs/debug-core.log"}
+{"time":"2024-12-08T20:09:05.140579039+01:00","level":"INFO","msg":"created new stream","id":"ayakzppq"}
+{"time":"2024-12-08T20:09:05.140614574+01:00","level":"INFO","msg":"stream: started","id":"ayakzppq"}
+{"time":"2024-12-08T20:09:05.140643937+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"ayakzppq"}
+{"time":"2024-12-08T20:09:05.140712097+01:00","level":"INFO","msg":"handler: started","stream_id":"ayakzppq"}
+{"time":"2024-12-08T20:09:05.140717636+01:00","level":"INFO","msg":"sender: started","stream_id":"ayakzppq"}
+{"time":"2024-12-08T20:09:05.446169424+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-08T20:09:10.461444215+01:00","level":"INFO","msg":"stream: closing","id":"ayakzppq"}
+{"time":"2024-12-08T20:09:10.461527333+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-08T20:09:10.462529547+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-08T20:09:11.272117013+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}

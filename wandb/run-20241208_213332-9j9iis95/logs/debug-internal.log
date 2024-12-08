@@ -1,0 +1,12 @@
+{"time":"2024-12-08T21:33:32.484050907+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-08T21:33:32.484091487+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241208_213332-9j9iis95/logs/debug-core.log"}
+{"time":"2024-12-08T21:33:32.58930823+01:00","level":"INFO","msg":"created new stream","id":"9j9iis95"}
+{"time":"2024-12-08T21:33:32.589345509+01:00","level":"INFO","msg":"stream: started","id":"9j9iis95"}
+{"time":"2024-12-08T21:33:32.589414464+01:00","level":"INFO","msg":"sender: started","stream_id":"9j9iis95"}
+{"time":"2024-12-08T21:33:32.589414404+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"9j9iis95"}
+{"time":"2024-12-08T21:33:32.58945155+01:00","level":"INFO","msg":"handler: started","stream_id":"9j9iis95"}
+{"time":"2024-12-08T21:33:32.98706056+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-08T21:33:36.015049385+01:00","level":"INFO","msg":"stream: closing","id":"9j9iis95"}
+{"time":"2024-12-08T21:33:36.015088397+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-08T21:33:36.015597521+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-08T21:33:36.793974926+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
