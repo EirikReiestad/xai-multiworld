@@ -1,0 +1,12 @@
+{"time":"2024-12-08T19:24:30.627312818+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-08T19:24:30.627339469+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241208_192430-utzuc6lc/logs/debug-core.log"}
+{"time":"2024-12-08T19:24:30.733409923+01:00","level":"INFO","msg":"created new stream","id":"utzuc6lc"}
+{"time":"2024-12-08T19:24:30.733458366+01:00","level":"INFO","msg":"stream: started","id":"utzuc6lc"}
+{"time":"2024-12-08T19:24:30.733785957+01:00","level":"INFO","msg":"sender: started","stream_id":"utzuc6lc"}
+{"time":"2024-12-08T19:24:30.733587239+01:00","level":"INFO","msg":"handler: started","stream_id":"utzuc6lc"}
+{"time":"2024-12-08T19:24:30.733792079+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"utzuc6lc"}
+{"time":"2024-12-08T19:24:31.128286186+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-08T19:24:33.881211182+01:00","level":"INFO","msg":"stream: closing","id":"utzuc6lc"}
+{"time":"2024-12-08T19:24:33.888266528+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-08T19:24:33.889172476+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-08T19:24:34.598593095+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}

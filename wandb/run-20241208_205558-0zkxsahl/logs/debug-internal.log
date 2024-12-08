@@ -1,0 +1,12 @@
+{"time":"2024-12-08T20:55:58.211676437+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-08T20:55:58.211687661+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241208_205558-0zkxsahl/logs/debug-core.log"}
+{"time":"2024-12-08T20:55:58.314318502+01:00","level":"INFO","msg":"created new stream","id":"0zkxsahl"}
+{"time":"2024-12-08T20:55:58.314356825+01:00","level":"INFO","msg":"stream: started","id":"0zkxsahl"}
+{"time":"2024-12-08T20:55:58.31440244+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"0zkxsahl"}
+{"time":"2024-12-08T20:55:58.314470107+01:00","level":"INFO","msg":"handler: started","stream_id":"0zkxsahl"}
+{"time":"2024-12-08T20:55:58.31449001+01:00","level":"INFO","msg":"sender: started","stream_id":"0zkxsahl"}
+{"time":"2024-12-08T20:55:58.658799935+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-08T20:59:44.063961652+01:00","level":"INFO","msg":"stream: closing","id":"0zkxsahl"}
+{"time":"2024-12-08T20:59:44.064027334+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-08T20:59:44.064931509+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-08T20:59:44.982333065+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
