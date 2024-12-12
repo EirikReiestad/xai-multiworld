@@ -10,6 +10,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
+    .wandb(project="multigrid-go-to-goal")
 )
 
 dqn = DQN(config)
