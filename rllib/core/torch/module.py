@@ -9,14 +9,6 @@ class TorchModule(nn.Module, ABC):
     def __init__(self):
         super(TorchModule, self).__init__()
 
-    def _get_conv_layer_output_size(self, input_dim: np.ndarray) -> int:
-        device = next(self.parameters()).device
-        with torch.no_grad():
-            dummy_input = torch.zeros(*input_dim).to(device).unsqueeze(0)
-            rearanged_input = dummy_input.permute(0, 3, 1, 2)
-            output = self.conv_layers(rearanged_input)
-        return output.numel()
-
     @abstractmethod
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         raise NotImplementedError
@@ -49,11 +41,3 @@ def build_fc_layers(
     if output_dim is not None:
         layers.append(nn.Linear(hidden_units[-1], output_dim))
     return nn.Sequential(*layers)
-
-
-def conv_layer_output_size(network: nn.Sequential, input_dim: np.ndarray) -> int:
-    device = next(network.parameters()).device
-    with torch.no_grad():
-        dummy_input = torch.zeros(*input_dim).to(device)
-        output = network.conv_feature(dummy_input)
-    return output.numel()
