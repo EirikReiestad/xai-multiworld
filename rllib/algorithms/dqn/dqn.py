@@ -10,7 +10,12 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.replay_memory import ReplayMemory, Transition
 from rllib.algorithms.dqn.utils.preprocessing import preprocess_next_observations
 from rllib.core.network.multi_input_network import MultiInputNetwork
-from rllib.utils.torch.processing import obs_to_torch
+from rllib.utils.torch.processing import (
+    observation_to_torch,
+    observation_to_torch_unsqueeze,
+    observations_seperate_to_torch,
+    observations_to_torch,
+)
 
 
 class DQN(Algorithm):
@@ -41,6 +46,7 @@ class DQN(Algorithm):
         next_obs = preprocess_next_observations(
             next_observations, terminations, truncations
         )
+
         self._memory.add(observations, actions, rewards, next_obs)
         self._optimize_model()
         self._soft_update_target()
@@ -55,8 +61,7 @@ class DQN(Algorithm):
         if sample > eps_threshold:
             for agent_id, obs in observation.items():
                 with torch.no_grad():
-                    torch_obs = obs_to_torch(obs)
-                    torch_obs = [obs.unsqueeze(0) for obs in torch_obs]
+                    torch_obs = observation_to_torch_unsqueeze(obs)
                     actions[agent_id] = self._policy_net(*torch_obs).argmax().item()
         else:
             for agent_id in observation.keys():
@@ -68,27 +73,45 @@ class DQN(Algorithm):
             return
 
         device = next(self._policy_net.parameters()).device
-        batch = self._memory.sample(self._config.batch_size)
+        transitions = self._memory.sample(self._config.batch_size)
+
+        batch = Transition(*zip(*transitions))
+
+        num_agents = len(batch.state[0].values())
 
         non_final_mask = torch.tensor(
-            tuple(map(lambda s: s is not None, batch.next_states)),
+            [
+                tuple(map(lambda s: s is not None, next_state))
+                for next_state in batch.next_state
+            ],
             device=device,
             dtype=torch.bool,
-        )
-        non_final_next_states = torch.cat(
-            [torch.from_numpy(s) for s in next_states if s is not None]
+        ).flatten()
+
+        non_final_next_states = observations_seperate_to_torch(
+            batch.next_state, skip_none=True
         )
 
-        states = torch.stack([torch.from_numpy(s) for s in states])
-        state_action_values = self._policy_net(states).gather(1, actions)
-        next_state_values = torch.zeros(self._config.batch_size).to(device)
+        state_batch = observations_seperate_to_torch(batch.state)
+        action_batch = torch.tensor(
+            [torch.tensor(a) for reward in batch.action for a in reward.values()]
+        ).unsqueeze(1)
+        reward_batch = torch.tensor(
+            [torch.tensor(r) for reward in batch.reward for r in reward.values()]
+        )
+
+        state_action_values = self._policy_net(*state_batch).gather(1, action_batch)
+
+        next_state_values = torch.zeros(self._config.batch_size * num_agents).to(device)
 
         with torch.no_grad():
             next_state_values[non_final_mask] = (
-                self._target_net(non_final_next_states).max(1).values
+                self._target_net(*non_final_next_states).max(1).values
             )
 
-        expected_state_action_values = next_state_values * self._config.gamma + rewards
+        expected_state_action_values = (
+            next_state_values * self._config.gamma + reward_batch
+        )
         criterion = torch.nn.SmoothL1Loss()
         loss = criterion(
             state_action_values, expected_state_action_values.unsqueeze(1)
