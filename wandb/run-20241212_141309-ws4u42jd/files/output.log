@@ -1,0 +1,16 @@
+(array([ 0.02930505, -0.1581699 , -0.01510413,  0.3072105 ], dtype=float32), array([ 0.01076334,  0.2318144 ,  0.00661864, -0.27248964], dtype=float32), array([ 0.14810108,  0.24446557, -0.19089703, -0.56105727], dtype=float32), array([ 0.06579345,  0.02653473, -0.00584194,  0.02466691], dtype=float32), array([ 0.1267733 ,  0.62957966, -0.15432762, -1.034499  ], dtype=float32), array([ 0.01539963,  0.4268413 ,  0.00116884, -0.5630777 ], dtype=float32), array([ 0.04077374,  0.6124144 ,  0.02810008, -0.8653109 ], dtype=float32), array([ 0.02736743,  0.02900964,  0.04655944, -0.0299508 ], dtype=float32), array([ 0.05254599,  0.8184476 , -0.04366701, -1.1791089 ], dtype=float32), array([0.01002769, 0.0367827 , 0.00625437, 0.01821342], dtype=float32), array([ 0.1393649 ,  0.43680882, -0.1750176 , -0.7939718 ], dtype=float32), array([ 0.10559447,  0.6261211 , -0.12123644, -0.9534124 ], dtype=float32), array([0.04166141, 0.02575831, 0.03807894, 0.0418211 ], dtype=float32), array([ 0.05302203,  0.4169215 ,  0.01079386, -0.563927  ], dtype=float32), array([ 0.02794762,  0.22343406,  0.04596042, -0.30758783], dtype=float32), array([ 0.05231433, -0.36374578,  0.01937351,  0.6108949 ], dtype=float32), array([ 0.02614165,  0.03716398, -0.00895992,  0.00980266], dtype=float32), array([ 0.15299039,  0.44168144, -0.20211817, -0.90729076], dtype=float32), array([ 0.0324163 ,  0.417872  ,  0.03980866, -0.5854292 ], dtype=float32), array([ 0.08919711,  0.81986773, -0.09695228, -1.2142082 ], dtype=float32), array([ 0.06632415, -0.16850296, -0.0053486 ,  0.31550092], dtype=float32), array([ 0.06295409, -0.3635483 ,  0.00096142,  0.6064923 ], dtype=float32), array([ 0.04503941, -0.16889991,  0.03159141,  0.3243764 ], dtype=float32), array([ 0.02393646,  0.23170295, -0.01009271, -0.27002674], dtype=float32), array([ 0.11811689,  0.4328205 , -0.1403047 , -0.70114607], dtype=float32), array([ 0.06136046,  0.22164975, -0.00048468, -0.2678631 ], dtype=float32), array([ 0.03153319,  0.42765912, -0.01447774, -0.58112776], dtype=float32), array([ 0.04008638,  0.6229809 , -0.02610029, -0.878336  ], dtype=float32), array([ 0.06891495,  1.0141085 , -0.06724919, -1.4851545 ], dtype=float32), array([ 0.05568312, -0.16843982,  0.01309126,  0.31411234], dtype=float32), array([ 0.02688493,  0.23241328, -0.00876386, -0.2856937 ], dtype=float32), array([ 0.02857052,  0.03672647, -0.01549324,  0.01945587], dtype=float32))
+Traceback (most recent call last):
+  File "/home/eirik/Projects/multigrid/rllib/examples/cartpole.py", line 12, in <module>
+    dqn.learn()
+  File "/home/eirik/Projects/multigrid/rllib/wrappers/single_algorithm.py", line 20, in learn
+    self._algorithm.learn(steps)
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 33, in learn
+    self.collect_rollouts()
+  File "/home/eirik/Projects/multigrid/rllib/wrappers/single_algorithm.py", line 33, in collect_rollouts
+    self._algorithm.train_step(
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/dqn/dqn.py", line 44, in train_step
+    self._optimize_model()
+  File "/home/eirik/Projects/multigrid/rllib/wrappers/single_algorithm.py", line 82, in _optimize_model
+    state_batch = torch.cat(batch.state)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+TypeError: expected Tensor as element 0 in argument 0, but got numpy.ndarray

@@ -1,0 +1,18 @@
+Traceback (most recent call last):
+  File "/home/eirik/Projects/multigrid/rllib/examples/cartpole.py", line 12, in <module>
+    dqn.learn()
+  File "/home/eirik/Projects/multigrid/rllib/wrappers/single_algorithm.py", line 20, in learn
+    self._algorithm.learn(steps)
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 33, in learn
+    self.collect_rollouts()
+  File "/home/eirik/Projects/multigrid/rllib/wrappers/single_algorithm.py", line 33, in collect_rollouts
+    self._algorithm.train_step(
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/dqn/dqn.py", line 44, in train_step
+    self._optimize_model()
+  File "/home/eirik/Projects/multigrid/rllib/wrappers/single_algorithm.py", line 82, in _optimize_model
+    action_batch = torch.cat([torch.tensor(action) for action in batch.action])
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/rllib/wrappers/single_algorithm.py", line 82, in <listcomp>
+    action_batch = torch.cat([torch.tensor(action) for action in batch.action])
+                              ^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Could not infer dtype of dict

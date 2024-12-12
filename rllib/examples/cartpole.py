@@ -5,7 +5,7 @@ from rllib.wrappers.single_algorithm import SingleAlgorithm
 
 cartpole = gym.make("CartPole-v1", render_mode="human")
 
-dqn_config = DQNConfig().environment(env=cartpole)
+dqn_config = DQNConfig().environment(env=cartpole)  # .wandb(project="CartPole-v1")
 dqn = DQN(dqn_config)
 dqn = SingleAlgorithm(dqn)
 
