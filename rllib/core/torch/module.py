@@ -18,17 +18,17 @@ class TorchModule(nn.Module, ABC):
         input_dim: np.ndarray,
         conv_layers: tuple[int, ...],
     ) -> nn.Sequential:
-        input_size = input_dim.shape[0]
         layers = []
+        channels = input_dim[-1]
         for hidden_dim in conv_layers:
-            layers.append(nn.Conv2d(input_size, hidden_dim, kernel_size=3, stride=1))
+            layers.append(nn.Conv2d(channels, hidden_dim, kernel_size=3, stride=1))
             layers.append(nn.ReLU())
-            input_size = hidden_dim
+            channels = hidden_dim
         return nn.Sequential(*layers)
 
     def _build_fc_layers(
         self,
-        input_dim: np.ndarray,
+        input_dim: int,
         hidden_units: tuple[int, ...],
         output_dim: int,
     ) -> nn.Sequential:

@@ -38,6 +38,7 @@ class Algorithm(Environment, WandB, ABC):
         observations, _ = self._env.reset()
         for t in count():
             self._steps_done += 1
+            print(observations)
             actions = self.predict(observations)
             next_observations, rewards, terminations, truncations, infos = self.step(
                 actions

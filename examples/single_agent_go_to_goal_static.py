@@ -8,7 +8,7 @@ config = (
     DQNConfig().environment(env=env).training().debugging(log_level="INFO").rendering()
 )
 
-ppo = DQN(config)
+dqn = DQN(config)
 
 while True:
-    ppo.train()
+    dqn.learn()
