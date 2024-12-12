@@ -3,6 +3,7 @@ import torch
 import torch.nn as nn
 
 from rllib.core.torch.module import TorchModule, build_conv_layers, build_fc_layers
+from rllib.utils.network.network import get_output_size
 import gymnasium as gym
 from gymnasium.spaces import Box, Discrete
 from rllib.utils.spaces import ObservationSpace, ActionSpace
@@ -28,12 +29,13 @@ class MultiInputNetwork(TorchModule):
             action_dim.discrete is not None
         ), f"Action space must be discrete, got {action_dim}"
         self._conv0 = ConvProcessor(state_dim.box, conv_layers)
-        conv_output_size = self._conv0._get_conv_layer_output_size(state_dim.box)
+        rolled_state_dim = np.roll(state_dim.box, shift=1)  # Channels first
+        conv_output_size = get_output_size(self._conv0, rolled_state_dim)
         self._fc0 = FCProcessor(
             int(state_dim.discrete), hidden_units, int(action_dim.discrete)
         )
-        fc_output_size = hidden_units[-1]
-        final_input_size = conv_output_size + int(fc_output_size)
+        fc_output_size = get_output_size(self._fc0, np.array([state_dim.discrete]))
+        final_input_size = conv_output_size + fc_output_size
         self._fc_final = FCProcessor(
             final_input_size, hidden_units, int(action_dim.discrete)
         )
@@ -45,9 +47,6 @@ class MultiInputNetwork(TorchModule):
 
         x_dir = self._fc0(x_dir)
 
-        print(x_img.shape, x_dir.shape)
-
         x = torch.cat([x_img, x_dir], dim=1)
-        print(x.shape)
         x = self._fc_final(x)
         return x
