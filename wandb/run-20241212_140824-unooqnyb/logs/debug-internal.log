@@ -1,0 +1,16 @@
+{"time":"2024-12-12T14:08:24.098034773+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-12T14:08:24.098081408+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241212_140824-unooqnyb/logs/debug-core.log"}
+{"time":"2024-12-12T14:08:24.202829465+01:00","level":"INFO","msg":"created new stream","id":"unooqnyb"}
+{"time":"2024-12-12T14:08:24.202867374+01:00","level":"INFO","msg":"stream: started","id":"unooqnyb"}
+{"time":"2024-12-12T14:08:24.202971913+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"unooqnyb"}
+{"time":"2024-12-12T14:08:24.202981457+01:00","level":"INFO","msg":"sender: started","stream_id":"unooqnyb"}
+{"time":"2024-12-12T14:08:24.20351937+01:00","level":"INFO","msg":"handler: started","stream_id":"unooqnyb"}
+{"time":"2024-12-12T14:08:24.621235865+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-12T14:08:26.846263087+01:00","level":"INFO","msg":"stream: closing","id":"unooqnyb"}
+{"time":"2024-12-12T14:08:26.846286865+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-12T14:08:26.846771988+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-12T14:08:27.986892832+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-12T14:08:28.282747658+01:00","level":"INFO","msg":"handler: closed","stream_id":"unooqnyb"}
+{"time":"2024-12-12T14:08:28.282785461+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"unooqnyb"}
+{"time":"2024-12-12T14:08:28.282812379+01:00","level":"INFO","msg":"sender: closed","stream_id":"unooqnyb"}
+{"time":"2024-12-12T14:08:28.282830065+01:00","level":"INFO","msg":"stream: closed","id":"unooqnyb"}

@@ -1,0 +1,16 @@
+{"time":"2024-12-12T13:17:40.370121643+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-12T13:17:40.370145723+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241212_131740-vksioh08/logs/debug-core.log"}
+{"time":"2024-12-12T13:17:40.474092043+01:00","level":"INFO","msg":"created new stream","id":"vksioh08"}
+{"time":"2024-12-12T13:17:40.474126536+01:00","level":"INFO","msg":"stream: started","id":"vksioh08"}
+{"time":"2024-12-12T13:17:40.47521107+01:00","level":"INFO","msg":"handler: started","stream_id":"vksioh08"}
+{"time":"2024-12-12T13:17:40.475423592+01:00","level":"INFO","msg":"sender: started","stream_id":"vksioh08"}
+{"time":"2024-12-12T13:17:40.475424204+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"vksioh08"}
+{"time":"2024-12-12T13:17:40.804231315+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-12T13:17:43.09077706+01:00","level":"INFO","msg":"stream: closing","id":"vksioh08"}
+{"time":"2024-12-12T13:17:43.090950141+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-12T13:17:43.091379123+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-12T13:17:43.708527849+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-12T13:17:44.193994113+01:00","level":"INFO","msg":"handler: closed","stream_id":"vksioh08"}
+{"time":"2024-12-12T13:17:44.19403006+01:00","level":"INFO","msg":"sender: closed","stream_id":"vksioh08"}
+{"time":"2024-12-12T13:17:44.194023919+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"vksioh08"}
+{"time":"2024-12-12T13:17:44.1940717+01:00","level":"INFO","msg":"stream: closed","id":"vksioh08"}

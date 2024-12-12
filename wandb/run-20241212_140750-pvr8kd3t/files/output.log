@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/eirik/Projects/multigrid/rllib/examples/cartpole.py", line 12, in <module>
+    dqn.learn()
+  File "/home/eirik/Projects/multigrid/rllib/wrappers/single_algorithm.py", line 20, in learn
+    self._algorithm.learn(steps)
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 33, in learn
+    self.collect_rollouts()
+  File "/home/eirik/Projects/multigrid/rllib/wrappers/single_algorithm.py", line 33, in collect_rollouts
+    self._algorithm.train_step(
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/dqn/dqn.py", line 44, in train_step
+    self._optimize_model()
+  File "/home/eirik/Projects/multigrid/rllib/wrappers/single_algorithm.py", line 81, in _optimize_model
+    state_batch = torch.cat(batch.state)
+                  ^^^^^^^^^^^^^^^^^^^^^^
+TypeError: expected Tensor as element 0 in argument 0, but got numpy.ndarray

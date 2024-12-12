@@ -30,10 +30,11 @@ class SingleAlgorithm:
                 self._algorithm.step(action)
             )
             total_reward += reward
+            actions = {"0": action}
             self._algorithm.train_step(
-                observation,
+                observations,
                 next_observation,
-                action,
+                actions,
                 reward,
                 termination,
                 truncation,
@@ -78,9 +79,13 @@ class SingleAlgorithm:
             [torch.from_numpy(s) for s in batch.next_state if s is not None]
         )
 
-        state_batch = torch.cat(batch.state)
-        action_batch = torch.cat(batch.action)
-        reward_batch = torch.cat(batch.reward)
+        state_batch = [torch.tensor(state["0"]) for state in batch.state]
+        action_batch = torch.tensor(
+            [torch.tensor(action["0"]) for action in batch.action]
+        )
+        reward_batch = torch.tensor(
+            [torch.tensor(reward["0"]) for reward in batch.reward]
+        )
 
         state_action_values = self._policy_net(state_batch).gather(1, action_batch)
         next_state_values = torch.zeros(self._config.batch_size).to(device)
