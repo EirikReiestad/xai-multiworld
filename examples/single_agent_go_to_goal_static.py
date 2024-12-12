@@ -5,7 +5,11 @@ from multigrid.envs.go_to_goal import GoToGoalEnv
 env = GoToGoalEnv(width=11, height=11, max_steps=300, agents=3)
 
 config = (
-    DQNConfig().environment(env=env).training().debugging(log_level="INFO").rendering()
+    DQNConfig(batch_size=8)
+    .environment(env=env)
+    .training()
+    .debugging(log_level="INFO")
+    .rendering()
 )
 
 dqn = DQN(config)
