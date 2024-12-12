@@ -16,7 +16,6 @@ for e in count():
         import time
 
         # time.sleep(5)
-        # print(obs.get(0)["image"][..., 0])
         if all(terms.values()) or all(truncs.values()):
             break
         env.render()

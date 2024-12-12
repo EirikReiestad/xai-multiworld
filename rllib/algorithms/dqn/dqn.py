@@ -7,22 +7,22 @@ from multigrid.core.action import Action
 from multigrid.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.dqn.dqn_config import DQNConfig
-from rllib.algorithms.dqn.qnetwork import QNetwork
 from rllib.algorithms.dqn.replay_memory import ReplayMemory, Transition
 from rllib.algorithms.dqn.utils.preprocessing import preprocess_next_observations
-from rllib.utils.torch import obs_to_torch
+from rllib.core.network.multi_input_network import MultiInputNetwork
+from rllib.utils.torch.processing import obs_to_torch
 
 
 class DQN(Algorithm):
-    _policy_net: QNetwork
-    _target_net: QNetwork
+    _policy_net: MultiInputNetwork
+    _target_net: MultiInputNetwork
 
     def __init__(self, config: DQNConfig):
         super().__init__(config)
         self._config = config
         self._memory = ReplayMemory(config.replay_buffer_size)
-        self._policy_net = QNetwork(self.observation_space, self.action_space)
-        self._target_net = QNetwork(self.observation_space, self.action_space)
+        self._policy_net = MultiInputNetwork(self.observation_space, self.action_space)
+        self._target_net = MultiInputNetwork(self.observation_space, self.action_space)
         self._target_net.load_state_dict(self._policy_net.state_dict())
         self._optimizer = torch.optim.AdamW(
             self._policy_net.parameters(), lr=config.learning_rate, amsgrad=True
@@ -55,7 +55,6 @@ class DQN(Algorithm):
         if sample > eps_threshold:
             for agent_id, obs in observation.items():
                 with torch.no_grad():
-                    print(obs)
                     torch_obs = obs_to_torch(obs)
                     torch_obs = [obs.unsqueeze(0) for obs in torch_obs]
                     actions[agent_id] = self._policy_net(*torch_obs).argmax().item()
@@ -70,8 +69,6 @@ class DQN(Algorithm):
 
         device = next(self._policy_net.parameters()).device
         batch = self._memory.sample(self._config.batch_size)
-
-        print(batch)
 
         non_final_mask = torch.tensor(
             tuple(map(lambda s: s is not None, batch.next_states)),

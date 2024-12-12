@@ -18,6 +18,7 @@ from multigrid.utils.observation import gen_obs_grid_encoding
 from multigrid.utils.position import Position
 from multigrid.utils.random import RandomMixin
 from multigrid.utils.typing import AgentID, ObsType
+from multigrid.utils.ohe import ohe_direction
 
 
 class MultiGridEnv(gym.Env, RandomMixin, ABC):
@@ -304,7 +305,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         return self._get_full_render(highlight, tile_size)
 
     def _gen_obs(self) -> dict[AgentID, ObsType]:
-        direction = self._agent_states.dir
+        directions = self._agent_states.dir
         image = gen_obs_grid_encoding(
             self.grid.state,
             self._agent_states,
@@ -313,9 +314,10 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         )
         observations = {}
         for i in range(self._num_agents):
+            ohe_dir = ohe_direction(directions[i])
             observations[i] = {
                 "image": image[i],
-                "direction": direction[i],
+                "direction": ohe_dir,
             }
 
         return observations

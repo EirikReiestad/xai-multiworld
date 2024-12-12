@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 from itertools import count
 from rllib.algorithms.algorithm_config import AlgorithmConfig
-from rllib.core.environment import Environment
-from rllib.core.wandb import WandB
+from rllib.core.environment.environment import Environment
+from rllib.core.wandb.wandb import WandB
 from multigrid.base import AgentID, ObsType
 from multigrid.core.action import Action, int_to_action
 from typing import Any, SupportsFloat
@@ -38,7 +38,6 @@ class Algorithm(Environment, WandB, ABC):
         observations, _ = self._env.reset()
         for t in count():
             self._steps_done += 1
-            print(observations)
             actions = self.predict(observations)
             next_observations, rewards, terminations, truncations, infos = self.step(
                 actions
