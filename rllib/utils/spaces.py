@@ -1,34 +1,63 @@
-from typing import NamedTuple, Tuple, Union, Optional
+from typing import Tuple, Union, Optional
+from dataclasses import dataclass
 import gymnasium as gym
 import numpy as np
 
 
-class ObservationSpace(NamedTuple):
+@dataclass
+class ObservationSpace:
     box: Optional[np.ndarray] = None
     discrete: Optional[np.int_] = None
+
+    def __eq__(self, other: object) -> bool:
+        if not isinstance(other, ObservationSpace):
+            return False
+
+        return (
+            self.box is None
+            and other.box is None
+            or (
+                self.box is not None
+                and other.box is not None
+                and np.array_equal(self.box, other.box)
+            )
+        ) and (self.discrete == other.discrete)
 
 
 def build_observation_space(
     observation_space: gym.spaces.Space,
-) -> list[ObservationSpace]:
+    current_observation_space: Optional[ObservationSpace] = None,
+) -> ObservationSpace:
+    """
+    Recursively build the observation space from the gym observation space with numpy arrays at the leaves.
+    """
+    if current_observation_space is None:
+        current_observation_space = ObservationSpace()
+
     if isinstance(observation_space, gym.spaces.Box):
-        return [ObservationSpace(box=observation_space.shape[0])]
-    if isinstance(observation_space, gym.spaces.Discrete):
-        print("Discrete")
-        return [ObservationSpace(discrete=observation_space.n)]
-    if isinstance(observation_space, gym.spaces.Dict):
-        print("Dict")
-        return [build_observation_space(space) for space in observation_space.values()]
-    raise ValueError(f"Unsupported observation space: {observation_space}")
+        assert current_observation_space.box is None, "Multiple boxes are not supported"
+        current_observation_space.box = np.array(observation_space.shape)
+    elif isinstance(observation_space, gym.spaces.Discrete):
+        assert (
+            current_observation_space.discrete is None
+        ), "Multiple discrete spaces are not supported"
+        current_observation_space.discrete = observation_space.n
+    elif isinstance(observation_space, gym.spaces.Dict):
+        for _, space in observation_space.items():
+            build_observation_space(space, current_observation_space)
+    else:
+        raise ValueError(f"Unsupported observation space: {observation_space}")
+    return current_observation_space
 
 
-class ActionSpace(NamedTuple):
+@dataclass
+class ActionSpace:
     discrete: Optional[np.int_] = None
 
 
 def build_action_space(
     action_space: gym.spaces.Space,
-) -> list[ActionSpace]:
+) -> ActionSpace:
     if isinstance(action_space, gym.spaces.Discrete):
-        return [ActionSpace(discrete=action_space.n)]
+        return ActionSpace(discrete=action_space.n)
     raise ValueError(f"Unsupported action space: {action_space}")

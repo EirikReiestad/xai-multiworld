@@ -10,6 +10,7 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.qnetwork import QNetwork
 from rllib.algorithms.dqn.replay_memory import ReplayMemory, Transition
 from rllib.algorithms.dqn.utils.preprocessing import preprocess_next_observations
+from rllib.utils.torch import obs_to_torch
 
 
 class DQN(Algorithm):
@@ -54,8 +55,10 @@ class DQN(Algorithm):
         if sample > eps_threshold:
             for agent_id, obs in observation.items():
                 with torch.no_grad():
-                    torch_obs = torch.from_numpy(obs).unsqueeze(dim=0)
-                    actions[agent_id] = self._policy_net(torch_obs).argmax().item()
+                    print(obs)
+                    torch_obs = obs_to_torch(obs)
+                    torch_obs = [obs.unsqueeze(0) for obs in torch_obs]
+                    actions[agent_id] = self._policy_net(*torch_obs).argmax().item()
         else:
             for agent_id in observation.keys():
                 actions[agent_id] = np.random.randint(self.action_space.discrete)
@@ -68,8 +71,10 @@ class DQN(Algorithm):
         device = next(self._policy_net.parameters()).device
         batch = self._memory.sample(self._config.batch_size)
 
+        print(batch)
+
         non_final_mask = torch.tensor(
-            tuple(map(lambda s: s is not None, next_states)),
+            tuple(map(lambda s: s is not None, batch.next_states)),
             device=device,
             dtype=torch.bool,
         )

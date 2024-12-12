@@ -14,7 +14,7 @@ def preprocess_next_observations(
     def handle_dict():
         next_obs = {}
         for agent_id, next_observation in next_observations.items():
-            if terminations[agent_id] or truncations[agent_id]:
+            if terminations.get(agent_id) or truncations.get(agent_id):
                 next_obs[agent_id] = None
             else:
                 next_obs[agent_id] = next_observation
