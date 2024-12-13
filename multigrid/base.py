@@ -2,7 +2,7 @@ import math
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from itertools import repeat
-from typing import Any, Callable, Literal, SupportsFloat
+from typing import Any, Callable, Literal, SupportsFloat, Dict
 
 import gymnasium as gym
 import numpy as np
@@ -82,8 +82,8 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
     def reset(
         self, seed: int | None = None, **kwargs
     ) -> tuple[
-        dict[AgentID, ObsType],
-        dict[AgentID, dict[str, Any]],
+        Dict[AgentID, ObsType],
+        Dict[AgentID, Dict[str, Any]],
     ]:
         super().reset(seed=seed, **kwargs)
 
@@ -110,28 +110,28 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         if self.render_mode == "human":
             self.render()
 
-        return observations, defaultdict(dict)
+        return observations, defaultdict(Dict)
 
     def step(
-        self, actions: dict[AgentID, Action | int]
+        self, actions: Dict[AgentID, Action | int]
     ) -> tuple[
-        dict[AgentID, ObsType],
-        dict[AgentID, SupportsFloat],
-        dict[AgentID, bool],
-        dict[AgentID, bool],
-        dict[AgentID, dict[str, Any]],
+        Dict[AgentID, ObsType],
+        Dict[AgentID, SupportsFloat],
+        Dict[AgentID, bool],
+        Dict[AgentID, bool],
+        Dict[AgentID, Dict[str, Any]],
     ]:
         self._step_count += 1
 
         rewards = self._handle_actions(actions)
 
-        observations: dict[AgentID, ObsType] = self._gen_obs()
-        terminations: dict[AgentID, bool] = {
+        observations: Dict[AgentID, ObsType] = self._gen_obs()
+        terminations: Dict[AgentID, bool] = {
             str(agent_id): self._agent_states[agent_id].terminated
             for agent_id in range(self._num_agents)
         }
         truncated: bool = self._step_count >= self._max_steps
-        truncations: dict[AgentID, bool] = {
+        truncations: Dict[AgentID, bool] = {
             str(agent_id): truncated
             for agent_id, _ in enumerate(repeat(truncated, self._num_agents))
         }
@@ -139,7 +139,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         if self.render_mode == "human":
             self.render()
 
-        return observations, rewards, terminations, truncations, defaultdict(dict)
+        return observations, rewards, terminations, truncations, defaultdict(Dict)
 
     def render(self):
         img = self._get_frame(self._highlight, self._tile_size)
@@ -176,10 +176,10 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         Returns
         -------
         spaces.Dict[AgentID, spaces.Space]
-            A dictionary of observation spaces for each agent
+            A Dictionary of observation spaces for each agent
         """
         return spaces.Dict(
-            {agent.index: agent.observation_space for agent in self.agents}
+            {str(agent.index): agent.observation_space for agent in self.agents}
         )
 
     @property
@@ -188,15 +188,17 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         Returns
         -------
         spaces.Dict[AgentID, spaces.Space]
-            A dictionary of action spaces for each agent
+            A Dictionary of action spaces for each agent
         """
-        return spaces.Dict({agent.index: agent.action_space for agent in self.agents})
+        return spaces.Dict(
+            {str(agent.index): agent.action_space for agent in self.agents}
+        )
 
     def on_success(
         self,
         agent: Agent,
-        rewards: dict[AgentID, SupportsFloat],
-        terminations: dict[AgentID, bool],
+        rewards: Dict[AgentID, SupportsFloat],
+        terminations: Dict[AgentID, bool],
     ):
         """
         Callback when an agent completes its mission
@@ -216,9 +218,11 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
             rewards[str(agent.index)] = self._reward()
 
     def _handle_actions(
-        self, actions: dict[AgentID, Action]
-    ) -> dict[AgentID, SupportsFloat]:
-        rewards = {agent_index: 0 for agent_index in range(self._num_agents)}
+        self, actions: Dict[AgentID, Action]
+    ) -> Dict[AgentID, SupportsFloat]:
+        rewards: Dict[AgentID, SupportsFloat] = {
+            str(agent_index): 0 for agent_index in range(self._num_agents)
+        }
 
         # TODO: Randomize order
 
@@ -304,7 +308,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
     def _get_frame(self, highlight: bool, tile_size: int) -> np.ndarray:
         return self._get_full_render(highlight, tile_size)
 
-    def _gen_obs(self) -> dict[AgentID, ObsType]:
+    def _gen_obs(self) -> Dict[AgentID, ObsType]:
         directions = self._agent_states.dir
         image = gen_obs_grid_encoding(
             self.grid.state,
@@ -364,8 +368,8 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
     def _on_failure(
         self,
         agent: Agent,
-        rewards: dict[AgentID, SupportsFloat],
-        terminations: dict[AgentID, bool],
+        rewards: Dict[AgentID, SupportsFloat],
+        terminations: Dict[AgentID, bool],
     ):
         if self._failure_termination_mode == "any":
             self._agent_states.terminated = True
