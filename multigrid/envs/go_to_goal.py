@@ -38,6 +38,5 @@ class GoToGoalEnv(MultiGridEnv):
             if obj is None:
                 continue
             if np.array_equal(obj, self.goal):
-                self.on_success(agent, rewards, terminations)
-
+                agent.pos = Position(-1, -1)
         return observations, rewards, terminations, truncations, info
