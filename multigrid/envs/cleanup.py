@@ -69,7 +69,14 @@ class CleanUpEnv(MultiGridEnv):
 
             fwd_pos = agent.front_pos
             fwd_obj = self.grid.get(fwd_pos)
-            if fwd_obj is not None and not fwd_obj.can_place:
+
+            if fwd_obj is None:
+                continue
+
+            if not isinstance(fwd_obj, Container):
+                continue
+
+            if fwd_obj.contains is not None:
                 continue
 
             agent_present = np.array(self._agent_states.pos == fwd_pos).any()
@@ -81,6 +88,7 @@ class CleanUpEnv(MultiGridEnv):
             self.add_reward(agent, rewards, 0.1 * self._reward(), joint_reward=False)
 
             if self._success_move_box == self._num_boxes or self._area == 0:
+                print("Success at step", self._step_count)
                 self.on_success(
                     agent,
                     rewards,

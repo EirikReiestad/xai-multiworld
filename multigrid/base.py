@@ -57,7 +57,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         self._window = None
         self._clock = None
         self._step_count = 0
-        self._max_steps = max_steps
+        self._max_steps = max_steps * agents
         self.render_mode = render_mode
         self._success_termination_mode = success_termination_mode
         self._failure_termination_mode = failure_termination_mode
@@ -234,9 +234,9 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
             agent_index: 0 for agent_index in range(self._num_agents)
         }
 
-        # TODO: Randomize order
+        agents = self._rand_perm(list(range(self._num_agents)))
 
-        for i in range(self._num_agents):
+        for i in agents:
             if i not in actions:
                 continue
 
