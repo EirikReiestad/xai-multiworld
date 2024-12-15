@@ -31,11 +31,17 @@ class Algorithm(Environment, WandB, ABC):
     def learn(self, steps: float = np.inf):
         for i in count():
             self.collect_rollouts()
+
+            self.add_log("steps_done", self._steps_done)
+            self.commit_log()
+
             if self._steps_done >= steps:
                 break
 
-    def collect_rollouts(self):
+    def collect_rollouts(self) -> dict:
         observations, _ = self._env.reset()
+        total_rewards = {agent_id: 0 for agent_id in observations.keys()}
+
         for t in count():
             self._steps_done += 1
             actions = self.predict(observations)
@@ -51,7 +57,9 @@ class Algorithm(Environment, WandB, ABC):
                 truncations,
                 infos,
             )
-            # NOTE: You should use the most recent observation
+
+            for agent_id in observations.keys():
+                self.add_log("total_rewards", total_rewards[agent_id], True)
             observations = next_observations
             if all(terminations.values()) or all(truncations.values()):
                 break

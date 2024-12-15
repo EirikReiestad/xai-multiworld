@@ -32,6 +32,7 @@ class DQN(Algorithm):
         self._optimizer = torch.optim.AdamW(
             self._policy_net.parameters(), lr=config.learning_rate, amsgrad=True
         )
+        self._eps_threshold = np.inf
 
     def train_step(
         self,
@@ -51,13 +52,15 @@ class DQN(Algorithm):
         self._optimize_model()
         self._hard_update_target()
 
+        self.add_log("eps_threshold", self._eps_threshold)
+
     def predict(self, observation: dict[AgentID, ObsType]) -> dict[AgentID, int]:
         sample = np.random.rand()
-        eps_threshold = self._config.eps_end + (
+        self._eps_threshold = self._config.eps_end + (
             self._config.eps_start - self._config.eps_end
         ) * np.exp(-1.0 * self._steps_done / self._config.eps_decay)
         actions = {}
-        if sample > eps_threshold:
+        if sample > self._eps_threshold:
             for agent_id, obs in observation.items():
                 with torch.no_grad():
                     torch_obs = observation_to_torch_unsqueeze(obs)

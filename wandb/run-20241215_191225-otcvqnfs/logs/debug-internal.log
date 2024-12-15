@@ -1,0 +1,12 @@
+{"time":"2024-12-15T19:12:25.721191939+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-15T19:12:25.721202789+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241215_191225-otcvqnfs/logs/debug-core.log"}
+{"time":"2024-12-15T19:12:25.825805383+01:00","level":"INFO","msg":"created new stream","id":"otcvqnfs"}
+{"time":"2024-12-15T19:12:25.825848927+01:00","level":"INFO","msg":"stream: started","id":"otcvqnfs"}
+{"time":"2024-12-15T19:12:25.825972422+01:00","level":"INFO","msg":"handler: started","stream_id":"otcvqnfs"}
+{"time":"2024-12-15T19:12:25.826806187+01:00","level":"INFO","msg":"sender: started","stream_id":"otcvqnfs"}
+{"time":"2024-12-15T19:12:25.826802518+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"otcvqnfs"}
+{"time":"2024-12-15T19:12:26.198255155+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-15T19:19:16.802980682+01:00","level":"INFO","msg":"stream: closing","id":"otcvqnfs"}
+{"time":"2024-12-15T19:19:16.803034533+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-15T19:19:16.803540507+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-15T19:19:17.639492649+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
