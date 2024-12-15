@@ -21,7 +21,6 @@ class CleanUpEnv(MultiGridEnv):
 
         container_obj = lambda: Container()
         container_area = Area((2, 2), container_obj)
-
         container_area.place(self.grid, (0, 0))
 
         placeable_positions = self.grid.get_empty_positions(self._num_boxes)

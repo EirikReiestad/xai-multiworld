@@ -1,6 +1,7 @@
 from multigrid.base import MultiGridEnv
 from multigrid.core.grid import Grid
-from multigrid.core.world_object import Box, Wall
+from multigrid.core.world_object import Box, Wall, Container
+from multigrid.core.area import Area
 from multigrid.utils.position import Position
 
 
@@ -8,13 +9,21 @@ class EmptyEnv(MultiGridEnv):
     def _gen_grid(self, width: int, height: int):
         self.grid = Grid(width, height)
 
-        for agent in self.agents:
-            while True:
-                agent.state.pos = self._rand_pos(0, width, 0, height)
-                start_cell = self.grid.get(agent.state.pos)
-                if start_cell is None or start_cell.can_overlap():
-                    break
+        container_obj = lambda: Container()
+        area_size = (3, 3)
+        container_area = Area(area_size, container_obj)
+        container_area.place(
+            self.grid,
+            (
+                (self.grid.width - int(area_size[0])) // 2,
+                (self.grid.height - int(area_size[1])) // 2,
+            ),
+        )
 
-        self.grid.set(self._rand_pos(0, width, 0, height), Box())
-        for _ in range(10):
-            self.grid.set(self._rand_pos(0, width, 0, height), Wall())
+        placeable_positions = self.grid.get_empty_positions(len(self.agents))
+        for agent, pos in zip(self.agents, placeable_positions):
+            agent.state.pos = pos
+
+        placeable_positions = self.grid.get_empty_positions(10)
+        for pos in placeable_positions:
+            self.grid.set(pos, Box())
