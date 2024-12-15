@@ -3,16 +3,16 @@ from rllib.algorithms.dqn.dqn import DQN
 from multigrid.envs.cleanup import CleanUpEnv
 
 env = CleanUpEnv(
-    width=7,
-    height=7,
-    max_steps=300,
-    boxes=2,
+    width=11,
+    height=11,
+    max_steps=1000,
+    boxes=10,
     agents=10,
-    success_termination_mode="all",
+    success_termination_mode="any",
 )
 
 config = (
-    DQNConfig(batch_size=8)
+    DQNConfig(batch_size=16)
     .environment(env=env)
     .training()
     .debugging(log_level="INFO")

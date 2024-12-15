@@ -152,7 +152,7 @@ class Grid:
             raise TypeError(f"Cannot set grid value to {type(obj)}")
 
     def get_empty_positions(
-        self, n: Optional[int]
+        self, n: Optional[int] = None
     ) -> list[Position] | NDArray[np.object_]:
         positions = [
             Position(x, y)

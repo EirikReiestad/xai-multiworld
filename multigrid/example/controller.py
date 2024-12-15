@@ -39,7 +39,7 @@ class Controller:
         assert all(
             action is not None for action in self._actions
         ), "Not all agents have an action"
-        return {str(i): self._actions[i] for i in range(self._agents)}
+        return {i: self._actions[i] for i in range(self._agents)}
 
     def _reset(self):
         self._actions = [None] * self._agents

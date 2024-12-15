@@ -1,4 +1,4 @@
-from multigrid.envs.cleanup import CleanUpEnv as Env
+from multigrid.envs.cleanup import CleanUpEnv
 from multigrid.base import MultiGridEnv
 from multigrid.example.controller import Controller
 
@@ -16,8 +16,8 @@ def run_episode(controller: Controller, env: MultiGridEnv):
 
 if __name__ == "__main__":
     agents = 1
-    env = Env(agents, width=11, height=11)
-    env.reset()
+    env = CleanUpEnv(boxes=2, agents=agents, width=11, height=11)
     controller = Controller(agents)
     while True:
+        env.reset()
         run_episode(controller, env)

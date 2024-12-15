@@ -12,8 +12,8 @@ class Action(enum.IntEnum):
     forward = enum.auto()  #: Move forward
     pickup = enum.auto()  #: Pick up an object
     drop = enum.auto()  #: Drop an object
-    toggle = enum.auto()  #: Toggle / activate an object
-    done = enum.auto()  #: Done completing task
+    # toggle = enum.auto()  #: Toggle / activate an object
+    # done = enum.auto()  #: Done completing task
 
 
 def int_to_action(actions: dict[AgentID, Action | int]) -> dict[AgentID, Action]:

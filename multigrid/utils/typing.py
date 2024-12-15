@@ -1,4 +1,4 @@
 from typing import Any
 
-AgentID = str
+AgentID = int
 ObsType = dict[str, Any]

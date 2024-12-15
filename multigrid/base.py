@@ -2,7 +2,7 @@ import math
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from itertools import repeat
-from typing import Any, Callable, Literal, SupportsFloat, Dict
+from typing import Any, Callable, Literal, SupportsFloat, Dict, Optional
 
 import gymnasium as gym
 import numpy as np
@@ -127,12 +127,12 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
 
         observations: Dict[AgentID, ObsType] = self._gen_obs()
         terminations: Dict[AgentID, bool] = {
-            str(agent_id): self._agent_states[agent_id].terminated
+            agent_id: self._agent_states[agent_id].terminated
             for agent_id in range(self._num_agents)
         }
         truncated: bool = self._step_count >= self._max_steps
         truncations: Dict[AgentID, bool] = {
-            str(agent_id): truncated
+            agent_id: truncated
             for agent_id, _ in enumerate(repeat(truncated, self._num_agents))
         }
 
@@ -179,7 +179,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
             A Dictionary of observation spaces for each agent
         """
         return spaces.Dict(
-            {str(agent.index): agent.observation_space for agent in self.agents}
+            {agent.index: agent.observation_space for agent in self.agents}
         )
 
     @property
@@ -190,9 +190,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         spaces.Dict[AgentID, spaces.Space]
             A Dictionary of action spaces for each agent
         """
-        return spaces.Dict(
-            {str(agent.index): agent.action_space for agent in self.agents}
-        )
+        return spaces.Dict({agent.index: agent.action_space for agent in self.agents})
 
     def on_success(
         self,
@@ -206,31 +204,43 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         if self._success_termination_mode == "any":
             self._agent_states.terminated = True  # Terminate all agents
             for i in range(self._num_agents):
-                terminations[str(i)] = True
+                terminations[i] = True
         else:
             agent.state.terminated = True  # Terminate only the agent
-            terminations[str(agent.index)] = True
+            terminations[agent.index] = True
 
-        if self._joint_reward:
+        self.add_reward(agent, rewards, self._reward())
+
+    def add_reward(
+        self,
+        agent: Agent,
+        rewards: Dict[AgentID, SupportsFloat],
+        reward: SupportsFloat,
+        joint_reward: Optional[bool] = None,
+    ):
+        if joint_reward is None:
+            joint_reward = self._joint_reward
+
+        if joint_reward:
             for i in range(self._num_agents):
-                rewards[str(i)] = self._reward()  # Reward all agents
+                rewards[i] = reward  # Reward all agents
         else:
-            rewards[str(agent.index)] = self._reward()
+            rewards[agent.index] = reward
 
     def _handle_actions(
         self, actions: Dict[AgentID, Action | int]
     ) -> Dict[AgentID, SupportsFloat]:
         rewards: Dict[AgentID, SupportsFloat] = {
-            str(agent_index): 0 for agent_index in range(self._num_agents)
+            agent_index: 0 for agent_index in range(self._num_agents)
         }
 
         # TODO: Randomize order
 
         for i in range(self._num_agents):
-            if str(i) not in actions:
+            if i not in actions:
                 continue
 
-            agent, action = self.agents[i], actions[str(i)]
+            agent, action = self.agents[i], actions[i]
 
             if agent.state.terminated:
                 continue
@@ -341,10 +351,8 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
     def _get_full_render(self, highlight: bool, tile_size: int) -> np.ndarray:
         obs_shape = self.agents[0].observation_space["image"].shape[:-1]
         vis_mask = np.zeros((self._num_agents, *obs_shape), dtype=bool)
-        for i, agent_obs in self._gen_obs().items():
-            vis_mask[i] = (
-                agent_obs["image"][..., 0] != WorldObjectType.unseen.to_index()
-            )
+        for key, obs in self._gen_obs().items():
+            vis_mask[key] = obs["image"][..., 0] != WorldObjectType.unseen.to_index()
 
         highlight_mask = np.zeros((self._width, self._height), dtype=bool)
 
@@ -388,10 +396,10 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         if self._failure_termination_mode == "any":
             self._agent_states.terminated = True
             for i in range(self._num_agents):
-                terminations[str(i)] = True
+                terminations[i] = True
         else:
             agent.state.terminated = True
-            terminations[str(agent.index)] = True
+            terminations[agent.index] = True
 
     def _is_done(self) -> bool:
         truncated = self._step_count >= self._max_steps
