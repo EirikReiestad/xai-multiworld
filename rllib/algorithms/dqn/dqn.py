@@ -49,7 +49,6 @@ class DQN(Algorithm):
 
         self._memory.add(observations, actions, rewards, next_obs)
         self._optimize_model()
-        self._soft_update_target()
         self._hard_update_target()
 
     def predict(self, observation: dict[AgentID, ObsType]) -> dict[AgentID, int]:
@@ -79,14 +78,11 @@ class DQN(Algorithm):
 
         num_agents = len(batch.state[0].values())
 
-        non_final_mask = torch.tensor(
-            [
-                tuple(map(lambda s: s is not None, next_state))
-                for next_state in batch.next_state
-            ],
-            device=device,
-            dtype=torch.bool,
-        ).flatten()
+        non_final_mask = []
+        for observation in batch.next_state:
+            agent_obs = observation.values()
+            for obs in agent_obs:
+                non_final_mask.append(True if obs is not None else False)
 
         non_final_next_states = observations_seperate_to_torch(
             batch.next_state, skip_none=True
@@ -105,9 +101,8 @@ class DQN(Algorithm):
         next_state_values = torch.zeros(self._config.batch_size * num_agents).to(device)
 
         with torch.no_grad():
-            next_state_values[non_final_mask] = (
-                self._target_net(*non_final_next_states).max(1).values
-            )
+            output = self._target_net(*non_final_next_states).max(1).values
+            next_state_values[non_final_mask] = output
 
         expected_state_action_values = (
             next_state_values * self._config.gamma + reward_batch
@@ -123,6 +118,7 @@ class DQN(Algorithm):
     def _hard_update_target(self):
         if self._steps_done % self._config.target_update != 0:
             return
+        print("Updating")
         self._target_net.load_state_dict(self._policy_net.state_dict())
 
     def _soft_update_target(self):
