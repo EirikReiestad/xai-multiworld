@@ -41,11 +41,22 @@ class CleanUpEnv(MultiGridEnv):
         dict[AgentID, bool],
         dict[AgentID, dict[str, Any]],
     ]:
-        observations, rewards, terminations, truncations, info = super().step(actions)
         for agent in self.agents:
-            obj = self.grid.get(agent.state.pos)
-            if obj is None:
+            if actions[str(agent.index)] != Action.drop:
                 continue
-            if np.array_equal(obj, self.goal):
-                agent.pos = Position(-1, -1)
+
+            if agent.state.carrying is None:
+                continue
+
+            fwd_pos = agent.front_pos
+            fwd_obj = self.grid.get(fwd_pos)
+            if fwd_obj is not None and not fwd_obj.can_place:
+                continue
+
+            agent_present = np.array(self._agent_states.pos == fwd_pos).any()
+            if agent_present:
+                continue
+
+        observations, rewards, terminations, truncations, info = super().step(actions)
+
         return observations, rewards, terminations, truncations, info

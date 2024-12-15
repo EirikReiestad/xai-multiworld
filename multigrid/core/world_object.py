@@ -152,6 +152,12 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
         """
         return False
 
+    def can_place(self) -> bool:
+        """
+        Can this object be placed on top of another object?
+        """
+        return False
+
     def toggle(self, env: "MultiGridEnv", agent: "Agent", pos: Position) -> bool:
         """
         Toggle the state of this object or trigger an action this object performs.
@@ -246,6 +252,12 @@ class Floor(WorldObject):
         return super().__new__(cls, color=color)
 
     def can_overlap(self) -> bool:
+        """
+        :meta private:
+        """
+        return True
+
+    def can_place(self) -> bool:
         """
         :meta private:
         """
