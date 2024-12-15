@@ -88,7 +88,6 @@ class CleanUpEnv(MultiGridEnv):
             self.add_reward(agent, rewards, 0.1 * self._reward(), joint_reward=False)
 
             if self._success_move_box == self._num_boxes or self._area == 0:
-                print("Success at step", self._step_count)
                 self.on_success(
                     agent,
                     rewards,

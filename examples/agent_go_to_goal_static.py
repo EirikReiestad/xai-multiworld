@@ -5,7 +5,7 @@ from multigrid.envs.go_to_goal import GoToGoalEnv
 env = GoToGoalEnv(
     width=7,
     height=7,
-    max_steps=300,
+    max_steps=100,
     agents=10,
     success_termination_mode="all",
 )
@@ -25,7 +25,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="multigrid-go-to-goal")
+    .wandb(project="multigrid-go-to-goal")
 )
 
 dqn = DQN(config)
