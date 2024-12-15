@@ -218,7 +218,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
             rewards[str(agent.index)] = self._reward()
 
     def _handle_actions(
-        self, actions: Dict[AgentID, Action]
+        self, actions: Dict[AgentID, Action | int]
     ) -> Dict[AgentID, SupportsFloat]:
         rewards: Dict[AgentID, SupportsFloat] = {
             str(agent_index): 0 for agent_index in range(self._num_agents)
@@ -227,10 +227,10 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         # TODO: Randomize order
 
         for i in range(self._num_agents):
-            if i not in actions:
+            if str(i) not in actions:
                 continue
 
-            agent, action = self.agents[i], actions[i]
+            agent, action = self.agents[i], actions[str(i)]
 
             if agent.state.terminated:
                 continue
