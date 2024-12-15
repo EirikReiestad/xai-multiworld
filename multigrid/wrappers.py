@@ -232,4 +232,3 @@ class SingleAgentWrapper(gym.Wrapper):
         """
         result = super().step({0: action})
         return tuple(item[0] for item in result)
-

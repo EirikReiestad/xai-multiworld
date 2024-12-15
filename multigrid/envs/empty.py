@@ -20,10 +20,10 @@ class EmptyEnv(MultiGridEnv):
             ),
         )
 
-        placeable_positions = self.grid.get_empty_positions(len(self.agents))
-        for agent, pos in zip(self.agents, placeable_positions):
-            agent.state.pos = pos
-
         placeable_positions = self.grid.get_empty_positions(10)
         for pos in placeable_positions:
             self.grid.set(pos, Box())
+
+        placeable_positions = self.grid.get_empty_positions(len(self.agents))
+        for agent, pos in zip(self.agents, placeable_positions):
+            agent.state.pos = pos

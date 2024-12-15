@@ -88,6 +88,8 @@ class State(str, IndexedEnum):
     Enumeration of object states.
     """
 
+    contained = "contained"
+    empty = "empty"
     open = "open"
     closed = "closed"
     locked = "locked"
