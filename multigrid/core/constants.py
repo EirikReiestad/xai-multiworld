@@ -3,7 +3,7 @@ import numpy as np
 from numpy.typing import NDArray as ndarray
 from multigrid.utils.enum import IndexedEnum
 
-TILE_PIXELS = 32
+TILE_PIXELS = 64
 
 COLORS = {
     "red": np.array([255, 0, 0]),

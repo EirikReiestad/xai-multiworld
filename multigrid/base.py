@@ -337,6 +337,8 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         highlight_mask = np.zeros((self._width, self._height), dtype=bool)
 
         for agent in self.agents:
+            if agent.state.terminated:
+                continue
             # Compute the world coordinates of the bottom-left corner
             # of the agent's view area
             f_vec = agent.state.dir.to_vec()
