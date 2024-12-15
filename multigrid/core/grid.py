@@ -1,5 +1,5 @@
 from collections import defaultdict
-from typing import Any, Iterable, Optional
+from typing import Any, Iterable, Optional, List
 
 import numpy as np
 from numpy.typing import NDArray
@@ -163,6 +163,22 @@ class Grid:
         if n is None:
             return positions
         return np.random.choice(np.array(positions), size=n, replace=False)
+
+    def get_empty_areas(
+        self, size: tuple[int, int]
+    ) -> list[Position] | NDArray[np.object_]:
+        positions = [
+            Position(x, y)
+            for x in range(self.width - size[0] + 1)
+            for y in range(self.height - size[1] + 1)
+            if all(
+                self.get(pos := Position(x + dx, y + dy)) is None
+                and self.in_bounds(pos)
+                for dx in range(size[0])
+                for dy in range(size[1])
+            )
+        ]
+        return positions
 
     @property
     def size(self) -> tuple[int, int]:

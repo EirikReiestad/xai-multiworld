@@ -374,10 +374,20 @@ class Container(WorldObject):
         """
         return False
 
+    def can_overlap(self) -> bool:
+        """
+        :meta private:
+        """
+        if self.contains is not None:
+            return self.contains.can_overlap()
+        return True
+
     def can_contain(self) -> bool:
         """
         :meta private:
         """
+        if self.contains is not None:
+            return False
         return True
 
     def render(self, img):
@@ -388,3 +398,25 @@ class Container(WorldObject):
         fill_coords(img, point_in_rect(0.031, 1, 0.031, 1), color)
         if self.contains is not None:
             self.contains.render(img)
+
+    @property
+    def contains(self) -> WorldObject | None:
+        """
+        Get the object contained in this container.
+        """
+        assert (self.state == State.contained) == (
+            self._contains is not None
+        ), f"State and object consistency mismatch: {self.state}, {self._contains}"
+        return self._contains
+
+    @contains.setter
+    def contains(self, obj: WorldObject | None):
+        """
+        Set the object contained in this container.
+        """
+        self._contains = obj
+
+        if obj is None:
+            self.state = State.empty
+        else:
+            self.state = State.contained

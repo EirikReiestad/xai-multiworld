@@ -1,14 +1,16 @@
-from typing import Any, SupportsFloat
+import random
+from typing import Any, List, SupportsFloat
 
 import numpy as np
+from numpy.typing import NDArray
 
 from multigrid.base import MultiGridEnv
 from multigrid.core.action import Action
+from multigrid.core.area import Area
 from multigrid.core.grid import Grid
-from multigrid.core.world_object import Box, Goal, Wall, WorldObject, Container
+from multigrid.core.world_object import Box, Container, Goal, Wall, WorldObject
 from multigrid.utils.position import Position
 from multigrid.utils.typing import AgentID, ObsType
-from multigrid.core.area import Area
 
 
 class CleanUpEnv(MultiGridEnv):
@@ -20,8 +22,16 @@ class CleanUpEnv(MultiGridEnv):
         self.grid = Grid(width, height)
 
         container_obj = lambda: Container()
-        container_area = Area((2, 2), container_obj)
-        container_area.place(self.grid, (0, 0))
+        area_sizes = [(1, 1), (2, 2), (3, 3), (4, 4), (5, 5)]
+        num_areas = 1
+        for _ in range(num_areas):
+            area_size = self._rand_elem(area_sizes)
+            placeable_areas = self.grid.get_empty_areas(area_size)
+            if len(placeable_areas) == 0:
+                continue
+            pos: Position = self._rand_elem(placeable_areas)
+            container_area = Area(area_size, container_obj)
+            container_area.place(self.grid, pos())
 
         placeable_positions = self.grid.get_empty_positions(self._num_boxes)
         for pos in placeable_positions:
@@ -40,6 +50,12 @@ class CleanUpEnv(MultiGridEnv):
         dict[AgentID, bool],
         dict[AgentID, dict[str, Any]],
     ]:
+        rewards: dict[AgentID, SupportsFloat] = {
+            str(agent.index): 0 for agent in self.agents
+        }
+        terminations: dict[AgentID, bool] = {
+            str(agent.index): False for agent in self.agents
+        }
         for agent in self.agents:
             if actions[str(agent.index)] != Action.drop:
                 continue
@@ -56,6 +72,25 @@ class CleanUpEnv(MultiGridEnv):
             if agent_present:
                 continue
 
-        observations, rewards, terminations, truncations, info = super().step(actions)
+            continue
+
+            self.on_success(
+                agent,
+                rewards,
+                terminations,
+            )
+
+        observations, step_rewards, terms, truncations, info = super().step(actions)
+
+        rewards = {
+            str(agent.index): float(rewards[str(agent.index)])
+            + float(step_rewards[str(agent.index)])
+            for agent in self.agents
+        }
+        terminations = {
+            str(agent.index): bool(terminations[str(agent.index)])
+            or bool(terms[str(agent.index)])
+            for agent in self.agents
+        }
 
         return observations, rewards, terminations, truncations, info

@@ -278,15 +278,27 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
                 self.grid.set(fwd_pos, None)
 
             elif action == Action.drop:
+                if agent.state.carrying is None:
+                    break
+
                 fwd_pos = agent.front_pos
                 fwd_obj = self.grid.get(fwd_pos)
 
-                if agent.state.carrying is not None and fwd_obj is None:
-                    agent_present = np.array(self._agent_states.pos == fwd_pos).any()
-                    if not agent_present:
-                        self.grid.set(fwd_pos, agent.state.carrying)
-                        agent.state.carrying.cur_pos = fwd_pos
-                        agent.state.carrying = None
+                agent_present = np.array(self._agent_states.pos == fwd_pos).any()
+                if agent_present:
+                    break
+
+                if fwd_obj is not None and fwd_obj.can_contain():
+                    fwd_obj.contains = agent.state.carrying
+                    agent.state.carrying = None
+                    break
+
+                if fwd_obj is not None:
+                    break
+
+                self.grid.set(fwd_pos, agent.state.carrying)
+                agent.state.carrying.cur_pos = fwd_pos
+                agent.state.carrying = None
 
             elif action == Action.toggle:
                 fwd_pos = agent.front_pos
