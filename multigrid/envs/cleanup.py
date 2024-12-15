@@ -5,22 +5,31 @@ import numpy as np
 from multigrid.base import MultiGridEnv
 from multigrid.core.action import Action
 from multigrid.core.grid import Grid
-from multigrid.core.world_object import Box, Goal, Wall, WorldObject
+from multigrid.core.world_object import Box, Goal, Wall, WorldObject, Container
 from multigrid.utils.position import Position
 from multigrid.utils.typing import AgentID, ObsType
+from multigrid.core.area import Area
 
 
-class GoToGoalEnv(MultiGridEnv):
+class CleanUpEnv(MultiGridEnv):
+    def __init__(self, boxes: int, *args, **kwargs):
+        self._num_boxes = boxes
+        super().__init__(*args, **kwargs)
+
     def _gen_grid(self, width: int, height: int):
         self.grid = Grid(width, height)
 
-        goal_pos = Position(width // 2, height // 2)
-        self.goal = Goal()
-        self.grid.set(goal_pos, self.goal)
+        container_obj = lambda: Container()
+        container_area = Area((2, 2), container_obj)
 
-        for agent in self.agents:
-            placeable_positions = self.grid.get_empty_positions()
-            pos = self._rand_elem(placeable_positions)
+        container_area.place(self.grid, (0, 0))
+
+        placeable_positions = self.grid.get_empty_positions(self._num_boxes)
+        for pos in placeable_positions:
+            self.grid.set(pos, Box())
+
+        placeable_positions = self.grid.get_empty_positions(len(self.agents))
+        for agent, pos in zip(self.agents, placeable_positions):
             agent.state.pos = pos
 
     def step(

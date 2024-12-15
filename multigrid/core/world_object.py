@@ -336,3 +336,43 @@ class Box(WorldObject):
 
         # Horizontal slit
         fill_coords(img, point_in_rect(0.16, 0.84, 0.47, 0.53), self.color.rgb())
+
+
+class Container(WorldObject):
+    """
+    Container object that may contain one object.
+    """
+
+    def __new__(cls, color: str = Color.purple, contains: WorldObject | None = None):
+        """
+        Parameters
+        ----------
+        color : str
+            Object color
+        contains : WorldObj or None
+            Object contents
+        """
+        container = super().__new__(cls, color=color)
+        container.contains = contains
+        return container
+
+    def can_pickup(self) -> bool:
+        """
+        :meta private:
+        """
+        return False
+
+    def can_contain(self) -> bool:
+        """
+        :meta private:
+        """
+        return True
+
+    def render(self, img):
+        """
+        :meta private:
+        """
+        color = self.color.rgb() / 2
+        fill_coords(img, point_in_rect(0.031, 1, 0.031, 1), color)
+        if self.contains is not None:
+            self.contains.render(img)

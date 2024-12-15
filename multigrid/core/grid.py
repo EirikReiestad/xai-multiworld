@@ -151,13 +151,18 @@ class Grid:
         else:
             raise TypeError(f"Cannot set grid value to {type(obj)}")
 
-    def get_placeable_positions(self) -> list[Position]:
-        return [
+    def get_empty_positions(
+        self, n: Optional[int]
+    ) -> list[Position] | NDArray[np.object_]:
+        positions = [
             Position(x, y)
             for x in range(self.width)
             for y in range(self.height)
-            if (obj := self.get(Position(x, y))) is None or obj.can_overlap()
+            if self.get(Position(x, y)) is None
         ]
+        if n is None:
+            return positions
+        return np.random.choice(np.array(positions), size=n, replace=False)
 
     @property
     def size(self) -> tuple[int, int]:
