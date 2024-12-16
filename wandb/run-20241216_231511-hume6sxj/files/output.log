@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/home/eirik/Projects/multigrid/examples/agent_go_to_goal.py", line 34, in <module>
+    dqn.learn()
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 34, in learn
+    self.collect_rollouts()
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 54, in collect_rollouts
+    next_observations, rewards, terminations, truncations, infos = self.step(
+                                                                   ^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 101, in step
+    self._render()
+  File "/home/eirik/Projects/multigrid/rllib/core/environment/environment.py", line 66, in _render
+    self._env.render()
+  File "/home/eirik/Projects/multigrid/multigrid/base.py", line 175, in render
+    self.clock.tick(self.metadata["render_fps"])
+KeyboardInterrupt

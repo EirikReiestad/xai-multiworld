@@ -1,4 +1,6 @@
 from abc import ABC
+import torch
+import torch.nn as nn
 import wandb
 
 
@@ -23,12 +25,23 @@ class WandB(ABC):
             tags=tags,
             dir=dir,
         )
-
         self._log = {}
+        self._artifact = None
+
+    def log_model(self, model: nn.Module, model_name: str = "model"):
+        if self._api is None:
+            return
+        file_path = f"{model_name}.pth"
+        torch.save(model.state_dict(), file_path)
+
+        self._artifact = wandb.Artifact(model_name, type="model")
+        self._artifact.add_file(file_path)
 
     def log(self, data: dict):
         if self._api is None:
             return
+        if self._artifact is not None:
+            wandb.log_artifact(self._artifact)
         wandb.log(data)
 
     def add_log(self, key: str, value: float, cumulative: bool = False):
@@ -45,3 +58,4 @@ class WandB(ABC):
             return
         self.log(self._log)
         self._log = {}
+        self._artifact = None

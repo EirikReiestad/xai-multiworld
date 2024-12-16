@@ -7,7 +7,6 @@ from multigrid.base import AgentID, ObsType
 from multigrid.core.action import Action, int_to_action
 from typing import Any, SupportsFloat
 import numpy as np
-import logging
 
 
 class Algorithm(Environment, WandB, ABC):
@@ -27,16 +26,23 @@ class Algorithm(Environment, WandB, ABC):
         self._build_environment()
 
         self._steps_done = 0
+        self._episodes_done = 0
 
     def learn(self, steps: float = np.inf):
         for i in count():
             self.collect_rollouts()
 
-            self.add_log("steps_done", self._steps_done)
+            self.log_episode()
             self.commit_log()
+
+            self._episodes_done += 1
 
             if self._steps_done >= steps:
                 break
+
+    def log_episode(self):
+        self.add_log("steps_done", self._steps_done)
+        self.add_log("episodes_done", self._episodes_done)
 
     def collect_rollouts(self):
         observations, _ = self._env.reset()
