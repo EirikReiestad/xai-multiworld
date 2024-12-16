@@ -1,0 +1,12 @@
+{"time":"2024-12-16T23:46:07.126840666+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-16T23:46:07.126867968+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241216_234607-0pyvijbe/logs/debug-core.log"}
+{"time":"2024-12-16T23:46:07.230641943+01:00","level":"INFO","msg":"created new stream","id":"0pyvijbe"}
+{"time":"2024-12-16T23:46:07.230678271+01:00","level":"INFO","msg":"stream: started","id":"0pyvijbe"}
+{"time":"2024-12-16T23:46:07.230713933+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"0pyvijbe"}
+{"time":"2024-12-16T23:46:07.230738648+01:00","level":"INFO","msg":"handler: started","stream_id":"0pyvijbe"}
+{"time":"2024-12-16T23:46:07.230746115+01:00","level":"INFO","msg":"sender: started","stream_id":"0pyvijbe"}
+{"time":"2024-12-16T23:46:07.63449092+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-16T23:46:16.907103028+01:00","level":"INFO","msg":"stream: closing","id":"0pyvijbe"}
+{"time":"2024-12-16T23:46:16.907157548+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-16T23:46:16.90789188+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-16T23:46:17.602187933+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}

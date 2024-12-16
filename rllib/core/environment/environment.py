@@ -1,5 +1,6 @@
 from abc import ABC
-from typing import Literal
+import numpy as np
+from typing import Literal, Optional
 from gymnasium import spaces
 from rllib.utils.spaces import (
     build_observation_space,
@@ -62,5 +63,5 @@ class Environment(ABC):
             self._action_space
         ), f"Action spaces must be the same for all agents, but got {self._action_space}"
 
-    def _render(self):
-        self._env.render()
+    def _render(self) -> Optional[np.ndarray]:
+        return self._env.render()

@@ -1,0 +1,12 @@
+{"time":"2024-12-16T23:46:25.150835098+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-16T23:46:25.150867128+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241216_234625-zvnct6fe/logs/debug-core.log"}
+{"time":"2024-12-16T23:46:25.25436465+01:00","level":"INFO","msg":"created new stream","id":"zvnct6fe"}
+{"time":"2024-12-16T23:46:25.254384396+01:00","level":"INFO","msg":"stream: started","id":"zvnct6fe"}
+{"time":"2024-12-16T23:46:25.254399617+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"zvnct6fe"}
+{"time":"2024-12-16T23:46:25.254442029+01:00","level":"INFO","msg":"sender: started","stream_id":"zvnct6fe"}
+{"time":"2024-12-16T23:46:25.254411773+01:00","level":"INFO","msg":"handler: started","stream_id":"zvnct6fe"}
+{"time":"2024-12-16T23:46:25.656329113+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-16T23:46:34.71599107+01:00","level":"INFO","msg":"stream: closing","id":"zvnct6fe"}
+{"time":"2024-12-16T23:46:34.716063027+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-16T23:46:34.716750518+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-16T23:46:35.558682188+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}

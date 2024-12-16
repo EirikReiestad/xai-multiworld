@@ -1,0 +1,11 @@
+{"time":"2024-12-16T23:38:44.648136623+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-16T23:38:44.64814753+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241216_233844-ay97hekd/logs/debug-core.log"}
+{"time":"2024-12-16T23:38:44.751901545+01:00","level":"INFO","msg":"created new stream","id":"ay97hekd"}
+{"time":"2024-12-16T23:38:44.751939725+01:00","level":"INFO","msg":"stream: started","id":"ay97hekd"}
+{"time":"2024-12-16T23:38:44.752038506+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"ay97hekd"}
+{"time":"2024-12-16T23:38:44.752055288+01:00","level":"INFO","msg":"handler: started","stream_id":"ay97hekd"}
+{"time":"2024-12-16T23:38:44.752776602+01:00","level":"INFO","msg":"sender: started","stream_id":"ay97hekd"}
+{"time":"2024-12-16T23:38:45.157892995+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-16T23:40:00.472294139+01:00","level":"INFO","msg":"stream: closing","id":"ay97hekd"}
+{"time":"2024-12-16T23:40:00.472356242+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-16T23:40:00.472995469+01:00","level":"INFO","msg":"Stopped system monitor"}

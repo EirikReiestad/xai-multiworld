@@ -1,0 +1,40 @@
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+[]
+Traceback (most recent call last):
+  File "/home/eirik/Projects/multigrid/examples/agent_go_to_goal.py", line 34, in <module>
+    dqn.learn()
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 33, in learn
+    self.collect_rollouts()
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 52, in collect_rollouts
+    next_observations, rewards, terminations, truncations, infos = self.step(
+                                                                   ^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 98, in step
+    observation, rewards, terminations, truncations, infos = self._env.step(actions)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/multigrid/envs/go_to_goal.py", line 36, in step
+    observations, rewards, terminations, truncations, info = super().step(actions)
+                                                             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/multigrid/base.py", line 140, in step
+    self.render()
+  File "/home/eirik/Projects/multigrid/multigrid/base.py", line 175, in render
+    self.clock.tick(self.metadata["render_fps"])
+KeyboardInterrupt

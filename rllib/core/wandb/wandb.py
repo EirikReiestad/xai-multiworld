@@ -1,6 +1,12 @@
+import os
+from rllib.utils.image import save_gif
 from abc import ABC
+from typing import Optional
+
+import numpy as np
 import torch
 import torch.nn as nn
+
 import wandb
 
 
@@ -27,6 +33,20 @@ class WandB(ABC):
         )
         self._log = {}
         self._artifact = None
+        self._frames = []
+
+    def log_frame(self, frame: Optional[np.ndarray]):
+        """
+        Logging a frame, a rendering of the environment.
+        """
+        if self._api is None:
+            return
+        if frame is None:
+            return
+        assert isinstance(
+            frame, np.ndarray
+        ), f"Frame must be a numpy array, but got {frame}"
+        self._frames.append(frame)
 
     def log_model(self, model: nn.Module, model_name: str = "model"):
         if self._api is None:
@@ -36,6 +56,8 @@ class WandB(ABC):
 
         self._artifact = wandb.Artifact(model_name, type="model")
         self._artifact.add_file(file_path)
+
+        os.remove(file_path)
 
     def log(self, data: dict):
         if self._api is None:
@@ -56,6 +78,18 @@ class WandB(ABC):
     def commit_log(self):
         if self._api is None:
             return
+
+        self._commit_frames()
+
         self.log(self._log)
         self._log = {}
         self._artifact = None
+
+    def _commit_frames(self):
+        if len(self._frames) == 0:
+            return
+        gif_path = "assets/temp.gif"
+        save_gif(self._frames, gif_path)
+        gif = wandb.Image(gif_path)
+        self._log["gif"] = gif
+        self._frames = []

@@ -96,7 +96,8 @@ class Algorithm(Environment, WandB, ABC):
         dict[AgentID, dict[str, Any]],
     ]:
         observation, rewards, terminations, truncations, infos = self._env.step(actions)
-        self._render()
+        rgb_array = self._render()
+        self.log_frame(rgb_array)
 
         return observation, rewards, terminations, truncations, infos
 
