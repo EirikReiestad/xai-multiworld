@@ -38,10 +38,8 @@ class Algorithm(Environment, WandB, ABC):
             if self._steps_done >= steps:
                 break
 
-    def collect_rollouts(self) -> dict:
+    def collect_rollouts(self):
         observations, _ = self._env.reset()
-        total_rewards = {agent_id: 0 for agent_id in observations.keys()}
-
         for t in count():
             self._steps_done += 1
             actions = self.predict(observations)
@@ -59,7 +57,12 @@ class Algorithm(Environment, WandB, ABC):
             )
 
             for agent_id in observations.keys():
-                self.add_log("total_rewards", total_rewards[agent_id], True)
+                self.add_log("total_rewards", float(rewards[agent_id]), True)
+
+            for agent_id, value in infos.items():
+                for key, value in value.items():
+                    self.add_log(key + str(agent_id), value)
+
             observations = next_observations
             if all(terminations.values()) or all(truncations.values()):
                 break

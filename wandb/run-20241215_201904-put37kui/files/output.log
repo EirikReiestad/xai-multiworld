@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/home/eirik/Projects/multigrid/examples/agent_go_to_goal_static.py", line 34, in <module>
+    dqn.learn()
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 33, in learn
+    self.collect_rollouts()
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 46, in collect_rollouts
+    next_observations, rewards, terminations, truncations, infos = self.step(
+                                                                   ^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 92, in step
+    observation, rewards, terminations, truncations, infos = self._env.step(actions)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/multigrid/envs/go_to_goal.py", line 35, in step
+    observations, rewards, terminations, truncations, info = super().step(actions)
+                                                             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/multigrid/base.py", line 142, in step
+    infos = {
+            ^
+  File "/home/eirik/Projects/multigrid/multigrid/base.py", line 142, in <dictcomp>
+    infos = {
+            ^
+KeyboardInterrupt

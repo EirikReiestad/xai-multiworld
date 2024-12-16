@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/home/eirik/Projects/multigrid/examples/agent_go_to_goal_static.py", line 34, in <module>
+    dqn.learn()
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 33, in learn
+    self.collect_rollouts()
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 46, in collect_rollouts
+    next_observations, rewards, terminations, truncations, infos = self.step(
+                                                                   ^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 93, in step
+    self._render()
+  File "/home/eirik/Projects/multigrid/rllib/core/environment/environment.py", line 66, in _render
+    self._env.render()
+  File "/home/eirik/Projects/multigrid/multigrid/base.py", line 154, in render
+    img = self._get_frame(self._highlight, self._tile_size)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/multigrid/base.py", line 340, in _get_frame
+    return self._get_full_render(highlight, tile_size)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/multigrid/base.py", line 390, in _get_full_render
+    if 0 <= abs_i < self._width and 0 <= abs_j < self._height:
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

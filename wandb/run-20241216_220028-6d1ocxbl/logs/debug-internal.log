@@ -1,0 +1,11 @@
+{"time":"2024-12-16T22:00:28.982490297+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-16T22:00:28.982531367+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241216_220028-6d1ocxbl/logs/debug-core.log"}
+{"time":"2024-12-16T22:00:29.087254055+01:00","level":"INFO","msg":"created new stream","id":"6d1ocxbl"}
+{"time":"2024-12-16T22:00:29.087291963+01:00","level":"INFO","msg":"stream: started","id":"6d1ocxbl"}
+{"time":"2024-12-16T22:00:29.087393431+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"6d1ocxbl"}
+{"time":"2024-12-16T22:00:29.087400103+01:00","level":"INFO","msg":"sender: started","stream_id":"6d1ocxbl"}
+{"time":"2024-12-16T22:00:29.087459167+01:00","level":"INFO","msg":"handler: started","stream_id":"6d1ocxbl"}
+{"time":"2024-12-16T22:00:29.492530021+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-16T22:00:32.181478952+01:00","level":"INFO","msg":"stream: closing","id":"6d1ocxbl"}
+{"time":"2024-12-16T22:00:32.181545245+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-16T22:00:32.182316294+01:00","level":"INFO","msg":"Stopped system monitor"}

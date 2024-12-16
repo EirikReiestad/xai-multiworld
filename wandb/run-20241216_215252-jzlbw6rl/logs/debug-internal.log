@@ -1,0 +1,12 @@
+{"time":"2024-12-16T21:52:52.992667293+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-16T21:52:52.99269233+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241216_215252-jzlbw6rl/logs/debug-core.log"}
+{"time":"2024-12-16T21:52:53.097496377+01:00","level":"INFO","msg":"created new stream","id":"jzlbw6rl"}
+{"time":"2024-12-16T21:52:53.097535419+01:00","level":"INFO","msg":"stream: started","id":"jzlbw6rl"}
+{"time":"2024-12-16T21:52:53.097578644+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"jzlbw6rl"}
+{"time":"2024-12-16T21:52:53.097606664+01:00","level":"INFO","msg":"handler: started","stream_id":"jzlbw6rl"}
+{"time":"2024-12-16T21:52:53.098395114+01:00","level":"INFO","msg":"sender: started","stream_id":"jzlbw6rl"}
+{"time":"2024-12-16T21:52:53.503604881+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-16T21:53:10.816600391+01:00","level":"INFO","msg":"stream: closing","id":"jzlbw6rl"}
+{"time":"2024-12-16T21:53:10.816706042+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-16T21:53:10.81778087+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-16T21:53:11.712929314+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}

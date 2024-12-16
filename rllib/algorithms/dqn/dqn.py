@@ -121,7 +121,6 @@ class DQN(Algorithm):
     def _hard_update_target(self):
         if self._steps_done % self._config.target_update != 0:
             return
-        print("Updating")
         self._target_net.load_state_dict(self._policy_net.state_dict())
 
     def _soft_update_target(self):

@@ -139,7 +139,16 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         if self.render_mode == "human":
             self.render()
 
-        return observations, rewards, terminations, truncations, defaultdict(Dict)
+        infos = {
+            agent_id: {
+                "step_count": self._step_count,
+                "terminated": terminations[agent_id],
+                "truncated": truncated,
+            }
+            for agent_id in range(self._num_agents)
+        }
+
+        return observations, rewards, terminations, truncations, infos
 
     def render(self):
         img = self._get_frame(self._highlight, self._tile_size)

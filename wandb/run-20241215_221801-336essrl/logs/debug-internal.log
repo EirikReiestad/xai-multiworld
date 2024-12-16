@@ -1,0 +1,16 @@
+{"time":"2024-12-15T22:18:01.924496407+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-15T22:18:01.924526795+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241215_221801-336essrl/logs/debug-core.log"}
+{"time":"2024-12-15T22:18:02.028332376+01:00","level":"INFO","msg":"created new stream","id":"336essrl"}
+{"time":"2024-12-15T22:18:02.028369285+01:00","level":"INFO","msg":"stream: started","id":"336essrl"}
+{"time":"2024-12-15T22:18:02.028403211+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"336essrl"}
+{"time":"2024-12-15T22:18:02.028477726+01:00","level":"INFO","msg":"handler: started","stream_id":"336essrl"}
+{"time":"2024-12-15T22:18:02.02848552+01:00","level":"INFO","msg":"sender: started","stream_id":"336essrl"}
+{"time":"2024-12-15T22:18:02.433524485+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-15T22:53:49.912482805+01:00","level":"INFO","msg":"stream: closing","id":"336essrl"}
+{"time":"2024-12-15T22:53:49.912514733+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-15T22:53:49.912957449+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-15T22:53:50.737184771+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-15T22:53:51.010285013+01:00","level":"INFO","msg":"handler: closed","stream_id":"336essrl"}
+{"time":"2024-12-15T22:53:51.010336225+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"336essrl"}
+{"time":"2024-12-15T22:53:51.010357298+01:00","level":"INFO","msg":"sender: closed","stream_id":"336essrl"}
+{"time":"2024-12-15T22:53:51.010491342+01:00","level":"INFO","msg":"stream: closed","id":"336essrl"}
