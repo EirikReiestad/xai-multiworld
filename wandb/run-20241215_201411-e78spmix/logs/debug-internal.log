@@ -1,0 +1,12 @@
+{"time":"2024-12-15T20:14:11.05033962+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-15T20:14:11.050381888+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241215_201411-e78spmix/logs/debug-core.log"}
+{"time":"2024-12-15T20:14:11.156016875+01:00","level":"INFO","msg":"created new stream","id":"e78spmix"}
+{"time":"2024-12-15T20:14:11.156064189+01:00","level":"INFO","msg":"stream: started","id":"e78spmix"}
+{"time":"2024-12-15T20:14:11.156145027+01:00","level":"INFO","msg":"sender: started","stream_id":"e78spmix"}
+{"time":"2024-12-15T20:14:11.156143277+01:00","level":"INFO","msg":"handler: started","stream_id":"e78spmix"}
+{"time":"2024-12-15T20:14:11.156133375+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"e78spmix"}
+{"time":"2024-12-15T20:14:11.635789586+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-15T20:18:47.144690389+01:00","level":"INFO","msg":"stream: closing","id":"e78spmix"}
+{"time":"2024-12-15T20:18:47.144731967+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-15T20:18:47.145398519+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-15T20:18:48.063502571+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}

@@ -1,0 +1,33 @@
+Traceback (most recent call last):
+  File "/home/eirik/Projects/multigrid/examples/agent_go_to_goal.py", line 34, in <module>
+    dqn.learn()
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 33, in learn
+    self.collect_rollouts()
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 46, in collect_rollouts
+    next_observations, rewards, terminations, truncations, infos = self.step(
+                                                                   ^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 92, in step
+    observation, rewards, terminations, truncations, infos = self._env.step(actions)
+                                                             ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/multigrid/envs/go_to_goal.py", line 36, in step
+    observations, rewards, terminations, truncations, info = super().step(actions)
+                                                             ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/multigrid/base.py", line 128, in step
+    observations: Dict[AgentID, ObsType] = self._gen_obs()
+                                           ^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/multigrid/base.py", line 344, in _gen_obs
+    image = gen_obs_grid_encoding(
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/multigrid/utils/observation.py", line 38, in gen_obs_grid_encoding
+    obs_grid = gen_obs_grid(grid_state, agent_state, agent_view_size)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/multigrid/utils/observation.py", line 78, in gen_obs_grid
+    top_left = get_view_exts(agent_dir, agent_pos, agent_view_size)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/multigrid/utils/observation.py", line 202, in get_view_exts
+    top_left[agent_dir == RIGHT, 0] = agent_x[agent_dir == RIGHT]
+                                      ~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/multigrid/core/agent.py", line 100, in __getitem__
+    out._view = self._view[idx, ...]
+                ^^^^^^^^^^
+AttributeError: 'AgentState' object has no attribute '_view'

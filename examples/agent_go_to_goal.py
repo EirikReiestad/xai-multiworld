@@ -18,7 +18,7 @@ config = (
         learning_rate=1e-4,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=1000,
+        eps_decay=50000,
         target_update=1000,
     )
     .environment(env=env)

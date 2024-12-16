@@ -1,0 +1,32 @@
+Updating
+Updating
+Updating
+Traceback (most recent call last):
+  File "/home/eirik/Projects/multigrid/examples/agent_go_to_goal_static.py", line 34, in <module>
+    dqn.learn()
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 33, in learn
+    self.collect_rollouts()
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/algorithm.py", line 51, in collect_rollouts
+    self.train_step(
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/dqn/dqn.py", line 52, in train_step
+    self._optimize_model()
+  File "/home/eirik/Projects/multigrid/rllib/algorithms/dqn/dqn.py", line 90, in _optimize_model
+    non_final_next_states = observations_seperate_to_torch(
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/rllib/utils/torch/processing.py", line 54, in observations_seperate_to_torch
+    obs_list = [
+               ^
+  File "/home/eirik/Projects/multigrid/rllib/utils/torch/processing.py", line 55, in <listcomp>
+    observations_to_torch(observation, skip_none) for observation in observations
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/eirik/Projects/multigrid/rllib/utils/torch/processing.py", line 40, in observations_to_torch
+    return [
+           ^
+  File "/home/eirik/Projects/multigrid/rllib/utils/torch/processing.py", line 41, in <listcomp>
+    observation_to_torch(observation)
+  File "/home/eirik/Projects/multigrid/rllib/utils/torch/processing.py", line 15, in observation_to_torch
+    return [
+           ^
+  File "/home/eirik/Projects/multigrid/rllib/utils/torch/processing.py", line 16, in <listcomp>
+    torch.tensor(observation[key], dtype=torch.float32)
+KeyboardInterrupt

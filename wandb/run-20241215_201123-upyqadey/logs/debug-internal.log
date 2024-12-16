@@ -1,0 +1,16 @@
+{"time":"2024-12-15T20:11:23.211050654+01:00","level":"INFO","msg":"using version","core version":"0.19.0"}
+{"time":"2024-12-15T20:11:23.211074075+01:00","level":"INFO","msg":"created symlink","path":"wandb/run-20241215_201123-upyqadey/logs/debug-core.log"}
+{"time":"2024-12-15T20:11:23.314925144+01:00","level":"INFO","msg":"created new stream","id":"upyqadey"}
+{"time":"2024-12-15T20:11:23.314971126+01:00","level":"INFO","msg":"stream: started","id":"upyqadey"}
+{"time":"2024-12-15T20:11:23.315036369+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"upyqadey"}
+{"time":"2024-12-15T20:11:23.31508465+01:00","level":"INFO","msg":"sender: started","stream_id":"upyqadey"}
+{"time":"2024-12-15T20:11:23.315670483+01:00","level":"INFO","msg":"handler: started","stream_id":"upyqadey"}
+{"time":"2024-12-15T20:11:23.722413186+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-15T20:13:07.361503539+01:00","level":"INFO","msg":"stream: closing","id":"upyqadey"}
+{"time":"2024-12-15T20:13:07.361556185+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-15T20:13:07.3624509+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-15T20:13:08.408233592+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-15T20:13:08.672682702+01:00","level":"INFO","msg":"handler: closed","stream_id":"upyqadey"}
+{"time":"2024-12-15T20:13:08.672733512+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"upyqadey"}
+{"time":"2024-12-15T20:13:08.672750095+01:00","level":"INFO","msg":"sender: closed","stream_id":"upyqadey"}
+{"time":"2024-12-15T20:13:08.672967255+01:00","level":"INFO","msg":"stream: closed","id":"upyqadey"}
