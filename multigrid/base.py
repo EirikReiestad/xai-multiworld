@@ -39,7 +39,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         joint_reward: bool = False,
         tile_size=TILE_PIXELS,
         screen_size: int | tuple[int, int] | None = None,
-        render_mode: Literal["human", "render_mode"] = "human",
+        render_mode: Literal["human", "rgb_array"] = "human",
         success_termination_mode: Literal["all", "any"] = "all",
         failure_termination_mode: Literal["all", "any"] = "any",
     ):
@@ -150,7 +150,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
 
         return observations, rewards, terminations, truncations, infos
 
-    def render(self):
+    def render(self) -> Optional[np.ndarray]:
         img = self._get_frame(self._highlight, self._tile_size)
 
         if self.render_mode == "human":
