@@ -5,7 +5,7 @@ from multigrid.envs.go_to_goal import GoToGoalEnv
 env = GoToGoalEnv(
     width=7,
     height=7,
-    max_steps=100,
+    max_steps=10,
     agents=10,
     success_termination_mode="all",
 )
