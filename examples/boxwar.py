@@ -1,15 +1,15 @@
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.dqn import DQN
-from multigrid.envs.boxwar import BoxWar
+from multigrid.envs.boxwar import BoxWarEnv
 
-env = BoxWar(
-    width=5,
-    height=5,
-    max_steps=201,
+env = BoxWarEnv(
+    width=10,
+    height=10,
+    max_steps=200,
     boxes=6,
     agents=2,
     team_reward=True,
-    success_termination_mode="all",
+    success_termination_mode="any",
 )
 
 config = (

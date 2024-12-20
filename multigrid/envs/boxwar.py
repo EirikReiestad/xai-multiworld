@@ -116,7 +116,9 @@ class BoxWarEnv(MultiGridEnv):
         )
 
         team_captain = self._get_team_captain(fwd_obj.color)
-        self.add_reward(team_captain, rewards, -1, joint_reward=False, team_reward=True)
+        self.add_reward(
+            team_captain, rewards, -0.1, joint_reward=False, team_reward=True
+        )
 
     def _handle_drop(
         self,
@@ -146,7 +148,7 @@ class BoxWarEnv(MultiGridEnv):
         self._team_score[fwd_obj.color.to_index()] = (
             self._team_score.get(fwd_obj.color.to_index(), 0) + 1
         )
-        self._reward_team(fwd_obj.color, rewards, 1)
+        self._reward_team(fwd_obj.color, rewards, 0.1)
 
         if self._team_score[fwd_obj.color.to_index()] == self._num_boxes:
             team_captain = self._get_team_captain(fwd_obj.color)
