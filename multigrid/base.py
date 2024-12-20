@@ -2,7 +2,7 @@ import math
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from itertools import repeat
-from typing import Any, Callable, Literal, SupportsFloat, Dict, Optional
+from typing import Any, Callable, Dict, Literal, Optional, SupportsFloat
 
 import gymnasium as gym
 import numpy as np
@@ -13,12 +13,12 @@ from multigrid.core.action import Action
 from multigrid.core.agent import Agent, AgentState
 from multigrid.core.constants import TILE_PIXELS, WorldObjectType
 from multigrid.core.grid import Grid
-from multigrid.core.world_object import WorldObject
+from multigrid.core.world_object import Container, WorldObject
 from multigrid.utils.observation import gen_obs_grid_encoding
+from multigrid.utils.ohe import ohe_direction
 from multigrid.utils.position import Position
 from multigrid.utils.random import RandomMixin
 from multigrid.utils.typing import AgentID, ObsType
-from multigrid.utils.ohe import ohe_direction
 
 
 class MultiGridEnv(gym.Env, RandomMixin, ABC):
@@ -300,7 +300,15 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
                 fwd_pos = agent.front_pos
                 fwd_obj = self.grid.get(fwd_pos)
 
-                if fwd_obj is None or not fwd_obj.can_pickup():
+                if fwd_obj is None:
+                    break
+
+                if isinstance(fwd_obj, Container):
+                    agent.state.carrying = fwd_obj.contains
+                    fwd_obj.contains = None
+                    break
+
+                if not fwd_obj.can_pickup():
                     break
 
                 agent.state.carrying = fwd_obj
