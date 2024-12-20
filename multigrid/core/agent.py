@@ -98,8 +98,8 @@ class AgentState(np.ndarray):
     def __getitem__(self, idx):
         out = super().__getitem__(idx)
         if out.shape and out.shape[-1] == self.dim:
-            if not hasattr(out, "_view"):
-                raise ValueError(f"{out} has no attribute _view")
+            if not hasattr(self, "_view"):
+                raise ValueError(f"{self} has no attribute _view")
             out._view = self._view[idx, ...]
             out._carried_obj = self._carried_obj[idx, ...]
             out._terminated = self._terminated[idx, ...]
