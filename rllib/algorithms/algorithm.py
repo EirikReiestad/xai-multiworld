@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from itertools import count
 from rllib.algorithms.algorithm_config import AlgorithmConfig
 from rllib.core.environment.environment import Environment
-from rllib.core.wandb.wandb import WandB
+from utils.base.wandb import WandB
 from multigrid.base import AgentID, ObsType
 from multigrid.core.action import Action, int_to_action
 from typing import Any, SupportsFloat
