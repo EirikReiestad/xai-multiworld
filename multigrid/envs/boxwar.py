@@ -48,6 +48,10 @@ class BoxWarEnv(MultiGridEnv):
             agent.state.pos = pos
             agent.color = team_colors[i // team_split]
 
+    def reset(self):
+        self._team_score = {}
+        return super().reset()
+
     def step(
         self, actions: dict[AgentID, Action | int]
     ) -> tuple[
@@ -106,8 +110,6 @@ class BoxWarEnv(MultiGridEnv):
         agent_present = np.array(self._agent_states.pos == fwd_pos).any()
         if agent_present:
             return
-
-        print("Picked up")
 
         self._team_score[fwd_obj.color.to_index()] = (
             self._team_score.get(fwd_obj.color.to_index(), 0) - 1

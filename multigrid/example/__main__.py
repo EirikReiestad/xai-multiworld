@@ -16,7 +16,9 @@ def run_episode(controller: Controller, env: MultiGridEnv):
 
 if __name__ == "__main__":
     agents = 2
-    env = BoxWarEnv(boxes=2, agents=agents, width=11, height=11)
+    env = BoxWarEnv(
+        boxes=2, agents=agents, width=11, height=11, success_termination_mode="any"
+    )
     controller = Controller(agents, same_keys=True)
     while True:
         env.reset()
