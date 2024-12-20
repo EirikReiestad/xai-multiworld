@@ -115,10 +115,13 @@ class BoxWarEnv(MultiGridEnv):
             self._team_score.get(fwd_obj.color.to_index(), 0) - 1
         )
 
-        team_captain = self._get_team_captain(fwd_obj.color)
-        self.add_reward(
-            team_captain, rewards, -0.1, joint_reward=False, team_reward=True
-        )
+        reward = 0.1
+        if fwd_obj.color == agent.color:
+            self.add_reward(
+                agent, rewards, -reward, joint_reward=False, team_reward=True
+            )
+            return
+        self.add_reward(agent, rewards, reward, joint_reward=False, team_reward=True)
 
     def _handle_drop(
         self,
@@ -148,7 +151,16 @@ class BoxWarEnv(MultiGridEnv):
         self._team_score[fwd_obj.color.to_index()] = (
             self._team_score.get(fwd_obj.color.to_index(), 0) + 1
         )
-        self._reward_team(fwd_obj.color, rewards, 0.1)
+
+        reward = 0.1
+        if fwd_obj.color != agent.color:
+            self.add_reward(
+                agent, rewards, -reward, joint_reward=False, team_reward=True
+            )
+        else:
+            self.add_reward(
+                agent, rewards, reward, joint_reward=False, team_reward=True
+            )
 
         if self._team_score[fwd_obj.color.to_index()] == self._num_boxes:
             team_captain = self._get_team_captain(fwd_obj.color)
@@ -163,13 +175,3 @@ class BoxWarEnv(MultiGridEnv):
             if agent.color == color:
                 return agent
         raise ValueError("No team captain found")
-
-    def _reward_team(
-        self, color: Color, rewards: dict[AgentID, SupportsFloat], reward: float
-    ):
-        for agent in self.agents:
-            if agent.color == color:
-                self.add_reward(
-                    agent, rewards, reward, joint_reward=False, team_reward=True
-                )
-                break
