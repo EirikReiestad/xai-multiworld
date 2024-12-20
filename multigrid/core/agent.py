@@ -8,6 +8,7 @@ from multigrid.core.world_object import WorldObject
 from multigrid.utils.misc import PropertyAlias, front_pos
 from multigrid.utils.rendering import point_in_triangle, rotate_fn, fill_coords
 from multigrid.utils.position import Position
+import logging
 
 
 class Agent:
@@ -96,6 +97,9 @@ class AgentState(np.ndarray):
 
     def __getitem__(self, idx):
         out = super().__getitem__(idx)
+        if not hasattr(out, "_view"):
+            raise ValueError(f"{out} has no attribute _view")
+
         if out.shape and out.shape[-1] == self.dim:
             out._view = self._view[idx, ...]
             out._carried_obj = self._carried_obj[idx, ...]
