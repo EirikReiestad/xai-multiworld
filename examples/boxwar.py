@@ -1,14 +1,14 @@
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.dqn import DQN
-from multigrid.envs.cleanup import CleanUpEnv
+from multigrid.envs.boxwar import BoxWar
 
-env = CleanUpEnv(
-    width=7,
-    height=7,
+env = BoxWar(
+    width=10,
+    height=10,
     max_steps=200,
     boxes=10,
     agents=6,
-    success_termination_mode="any",
+    success_termination_mode="all",
 )
 
 config = (

@@ -37,6 +37,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         highlight: bool = False,
         see_through_walls: bool = False,
         joint_reward: bool = False,
+        team_reward: bool = False,
         tile_size=TILE_PIXELS,
         screen_size: int | tuple[int, int] | None = None,
         render_mode: Literal["human", "rgb_array"] = "human",
@@ -52,6 +53,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         self._height = height
         self._highlight = highlight
         self._joint_reward = joint_reward
+        self._team_reward = team_reward
         self._tile_size = tile_size
         self._render_size = None
         self._window = None
@@ -226,13 +228,21 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         rewards: Dict[AgentID, SupportsFloat],
         reward: SupportsFloat,
         joint_reward: Optional[bool] = None,
+        team_reward: Optional[bool] = None,
     ):
         if joint_reward is None:
             joint_reward = self._joint_reward
 
+        if team_reward is None:
+            team_reward = self._team_reward
+
         if joint_reward:
             for i in range(self._num_agents):
                 rewards[i] = reward  # Reward all agents
+        elif team_reward:
+            for i in range(self._num_agents):
+                if agent.color == self.agents[i].color:
+                    rewards[i] = reward
         else:
             rewards[agent.index] = reward
 
