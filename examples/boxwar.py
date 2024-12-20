@@ -3,11 +3,11 @@ from rllib.algorithms.dqn.dqn import DQN
 from multigrid.envs.boxwar import BoxWarEnv
 
 env = BoxWarEnv(
-    width=10,
-    height=10,
+    width=15,
+    height=15,
     max_steps=200,
-    boxes=6,
-    agents=2,
+    boxes=10,
+    agents=10,
     team_reward=True,
     success_termination_mode="any",
 )
