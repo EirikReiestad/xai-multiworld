@@ -15,7 +15,7 @@ from multigrid.utils.position import Position
 from multigrid.utils.typing import AgentID, ObsType
 
 
-class BoxWar(MultiGridEnv):
+class BoxWarEnv(MultiGridEnv):
     def __init__(self, boxes: int, *args, **kwargs):
         self._num_boxes = boxes
         self._num_teams = 2
