@@ -32,6 +32,6 @@ poetry install
 
 poetry run wandb login
 
-poetry run python -O examples/examples.py
+poetry run python -O examples
 
 uname -a
