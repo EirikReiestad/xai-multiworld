@@ -6,12 +6,13 @@ from numpy.typing import NDArray
 
 from multigrid.base import MultiGridEnv
 from multigrid.core.action import Action
+from multigrid.core.agent import Agent
 from multigrid.core.area import Area
+from multigrid.core.constants import Color
 from multigrid.core.grid import Grid
 from multigrid.core.world_object import Box, Container, Goal, Wall, WorldObject
 from multigrid.utils.position import Position
 from multigrid.utils.typing import AgentID, ObsType
-from multigrid.core.constants import Color
 
 
 class BoxWar(MultiGridEnv):
@@ -63,42 +64,10 @@ class BoxWar(MultiGridEnv):
             agent.index: False for agent in self.agents
         }
         for agent in self.agents:
-            if actions[agent.index] != Action.drop:
-                continue
-
-            if agent.state.carrying is None:
-                continue
-
-            fwd_pos = agent.front_pos
-            fwd_obj = self.grid.get(fwd_pos)
-
-            if fwd_obj is None:
-                continue
-
-            if not isinstance(fwd_obj, Container):
-                continue
-
-            if fwd_obj.contains is not None:
-                continue
-
-            agent_present = np.array(self._agent_states.pos == fwd_pos).any()
-            if agent_present:
-                continue
-
-            if fwd_obj.color == agent.color:
-                self._team_score[agent.color.to_index()] += 1
-                self.add_reward(agent, rewards, 1, joint_reward=False, team_reward=True)
-
-            self._success_move_box += 1
-            self._area -= 1
-            self.add_reward(agent, rewards, 0.1 * self._reward(), joint_reward=False)
-
-            if self._success_move_box == self._num_boxes or self._area == 0:
-                self.on_success(
-                    agent,
-                    rewards,
-                    terminations,
-                )
+            if actions[agent.index] == Action.drop:
+                self._handle_drop(agent, rewards, terminations)
+            if actions[agent.index] == Action.pickup:
+                self._handle_pickup(agent, rewards, terminations)
 
         observations, step_rewards, terms, truncations, info = super().step(actions)
 
@@ -112,3 +81,91 @@ class BoxWar(MultiGridEnv):
         }
 
         return observations, rewards, terminations, truncations, info
+
+    def _handle_pickup(
+        self,
+        agent: Agent,
+        rewards: dict[AgentID, SupportsFloat],
+        terminations: dict[AgentID, bool],
+    ):
+        if agent.state.carrying is not None:
+            return
+
+        fwd_pos = agent.front_pos
+        fwd_obj = self.grid.get(fwd_pos)
+
+        if fwd_obj is None:
+            return
+
+        if not isinstance(fwd_obj, Container):
+            return
+
+        if fwd_obj.contains is None:
+            return
+
+        agent_present = np.array(self._agent_states.pos == fwd_pos).any()
+        if agent_present:
+            return
+
+        print("Picked up")
+
+        self._team_score[fwd_obj.color.to_index()] = (
+            self._team_score.get(fwd_obj.color.to_index(), 0) - 1
+        )
+
+        team_captain = self._get_team_captain(fwd_obj.color)
+        self.add_reward(team_captain, rewards, -1, joint_reward=False, team_reward=True)
+
+    def _handle_drop(
+        self,
+        agent: Agent,
+        rewards: dict[AgentID, SupportsFloat],
+        terminations: dict[AgentID, bool],
+    ):
+        if agent.state.carrying is None:
+            return
+
+        fwd_pos = agent.front_pos
+        fwd_obj = self.grid.get(fwd_pos)
+
+        if fwd_obj is None:
+            return
+
+        if not isinstance(fwd_obj, Container):
+            return
+
+        if fwd_obj.contains is not None:
+            return
+
+        agent_present = np.array(self._agent_states.pos == fwd_pos).any()
+        if agent_present:
+            return
+
+        self._team_score[fwd_obj.color.to_index()] = (
+            self._team_score.get(fwd_obj.color.to_index(), 0) + 1
+        )
+        self._reward_team(fwd_obj.color, rewards, 1)
+
+        if self._team_score[fwd_obj.color.to_index()] == self._num_boxes:
+            team_captain = self._get_team_captain(fwd_obj.color)
+            self.on_success(
+                team_captain,
+                rewards,
+                terminations,
+            )
+
+    def _get_team_captain(self, color: Color) -> Agent:
+        for agent in self.agents:
+            if agent.color == color:
+                return agent
+        raise ValueError("No team captain found")
+
+    def _reward_team(
+        self, color: Color, rewards: dict[AgentID, SupportsFloat], reward: float
+    ):
+        for agent in self.agents:
+            if agent.color == color:
+                self.add_reward(
+                    agent, rewards, reward, joint_reward=False, team_reward=True
+                )
+                break
