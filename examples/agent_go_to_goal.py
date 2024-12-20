@@ -3,9 +3,9 @@ from rllib.algorithms.dqn.dqn import DQN
 from multigrid.envs.go_to_goal import GoToGoalEnv
 
 env = GoToGoalEnv(
-    width=7,
-    height=7,
-    max_steps=10,
+    width=10,
+    height=10,
+    max_steps=300,
     agents=10,
     success_termination_mode="all",
     render_mode="rgb_array",
