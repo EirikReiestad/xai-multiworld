@@ -63,6 +63,10 @@ def zipped_torch_observation_data(observation: List) -> List:
     """
     If the observation is a 2D array, this function will return a list of tuples.
     """
-    zipped = list(zip(*observation))
-    print(len(zipped))
+    zipped = [torch.tensor(np.array(tup)) for tup in zip(*observation)]
     return zipped
+
+
+def zip_observation_data(observation: Observation) -> List:
+    data = observation_data_to_torch(observation)
+    return zipped_torch_observation_data(data)
