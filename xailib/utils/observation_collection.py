@@ -13,7 +13,7 @@ class ObservationCollection:
         self,
         positive_observation_path: str | None = None,
         negative_observation_path: str | None = None,
-        folder_path: str = "data/",
+        folder_path: str = "artifacts/concepts",
     ) -> None:
         self._folder_path = folder_path
 

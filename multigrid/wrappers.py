@@ -66,10 +66,11 @@ class ConceptObsWrapper(gym.Wrapper):
                 if len(self._concepts[concept]) >= self._num_observations:
                     self._concepts_filled[concept] = True
 
-        if all(self._concepts_filled.values()):
-            self._write_concepts()
-            self._concepts_filled["flag"] = False
-            self._visualize_concepts()
+                if all(self._concepts_filled.values()):
+                    self._write_concepts()
+                    self._concepts_filled["flag"] = False
+                    # self._visualize_concepts()
+                    break
 
         return observations, rewards, terminations, truncations, info
 
@@ -82,6 +83,7 @@ class ConceptObsWrapper(gym.Wrapper):
             with open(path, "w") as f:
                 json.dump(observations, f, indent=4, cls=NumpyEncoder)
 
+    # TODO: Remove, this has nothing to do with the wrapper
     def _visualize_concepts(self, k: int = 3) -> None:
         for concept, observations in self._concepts.items():
             logging.info(f"Visualizing {concept} observations...")
