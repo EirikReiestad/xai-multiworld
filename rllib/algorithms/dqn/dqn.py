@@ -2,6 +2,7 @@ from typing import Any, SupportsFloat
 
 import numpy as np
 import torch
+import torch.nn as nn
 
 from multigrid.core.action import Action
 from multigrid.utils.typing import AgentID, ObsType
@@ -16,6 +17,7 @@ from rllib.utils.torch.processing import (
     observations_seperate_to_torch,
     observations_to_torch,
 )
+from typing import Mapping
 
 
 class DQN(Algorithm):
@@ -72,6 +74,12 @@ class DQN(Algorithm):
             for agent_id in observation.keys():
                 actions[agent_id] = np.random.randint(self.action_space.discrete)
         return actions
+
+    def load_model(self, model: Mapping[str, Any]):
+        self._policy_net.load_state_dict(model)
+        self._target_net.load_state_dict(self._policy_net.state_dict())
+        self._policy_net.eval()
+        self._target_net.eval()
 
     def _optimize_model(self):
         if len(self._memory) < self._config.batch_size:
