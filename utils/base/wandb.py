@@ -1,5 +1,6 @@
+import logging
+import json
 import os
-from rllib.utils.image import save_gif
 from abc import ABC
 from typing import Optional
 
@@ -8,6 +9,7 @@ import torch
 import torch.nn as nn
 
 import wandb
+from rllib.utils.image import save_gif
 
 
 class WandB(ABC):
@@ -18,12 +20,17 @@ class WandB(ABC):
         reinit: bool | None,
         tags: list[str] | None,
         dir: str | None,
+        only_api: bool = False,
     ):
         if project is None:
             self._api = None
             return
 
         self._api = wandb.Api()
+
+        if only_api:
+            return
+
         wandb.init(
             project=project,
             name=run_name,
@@ -74,6 +81,32 @@ class WandB(ABC):
             self._log[key] = self._log.get(key, 0) + value
         else:
             self._log[key] = value
+
+    def download_model(
+        self, run_path: str, model_artifact: str, version_number: str
+    ) -> tuple[None | str, None | dict]:
+        if self._api is None:
+            return None, None
+
+        if version_number == "":
+            logging.error("Error: version_number cannot be empty")
+        artifact_path = f"{run_path}/{model_artifact}:{version_number}"
+        try:
+            artifact = self._api.artifact(
+                artifact_path,
+            )
+            artifact_dir = artifact.download()
+            logging.info("model downloaded at: " + artifact_dir)
+            logging.info("Metadata: " + str(artifact.metadata))
+            metadata_path = os.path.join(artifact_dir, "metadata.json")
+            with open(metadata_path, "w") as f:
+                json.dump(artifact.metadata, f)
+            logging.info("Metadata saved at: " + metadata_path)
+            return artifact_dir, artifact.metadata
+        except wandb.Error as e:
+            logging.error(f"Error: Could not load model with artifact: {artifact_path}")
+            logging.error(f"Error: {e}")
+            return None, None
 
     def commit_log(self):
         if self._api is None:
