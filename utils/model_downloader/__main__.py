@@ -1,6 +1,6 @@
 import logging
 
-from utils.model_downloader.core.model_downloader import ModelDownloader
+from utils.core.model_downloader import ModelDownloader
 
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
