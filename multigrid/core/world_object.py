@@ -394,7 +394,7 @@ class Container(WorldObject):
         """
         :meta private:
         """
-        color = self.color.rgb() / 2
+        color = self.color.rgb() / 5
         fill_coords(img, point_in_rect(0.031, 1, 0.031, 1), color)
         if self.contains is not None:
             self.contains.render(img)
