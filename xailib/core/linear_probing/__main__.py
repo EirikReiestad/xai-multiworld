@@ -46,4 +46,5 @@ linear_probe = LinearProbe(
     observations["goal"],
     observations["random"],
 )
-linear_probe.train()
+regressors = linear_probe.train()
+print(regressors)
