@@ -1,38 +1,41 @@
 import warnings
-from typing import List, Optional
+from typing import Any, List, Optional, Dict
 
 import matplotlib.pyplot as plt
 import numpy as np
-import seaborn as sns
 import torch
 import torch.nn as nn
 from sklearn.exceptions import ConvergenceWarning
 
 # from rl.src.regressor.logistic import LogisticRegression
 from sklearn.linear_model import LogisticRegression
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from utils.common.observation import Observation
+
+from utils.common.observation import (
+    Observation,
+    split_observation,
+    zip_observation_data,
+)
 
 warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
 
 class LinearProbe:
-    id: int = 0
-
     def __init__(
         self,
         model: nn.Module,
-        positive_observations: List[Observation],
-        negative_observations: List[Observation],
-        test_positive_observations: List[Observation],
+        positive_observations: Observation,
+        negative_observations: Observation,
         scaler: str = "",
     ):
         self._model = model
         self._model.eval()
 
-        self._positive_observations = positive_observations
-        self._negative_observations = negative_observations
-        self._test_positive_observations = test_positive_observations
+        self._positive_observations, self._test_positive_observations = (
+            split_observation(positive_observations, 0.8)
+        )
+        self._negative_observations, _ = split_observation(negative_observations, 0.8)
 
         self._register_hooks()
         self._activations = {}
@@ -56,68 +59,28 @@ class LinearProbe:
                     continue
                 sub_layer.register_forward_hook(self._module_hook)
 
-    def compute_cavs(self) -> tuple[dict, dict, dict]:
-        positive_data, positive_labels = self._positive_data.get_data_lists(
-            sample_ratio
-        )
-        negative_data, negative_labels = self._negative_data.get_data_lists(
-            sample_ratio
-        )
-        test_data, test_labels = self._test_positive_data.get_data_lists(sample_ratio)
-
-        if custom_test_data is not None:
-            test_data_handler = DataHandler()
-            test_data_handler.load_samples(custom_test_data)
-            test_data, test_labels = test_data_handler.get_data_lists(sample_ratio=1.0)
+    def train(self) -> Dict[str, LogisticRegression]:
+        positive_observations = zip_observation_data(self._positive_observations)
+        negative_observations = zip_observation_data(self._negative_observations)
 
         positive_activations, positive_output = self._compute_activations(
-            positive_data, requires_grad=True
+            positive_observations, requires_grad=True
         )
         negative_activations, negative_output = self._compute_activations(
-            negative_data, requires_grad=True
-        )
-        test_activations, test_output = self._compute_activations(
-            test_data, requires_grad=True
+            negative_observations, requires_grad=True
         )
 
-        cavs = {}
-        binary_concept_scores = {}
-        tcav_scores = {}
+        regressors = {}
 
         for i, layer in enumerate(self._activations.keys()):
-            self._layer_idx = i
-            if self._scaler_name == "minmax":
-                self._scaler = MinMaxScaler()
-            elif self._scaler_name == "standard":
-                self._scaler = StandardScaler()
+            print(layer)
             name = f"{i}_{layer.__class__.__name__}"
-
             regressor = self._compute_regressor(
                 positive_activations[layer], negative_activations[layer]
             )
-            cav = self._cav(regressor)
-            self._plot_distribution(cav.flatten(), name + "_cav" + str(CAV.id))
-            tcav_score = self._tcav_score(test_activations[layer], test_output, cav)
-            binary_concept_score = self._binary_concept_score(
-                test_activations[layer], regressor
-            )
+            regressors[name] = regressor
 
-            cavs[name] = cav
-            binary_concept_scores[name] = binary_concept_score
-            tcav_scores[name] = tcav_score
-
-            if plot_distribution is True:
-                self._plot_distribution(
-                    positive_activations[layer]["output"].detach().numpy(),
-                    name,
-                )
-                self._plot_distribution(
-                    negative_activations[layer]["output"].detach().numpy(),
-                    name + "_negative",
-                )
-
-        CAV.id += 1
-        return cavs, binary_concept_scores, tcav_scores
+        return regressors
 
     def _preprocess_activations(self, activations: dict) -> np.ndarray:
         numpy_activations = activations["output"].detach().numpy()
@@ -172,21 +135,7 @@ class LinearProbe:
         combined_activations = combined_activations[idx]
         combined_labels = combined_labels[idx]
 
-        # Initialize weights randomly
         regressor = LogisticRegression(max_iter=200, solver="lbfgs", C=1.0)
-        """
-        n_features = combined_activations.shape[1]
-        random_state = np.random.RandomState(seed=None)
-        initial_weights = random_state.normal(size=n_features)
-
-        regressor = LogisticRegression(
-            max_iter=200, solver="lbfgs", warm_start=True, random_state=random_state
-        )
-
-        regressor.coef_ = np.array([initial_weights])
-        regressor.intercept_ = np.array([random_state.normal()])
-        """
-
         regressor.fit(combined_activations, combined_labels)
 
         return regressor
@@ -203,9 +152,6 @@ class LinearProbe:
         ), "Activations must have requires_grad=True"
         sensitivity_score = self._sensitivity_score(
             torch_activations, network_output, cav
-        )
-        self._plot_distribution(
-            sensitivity_score, f"sensitivity_score_{self._layer_idx}_{CAV.id}"
         )
         return (sensitivity_score > 0).mean()
 
@@ -226,10 +172,6 @@ class LinearProbe:
         )[0]
 
         grads_flattened = grads.view(grads.size(0), -1).detach().numpy()
-        self._plot_distribution(
-            grads_flattened,
-            f"grads_flattened_{self._layer_idx}_{CAV.id}",
-        )
         sensitivity_score = np.dot(grads_flattened, cav.T)
         return sensitivity_score
 
@@ -242,15 +184,11 @@ class LinearProbe:
         return score
 
     def _compute_activations(
-        self, inputs: list[np.ndarray], requires_grad=False
+        self, inputs: List, requires_grad=True
     ) -> tuple[dict, torch.Tensor]:
         self._activations.clear()
 
-        torch_inputs: list[torch.Tensor] = [
-            torch.from_numpy(input).requires_grad_(True) for input in inputs
-        ]
-
-        inputs = torch.stack(torch_inputs).requires_grad_(True)
+        inputs = torch.stack(inputs).requires_grad_(requires_grad)
 
         outputs = self._model(inputs)
 

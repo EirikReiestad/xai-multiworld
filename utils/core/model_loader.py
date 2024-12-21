@@ -50,7 +50,7 @@ class ModelLoader:
             network.load_state_dict(model_weights)
             model = network
         except AttributeError as e:
-            logging.warning(f"Failed to load model with network: {e}")
+            raise AttributeError(f"Model class does not match network: {e}")
 
         model_artifact = ModelArtifact(
             model_weights=model_weights, metadata=metadata, model=model

@@ -7,4 +7,4 @@ import torch.nn as nn
 class ModelArtifact:
     model_weights: Mapping[str, Any]
     metadata: Dict[str, Any]
-    model: nn.Module | None = None
+    model: nn.Module

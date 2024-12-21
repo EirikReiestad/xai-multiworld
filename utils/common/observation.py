@@ -1,5 +1,6 @@
 import json
-from typing import List, Dict
+import torch
+from typing import List, Dict, Tuple
 
 import numpy as np
 
@@ -40,3 +41,28 @@ def observation_from_dict(data: List[Dict]) -> Observation:
         num_observations, 1
     )
     return obs
+
+
+def split_observation(
+    observation: Observation, ratio: float
+) -> Tuple[Observation, Observation]:
+    num_observations = observation.shape[0]
+    split_index = int(num_observations * ratio)
+    return observation[:split_index], observation[split_index:]
+
+
+def observation_data_to_torch(observation: Observation) -> List:
+    data = [
+        [torch.tensor(v) for v in obs[0].values()]
+        for obs in observation[..., Observation.DATA]
+    ]
+    return data
+
+
+def zipped_torch_observation_data(observation: List) -> List:
+    """
+    If the observation is a 2D array, this function will return a list of tuples.
+    """
+    zipped = list(zip(*observation))
+    print(len(zipped))
+    return zipped
