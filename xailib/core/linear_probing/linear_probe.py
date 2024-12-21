@@ -50,14 +50,14 @@ class LinearProbe:
 
         np.random.seed(None)
 
+    # TODO: Make this modular and allow for different networks
     def _register_hooks(self):
-        for name, layer in self._model.named_children():
-            if not isinstance(layer, nn.Sequential):
-                continue
-            for sub_layer in layer:
-                if not isinstance(sub_layer, nn.ReLU):
-                    continue
-                sub_layer.register_forward_hook(self._module_hook)
+        for _, processor in self._model.named_children():
+            for _, layer in processor.named_children():
+                for name, sub_layer in layer.named_children():
+                    if not isinstance(sub_layer, nn.ReLU):
+                        continue
+                    sub_layer.register_forward_hook(self._module_hook)
 
     def train(self) -> Dict[str, LogisticRegression]:
         positive_observations = zip_observation_data(self._positive_observations)
@@ -73,7 +73,6 @@ class LinearProbe:
         regressors = {}
 
         for i, layer in enumerate(self._activations.keys()):
-            print(layer)
             name = f"{i}_{layer.__class__.__name__}"
             regressor = self._compute_regressor(
                 positive_activations[layer], negative_activations[layer]
@@ -188,9 +187,7 @@ class LinearProbe:
     ) -> tuple[dict, torch.Tensor]:
         self._activations.clear()
 
-        inputs = torch.stack(inputs).requires_grad_(requires_grad)
-
-        outputs = self._model(inputs)
+        outputs = self._model(*inputs)
 
         activations_cloned = {key: value for key, value in self._activations.items()}
         return activations_cloned, outputs
