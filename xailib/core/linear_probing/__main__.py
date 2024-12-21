@@ -4,4 +4,5 @@ import os
 
 path = os.path.join("artifacts")
 
-model_loader = ModelLoader().load_from_path()
+model_loader = ModelLoader.load_from_path(path)
+print(model_loader)
