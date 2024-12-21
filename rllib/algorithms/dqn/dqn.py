@@ -81,6 +81,10 @@ class DQN(Algorithm):
         self._policy_net.eval()
         self._target_net.eval()
 
+    @property
+    def model(self) -> nn.Module:
+        return self._policy_net
+
     def _optimize_model(self):
         if len(self._memory) < self._config.batch_size:
             return

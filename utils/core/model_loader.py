@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from typing import Any, Dict, List, Mapping
 
@@ -36,12 +37,23 @@ class ModelLoader:
                     f"Model and metadata files not found in {model_dir_path}"
                 )
 
-            model = torch.load(model_file, weights_only=True)
+            model_weights = torch.load(model_file, weights_only=True)
 
             with open(metadata_file, "r") as f:
                 metadata = json.load(f)
 
-            model_artifact = ModelArtifact(model=model, metadata=metadata)
+            model = None
+            if network is not None:
+                try:
+                    network.load_state_dict(
+                        torch.load(model_weights, weights_only=True)
+                    )
+                    model = network
+                except Exception as e:
+                    logging.warning(f"Failed to load model with network: {e}")
 
+            model_artifact = ModelArtifact(
+                model_weights=model_weights, metadata=metadata, model=model
+            )
             models[model_dir] = model_artifact
         return models
