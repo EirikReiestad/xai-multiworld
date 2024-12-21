@@ -1,15 +1,107 @@
 from __future__ import annotations
 
+import json
+import logging
+import os
+import random
+from collections import defaultdict
+from typing import Any, Dict, List, SupportsFloat, Tuple
+
 import gymnasium as gym
 import numpy as np
-
 from gymnasium import spaces
 from gymnasium.core import ObservationWrapper
 from numpy.typing import NDArray as ndarray
 
-from .base import MultiGridEnv, AgentID, ObsType
-from .core.constants import Color, Direction, State, WorldObjectType
-from .core.world_object import WorldObject
+from multigrid.base import AgentID, MultiGridEnv, ObsType
+from multigrid.core.action import Action
+from multigrid.core.constants import Color, Direction, State, WorldObjectType
+from multigrid.core.world_object import WorldObject
+from utils.common.numpy_encoder import NumpyEncoder
+
+
+class ConceptObsWrapper(gym.Wrapper):
+    """
+    Collect observations for a concept learning task.
+    """
+
+    def __init__(
+        self,
+        env: MultiGridEnv,
+        observations: int = 1000,
+        save_dir: str = "artifacts/concepts",
+    ):
+        super().__init__(env)
+
+        self._num_observations = observations
+        self._save_dir = save_dir
+
+        self._concepts: Dict[str, List[ObsType]] = defaultdict(list)
+        self._concepts_filled = defaultdict(lambda: False)
+        self._concepts_filled["flag"] = True  # Only write once
+
+        self._concept_checks = {
+            "random": self._random_observation,
+            "goal": self._goal_in_view,
+        }
+
+    def step(
+        self, actions: Dict[AgentID, Action | int]
+    ) -> Tuple[
+        Dict[AgentID, ObsType],
+        Dict[AgentID, SupportsFloat],
+        Dict[AgentID, bool],
+        Dict[AgentID, bool],
+        Dict[AgentID, Dict[str, Any]],
+    ]:
+        observations, rewards, terminations, truncations, info = super().step(actions)
+
+        for concept, check_fn in self._concept_checks.items():
+            if self._concepts_filled[concept]:
+                continue
+            for agent_id, obs in observations.items():
+                if not check_fn(obs["image"]):
+                    continue
+                self._concepts[concept].append(obs)
+                if len(self._concepts[concept]) >= self._num_observations:
+                    self._concepts_filled[concept] = True
+
+        if all(self._concepts_filled.values()):
+            self._write_concepts()
+            self._concepts_filled["flag"] = False
+            self._visualize_concepts()
+
+        return observations, rewards, terminations, truncations, info
+
+    def _write_concepts(self) -> None:
+        logging.info("Writing concept observations to disk...")
+        for concept, observations in self._concepts.items():
+            filename = f"{concept}.json"
+            path = os.path.join(self._save_dir, filename)
+
+            with open(path, "w") as f:
+                json.dump(observations, f, indent=4, cls=NumpyEncoder)
+
+    def _visualize_concepts(self, k: int = 3) -> None:
+        for concept, observations in self._concepts.items():
+            logging.info(f"Visualizing {concept} observations...")
+            observations = random.sample(observations, k=k)
+            print(observations)
+
+    def _random_observation(self, _: ndarray[np.int_]) -> bool:
+        rand_float = np.random.uniform()
+        if rand_float < 0.2:
+            return True
+        return False
+
+    @staticmethod
+    def _goal_in_view(view: ndarray[np.int_]) -> bool:
+        for row in view:
+            for cell in row:
+                type_idx = cell[WorldObject.TYPE]
+                if type_idx == WorldObjectType.goal.to_index():
+                    return True
+        return False
 
 
 class FullyObsWrapper(ObservationWrapper):
