@@ -29,12 +29,13 @@ class ConceptObsWrapper(gym.Wrapper):
         self,
         env: MultiGridEnv,
         observations: int = 1000,
-        save_dir: str = "artifacts/concepts",
+        save_dir: str = "assets/concepts",
     ):
         super().__init__(env)
 
         self._num_observations = observations
         self._save_dir = save_dir
+        os.makedirs(self._save_dir, exist_ok=True)
 
         self._concepts: Dict[str, List[ObsType]] = defaultdict(list)
         self._concepts_filled = defaultdict(lambda: False)

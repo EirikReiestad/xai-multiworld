@@ -5,6 +5,7 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from utils.core.model_loader import ModelLoader
 from multigrid.envs.go_to_goal import GoToGoalEnv
 from utils.common.observation import Observation, observation_from_file
+from xailib.core.linear_probing.linear_probe import LinearProbe
 
 env = GoToGoalEnv(render_mode="rgb_array")
 
@@ -25,20 +26,24 @@ config = (
 
 dqn = DQN(config)
 
-path = os.path.join("artifacts", "models")
-models = ModelLoader.load_models_from_path(path, dqn.model)
+path = os.path.join("artifacts")
+model_artifacts = ModelLoader.load_models_from_path(path, dqn.model)
+model_artifact = next(iter(model_artifacts.values()))
 
-concept = "goal"
-path = os.path.join("artifacts", "concepts", concept + ".json")
-goal_observation = observation_from_file(path)
+concepts = ["goal", "random"]
+observations = {
+    concept: observation_from_file(
+        os.path.join("assets", "concepts", concept + ".json")
+    )
+    for concept in concepts
+}
 
-print(goal_observation)
+observations["goal"][..., Observation.LABEL] = 1
+observations["random"][..., Observation.LABEL] = 0
 
-"""
 linear_probe = LinearProbe(
     dqn.model,
-    models,
-    observations.positive_observation,
-    observations.negative_observation,
+    observations["goal"],
+    observations["random"],
 )
-"""
+linear_probe.train()
