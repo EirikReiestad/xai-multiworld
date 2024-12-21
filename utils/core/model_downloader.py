@@ -10,15 +10,17 @@ from utils.core.wandb import WandB
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.algorithm import Algorithm
+import torch.nn as nn
+from utils.core.model_loader import ModelLoader
 
 
 class ModelDownloader(WandB):
     def __init__(
         self,
-        model: Algorithm,
         project_folder: str,
         model_name: str,
         models: list[str],
+        model: nn.Module | None = None,
         folder_suffix: str = "",
     ):
         self.wandb = WandB(
@@ -69,3 +71,9 @@ class ModelDownloader(WandB):
         )
         if artifact_dir is None or metadata is None:
             raise Exception(f"Model not found, {traceback.format_exc}")
+
+        if self._model is None:
+            return
+
+        # Test if model is loaded correctly
+        model_artifacts = ModelLoader.load_model_from_path(artifact_dir, self._model)

@@ -7,10 +7,10 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from multigrid.envs.go_to_goal import GoToGoalEnv
 
 project_folder = "multigrid-go-to-goal"
-model_name = "model_0"
+model_name = "model"
 
 models = []
-for i in range(0, 10):
+for i in range(1):
     models.append(f"model_{i}:latest")
 
 env = GoToGoalEnv(render_mode="rgb_array")
@@ -34,9 +34,9 @@ dqn_config = (
 dqn = DQN(dqn_config)
 
 model_downloader = ModelDownloader(
-    model=dqn,
     project_folder=project_folder,
     model_name=model_name,
     models=models,
+    model=dqn.model,
 )
 model_downloader.download()

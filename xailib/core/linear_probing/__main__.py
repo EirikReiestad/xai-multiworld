@@ -5,6 +5,7 @@ from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from utils.core.model_loader import ModelLoader
 from multigrid.envs.go_to_goal import GoToGoalEnv
+from xailib.core.linear_probing.linear_probe import LinearProbe
 
 path = os.path.join("artifacts")
 
@@ -27,4 +28,6 @@ config = (
 
 dqn = DQN(config)
 
-models = ModelLoader.load_from_path(path, dqn.model)
+models = ModelLoader.load_models_from_path(path, dqn.model)
+
+linear_probe = LinearProbe(dqn.model, models)

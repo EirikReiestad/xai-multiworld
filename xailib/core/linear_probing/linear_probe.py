@@ -1,5 +1,5 @@
 import warnings
-from typing import Optional
+from typing import List, Optional
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -11,6 +11,7 @@ from sklearn.exceptions import ConvergenceWarning
 # from rl.src.regressor.logistic import LogisticRegression
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
+from utils.common.observation import Observation
 
 warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
@@ -21,13 +22,18 @@ class LinearProbe:
     def __init__(
         self,
         model: nn.Module,
-        positive_sample_path: str,
-        negative_sample_path: str,
+        positive_observations: List[Observation],
+        negative_observations: List[Observation],
+        test_positive_observations: List[Observation],
         scaler: str = "",
     ):
         self._model = model
         self._model.eval()
-        self._load_data(positive_sample_path, negative_sample_path)
+
+        self._positive_observations = positive_observations
+        self._negative_observations = negative_observations
+        self._test_positive_observations = test_positive_observations
+
         self._register_hooks()
         self._activations = {}
 
@@ -50,23 +56,7 @@ class LinearProbe:
                     continue
                 sub_layer.register_forward_hook(self._module_hook)
 
-    def _load_data(self, positive_sample_path: str, negative_sample_path: str):
-        positive_data = DataHandler()
-        positive_data.load_data_from_path(positive_sample_path)
-
-        self._positive_data, self._test_positive_data = positive_data.split(0.8, 0.1)
-
-        negative_data = DataHandler()
-        negative_data.load_data_from_path(negative_sample_path)
-
-        self._negative_data, self._test_negative_data = negative_data.split(0.8, 0.1)
-
-    def compute_cavs(
-        self,
-        custom_test_data: Optional[list[Sample]] = None,
-        plot_distribution: bool = False,
-        sample_ratio: float = 0.8,
-    ) -> tuple[dict, dict, dict]:
+    def compute_cavs(self) -> tuple[dict, dict, dict]:
         positive_data, positive_labels = self._positive_data.get_data_lists(
             sample_ratio
         )
