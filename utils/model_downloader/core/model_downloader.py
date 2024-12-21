@@ -6,23 +6,29 @@ import shutil
 
 import torch
 
-from managers import WandBConfig, WandBManager
-from rl.src.dqn.policies import DQNPolicy
+from utils.base.wandb import WandB
+from rllib.algorithms.dqn.dqn_config import DQNConfig
+from rllib.algorithms.dqn.dqn import DQN
+from rllib.algorithms.algorithm import Algorithm
 
 
 class ModelDownloader(WandB):
     def __init__(
         self,
-        model: DQNPolicy,
+        model: Algorithm,
         project_folder: str,
         model_name: str,
         models: list[str],
         folder_suffix: str = "",
     ):
-        current_user = getpass.getuser()
-        project = f"{current_user}"
-        wandb_config = WandBConfig(project=project)
-        self.wandb_manager = WandBManager(active=False, config=wandb_config)
+        self.wandb = WandB(
+            project=project_folder,
+            run_name=None,
+            reinit=True,
+            tags=[],
+            dir=".",
+            only_api=True,
+        )
 
         self._model_name = model_name
         self._run_id = f"eirikreiestad-ntnu/{project_folder}"
@@ -58,40 +64,8 @@ class ModelDownloader(WandB):
             self._load_model(model_artifact, version_number)
 
     def _load_model(self, model_artifact: str, version_number: str):
-        artifact_dir, metadata = self.wandb_manager.load_model(
+        artifact_dir, metadata = self.wandb.download_model(
             self._run_id, model_artifact, version_number
         )
         if artifact_dir is None or metadata is None:
             raise Exception(f"Model not found, {traceback.format_exc}")
-        self._metadata = metadata
-
-        path = f"{artifact_dir}/{self._model_name}"
-        if not path.endswith(".pt"):
-            path += ".pt"
-
-        self._model.policy_net.load_state_dict(torch.load(path, weights_only=True))
-        self._model.target_net.load_state_dict(self._model.policy_net.state_dict())
-        self._model.policy_net.eval()
-        self._model.target_net.eval()
-
-        self._save_locally(model_artifact, version_number, metadata)
-
-    def _save_locally(self, model_artifact: str, version_number: str, metadata: dict):
-        folder_path = os.path.join(
-            "models", "latest" + self.folder_suffix, model_artifact
-        )
-        os.makedirs(folder_path, exist_ok=True)
-
-        path = os.path.join(folder_path, version_number)
-        path += ".pt"
-
-        torch.save(self._model.policy_net.state_dict(), path)
-
-        folder_path = os.path.join(
-            "models", "metadata" + self.folder_suffix, model_artifact
-        )
-        os.makedirs(folder_path, exist_ok=True)
-        path = os.path.join(folder_path, version_number)
-        path += ".json"
-
-        json.dump(metadata, open(path, "w"))
