@@ -10,19 +10,25 @@ class ActivationTracker:
         self._model = model
         self._activations = {}
 
+        self._register_hooks()
+
     def compute_activations(self, inputs: List) -> tuple[dict, torch.Tensor]:
         self._activations.clear()
         outputs = self._model(*inputs)
-        activations = copy.deepcopy(self._activations)
-        return activations, outputs
+        activations_cloned = {key: value for key, value in self._activations.items()}
+        return activations_cloned, outputs
 
     def _register_hooks(self):
+        hook_count = 0
         for _, processor in self._model.named_children():
             for _, layer in processor.named_children():
                 for name, sub_layer in layer.named_children():
                     if not isinstance(sub_layer, nn.ReLU):
                         continue
+                    hook_count += 1
                     sub_layer.register_forward_hook(self._module_hook)
+
+        assert hook_count > 0, "No hooks registered"
 
     def _module_hook(self, module: nn.Module, input, output):
         self._activations[module] = {

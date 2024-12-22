@@ -4,7 +4,7 @@ from multigrid.envs.go_to_goal import GoToGoalEnv
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from utils.core.model_loader import ModelLoader
-from xailib.common.get_probes import get_probes
+from xailib.common.probes import get_probes
 from utils.common.observation import observation_from_file
 from xailib.common.binary_concept_score import binary_concept_score
 
@@ -41,5 +41,4 @@ negative_observation = observation_from_file(
     os.path.join(concept_path, negative_concept + ".json")
 )
 probes = get_probes(model_artifacts, positive_observation, negative_observation)
-
-for probe in probes:
+print(probes)
