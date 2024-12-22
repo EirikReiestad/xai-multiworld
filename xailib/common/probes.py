@@ -1,19 +1,15 @@
-import os
-
-import torch.nn as nn
-from torch import positive
-
 from utils.common.model_artifact import ModelArtifact
-from utils.common.observation import Observation, observation_from_file
+from utils.common.observation import Observation
 from xailib.core.linear_probing.linear_probe import LinearProbe
+from typing import Dict
+from sklearn.linear_model import LogisticRegression
 
 
 def get_probes(
     model_artifacts: dict[str, ModelArtifact],
     positive_observation: Observation,
     negative_observation: Observation,
-    concept_path: str = os.path.join("assets", "concepts"),
-):
+) -> Dict[str, Dict[str, LogisticRegression]]:
     regressors = {}
 
     positive_observation[..., Observation.LABEL] = 1
@@ -25,6 +21,7 @@ def get_probes(
             positive_observation,
             negative_observation,
         )
-        regressors = linear_probe.train()
+        model_regressors = linear_probe.train()
+        regressors[model_name] = model_regressors
 
     return regressors
