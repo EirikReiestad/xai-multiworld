@@ -1,5 +1,6 @@
-import json
+import copy
 import io
+import json
 import logging
 import os
 from typing import Any, Dict, List, Mapping
@@ -20,7 +21,9 @@ class ModelLoader:
             model_dir_path = os.path.join(path, model_dir)
             if not os.path.isdir(model_dir_path):
                 continue
-            model_artifact = ModelLoader.load_model_from_path(model_dir_path, network)
+            model_artifact = ModelLoader.load_model_from_path(
+                model_dir_path, copy.deepcopy(network)
+            )
             models[model_dir] = model_artifact
         return models
 

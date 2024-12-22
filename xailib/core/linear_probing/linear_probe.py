@@ -18,7 +18,7 @@ from utils.common.observation import (
     zip_observation_data,
 )
 
-warnings.filterwarnings("ignore", category=ConvergenceWarning)
+# warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
 
 class LinearProbe:
