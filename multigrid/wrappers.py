@@ -4,8 +4,9 @@ import json
 import logging
 import os
 import random
+import sys
 from collections import defaultdict
-from typing import Any, Dict, List, SupportsFloat, Tuple
+from typing import Any, Dict, List, Literal, SupportsFloat, Tuple
 
 import gymnasium as gym
 import numpy as np
@@ -29,6 +30,8 @@ class ConceptObsWrapper(gym.Wrapper):
         self,
         env: MultiGridEnv,
         observations: int = 1000,
+        concepts: list[str] | None = None,
+        method: Literal["random", "policy"] = "policy",
         save_dir: str = "assets/concepts",
     ):
         super().__init__(env)
@@ -41,10 +44,22 @@ class ConceptObsWrapper(gym.Wrapper):
         self._concepts_filled = defaultdict(lambda: False)
         self._concepts_filled["flag"] = True  # Only write once
 
-        self._concept_checks = {
+        all_concept_checks = {
             "random": self._random_observation,
             "goal": self._goal_in_view,
         }
+
+        self._concept_checks = (
+            all_concept_checks
+            if concepts is None
+            else {
+                key: value
+                for key, value in all_concept_checks.items()
+                if key in concepts
+            }
+        )
+
+        self._method = method
 
     def step(
         self, actions: Dict[AgentID, Action | int]
@@ -55,6 +70,9 @@ class ConceptObsWrapper(gym.Wrapper):
         Dict[AgentID, bool],
         Dict[AgentID, Dict[str, Any]],
     ]:
+        if self._method == "random":
+            super().reset()
+
         observations, rewards, terminations, truncations, info = super().step(actions)
 
         for concept, check_fn in self._concept_checks.items():
@@ -70,8 +88,7 @@ class ConceptObsWrapper(gym.Wrapper):
                 if all(self._concepts_filled.values()):
                     self._write_concepts()
                     self._concepts_filled["flag"] = False
-                    # self._visualize_concepts()
-                    break
+                    sys.exit()
 
         return observations, rewards, terminations, truncations, info
 
@@ -83,12 +100,6 @@ class ConceptObsWrapper(gym.Wrapper):
 
             with open(path, "w") as f:
                 json.dump(observations, f, indent=4, cls=NumpyEncoder)
-
-    # TODO: Remove, this has nothing to do with the wrapper
-    def _visualize_concepts(self, k: int = 3) -> None:
-        for concept, observations in self._concepts.items():
-            logging.info(f"Visualizing {concept} observations...")
-            observations = random.sample(observations, k=k)
 
     def _random_observation(self, _: ndarray[np.int_]) -> bool:
         rand_float = np.random.uniform()

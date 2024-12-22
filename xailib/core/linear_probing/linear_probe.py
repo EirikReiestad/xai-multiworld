@@ -1,7 +1,5 @@
-import warnings
-from typing import Any, List, Optional, Dict
+from typing import Dict
 
-import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torch.nn as nn
@@ -9,16 +7,13 @@ from sklearn.exceptions import ConvergenceWarning
 
 # from rl.src.regressor.logistic import LogisticRegression
 from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
-
-from xailib.common.activations import ActivationTracker, preprocess_activations
 
 from utils.common.observation import (
     Observation,
     split_observation,
     zip_observation_data,
 )
+from xailib.common.activations import ActivationTracker, preprocess_activations
 
 # warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
@@ -88,7 +83,7 @@ class LinearProbe:
         combined_activations = combined_activations[idx]
         combined_labels = combined_labels[idx]
 
-        regressor = LogisticRegression(max_iter=200, solver="lbfgs", C=1.0)
+        regressor = LogisticRegression(max_iter=500, solver="lbfgs", C=1.0)
         regressor.fit(combined_activations, combined_labels)
 
         return regressor
