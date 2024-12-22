@@ -3,11 +3,9 @@ import subprocess
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    "--method", choices=["probe", "tcav"], help="Specify the method to use"
+    "--concept-score", action="store_true", help="Run the concept score script"
 )
 args = parser.parse_args()
 
-if args.method == "probe":
-    subprocess.run(["python", "xailib/core/linear_probing"])
-elif args.method == "tcav":
-    pass
+if args.concept_score:
+    subprocess.run(["python", "xailib/scripts/concept_score.py"])

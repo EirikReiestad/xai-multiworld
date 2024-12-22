@@ -10,7 +10,7 @@ project_folder = "multigrid-go-to-goal"
 model_name = "model"
 
 models = []
-for i in range(1):
+for i in range(4):
     models.append(f"model_{i}:latest")
 
 env = GoToGoalEnv(render_mode="rgb_array")
