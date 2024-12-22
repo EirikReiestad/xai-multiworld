@@ -53,9 +53,15 @@ class LinearProbe:
 
         regressors = {}
 
+        assert positive_activations.keys() == negative_activations.keys(), (
+            f"Positive and negative activations must have the same layers. "
+            f"Positive: {positive_activations.keys()}, Negative: {negative_activations.keys()}"
+        )
+        assert len(positive_activations.keys()) > 0, "No activations found"
+
         for i, layer in enumerate(positive_activations.keys()):
             name = f"{i}_{layer.__class__.__name__}"
-            regressor = LinearProbe._compute_regressor(
+            regressor = LinearProbe.compute_regressor(
                 positive_activations[layer], negative_activations[layer]
             )
             regressors[name] = regressor
@@ -63,7 +69,7 @@ class LinearProbe:
         return regressors
 
     @staticmethod
-    def _compute_regressor(
+    def compute_regressor(
         positive_activations: dict,
         negative_activations: dict,
     ) -> LogisticRegression:

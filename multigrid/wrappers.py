@@ -89,7 +89,6 @@ class ConceptObsWrapper(gym.Wrapper):
         for concept, observations in self._concepts.items():
             logging.info(f"Visualizing {concept} observations...")
             observations = random.sample(observations, k=k)
-            print(observations)
 
     def _random_observation(self, _: ndarray[np.int_]) -> bool:
         rand_float = np.random.uniform()
