@@ -9,7 +9,7 @@ env = GoToGoalEnv(
     max_steps=100,
     agents=10,
     success_termination_mode="all",
-    render_mode="human",
+    render_mode="rgb_array",
 )
 env_wrapped = ConceptObsWrapper(
     env, observations=1000, concepts=["random"], method="random"
