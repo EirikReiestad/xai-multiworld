@@ -1,25 +1,29 @@
+from typing import Tuple
+
 import numpy as np
 import torch
-import torch.nn as nn
 
-from rllib.core.torch.module import TorchModule, build_conv_layers, build_fc_layers
-from rllib.utils.network.network import get_output_size
-import gymnasium as gym
-from gymnasium.spaces import Box, Discrete
-from rllib.utils.spaces import ObservationSpace, ActionSpace
 from rllib.core.network.processor import ConvProcessor, FCProcessor
-from rllib.utils.network.network import observation_space_check, action_space_check
+from rllib.core.torch.module import TorchModule
+from rllib.utils.network.network import (
+    action_space_check,
+    get_output_size,
+    observation_space_check,
+)
+from rllib.utils.spaces import ActionSpace, ObservationSpace
 
 
-class MultiInputNetwork(TorchModule):
+class ConceptBottleneckModel(TorchModule):
     def __init__(
         self,
         state_dim: ObservationSpace,
         action_dim: ActionSpace,
+        concept_dim: int,
         conv_layers: tuple[int, ...] = (32, 64, 64),
         hidden_units: tuple[int, ...] = (128, 128),
+        concept_hidden_units: tuple[int, ...] = (32, 64),
     ):
-        super(MultiInputNetwork, self).__init__()
+        super(ConceptBottleneckModel, self).__init__()
         observation_space_check(state_dim)
         action_space_check(action_dim)
         self._conv0 = ConvProcessor(state_dim.box, conv_layers)
@@ -30,11 +34,16 @@ class MultiInputNetwork(TorchModule):
         )
         fc_output_size = get_output_size(self._fc0, np.array([state_dim.discrete]))
         final_input_size = conv_output_size + fc_output_size
+
+        self._fc_concept = FCProcessor(final_input_size, hidden_units, concept_dim)
+
         self._fc_final = FCProcessor(
-            final_input_size, hidden_units, int(action_dim.discrete)
+            final_input_size, concept_hidden_units, int(action_dim.discrete)
         )
 
-    def forward(self, x_img: torch.Tensor, x_dir: torch.Tensor) -> torch.Tensor:
+    def forward(
+        self, x_img: torch.Tensor, x_dir: torch.Tensor
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
         x_img = x_img.float()
         x_img = x_img.permute(0, 3, 1, 2)
         x_img = self._conv0(x_img)
@@ -43,5 +52,7 @@ class MultiInputNetwork(TorchModule):
         x_dir = self._fc0(x_dir)
 
         x = torch.cat([x_img, x_dir], dim=1)
-        x = self._fc_final(x)
-        return x
+
+        concept_pred = self._fc_concept(x)
+        action_pred = self._fc_final(x)
+        return concept_pred, action_pred
