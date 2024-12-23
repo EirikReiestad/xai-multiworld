@@ -40,9 +40,9 @@ class DQNConceptBottleneckWrapper(ConceptBottleneck):
         )
         self._algorithm._target_net.load_state_dict(self._policy_net.state_dict())
 
+        self._algorithm._optimize_model = self._optimize_model
         self._algorithm._predict_policy_values = self._predict_policy_values
         self._algorithm._expected_state_values = self._expected_state_values
-        self._algorithm._compute_loss = self._compute_loss
 
     def _optimize_model(self):
         if len(self._memory) < self._config.batch_size:
@@ -110,7 +110,7 @@ class DQNConceptBottleneckWrapper(ConceptBottleneck):
         self, state: List[torch.Tensor], action_batch: torch.Tensor
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         concept_pred, action_pred = self._policy_net(*state)
-        return concept_pred, action_pred.gather(1, action_batch)
+        return concept_pred.gather(1, action_batch), action_pred.gather(1, action_batch)
 
     def _get_concept_values(self, next_state: List[NDArray]):
         """

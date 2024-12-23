@@ -17,20 +17,20 @@ env_wrapped = ConceptObsWrapper(
 
 config = (
     DQNConfig(
-        batch_size=16,
+        batch_size=36,
         replay_buffer_size=10000,
         gamma=0.99,
         learning_rate=1e-4,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=50000,
+        eps_decay=100000,
         target_update=1000,
     )
     .environment(env=env)
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="multigrid-go-to-goal")
+    .wandb(project="dell-multigrid-go-to-goal")
 )
 
 dqn = DQN(config)

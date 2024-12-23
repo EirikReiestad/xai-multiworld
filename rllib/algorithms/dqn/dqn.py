@@ -115,9 +115,6 @@ class DQN(Algorithm):
         self._predict_target_values(
             non_final_next_states, next_state_values, non_final_mask
         )
-        # TODO: Remove, just a sanity check for now
-        # Check that next_state_values is not all None
-        assert all(next_state_values != 0), "Next state values are all None."
         expected_state_action_values = self._expected_state_action_values(
             next_state_values, reward_batch
         )
