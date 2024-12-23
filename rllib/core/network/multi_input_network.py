@@ -41,6 +41,7 @@ class MultiInputNetwork(TorchModule):
         )
 
     def forward(self, x_img: torch.Tensor, x_dir: torch.Tensor) -> torch.Tensor:
+        x_img = x_img.float()
         x_img = x_img.permute(0, 3, 1, 2)
         x_img = self._conv0(x_img)
         x_img = x_img.view(x_img.size(0), -1)

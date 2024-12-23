@@ -2,7 +2,7 @@ import math
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from itertools import repeat
-from typing import Any, Callable, Dict, Literal, Optional, SupportsFloat
+from typing import Any, Callable, Dict, Literal, Optional, SupportsFloat, Tuple
 
 import gymnasium as gym
 import numpy as np
@@ -116,7 +116,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
 
     def step(
         self, actions: Dict[AgentID, Action | int]
-    ) -> tuple[
+    ) -> Tuple[
         Dict[AgentID, ObsType],
         Dict[AgentID, SupportsFloat],
         Dict[AgentID, bool],
