@@ -21,6 +21,7 @@ class ModelDownloader(WandB):
         model_name: str,
         models: list[str],
         model: nn.Module | None = None,
+        model_folder: str = "artifacts",
         folder_suffix: str = "",
     ):
         self.wandb = WandB(
@@ -32,6 +33,8 @@ class ModelDownloader(WandB):
             only_api=True,
         )
 
+        self._clean_models(model_folder)
+
         self._model_name = model_name
         self._run_id = f"eirikreiestad-ntnu/{project_folder}"
         self._extract_model_names(models)
@@ -39,13 +42,8 @@ class ModelDownloader(WandB):
         self._model = model
         self.folder_suffix = folder_suffix
 
-        self._clean_models()
-
-    def _clean_models(self):
-        model_folder = os.path.join("models", "latest" + self.folder_suffix)
-        shutil.rmtree(model_folder, ignore_errors=True)
-        metadata_folder = os.path.join("models", "metadata" + self.folder_suffix)
-        shutil.rmtree(metadata_folder, ignore_errors=True)
+    def _clean_models(self, path: str):
+        shutil.rmtree(path, ignore_errors=True)
 
     def _extract_model_names(self, model_names: list[str]):
         model_artifacts = []

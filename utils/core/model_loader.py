@@ -1,4 +1,5 @@
 import copy
+import re
 import io
 import json
 import logging
@@ -17,7 +18,11 @@ class ModelLoader:
         path: str, network: nn.Module
     ) -> Dict[str, ModelArtifact]:
         models = {}
-        for model_dir in os.listdir(path):
+        model_dirs = os.listdir(path)
+        sorted_model_dirs = sorted(
+            model_dirs, key=lambda x: int(re.search(r"\d+", x).group())
+        )
+        for model_dir in sorted_model_dirs:
             model_dir_path = os.path.join(path, model_dir)
             if not os.path.isdir(model_dir_path):
                 continue
