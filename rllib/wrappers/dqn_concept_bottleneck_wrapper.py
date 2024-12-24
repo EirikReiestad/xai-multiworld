@@ -42,7 +42,6 @@ class DQNConceptBottleneckWrapper(ConceptBottleneck):
 
         self._algorithm._optimize_model = self._optimize_model
         self._algorithm._predict_policy_values = self._predict_policy_values
-        self._algorithm._expected_state_values = self._expected_state_values
 
     def _optimize_model(self):
         if len(self._memory) < self._config.batch_size:

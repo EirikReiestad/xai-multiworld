@@ -65,15 +65,10 @@ class DQN(Algorithm):
         self._eps_threshold = self._config.eps_end + (
             self._config.eps_start - self._config.eps_end
         ) * np.exp(-1.0 * self._steps_done / self._config.eps_decay)
-        actions = {}
         if sample > self._eps_threshold:
-            for agent_id, obs in observation.items():
-                with torch.no_grad():
-                    torch_obs = observation_to_torch_unsqueeze(obs)
-                    actions[agent_id] = self._policy_net(*torch_obs).argmax().item()
+            actions = self._get_policy_actions(observation)
         else:
-            for agent_id in observation.keys():
-                actions[agent_id] = np.random.randint(self.action_space.discrete)
+            actions = self._get_random_actions(observation)
         return actions
 
     def load_model(self, model: Mapping[str, Any]):
@@ -85,6 +80,28 @@ class DQN(Algorithm):
     @property
     def model(self) -> nn.Module:
         return self._policy_net
+
+    def _get_policy_actions(
+        self, observations: dict[AgentID, ObsType]
+    ) -> dict[AgentID, int]:
+        actions = {}
+        for agent_id, obs in observations.items():
+            actions[agent_id] = self._get_policy_action(obs)
+        return actions
+
+    def _get_policy_action(self, observation: ObsType) -> Action:
+        with torch.no_grad():
+            torch_obs = observation_to_torch_unsqueeze(observation)
+            action = self._policy_net(*torch_obs).argmax().item()
+        return action
+
+    def _get_random_actions(
+        self, observations: dict[AgentID, ObsType]
+    ) -> dict[AgentID, int]:
+        actions = {}
+        for agent_id in observations.keys():
+            actions[agent_id] = np.random.randint(self.action_space.discrete)
+        return actions
 
     def _optimize_model(self):
         if len(self._memory) < self._config.batch_size:
