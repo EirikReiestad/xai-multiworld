@@ -17,7 +17,7 @@ env_wrapped = ConceptObsWrapper(
 
 config = (
     DQNConfig(
-        batch_size=36,
+        batch_size=32,
         replay_buffer_size=10000,
         gamma=0.99,
         learning_rate=1e-4,
