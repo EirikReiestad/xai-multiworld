@@ -127,6 +127,6 @@ class WandB(ABC):
         try:
             gif = wandb.Image(gif_path)
             self._log["gif"] = gif
-        except PIL.UnidentifiedImageError:
-            logging.error(f"Error: Could not save gif, {gif_path}")
+        except Exception as e:
+            logging.error(f"Error: Could not save gif: {e}")
         self._frames = []
