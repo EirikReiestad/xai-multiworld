@@ -86,6 +86,9 @@ class DQNConceptBottleneckWrapper(ConceptBottleneck):
             state_action_values, expected_state_action_values
         )
 
+        self._algorithm.add_log("action_loss", action_loss.item())
+        self._algorithm.add_log("concept_loss", concept_loss.item())
+
         self._optimizer.zero_grad()
         concept_loss.backward(retain_graph=True)
         self._optimizer.step()

@@ -31,7 +31,7 @@ def _goal_to_right_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
     dir = view["direction"]
 
     for row in image:
-        for cell in row[row.length // 2, row.length]:
+        for cell in row[row.size // 2 : row.size]:
             type_idx = cell[WorldObject.TYPE]
             if type_idx == WorldObjectType.goal.to_index():
                 return True
@@ -44,7 +44,7 @@ def _goal_to_left_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
     dir = view["direction"]
 
     for row in image:
-        for cell in row[0, row.length // 2]:
+        for cell in row[0 : row.size // 2]:
             type_idx = cell[WorldObject.TYPE]
             if type_idx == WorldObjectType.goal.to_index():
                 return True
@@ -57,7 +57,7 @@ def _goal_in_front_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
     dir = view["direction"]
 
     for row in image[1:]:
-        for cell in row[0 : row.length // 2]:
+        for cell in row[0 : row.size // 2]:
             type_idx = cell[WorldObject.TYPE]
             if type_idx == WorldObjectType.goal.to_index():
                 return True
