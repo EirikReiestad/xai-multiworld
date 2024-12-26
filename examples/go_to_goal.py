@@ -9,7 +9,7 @@ env = GoToGoalEnv(
     max_steps=300,
     agents=10,
     success_termination_mode="all",
-    render_mode="rgb_array",
+    render_mode="human",
 )
 env_wrapped = ConceptObsWrapper(
     env, observations=1000, concepts=["random"], method="random"
@@ -30,7 +30,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="dell-multigrid-go-to-goal")
+    # .wandb(project="dell-multigrid-go-to-goal")
 )
 
 dqn = DQN(config)

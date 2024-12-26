@@ -1,4 +1,4 @@
-from typing import Any, SupportsFloat, List
+from typing import Any, List, Mapping, SupportsFloat
 
 import numpy as np
 import torch
@@ -9,16 +9,13 @@ from multigrid.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.replay_memory import ReplayMemory, Transition
-from rllib.utils.dqn.preprocessing import preprocess_next_observations
 from rllib.core.network.multi_input_network import MultiInputNetwork
+from rllib.utils.dqn.misc import get_non_final_mask
+from rllib.utils.dqn.preprocessing import preprocess_next_observations
 from rllib.utils.torch.processing import (
-    observation_to_torch,
     observation_to_torch_unsqueeze,
     observations_seperate_to_torch,
-    observations_to_torch,
 )
-from typing import Mapping
-from rllib.utils.dqn.misc import get_non_final_mask
 
 
 class DQN(Algorithm):

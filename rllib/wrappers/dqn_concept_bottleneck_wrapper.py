@@ -1,28 +1,21 @@
-from typing import Any, List, Mapping, SupportsFloat, Tuple
-from numpy.typing import NDArray
-
-import numpy as np
+from typing import List, Tuple
 import torch
 import torch.nn as nn
 
 from multigrid.core.action import Action
-from multigrid.core.concept import get_concept_checks
-from multigrid.utils.typing import AgentID, ObsType
-from multigrid.wrappers import ConceptObsWrapper
-from rllib.algorithms.algorithm import Algorithm
+from multigrid.core.concept import (
+    get_concept_checks,
+    get_concept_values,
+)
+from multigrid.utils.typing import ObsType
 from rllib.algorithms.dqn.dqn import DQN
-from rllib.algorithms.dqn.dqn_config import DQNConfig
-from rllib.algorithms.dqn.replay_memory import ReplayMemory, Transition
+from rllib.algorithms.dqn.replay_memory import Transition
 from rllib.core.concept_bottleneck.concept_bottleneck import ConceptBottleneck
 from rllib.core.network.concept_bottleneck_model import ConceptBottleneckModel
-from rllib.core.network.multi_input_network import MultiInputNetwork
 from rllib.utils.dqn.misc import get_non_final_mask
-from rllib.utils.dqn.preprocessing import preprocess_next_observations
 from rllib.utils.torch.processing import (
-    observation_to_torch,
     observation_to_torch_unsqueeze,
     observations_seperate_to_torch,
-    observations_to_torch,
 )
 
 
@@ -82,10 +75,14 @@ class DQNConceptBottleneckWrapper(ConceptBottleneck):
         expected_state_action_values = self._algorithm._expected_state_action_values(
             next_state_values, reward_batch
         )
-        expected_state_concept_values = self._get_concept_values(batch.next_state)
+        expected_state_concept_values = torch.Tensor(
+            get_concept_values(batch.next_state)
+        )
 
         concept_loss = self._compute_concept_loss(
-            state_concept_values, expected_state_concept_values, action_batch
+            state_concept_values,
+            expected_state_concept_values,
+            expected_state_concept_values,
         )
         action_loss = self._algorithm._compute_action_loss(
             state_action_values, expected_state_action_values
@@ -130,44 +127,12 @@ class DQNConceptBottleneckWrapper(ConceptBottleneck):
             next_state_values[non_final_mask] = action_output
         return next_state_values
 
-    def _get_concept_values(self, next_state: List[NDArray]):
-        """
-        This function processes the next state observations and checks for the presence of each concept.
-        It returns a bit map (list of 0 or 1) for each concept, indicating whether it's present in the given state.
-
-        Args:
-            next_state (List[NDArray]): List of state observations for multiple agents.
-
-        Returns:
-            List[NDArray]: List of concept bit maps, each representing the presence (1) or absence (0) of concepts.
-        """
-        # List to store the bit maps for each concept in the batch
-        concept_bit_maps = []
-
-        # Iterate over the states for each agent
-        for state in next_state:
-            # Initialize a list to store concept values (0 or 1) for the current state
-            concept_values = []
-
-            # For each concept, check its presence (using concept checks, as defined in `get_concept_checks`)
-            for concept_check in self._concept_checks:
-                # Apply the concept check to the state (assuming it returns True/False)
-                concept_present = concept_check(
-                    state
-                )  # Will return True if concept is present, else False
-                concept_values.append(1 if concept_present else 0)
-
-            # Convert the list of 0s and 1s to a numpy array for the current state
-            concept_bit_maps.append(np.array(concept_values))
-
-        # Return the list of concept bit maps
-        return concept_bit_maps
-
     def _compute_concept_loss(
         self,
         concept_pred: torch.Tensor,
-        concept_target: torch.Tensor,
-        action_batch: torch.Tensor,
+        concept_target: torch.Tensor,  # Agents, batch size, concepts
+        concept_batch: torch.Tensor,
     ) -> nn.SmoothL1Loss:
         criterion = nn.SmoothL1Loss()  # Use a suitable loss function
-        return criterion(concept_pred, concept_target).gather(1, action_batch)
+        criterion = criterion(concept_pred, concept_target)
+        return criterion.gather(1, concept_batch)
