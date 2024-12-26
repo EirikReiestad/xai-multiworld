@@ -42,6 +42,8 @@ class DQNConceptBottleneckWrapper(ConceptBottleneck):
 
         self._algorithm._optimize_model = self._optimize_model
         self._algorithm._predict_policy_values = self._predict_policy_values
+        self._algorithm._get_policy_action = self._get_policy_action
+        self._algorithm._predict_target_values = self._predict_target_values
 
     def _optimize_model(self):
         if len(self._memory) < self._config.batch_size:
@@ -80,9 +82,7 @@ class DQNConceptBottleneckWrapper(ConceptBottleneck):
         expected_state_action_values = self._algorithm._expected_state_action_values(
             next_state_values, reward_batch
         )
-        expected_state_concept_values = self._expected_state_concept_values(
-            batch.next_state
-        )
+        expected_state_concept_values = self._get_concept_values(batch.next_state)
 
         concept_loss = self._compute_concept_loss(
             state_concept_values, expected_state_concept_values, action_batch
@@ -109,7 +109,26 @@ class DQNConceptBottleneckWrapper(ConceptBottleneck):
         self, state: List[torch.Tensor], action_batch: torch.Tensor
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         concept_pred, action_pred = self._policy_net(*state)
-        return concept_pred.gather(1, action_batch), action_pred.gather(1, action_batch)
+        return concept_pred, action_pred.gather(1, action_batch)
+
+    def _get_policy_action(self, observation: ObsType) -> Action:
+        with torch.no_grad():
+            torch_obs = observation_to_torch_unsqueeze(observation)
+            action, _ = self._policy_net(*torch_obs)
+            action = action.argmax().item()
+        return action
+
+    def _predict_target_values(
+        self,
+        non_final_next_states: List[torch.Tensor],
+        next_state_values: torch.Tensor,
+        non_final_mask: List[bool],
+    ) -> torch.Tensor:
+        with torch.no_grad():
+            action_output, concept_output = self._target_net(*non_final_next_states)
+            action_output = action_output.max(1).values
+            next_state_values[non_final_mask] = action_output
+        return next_state_values
 
     def _get_concept_values(self, next_state: List[NDArray]):
         """
