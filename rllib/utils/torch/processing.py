@@ -1,5 +1,6 @@
 from itertools import chain
-from typing import Dict
+from numpy.typing import NDArray
+from typing import Dict, SupportsFloat, List
 
 import gymnasium as gym
 import numpy as np
@@ -57,3 +58,24 @@ def observations_seperate_to_torch(
     obs_flattened = list(chain.from_iterable(obs_list))
     transposed = [np.array(tensors) for tensors in zip(*obs_flattened)]
     return [torch.tensor(tensor) for tensor in transposed]
+
+
+def remove_none_dict(observations: Dict[str, Dict[str, NDArray]]):
+    observation_copy = observations.copy()
+    for key, value in observations.items():
+        if value is None:
+            del observation_copy[key]
+    return observations
+
+
+def remove_none_observations(
+    observations: list[Dict[str, Dict[str, NDArray]]],
+) -> List[Dict[str, Dict[str, NDArray]]]:
+    """
+    Remove None observations from a list of observations
+    """
+    return [
+        remove_none_dict(observation)
+        for observation in observations
+        if observation is not None
+    ]

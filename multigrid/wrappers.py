@@ -3,7 +3,6 @@ from __future__ import annotations
 import json
 import logging
 import os
-import random
 import sys
 from collections import defaultdict
 from typing import Any, Dict, List, Literal, SupportsFloat, Tuple
@@ -16,6 +15,7 @@ from numpy.typing import NDArray as ndarray
 
 from multigrid.base import AgentID, MultiGridEnv, ObsType
 from multigrid.core.action import Action
+from multigrid.core.concept import get_concept_checks
 from multigrid.core.constants import Color, Direction, State, WorldObjectType
 from multigrid.core.world_object import WorldObject
 from utils.common.numpy_encoder import NumpyEncoder
@@ -30,7 +30,7 @@ class ConceptObsWrapper(gym.Wrapper):
         self,
         env: MultiGridEnv,
         observations: int = 1000,
-        concepts: list[str] | None = None,
+        concepts: List[str] | None = None,
         method: Literal["random", "policy"] = "policy",
         save_dir: str = "assets/concepts",
     ):
@@ -43,21 +43,7 @@ class ConceptObsWrapper(gym.Wrapper):
         self._concepts: Dict[str, List[ObsType]] = defaultdict(list)
         self._concepts_filled = defaultdict(lambda: False)
         self._concepts_filled["flag"] = True  # Only write once
-
-        all_concept_checks = {
-            "random": self._random_observation,
-            "goal": self._goal_in_view,
-        }
-
-        self._concept_checks = (
-            all_concept_checks
-            if concepts is None
-            else {
-                key: value
-                for key, value in all_concept_checks.items()
-                if key in concepts
-            }
-        )
+        self._concept_checks = get_concept_checks(concepts)
 
         self._method = method
 
@@ -82,6 +68,7 @@ class ConceptObsWrapper(gym.Wrapper):
                 if not check_fn(obs["image"]):
                     continue
                 self._concepts[concept].append(obs)
+
                 if len(self._concepts[concept]) >= self._num_observations:
                     self._concepts_filled[concept] = True
 
@@ -100,21 +87,6 @@ class ConceptObsWrapper(gym.Wrapper):
 
             with open(path, "w") as f:
                 json.dump(observations, f, indent=4, cls=NumpyEncoder)
-
-    def _random_observation(self, _: ndarray[np.int_]) -> bool:
-        rand_float = np.random.uniform()
-        if rand_float < 0.2:
-            return True
-        return False
-
-    @staticmethod
-    def _goal_in_view(view: ndarray[np.int_]) -> bool:
-        for row in view:
-            for cell in row:
-                type_idx = cell[WorldObject.TYPE]
-                if type_idx == WorldObjectType.goal.to_index():
-                    return True
-        return False
 
 
 class FullyObsWrapper(ObservationWrapper):

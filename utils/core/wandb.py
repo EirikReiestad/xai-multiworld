@@ -1,10 +1,11 @@
-import logging
 import json
+import logging
 import os
 from abc import ABC
 from typing import Optional
 
 import numpy as np
+import PIL
 import torch
 import torch.nn as nn
 
@@ -123,6 +124,9 @@ class WandB(ABC):
             return
         gif_path = "assets/temp.gif"
         save_gif(self._frames, gif_path)
-        gif = wandb.Image(gif_path)
-        self._log["gif"] = gif
+        try:
+            gif = wandb.Image(gif_path)
+            self._log["gif"] = gif
+        except Exception as e:
+            logging.error(f"Error: Could not save gif: {e}")
         self._frames = []
