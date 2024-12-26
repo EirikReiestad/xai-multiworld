@@ -1,11 +1,12 @@
 from abc import ABC, abstractmethod
+import torch.nn as nn
 from itertools import count
 from rllib.algorithms.algorithm_config import AlgorithmConfig
 from rllib.core.environment.environment import Environment
-from utils.base.wandb import WandB
+from utils.core.wandb import WandB
 from multigrid.base import AgentID, ObsType
 from multigrid.core.action import Action, int_to_action
-from typing import Any, SupportsFloat
+from typing import Any, SupportsFloat, Mapping
 import numpy as np
 
 
@@ -100,6 +101,15 @@ class Algorithm(Environment, WandB, ABC):
         self.log_frame(rgb_array)
 
         return observation, rewards, terminations, truncations, infos
+
+    @property
+    @abstractmethod
+    def model(self) -> nn.Module:
+        raise NotImplementedError
+
+    @abstractmethod
+    def load_model(self, model: Mapping[str, Any]) -> None:
+        raise NotImplementedError
 
     @abstractmethod
     def predict(self, observation: dict[AgentID, ObsType]) -> dict[AgentID, int]:

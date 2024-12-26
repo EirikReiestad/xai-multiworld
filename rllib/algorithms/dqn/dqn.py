@@ -1,20 +1,20 @@
-from typing import Any, SupportsFloat
+from typing import Any, List, Mapping, SupportsFloat
 
 import numpy as np
 import torch
+import torch.nn as nn
 
 from multigrid.core.action import Action
 from multigrid.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.replay_memory import ReplayMemory, Transition
-from rllib.algorithms.dqn.utils.preprocessing import preprocess_next_observations
 from rllib.core.network.multi_input_network import MultiInputNetwork
+from rllib.utils.dqn.misc import get_non_final_mask
+from rllib.utils.dqn.preprocessing import preprocess_next_observations
 from rllib.utils.torch.processing import (
-    observation_to_torch,
     observation_to_torch_unsqueeze,
     observations_seperate_to_torch,
-    observations_to_torch,
 )
 
 
@@ -62,34 +62,55 @@ class DQN(Algorithm):
         self._eps_threshold = self._config.eps_end + (
             self._config.eps_start - self._config.eps_end
         ) * np.exp(-1.0 * self._steps_done / self._config.eps_decay)
-        actions = {}
         if sample > self._eps_threshold:
-            for agent_id, obs in observation.items():
-                with torch.no_grad():
-                    torch_obs = observation_to_torch_unsqueeze(obs)
-                    actions[agent_id] = self._policy_net(*torch_obs).argmax().item()
+            actions = self._get_policy_actions(observation)
         else:
-            for agent_id in observation.keys():
-                actions[agent_id] = np.random.randint(self.action_space.discrete)
+            actions = self._get_random_actions(observation)
+        return actions
+
+    def load_model(self, model: Mapping[str, Any]):
+        self._policy_net.load_state_dict(model)
+        self._target_net.load_state_dict(self._policy_net.state_dict())
+        self._policy_net.eval()
+        self._target_net.eval()
+
+    @property
+    def model(self) -> nn.Module:
+        return self._policy_net
+
+    def _get_policy_actions(
+        self, observations: dict[AgentID, ObsType]
+    ) -> dict[AgentID, int]:
+        actions = {}
+        for agent_id, obs in observations.items():
+            actions[agent_id] = self._get_policy_action(obs)
+        return actions
+
+    def _get_policy_action(self, observation: ObsType) -> Action:
+        with torch.no_grad():
+            torch_obs = observation_to_torch_unsqueeze(observation)
+            action = self._policy_net(*torch_obs).argmax().item()
+        return action
+
+    def _get_random_actions(
+        self, observations: dict[AgentID, ObsType]
+    ) -> dict[AgentID, int]:
+        actions = {}
+        for agent_id in observations.keys():
+            actions[agent_id] = np.random.randint(self.action_space.discrete)
         return actions
 
     def _optimize_model(self):
         if len(self._memory) < self._config.batch_size:
             return
 
-        device = next(self._policy_net.parameters()).device
         transitions = self._memory.sample(self._config.batch_size)
 
         batch = Transition(*zip(*transitions))
 
         num_agents = len(batch.state[0].values())
 
-        non_final_mask = []
-        for observation in batch.next_state:
-            agent_obs = observation.values()
-            for obs in agent_obs:
-                non_final_mask.append(True if obs is not None else False)
-
+        non_final_mask = get_non_final_mask(batch.next_state)
         non_final_next_states = observations_seperate_to_torch(
             batch.next_state, skip_none=True
         )
@@ -102,24 +123,61 @@ class DQN(Algorithm):
             [torch.tensor(r) for reward in batch.reward for r in reward.values()]
         )
 
-        state_action_values = self._policy_net(*state_batch).gather(1, action_batch)
+        state_action_values = self._predict_policy_values(state_batch, action_batch)
 
-        next_state_values = torch.zeros(self._config.batch_size * num_agents).to(device)
-
-        with torch.no_grad():
-            output = self._target_net(*non_final_next_states).max(1).values
-            next_state_values[non_final_mask] = output
-
-        expected_state_action_values = (
-            next_state_values * self._config.gamma + reward_batch
+        next_state_values = torch.zeros(self._config.batch_size * num_agents)
+        self._predict_target_values(
+            non_final_next_states, next_state_values, non_final_mask
         )
-        criterion = torch.nn.SmoothL1Loss()
-        loss = criterion(
-            state_action_values, expected_state_action_values.unsqueeze(1)
-        ).mean()
+        expected_state_action_values = self._expected_state_action_values(
+            next_state_values, reward_batch
+        )
+
+        loss = self._compute_loss(state_action_values, expected_state_action_values)
+
         self._optimizer.zero_grad()
         loss.backward()
         self._optimizer.step()
+
+    def _predict_policy_values(
+        self, state: List[torch.Tensor], action_batch: torch.Tensor
+    ) -> torch.Tensor:
+        return self._policy_net(*state).gather(1, action_batch)
+
+    def _predict_target_values(
+        self,
+        non_final_next_states: List[torch.Tensor],
+        next_state_values: torch.Tensor,
+        non_final_mask: List[bool],
+    ) -> torch.Tensor:
+        with torch.no_grad():
+            output = self._target_net(*non_final_next_states).max(1).values
+            next_state_values[non_final_mask] = output
+        return next_state_values
+
+    def _expected_state_action_values(
+        self, next_state_values: torch.Tensor, reward_batch: torch.Tensor
+    ) -> torch.Tensor:
+        return next_state_values * self._config.gamma + reward_batch
+
+    def _compute_loss(
+        self,
+        state_action_values: torch.Tensor,
+        expected_state_action_values: torch.Tensor,
+    ) -> torch.nn.SmoothL1Loss:
+        return self._compute_action_loss(
+            state_action_values, expected_state_action_values
+        )
+
+    def _compute_action_loss(
+        self,
+        state_action_values: torch.Tensor,
+        expected_state_action_values: torch.Tensor,
+    ) -> torch.nn.SmoothL1Loss:
+        criterion = torch.nn.SmoothL1Loss()
+        return criterion(
+            state_action_values, expected_state_action_values.unsqueeze(1)
+        ).mean()
 
     def _hard_update_target(self):
         if self._steps_done % self._config.target_update != 0:
