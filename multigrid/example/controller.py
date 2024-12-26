@@ -7,8 +7,9 @@ from multigrid.utils.typing import AgentID
 
 
 class Controller:
-    def __init__(self, agents: int = 1):
+    def __init__(self, agents: int = 1, same_keys: bool = False):
         self._agents = agents
+        self._same_keys = same_keys
 
         self.key_map = {
             "a": Action.left,  # Turn left
@@ -16,8 +17,8 @@ class Controller:
             "w": Action.forward,  # Move forward
             "p": Action.pickup,  # Pick up object
             "o": Action.drop,  # Drop object
-            "t": Action.toggle,  # Toggle object
-            "e": Action.done,  # Done task
+            # "t": Action.toggle,  # Toggle object
+            # "e": Action.done,  # Done task
         }
         self._current_action = None
         self._actions = [None] * agents
@@ -63,9 +64,14 @@ class Controller:
             self._action_event.wait()
             if self._current_action is None:
                 continue
-            for i in range(self._agents):
-                if self._actions[i] is None:
-                    self._actions[i] = self._current_action
-                    break
-                self._current_action = None
-                self._action_event.clear()
+            if self._same_keys:
+                for i in range(self._agents):
+                    if self._actions[i] is None:
+                        self._actions[i] = self._current_action
+            else:
+                for i in range(self._agents):
+                    if self._actions[i] is None:
+                        self._actions[i] = self._current_action
+                        break
+            self._current_action = None
+            self._action_event.clear()

@@ -2,7 +2,7 @@ import math
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from itertools import repeat
-from typing import Any, Callable, Literal, SupportsFloat, Dict, Optional
+from typing import Any, Callable, Dict, Literal, Optional, SupportsFloat, Tuple
 
 import gymnasium as gym
 import numpy as np
@@ -13,12 +13,12 @@ from multigrid.core.action import Action
 from multigrid.core.agent import Agent, AgentState
 from multigrid.core.constants import TILE_PIXELS, WorldObjectType
 from multigrid.core.grid import Grid
-from multigrid.core.world_object import WorldObject
+from multigrid.core.world_object import Container, WorldObject
 from multigrid.utils.observation import gen_obs_grid_encoding
+from multigrid.utils.ohe import ohe_direction
 from multigrid.utils.position import Position
 from multigrid.utils.random import RandomMixin
 from multigrid.utils.typing import AgentID, ObsType
-from multigrid.utils.ohe import ohe_direction
 
 
 class MultiGridEnv(gym.Env, RandomMixin, ABC):
@@ -37,6 +37,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         highlight: bool = False,
         see_through_walls: bool = False,
         joint_reward: bool = False,
+        team_reward: bool = False,
         tile_size=TILE_PIXELS,
         screen_size: int | tuple[int, int] | None = None,
         render_mode: Literal["human", "rgb_array"] = "human",
@@ -52,6 +53,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         self._height = height
         self._highlight = highlight
         self._joint_reward = joint_reward
+        self._team_reward = team_reward
         self._tile_size = tile_size
         self._render_size = None
         self._window = None
@@ -114,7 +116,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
 
     def step(
         self, actions: Dict[AgentID, Action | int]
-    ) -> tuple[
+    ) -> Tuple[
         Dict[AgentID, ObsType],
         Dict[AgentID, SupportsFloat],
         Dict[AgentID, bool],
@@ -226,13 +228,21 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         rewards: Dict[AgentID, SupportsFloat],
         reward: SupportsFloat,
         joint_reward: Optional[bool] = None,
+        team_reward: Optional[bool] = None,
     ):
         if joint_reward is None:
             joint_reward = self._joint_reward
 
+        if team_reward is None:
+            team_reward = self._team_reward
+
         if joint_reward:
             for i in range(self._num_agents):
                 rewards[i] = reward  # Reward all agents
+        elif team_reward:
+            for i in range(self._num_agents):
+                if agent.color == self.agents[i].color:
+                    rewards[i] = reward
         else:
             rewards[agent.index] = reward
 
@@ -248,89 +258,99 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         for i in agents:
             if i not in actions:
                 continue
-
             agent, action = self.agents[i], actions[i]
-
-            if agent.state.terminated:
-                continue
-
-            # Rotate left
-            if action == Action.left:
-                agent.state.dir = (agent.state.dir - 1) % 4
-
-            # Rotate right
-            elif action == Action.right:
-                agent.state.dir = (agent.state.dir + 1) % 4
-
-            # Move forward
-            elif action == Action.forward:
-                fwd_pos = agent.front_pos
-                if not self.grid.in_bounds(fwd_pos):
-                    continue
-
-                fwd_obj = self.grid.get(fwd_pos)
-
-                if fwd_obj is not None and not fwd_obj.can_overlap():
-                    continue
-
-                agent_present = np.array(self._agent_states.pos == fwd_pos).any()
-                if agent_present:
-                    continue
-
-                agent.state.pos = fwd_pos
-                if fwd_obj is not None:
-                    if fwd_obj.type == WorldObjectType.goal:
-                        self.on_success(agent, rewards, {})
-                break
-
-            elif action == Action.pickup:
-                if agent.state.carrying is not None:
-                    break
-
-                fwd_pos = agent.front_pos
-                fwd_obj = self.grid.get(fwd_pos)
-
-                if fwd_obj is None or not fwd_obj.can_pickup():
-                    break
-
-                agent.state.carrying = fwd_obj
-                self.grid.set(fwd_pos, None)
-
-            elif action == Action.drop:
-                if agent.state.carrying is None:
-                    break
-
-                fwd_pos = agent.front_pos
-                fwd_obj = self.grid.get(fwd_pos)
-
-                agent_present = np.array(self._agent_states.pos == fwd_pos).any()
-                if agent_present:
-                    break
-
-                if fwd_obj is not None and fwd_obj.can_contain():
-                    fwd_obj.contains = agent.state.carrying
-                    agent.state.carrying = None
-                    break
-
-                if fwd_obj is not None:
-                    break
-
-                self.grid.set(fwd_pos, agent.state.carrying)
-                agent.state.carrying.cur_pos = fwd_pos
-                agent.state.carrying = None
-
-            elif action == Action.toggle:
-                fwd_pos = agent.front_pos
-                fwd_obj = self.grid.get(fwd_pos)
-                if fwd_obj is not None:
-                    fwd_obj.toggle(self, agent, fwd_pos)
-
-            elif action == Action.done:
-                pass
-            else:
-                raise ValueError(f"Invalid action: {action}")
+            self._execute_action(agent, action, rewards)
 
         return rewards
+
+    def _execute_action(
+        self, agent: Agent, action: Action | int, rewards: Dict[AgentID, SupportsFloat]
+    ) -> None:
+        if agent.state.terminated:
+            return
+
+        # Rotate left
+        if action == Action.left:
+            agent.state.dir = (agent.dir - 1) % 4
+
+        # Rotate right
+        elif action == Action.right:
+            agent.state.dir = (agent.dir + 1) % 4
+
+        # Move forward
+        elif action == Action.forward:
+            fwd_pos = agent.front_pos
+            if not self.grid.in_bounds(fwd_pos):
+                return
+
+            fwd_obj = self.grid.get(fwd_pos)
+
+            if fwd_obj is not None and not fwd_obj.can_overlap():
+                return
+
+            agent_present = np.array(self._agent_states.pos == fwd_pos).any()
+            if agent_present:
+                return
+
+            agent.state.pos = fwd_pos
+            if fwd_obj is not None:
+                if fwd_obj.type == WorldObjectType.goal:
+                    self.on_success(agent, rewards, {})
+
+        elif action == Action.pickup:
+            if agent.state.carrying is not None:
+                return
+
+            fwd_pos = agent.front_pos
+            fwd_obj = self.grid.get(fwd_pos)
+
+            if fwd_obj is None:
+                return
+
+            if isinstance(fwd_obj, Container):
+                agent.state.carrying = fwd_obj.contains
+                fwd_obj.contains = None
+                return
+
+            if not fwd_obj.can_pickup():
+                return
+
+            agent.state.carrying = fwd_obj
+            self.grid.set(fwd_pos, None)
+
+        elif action == Action.drop:
+            if agent.state.carrying is None:
+                return
+
+            fwd_pos = agent.front_pos
+            fwd_obj = self.grid.get(fwd_pos)
+
+            agent_present = np.array(self._agent_states.pos == fwd_pos).any()
+            if agent_present:
+                return
+
+            if fwd_obj is not None and fwd_obj.can_contain():
+                fwd_obj.contains = agent.state.carrying
+                agent.state.carrying = None
+                return
+
+            if fwd_obj is not None:
+                return
+
+            self.grid.set(fwd_pos, agent.carrying)
+            agent.state.carrying.cur_pos = fwd_pos
+            agent.state.carrying = None
+
+        elif action == Action.toggle:
+            fwd_pos = agent.front_pos
+            fwd_obj = self.grid.get(fwd_pos)
+            if fwd_obj is not None:
+                fwd_obj.toggle(self, agent, fwd_pos)
+
+        elif action == Action.done:
+            pass
+        else:
+            raise ValueError(f"Invalid action: {action}")
 
     @abstractmethod
     def _gen_grid(self, width: int, height: int):
