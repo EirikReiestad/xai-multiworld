@@ -14,6 +14,8 @@ def _random_observation_concept(_: NDArray[np.int_]) -> bool:
 
 @staticmethod
 def _goal_in_view_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
+    if view is None:
+        return False
     image = view["image"]
     dir = view["direction"]
 

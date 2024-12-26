@@ -2,6 +2,7 @@ from typing import List, Tuple
 import torch
 import torch.nn as nn
 
+from multigrid.core import action
 from multigrid.core.action import Action
 from multigrid.core.concept import (
     get_concept_checks,
@@ -16,6 +17,7 @@ from rllib.utils.dqn.misc import get_non_final_mask
 from rllib.utils.torch.processing import (
     observation_to_torch_unsqueeze,
     observations_seperate_to_torch,
+    remove_none_observations,
 )
 
 
@@ -69,9 +71,6 @@ class DQNConceptBottleneckWrapper(ConceptBottleneck):
         self._algorithm._predict_target_values(
             non_final_next_states, next_state_values, non_final_mask
         )
-        # TODO: Remove, just a sanity check for now
-        # Check that next_state_values is not all None
-        assert all(next_state_values != 0), "Next state values are all None."
         expected_state_action_values = self._algorithm._expected_state_action_values(
             next_state_values, reward_batch
         )
@@ -82,25 +81,22 @@ class DQNConceptBottleneckWrapper(ConceptBottleneck):
         concept_loss = self._compute_concept_loss(
             state_concept_values,
             expected_state_concept_values,
-            expected_state_concept_values,
         )
         action_loss = self._algorithm._compute_action_loss(
             state_action_values, expected_state_action_values
         )
 
         self._optimizer.zero_grad()
-        concept_loss.backward()
+        concept_loss.backward(retain_graph=True)
         self._optimizer.step()
 
-        for param in self._policy_net.concept_head.parameters():
-            param.requires_grad = False
+        self._policy_net.freeze_concept_head()
 
         self._optimizer.zero_grad()
         action_loss.backward()
         self._optimizer.step()
 
-        for param in self._policy_net.concept_head.parameters():
-            param.requires_grad = True
+        self._policy_net.unfreeze_concept_head()
 
     def _predict_policy_values(
         self, state: List[torch.Tensor], action_batch: torch.Tensor
@@ -131,8 +127,6 @@ class DQNConceptBottleneckWrapper(ConceptBottleneck):
         self,
         concept_pred: torch.Tensor,
         concept_target: torch.Tensor,  # Agents, batch size, concepts
-        concept_batch: torch.Tensor,
     ) -> nn.SmoothL1Loss:
         criterion = nn.SmoothL1Loss()  # Use a suitable loss function
-        criterion = criterion(concept_pred, concept_target)
-        return criterion.gather(1, concept_batch)
+        return criterion(concept_pred, concept_target)

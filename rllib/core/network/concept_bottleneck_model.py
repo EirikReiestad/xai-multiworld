@@ -2,6 +2,7 @@ from typing import Tuple
 
 import numpy as np
 import torch
+import torch.nn as nn
 
 from rllib.core.network.processor import ConvProcessor, FCProcessor
 from rllib.core.torch.module import TorchModule
@@ -56,3 +57,25 @@ class ConceptBottleneckModel(TorchModule):
         concept_pred = self._fc_concept(x)
         action_pred = self._fc_final(x)
         return concept_pred, action_pred
+
+    def freeze_concept_head(self):
+        """
+        Freeze all layers that impact the concept prediction.
+        """
+        for param in self._conv0.parameters():
+            param.requires_grad = False
+        for param in self._fc0.parameters():
+            param.requires_grad = False
+        for param in self._fc_concept.parameters():
+            param.requires_grad = False
+
+    def unfreeze_concept_head(self):
+        """
+        Unfreeze all layers that impact the concept prediction.
+        """
+        for param in self._conv0.parameters():
+            param.requires_grad = True
+        for param in self._fc0.parameters():
+            param.requires_grad = True
+        for param in self._fc_concept.parameters():
+            param.requires_grad = True
