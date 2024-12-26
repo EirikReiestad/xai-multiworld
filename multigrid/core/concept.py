@@ -14,8 +14,6 @@ def _random_observation_concept(_: NDArray[np.int_]) -> bool:
 
 @staticmethod
 def _goal_in_view_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
-    if view is None:
-        return False
     image = view["image"]
     dir = view["direction"]
 
@@ -27,9 +25,51 @@ def _goal_in_view_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
     return False
 
 
+@staticmethod
+def _goal_to_right_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
+    image = view["image"]
+    dir = view["direction"]
+
+    for row in image:
+        for cell in row[row.length // 2, row.length]:
+            type_idx = cell[WorldObject.TYPE]
+            if type_idx == WorldObjectType.goal.to_index():
+                return True
+    return False
+
+
+@staticmethod
+def _goal_to_left_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
+    image = view["image"]
+    dir = view["direction"]
+
+    for row in image:
+        for cell in row[0, row.length // 2]:
+            type_idx = cell[WorldObject.TYPE]
+            if type_idx == WorldObjectType.goal.to_index():
+                return True
+    return False
+
+
+@staticmethod
+def _goal_in_front_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
+    image = view["image"]
+    dir = view["direction"]
+
+    for row in image[1:]:
+        for cell in row[0 : row.length // 2]:
+            type_idx = cell[WorldObject.TYPE]
+            if type_idx == WorldObjectType.goal.to_index():
+                return True
+    return False
+
+
 concept_checks: Dict[str, Callable] = {
     "random": _random_observation_concept,
     "goal": _goal_in_view_concept,
+    "goal_to_right": _goal_to_right_concept,
+    "goal_to_left": _goal_to_left_concept,
+    "goal_in_front": _goal_in_front_concept,
 }
 
 
@@ -76,6 +116,8 @@ def _get_agent_concept_values(state: Dict[str, Dict[str, NDArray]]) -> List:
 
 
 def _get_concept_check_bitmap(state: Dict[str, NDArray]) -> List[NDArray]:
+    if state is None:
+        return [0] * len(concept_checks)
     concept_bitmap = []
     for concept_check_name, concept_check in concept_checks.items():
         # Apply the concept check to the state (assuming it returns True/False)
