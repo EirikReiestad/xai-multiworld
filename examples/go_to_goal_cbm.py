@@ -6,7 +6,7 @@ from rllib.wrappers.dqn_concept_bottleneck_wrapper import DQNConceptBottleneckWr
 env = GoToGoalEnv(
     width=10,
     height=10,
-    max_steps=100,
+    max_steps=300,
     agents=1,
     success_termination_mode="all",
     render_mode="rgb_array",
