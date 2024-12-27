@@ -98,6 +98,7 @@ class Algorithm(Environment, WandB, ABC):
     ]:
         observation, rewards, terminations, truncations, infos = self._env.step(actions)
         rgb_array = self._render()
+        rgb_array = self._config._rendering_callback(rgb_array, observation)
         self.log_frame(rgb_array)
 
         return observation, rewards, terminations, truncations, infos

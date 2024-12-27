@@ -156,7 +156,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         img = self._get_frame(self._highlight, self._tile_size)
 
         if self.render_mode == "human":
-            img = np.transpose(img, axes=(1, 0, 2))
+            img_transposed = np.transpose(img, axes=(1, 0, 2))
             screen_size = tuple(map(int, self._screen_size))
             if self._render_size is None:
                 self._render_size = img.shape[2]
@@ -167,7 +167,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
                 self._window = pg.display.set_mode(screen_size)
             if self._clock is None:
                 self.clock = pg.time.Clock()
-            surf = pg.surfarray.make_surface(img)
+            surf = pg.surfarray.make_surface(img_transposed)
             bg = pg.Surface(screen_size)
             bg.convert()
             bg.fill((255, 255, 255))
@@ -176,6 +176,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
             pg.event.pump()
             self.clock.tick(self.metadata["render_fps"])
             pg.display.flip()
+            return img
         elif self.render_mode == "rgb_array":
             return img
         else:
