@@ -12,6 +12,17 @@ from xailib.common.gradients import calculate_gradients
 
 
 def feature_concept_importance(
+    activations: torch.Tensor,
+    observation: List[torch.Tensor],
+):
+    obs_img = observation[0]
+    obs_dir = observation[1]
+    grads_img = calculate_gradients(obs_img, activations)
+    grads_dir = calculate_gradients(obs_dir, activations, allow_unused=True)
+    return grads_img, grads_dir
+
+
+def feature_concept_importances(
     activations: Dict[str, Dict[str, Dict]],  # activations[model_name][layer_name]
     observations: Dict[str, List[torch.Tensor]],
     probes: Dict[str, Dict[str, LogisticRegression]],  # probes[model_name][layer_name]
@@ -30,14 +41,8 @@ def feature_concept_importance(
     for model_name, model in activations.items():
         obs = observations[model_name]
         for layer_name, layer_activations in model.items():
-            print(model_name, layer_name)
-            obs_img = obs[0].detach().clone().requires_grad_(True)
-            obs_dir = obs[1].detach().clone().requires_grad_(True)
             act = layer_activations["output"]
-            grads_img = calculate_gradients(obs_img, act)
-            grads_dir = calculate_gradients(obs_dir.clone(), act, allow_unused=True)
-            print(grads_img)
-            print(grads_dir)
+            grads_img, grads_dir = feature_concept_importance(act, obs)
 
 
 def filter_negative_concepts(

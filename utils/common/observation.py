@@ -1,8 +1,9 @@
 import json
-import torch
-from typing import List, Dict, Tuple
+import os
+from typing import Dict, List, Tuple
 
 import numpy as np
+import torch
 
 
 class Observation(np.ndarray):
@@ -84,3 +85,10 @@ def zip_observation_data(observation: Observation) -> List:
     assert isinstance(observation, Observation)
     data = observation_data_to_torch(observation)
     return zipped_torch_observation_data(data)
+
+
+def load_and_split_observation(
+    concept: str, split_ratio=0.8, concept_path=os.path.join("assets", "concepts")
+) -> Tuple[Observation, Observation]:
+    observation = observation_from_file(os.path.join(concept_path, concept + ".json"))
+    return split_observation(observation, split_ratio)
