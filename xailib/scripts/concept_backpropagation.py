@@ -63,6 +63,10 @@ for grad, obs in zip(grads_img, test_observation):
     numpy_grad = grad.detach().numpy()
     grid_obs = np.array(obs.features[0]["image"])
     agents = agents_from_agent_observation(grid_obs)
+    agent = Agent(0)
+    agent.pos = (grid_obs.shape[1] // 2, grid_obs.shape[0] - 1)
+    agent.dir = 3
+    agents.append(agent)
     grid = Grid.from_numpy(grid_obs)
     img = grid.render(TILE_PIXELS, agents=agents)
 
