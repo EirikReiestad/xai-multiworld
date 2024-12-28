@@ -18,7 +18,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="multigrid-cleanup")
+    .wandb(project="multigrid-cleanup")
 )
 
 dqn = DQN(config)
