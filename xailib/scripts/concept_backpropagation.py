@@ -8,11 +8,13 @@ from utils.common.observation import (
     observation_from_file,
     split_observation,
     zip_observation_data,
+    set_require_grad,
 )
 from utils.core.model_loader import ModelLoader
 from xailib.common.activations import ActivationTracker
-from xailib.common.binary_concept_score import binary_concept_scores
+from xailib.common.tcav_score import tcav_scores
 from xailib.common.probes import get_probes
+from xailib.common.concept_backpropagation import feature_concept_importance
 
 env = GoToGoalEnv(render_mode="rgb_array")
 config = (
@@ -53,18 +55,26 @@ negative_observation, _ = split_observation(negative_observation, 0.8)
 probes = get_probes(model_artifacts, positive_observation, negative_observation)
 
 test_observation_zipped = zip_observation_data(test_observation)
+set_require_grad(test_observation_zipped)
 
 test_activations = {}
+test_input = {}
+test_output = {}
 for key, value in model_artifacts.items():
-    activations, _, _ = ActivationTracker(value.model).compute_activations(
+    activations, input, output = ActivationTracker(value.model).compute_activations(
         test_observation_zipped
     )
     test_activations[key] = activations
+    test_input[key] = input
+    test_output[key] = output
 
-binary_concept_scores = binary_concept_scores(test_activations, probes)
+feature_concept_importance = feature_concept_importance(
+    test_activations, test_input, probes
+)
+tcav_scores = tcav_scores(test_activations, test_output, probes)
 
 plot_3d(
-    binary_concept_scores,
+    tcav_scores,
     label=positive_concept,
     filename="concept_score",
     min=0,

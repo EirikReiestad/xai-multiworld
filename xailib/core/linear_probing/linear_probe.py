@@ -39,10 +39,10 @@ class LinearProbe:
         positive_observations = zip_observation_data(self._positive_observations)
         negative_observations = zip_observation_data(self._negative_observations)
 
-        positive_activations, positive_output = (
+        positive_activations, positive_input, positive_output = (
             self._activation_tracker.compute_activations(positive_observations)
         )
-        negative_activations, negative_output = (
+        negative_activations, negative_input, negative_output = (
             self._activation_tracker.compute_activations(negative_observations)
         )
 

@@ -65,7 +65,7 @@ class ConceptObsWrapper(gym.Wrapper):
             if self._concepts_filled[concept]:
                 continue
             for agent_id, obs in observations.items():
-                if not check_fn(obs["image"]):
+                if not check_fn(obs):
                     continue
                 self._concepts[concept].append(obs)
 

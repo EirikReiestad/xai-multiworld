@@ -33,7 +33,7 @@ config = (
 
 dqn = DQN(config)
 
-positive_concept = "goal"
+positive_concept = "random"
 negative_concept = "random_negative"
 
 model_path = os.path.join("artifacts")
@@ -58,7 +58,7 @@ test_observation_zipped = zip_observation_data(test_observation)
 test_activations = {}
 test_output = {}
 for key, value in model_artifacts.items():
-    activations, output = ActivationTracker(value.model).compute_activations(
+    activations, input, output = ActivationTracker(value.model).compute_activations(
         test_observation_zipped
     )
     test_activations[key] = activations

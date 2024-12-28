@@ -1,6 +1,7 @@
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.dqn import DQN
 from multigrid.envs.go_to_goal import GoToGoalEnv
+from multigrid.wrappers import ConceptObsWrapper
 
 env = GoToGoalEnv(
     width=10,
@@ -9,6 +10,9 @@ env = GoToGoalEnv(
     agents=10,
     success_termination_mode="all",
     render_mode="human",
+)
+env_wrapped = ConceptObsWrapper(
+    env, observations=10, concepts=["random"], method="random"
 )
 
 config = (
@@ -22,11 +26,10 @@ config = (
         eps_decay=100000,
         target_update=1000,
     )
-    .environment(env=env)
+    .environment(env=env_wrapped)
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="dell-multigrid-go-to-goal")
 )
 
 dqn = DQN(config)

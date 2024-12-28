@@ -12,11 +12,11 @@ class ActivationTracker:
 
         self._register_hooks()
 
-    def compute_activations(self, inputs: List) -> tuple[dict, torch.Tensor]:
+    def compute_activations(self, inputs: List) -> tuple[dict, List, torch.Tensor]:
         self._activations.clear()
         outputs = self._model(*inputs)
         activations_cloned = {key: value for key, value in self._activations.items()}
-        return activations_cloned, outputs
+        return activations_cloned, inputs, outputs
 
     def _register_hooks(self):
         hook_count = 0

@@ -63,10 +63,24 @@ def zipped_torch_observation_data(observation: List) -> List:
     """
     If the observation is a 2D array, this function will return a list of tuples.
     """
-    zipped = [torch.tensor(np.array(tup)) for tup in zip(*observation)]
-    return zipped
+    return [torch.tensor(np.array(tup)) for tup in zip(*observation)]
+
+
+def set_require_grad(observation: List):
+    for i, obs in enumerate(observation):  # Use enumerate to modify the list in place
+        if isinstance(obs, List):
+            set_require_grad(obs)
+            continue
+        elif isinstance(obs, torch.Tensor):
+            observation[i] = obs.float()  # Modify the tensor in the original list
+            observation[i].requires_grad = True  # Set requires_grad in place
+        else:
+            raise ValueError(f"Expected torch.Tensor or List, got {type(obs)}")
+
+    assert all([obs.requires_grad for obs in observation])
 
 
 def zip_observation_data(observation: Observation) -> List:
+    assert isinstance(observation, Observation)
     data = observation_data_to_torch(observation)
     return zipped_torch_observation_data(data)
