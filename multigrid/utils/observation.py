@@ -1,12 +1,16 @@
+from typing import List
+
 import numpy as np
 from numpy.typing import NDArray as ndarray
+from multigrid.utils.position import Position
 
-from multigrid.core.agent import AgentState
+from multigrid.core.agent import Agent, AgentState
 from multigrid.core.constants import Color, Direction, WorldObjectType
-from multigrid.core.world_object import WorldObject, Wall
+from multigrid.core.world_object import Wall, WorldObject
 
 WALL_ENCODING = Wall().encode()
 UNSEEN_ENCODING = WorldObject(WorldObjectType.unseen, Color.from_index(0)).encode()
+EMPTY_ENCODING = WorldObject(WorldObjectType.empty, Color.from_index(0)).encode()
 ENCODE_DIM = WorldObject.dim
 
 GRID_ENCODING_IDX = slice(None)
@@ -215,3 +219,34 @@ def get_view_exts(
     top_left[agent_dir == UP, 1] = agent_y[agent_dir == UP] - agent_view_size + 1
 
     return top_left
+
+
+def agents_from_agent_observation(obs_grid: ndarray[np.int_]) -> List[Agent]:
+    width, height = obs_grid.shape[0], obs_grid.shape[1]
+    agent_encodings = []
+    agents_pos = []
+    for y in range(height):
+        for x in range(width):
+            pos = Position(x, y)
+            cell = obs_grid[pos.y, pos.x]
+            if cell[TYPE] == WorldObjectType.agent.to_index():
+                agent_encodings.append(cell.copy())
+                agents_pos.append(pos())
+                obs_grid[pos.y, pos.x] = EMPTY_ENCODING
+            # TODO: This should be handled differently
+            if cell[TYPE] == WorldObjectType.unseen.to_index():
+                obs_grid[pos.y, pos.x] = EMPTY_ENCODING
+
+    agent_state = AgentState(len(agent_encodings))
+
+    for i in range(len(agent_encodings)):
+        agent_state[i, AGENT_ENCODING_IDX] = agent_encodings[i]
+        agent_state[i, AGENT_POS_IDX] = agents_pos[i]
+
+    agents = []
+    for i in range(len(agent_encodings)):
+        agent = Agent(i)
+        agent.state = agent_state[agent.index]
+        agents.append(agent)
+
+    return agents

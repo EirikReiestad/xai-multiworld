@@ -1,11 +1,12 @@
 from collections import defaultdict
-from typing import Any, Iterable, Optional, List
+from typing import Any, Iterable, List, Optional
 
 import numpy as np
 from numpy.typing import NDArray
 
 from multigrid.core.constants import TILE_PIXELS
 from multigrid.core.world_object import WorldObject
+from multigrid.utils import position
 from multigrid.utils.position import Position
 from multigrid.utils.random import RandomMixin
 from multigrid.utils.rendering import (
@@ -34,6 +35,27 @@ class Grid:
             (width, height, WorldObject.dim), dtype=int
         )
         self.state[...] = WorldObject.empty()
+
+    @staticmethod
+    def from_numpy(grid: NDArray[np.int_]) -> "Grid":
+        assert grid.ndim == 3, "Input grid must be 3-dimensional."
+        height, width, dim = grid.shape
+        assert (
+            dim == WorldObject.dim
+        ), f"Last dimension must match WorldObject.dim ({WorldObject.dim})."
+
+        new_grid = Grid(width, height)
+        new_grid.state = grid.copy()
+        for j in range(height):  # Iterate over rows
+            for i in range(width):  # Iterate over columns
+                pos = Position(i, j)
+                grid_obj = grid[pos.y, pos.x]
+                new_grid.state[pos.x, pos.y] = grid_obj
+                obj = WorldObject.from_array(grid_obj)  # Row-major indexing
+                if obj is not None:
+                    new_grid._world_objects[pos.x, pos.y] = obj
+
+        return new_grid
 
     @classmethod
     def render_tile(

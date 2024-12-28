@@ -2,6 +2,4 @@
 git stash
 git pull
 
-sh clean.sh
-
-sbatch idun.sh
+sbatch scripts/idun/idun.sh

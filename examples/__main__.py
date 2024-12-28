@@ -1,5 +1,5 @@
 import subprocess
 
 if __name__ == "__main__":
-    script = "examples/go_to_goal_cbm.py"
+    script = "examples/boxwar.py"
     subprocess.run(["python", script])
