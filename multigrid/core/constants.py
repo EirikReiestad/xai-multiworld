@@ -1,6 +1,7 @@
-import enum
+import aenum as enum
 import numpy as np
 from numpy.typing import NDArray as ndarray
+
 from multigrid.utils.enum import IndexedEnum
 
 TILE_PIXELS = 64

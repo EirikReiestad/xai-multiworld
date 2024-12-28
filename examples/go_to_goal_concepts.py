@@ -12,7 +12,7 @@ env = GoToGoalEnv(
     render_mode="human",
 )
 env_wrapped = ConceptObsWrapper(
-    env, observations=10, concepts=["random"], method="random"
+    env, observations=1000, concepts=["random", "goal"], method="random"
 )
 
 config = (

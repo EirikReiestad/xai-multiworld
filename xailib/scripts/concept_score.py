@@ -31,7 +31,7 @@ config = (
 
 dqn = DQN(config)
 
-concept = "goal"
+concept = "random"
 
 model_artifacts = ModelLoader.load_models_from_path("artifacts", dqn.model)
 positive_observation, test_observation = load_and_split_observation(concept, 0.8)

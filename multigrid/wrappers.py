@@ -45,7 +45,11 @@ class ConceptObsWrapper(gym.Wrapper):
         self._concepts_filled["flag"] = True  # Only write once
         self._concept_checks = get_concept_checks(concepts)
 
+        assert len(self._concept_checks) != 0, f"No concepts to check, {concepts}"
+
         self._method = method
+        self._step_count = 0
+        self._concepts_added = 0
 
     def step(
         self, actions: Dict[AgentID, Action | int]
@@ -59,6 +63,12 @@ class ConceptObsWrapper(gym.Wrapper):
         if self._method == "random":
             super().reset()
 
+        if self._step_count % (self._num_observations // 10) == 0:
+            logging.info(f"Step {self._step_count}")
+            logging.info(
+                f"Number of concepts filled: {self._concepts_added} / {self._num_observations * len(self._concept_checks)}"
+            )
+
         observations, rewards, terminations, truncations, info = super().step(actions)
 
         for concept, check_fn in self._concept_checks.items():
@@ -67,6 +77,7 @@ class ConceptObsWrapper(gym.Wrapper):
             for agent_id, obs in observations.items():
                 if not check_fn(obs):
                     continue
+                self._concepts_added += 1
                 self._concepts[concept].append(obs)
 
                 if len(self._concepts[concept]) >= self._num_observations:
@@ -76,6 +87,8 @@ class ConceptObsWrapper(gym.Wrapper):
                     self._write_concepts()
                     self._concepts_filled["flag"] = False
                     sys.exit()
+
+        self._step_count += 1
 
         return observations, rewards, terminations, truncations, info
 
