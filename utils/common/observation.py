@@ -21,6 +21,10 @@ class Observation(np.ndarray):
 
         return obj
 
+    @property
+    def features(self):
+        return self[..., self.DATA]
+
 
 def observation_from_file(path: str) -> Observation:
     assert path.endswith(".json")

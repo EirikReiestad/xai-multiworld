@@ -34,6 +34,7 @@ class WorldObjectType(str, IndexedEnum):
     box = "box"
     goal = "goal"
     agent = "agent"
+    container = "container"
 
 
 class Color(str, IndexedEnum):

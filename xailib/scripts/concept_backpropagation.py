@@ -1,17 +1,23 @@
+import numpy as np
+
+from multigrid.core.agent import Agent
+from multigrid.core.constants import TILE_PIXELS
+from multigrid.core.grid import Grid
 from multigrid.envs.go_to_goal import GoToGoalEnv
-from xailib.core.plotting.plot3d import plot_3d
+from multigrid.utils.observation import agents_from_agent_observation
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from utils.common.observation import (
-    zip_observation_data,
-    set_require_grad,
     load_and_split_observation,
+    set_require_grad,
+    zip_observation_data,
 )
 from utils.core.model_loader import ModelLoader
 from xailib.common.activations import compute_activations_from_artifacts
-from xailib.common.tcav_score import tcav_scores
-from xailib.common.probes import get_probes
 from xailib.common.concept_backpropagation import feature_concept_importance
+from xailib.common.probes import get_probes
+from xailib.common.tcav_score import tcav_scores
+from xailib.core.plotting.heatmap import plot_heatmap
 
 env = GoToGoalEnv(render_mode="rgb_array")
 config = (
@@ -47,18 +53,20 @@ test_activations, test_input, test_output = compute_activations_from_artifacts(
     model_artifacts, test_observation_zipped
 )
 
-print(len(test_activations["latest"]))
+last_layer_activations = next(reversed(test_activations["latest"].values()))["output"]
 
-feature_concept_importance = feature_concept_importance(
-    test_activations["latest"][layer], test_input["latest"]
+grads_img, grads_dir = feature_concept_importance(
+    last_layer_activations, test_input["latest"]
 )
+
+for grad, obs in zip(grads_img, test_observation):
+    numpy_grad = grad.detach().numpy()
+    grid_obs = np.array(obs.features[0]["image"])
+    agents = agents_from_agent_observation(grid_obs)
+    grid = Grid.from_numpy(grid_obs)
+    img = grid.render(TILE_PIXELS, agents=agents)
+
+    grad_sum = numpy_grad.sum(axis=2)  # sum of gradients for the observation object
+    plot_heatmap(grad_sum, background=img, alpha=0.5, title=concept)
 
 tcav_scores = tcav_scores(test_activations, test_output, probes)
-
-plot_3d(
-    tcav_scores,
-    label=concept,
-    filename="concept_score",
-    min=0,
-    max=1,
-)
