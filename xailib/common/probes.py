@@ -6,7 +6,7 @@ from sklearn.linear_model import LogisticRegression
 
 
 def get_probes(
-    model_artifacts: dict[str, ModelArtifact],
+    model_artifacts: Dict[str, ModelArtifact],
     positive_observation: Observation,
     negative_observation: Observation,
 ) -> Dict[str, Dict[str, LogisticRegression]]:
