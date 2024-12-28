@@ -1,7 +1,9 @@
 from abc import ABC
-from typing import Literal, Optional
+from typing import Literal, Optional, Callable
 import logging
 import gymnasium as gym
+
+from rllib.common.callbacks import RenderingCallback, empty_rendering_callback
 
 
 class AlgorithmConfig(ABC):
@@ -32,8 +34,13 @@ class AlgorithmConfig(ABC):
         logging.basicConfig(level=log_level)
         return self
 
-    def rendering(self, rendering: bool = True):
+    def rendering(
+        self,
+        rendering: bool = True,
+        callback: RenderingCallback = empty_rendering_callback,
+    ):
         self._rendering = rendering
+        self._rendering_callback = callback
         return self
 
     def wandb(

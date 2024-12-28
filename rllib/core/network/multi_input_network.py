@@ -8,6 +8,7 @@ import gymnasium as gym
 from gymnasium.spaces import Box, Discrete
 from rllib.utils.spaces import ObservationSpace, ActionSpace
 from rllib.core.network.processor import ConvProcessor, FCProcessor
+from rllib.utils.network.network import observation_space_check, action_space_check
 
 
 class MultiInputNetwork(TorchModule):
@@ -19,15 +20,8 @@ class MultiInputNetwork(TorchModule):
         hidden_units: tuple[int, ...] = (128, 128),
     ):
         super(MultiInputNetwork, self).__init__()
-        assert (
-            state_dim.box is not None
-        ), f"State space must be continuous, got {state_dim}"
-        assert (
-            state_dim.discrete is not None
-        ), f"State space must be discrete, got {state_dim}"
-        assert (
-            action_dim.discrete is not None
-        ), f"Action space must be discrete, got {action_dim}"
+        observation_space_check(state_dim)
+        action_space_check(action_dim)
         self._conv0 = ConvProcessor(state_dim.box, conv_layers)
         rolled_state_dim = np.roll(state_dim.box, shift=1)  # Channels first
         conv_output_size = get_output_size(self._conv0, rolled_state_dim)
@@ -41,6 +35,7 @@ class MultiInputNetwork(TorchModule):
         )
 
     def forward(self, x_img: torch.Tensor, x_dir: torch.Tensor) -> torch.Tensor:
+        x_img = x_img.float()
         x_img = x_img.permute(0, 3, 1, 2)
         x_img = self._conv0(x_img)
         x_img = x_img.view(x_img.size(0), -1)
