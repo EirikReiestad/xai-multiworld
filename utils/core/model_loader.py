@@ -33,6 +33,20 @@ class ModelLoader:
         return models
 
     @staticmethod
+    def load_latest_model_from_path(
+        path: str, network: nn.Module
+    ) -> Dict[str, ModelArtifact]:
+        model_dirs = os.listdir(path)
+        sorted_model_dirs = sorted(
+            model_dirs, key=lambda x: int(re.search(r"\d+", x).group())
+        )
+        latest_model_dir = sorted_model_dirs[-1]
+        latest_model_dir_path = os.path.join(path, latest_model_dir)
+        return {
+            "latest": ModelLoader.load_model_from_path(latest_model_dir_path, network)
+        }
+
+    @staticmethod
     def load_model_from_path(path: str, network: nn.Module) -> ModelArtifact:
         model_file = None
         metadata_file = None

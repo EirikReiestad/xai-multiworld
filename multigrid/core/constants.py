@@ -1,6 +1,7 @@
-import enum
+import aenum as enum
 import numpy as np
 from numpy.typing import NDArray as ndarray
+
 from multigrid.utils.enum import IndexedEnum
 
 TILE_PIXELS = 64
@@ -34,6 +35,7 @@ class WorldObjectType(str, IndexedEnum):
     box = "box"
     goal = "goal"
     agent = "agent"
+    container = "container"
 
 
 class Color(str, IndexedEnum):

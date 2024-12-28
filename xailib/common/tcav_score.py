@@ -5,6 +5,7 @@ import numpy as np
 import torch
 from numpy.typing import NDArray
 from sklearn.linear_model import LogisticRegression
+from xailib.common.gradients import calculate_gradients
 
 
 def tcav_scores(
@@ -51,17 +52,9 @@ def _tcav_score(
 def _sensitivity_score(
     activations: torch.Tensor, network_output: torch.Tensor, cav: np.ndarray
 ) -> np.ndarray:
-    assert isinstance(activations, torch.Tensor), "Activations must be a tensor"
-    assert activations.requires_grad, "Activations must have requires_grad=True"
     assert cav.ndim == 2, "Coef must be 2D (n_features, n_classes)"
 
-    grads = torch.autograd.grad(
-        network_output,
-        activations,
-        grad_outputs=torch.ones_like(network_output),
-        create_graph=True,
-        retain_graph=True,
-    )[0]
+    grads = calculate_gradients(activations, network_output)
 
     grads_flattened = grads.contiguous().view(grads.size(0), -1).detach().numpy()
     # grads_flattened = grads.view(grads.size(0), -1).detach().numpy() # Removed due to grads may not be contiguous

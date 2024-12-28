@@ -2,7 +2,9 @@ import torch.nn as nn
 import numpy as np
 import copy
 import torch
-from typing import List
+from typing import List, Dict, Tuple
+
+from utils.common.model_artifact import ModelArtifact
 
 
 class ActivationTracker:
@@ -12,11 +14,11 @@ class ActivationTracker:
 
         self._register_hooks()
 
-    def compute_activations(self, inputs: List) -> tuple[dict, torch.Tensor]:
+    def compute_activations(self, inputs: List) -> tuple[dict, List, torch.Tensor]:
         self._activations.clear()
         outputs = self._model(*inputs)
         activations_cloned = {key: value for key, value in self._activations.items()}
-        return activations_cloned, outputs
+        return activations_cloned, inputs, outputs
 
     def _register_hooks(self):
         hook_count = 0
@@ -41,3 +43,20 @@ def preprocess_activations(activations: dict) -> np.ndarray:
     numpy_activations = activations["output"].detach().numpy()
     reshaped_activations = numpy_activations.reshape(numpy_activations.shape[0], -1)
     return reshaped_activations
+
+
+def compute_activations_from_artifacts(
+    artifacts: Dict[str, ModelArtifact], input: List
+) -> Tuple[Dict[str, Dict], Dict[str, List], Dict[str, torch.Tensor]]:
+    activations = {}
+    inputs = {}
+    outputs = {}
+    for key, value in artifacts.items():
+        _activation, _input, _output = ActivationTracker(
+            value.model
+        ).compute_activations(input)
+
+        activations[key] = _activation
+        inputs[key] = _input
+        outputs[key] = _output
+    return activations, inputs, outputs

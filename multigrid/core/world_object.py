@@ -1,11 +1,12 @@
 import functools
-from typing import TYPE_CHECKING, Union
+import logging
+from typing import TYPE_CHECKING, Union, Optional
 
 import numpy as np
 from numpy.typing import NDArray
-from multigrid.utils.position import Position
 
 from multigrid.core.constants import Color, State, WorldObjectType
+from multigrid.utils.position import Position
 from multigrid.utils.rendering import fill_coords, point_in_rect
 
 if TYPE_CHECKING:
@@ -51,7 +52,9 @@ class WorldObjectMeta(type):
                 WorldObjectType.add_item(type_name, type_name)
 
             # Store the object class with its corresponding type index
-            meta._TYPE_IDX_TO_CLASS[WorldObjectType(type_name).to_index()] = cls
+            type_idx = WorldObjectType(type_name).to_index()
+
+            meta._TYPE_IDX_TO_CLASS[type_idx] = cls
         return cls
 
 
@@ -85,7 +88,7 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
         return WorldObject(type_name=WorldObjectType.empty)
 
     @staticmethod
-    def from_array(arr: list[int]) -> ["WorldObject", None]:
+    def from_array(arr: list[int]) -> Optional["WorldObject"]:
         type_idx = arr[WorldObject.TYPE]
 
         if type_idx == WorldObjectType.empty.to_index():
