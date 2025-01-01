@@ -1,14 +1,13 @@
 import random
-from typing import Any, List, SupportsFloat
+from typing import Any, SupportsFloat
 
 import numpy as np
-from numpy.typing import NDArray
 
 from multigrid.base import MultiGridEnv
 from multigrid.core.action import Action
 from multigrid.core.area import Area
 from multigrid.core.grid import Grid
-from multigrid.core.world_object import Box, Container, Goal, Wall, WorldObject
+from multigrid.core.world_object import Box, Container
 from multigrid.utils.position import Position
 from multigrid.utils.typing import AgentID, ObsType
 
@@ -26,7 +25,7 @@ class CleanUpEnv(MultiGridEnv):
 
         container_obj = lambda: Container()
         area_sizes = [(1, 1), (2, 2)]
-        num_areas = 5
+        num_areas = random.randint(1, 5)
         for _ in range(num_areas):
             area_size = self._rand_elem(area_sizes)
             placeable_areas = self.grid.get_empty_areas(area_size)
