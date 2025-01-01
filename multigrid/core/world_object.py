@@ -393,6 +393,12 @@ class Container(WorldObject):
             return False
         return True
 
+    def can_pickup_contained(self) -> bool:
+        """
+        : meta private:
+        """
+        return False
+
     def render(self, img):
         """
         :meta private:
