@@ -309,6 +309,8 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
                 return
 
             if isinstance(fwd_obj, Container):
+                if fwd_obj.can_pickup_contained is False:
+                    return
                 agent.state.carrying = fwd_obj.contains
                 fwd_obj.contains = None
                 return
