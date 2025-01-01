@@ -1,5 +1,5 @@
 import random
-from typing import Any, SupportsFloat
+from typing import Any, SupportsFloat, Dict
 
 import numpy as np
 
@@ -26,6 +26,7 @@ class CleanUpEnv(MultiGridEnv):
         container_obj = lambda: Container()
         area_sizes = [(1, 1), (2, 2)]
         num_areas = random.randint(1, 5)
+        self._area = 0
         for _ in range(num_areas):
             area_size = self._rand_elem(area_sizes)
             placeable_areas = self.grid.get_empty_areas(area_size)
@@ -44,6 +45,16 @@ class CleanUpEnv(MultiGridEnv):
         for agent, pos in zip(self.agents, placeable_positions):
             agent.state.pos = pos
 
+    def reset(
+        self, seed: int | None = None, **kwargs
+    ) -> tuple[
+        Dict[AgentID, ObsType],
+        Dict[AgentID, Dict[str, Any]],
+    ]:
+        observations, info = super().reset()
+        self._success_move_box = 0
+        return observations, info
+
     def step(
         self, actions: dict[AgentID, Action | int]
     ) -> tuple[
@@ -60,37 +71,66 @@ class CleanUpEnv(MultiGridEnv):
             agent.index: False for agent in self.agents
         }
         for agent in self.agents:
-            if actions[agent.index] != Action.drop:
-                continue
+            if actions[agent.index] == Action.drop:
+                if agent.state.carrying is None:
+                    continue
 
-            if agent.state.carrying is None:
-                continue
+                fwd_pos = agent.front_pos
+                fwd_obj = self.grid.get(fwd_pos)
 
-            fwd_pos = agent.front_pos
-            fwd_obj = self.grid.get(fwd_pos)
+                if fwd_obj is None:
+                    continue
 
-            if fwd_obj is None:
-                continue
+                if not isinstance(fwd_obj, Container):
+                    continue
 
-            if not isinstance(fwd_obj, Container):
-                continue
+                if fwd_obj.contains is not None:
+                    continue
 
-            if fwd_obj.contains is not None:
-                continue
+                agent_present = np.array(self._agent_states.pos == fwd_pos).any()
+                if agent_present:
+                    continue
 
-            agent_present = np.array(self._agent_states.pos == fwd_pos).any()
-            if agent_present:
-                continue
+                self._success_move_box += 1
+                self._area -= 1
+                self.add_reward(
+                    agent, rewards, 0.1 * self._reward(), joint_reward=False
+                )
 
-            self._success_move_box += 1
-            self._area -= 1
-            self.add_reward(agent, rewards, 0.1 * self._reward(), joint_reward=False)
+                if self._success_move_box == self._num_boxes or self._area == 0:
+                    self.on_success(
+                        agent,
+                        rewards,
+                        terminations,
+                    )
 
-            if self._success_move_box == self._num_boxes or self._area == 0:
-                self.on_success(
-                    agent,
-                    rewards,
-                    terminations,
+            if actions[agent.index] == Action.pickup:
+                if agent.state.carrying is not None:
+                    continue
+
+                fwd_pos = agent.front_pos
+                fwd_obj = self.grid.get(fwd_pos)
+
+                if fwd_obj is None:
+                    continue
+
+                if not isinstance(fwd_obj, Container):
+                    continue
+
+                if fwd_obj.contains is None:
+                    continue
+
+                agent_present = np.array(self._agent_states.pos == fwd_pos).any()
+                if agent_present:
+                    continue
+
+                if fwd_obj.can_pickup_contained() is False:
+                    continue
+
+                self._success_move_box -= 1
+                self._area += 1
+                self.add_reward(
+                    agent, rewards, 0.1 * self._reward(), joint_reward=False
                 )
 
         observations, step_rewards, terms, truncations, info = super().step(actions)
