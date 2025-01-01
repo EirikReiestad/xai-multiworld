@@ -309,7 +309,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
                 return
 
             if isinstance(fwd_obj, Container):
-                if fwd_obj.can_pickup_contained is False:
+                if fwd_obj.can_pickup_contained() is False:
                     return
                 agent.state.carrying = fwd_obj.contains
                 fwd_obj.contains = None
@@ -327,6 +327,9 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
 
             fwd_pos = agent.front_pos
             fwd_obj = self.grid.get(fwd_pos)
+
+            if not self.grid.in_bounds(fwd_pos):
+                return
 
             agent_present = np.array(self._agent_states.pos == fwd_pos).any()
             if agent_present:
