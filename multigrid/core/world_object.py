@@ -82,6 +82,9 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
 
         return obj
 
+    def __str__(self):
+        return f"{self.type}({self.color}, {self.state})"
+
     @staticmethod
     @functools.cache
     def empty():

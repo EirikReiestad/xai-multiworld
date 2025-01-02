@@ -48,3 +48,5 @@ def plot_heatmap(
 
     if save:
         plt.savefig(f"assets/figures/heatmap-{title}.png")
+
+    plt.close()
