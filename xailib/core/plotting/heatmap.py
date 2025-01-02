@@ -16,6 +16,8 @@ def plot_heatmap(
     cmap="coolwarm",
     figsize=(10, 8),
     cbar=True,
+    show: bool = False,
+    save: bool = False,
 ):
     plt.figure(figsize=figsize)
 
@@ -40,4 +42,9 @@ def plot_heatmap(
     )
     plt.axis("off")
     plt.title(title)
-    plt.show()
+
+    if show:
+        plt.show()
+
+    if save:
+        plt.savefig(f"assets/figures/heatmap-{title}.png")

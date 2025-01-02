@@ -18,6 +18,9 @@ from xailib.common.concept_backpropagation import feature_concept_importance
 from xailib.common.probes import get_probes
 from xailib.common.tcav_score import tcav_scores
 from xailib.core.plotting.heatmap import plot_heatmap
+from utils.common.element_matrix import (
+    images_to_element_matrix,
+)
 
 env = GoToGoalEnv(render_mode="rgb_array")
 config = (
@@ -37,12 +40,12 @@ config = (
 
 dqn = DQN(config)
 
-concept = "goal"
+concept = "goal_10"
 layer = 0
 
 model_artifacts = ModelLoader.load_latest_model_from_path("artifacts", dqn.model)
 positive_observation, test_observation = load_and_split_observation(concept, 0.8)
-negative_observation, _ = load_and_split_observation("random_negative", 0.8)
+negative_observation, _ = load_and_split_observation("random_10_negative", 0.8)
 
 probes = get_probes(model_artifacts, positive_observation, negative_observation)
 
@@ -71,6 +74,8 @@ for grad, obs in zip(grads_img, test_observation):
     img = grid.render(TILE_PIXELS, agents=agents)
 
     grad_sum = numpy_grad.sum(axis=2)  # sum of gradients for the observation object
-    plot_heatmap(grad_sum, background=img, alpha=0.5, title=concept)
+    plot_heatmap(grad_sum, background=img, alpha=0.5, title=concept, show=True)
+
+image_matrices = images_to_element_matrix(grads_img.detach().numpy(), test_observation)
 
 tcav_scores = tcav_scores(test_activations, test_output, probes)
