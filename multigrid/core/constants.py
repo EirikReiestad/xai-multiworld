@@ -90,6 +90,7 @@ class State(str, IndexedEnum):
     Enumeration of object states.
     """
 
+    # TODO: Find out why I can not place contained below empty, as every new object start with contained as their state, which is wrong.
     contained = "contained"
     empty = "empty"
     open = "open"
