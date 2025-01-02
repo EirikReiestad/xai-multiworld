@@ -23,7 +23,8 @@ from utils.common.element_matrix import (
     images_to_element_matrix,
 )
 from utils.core.plotting import show_image
-from multigrid.core.world_object import WorldObject, WorldObjectType
+from multigrid.core.world_object import WorldObject
+from multigrid.core.constants import WorldObjectType, Color
 
 env = GoToGoalEnv(render_mode="rgb_array")
 config = (
@@ -43,12 +44,12 @@ config = (
 
 dqn = DQN(config)
 
-concept = "goal_10"
+concept = "goal"
 layer = 0
 
 model_artifacts = ModelLoader.load_latest_model_from_path("artifacts", dqn.model)
 positive_observation, test_observation = load_and_split_observation(concept, 0.8)
-negative_observation, _ = load_and_split_observation("random_10_negative", 0.8)
+negative_observation, _ = load_and_split_observation("random_negative", 0.8)
 
 probes = get_probes(model_artifacts, positive_observation, negative_observation)
 
@@ -85,11 +86,14 @@ image_matrices = images_to_element_matrix(
 normalized_images = {
     key: normalize_image(value) for key, value in image_matrices.items()
 }
+
 for key, value in normalized_images.items():
     if key[WorldObject.TYPE] == WorldObjectType.unseen.to_index():
         title = "unseen"
+    elif key[WorldObject.TYPE] == WorldObjectType.agent.to_index():
+        title = "agent"
     else:
         title = str(WorldObject.from_array(key))
-    show_image(value, title)
+    show_image(value, title, rgb=True, rgb_titles=("type", "color", "state"))
 
 tcav_scores = tcav_scores(test_activations, test_output, probes)

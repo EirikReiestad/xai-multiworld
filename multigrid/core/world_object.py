@@ -1,5 +1,4 @@
 import functools
-import logging
 from typing import TYPE_CHECKING, Union, Optional
 
 import numpy as np
@@ -97,13 +96,10 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
         if type_idx == WorldObjectType.empty.to_index():
             return None
 
-        if type_idx in WorldObject._TYPE_IDX_TO_CLASS:
-            cls = WorldObject._TYPE_IDX_TO_CLASS[type_idx]
-            obj = cls.__new__(cls)
-            obj[...] = arr
-            return obj
-
-        raise ValueError(f"Unknown object type index: {type_idx}")
+        cls = WorldObject._TYPE_IDX_TO_CLASS[type_idx]
+        obj = cls.__new__(cls)
+        obj[...] = arr
+        return obj
 
     @functools.cached_property
     def type(self) -> WorldObjectType:

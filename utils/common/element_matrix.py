@@ -25,6 +25,7 @@ def image_to_element_matrix(
         for x in range(width):
             i = (y, x)
             hashable_elem = tuple(observation[i])
+            hashable_elem = (hashable_elem[0], 0, 0)
             element_matrices[hashable_elem][i] = image[i]
             if absolute:
                 element_matrices[hashable_elem][i] = abs(image[i])
