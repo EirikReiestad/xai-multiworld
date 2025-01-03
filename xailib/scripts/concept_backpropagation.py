@@ -45,12 +45,12 @@ config = (
 
 dqn = DQN(config)
 
-concept = "goal_10"
+concept = "goal"
 layer = 0
 
 model_artifacts = ModelLoader.load_latest_model_from_path("artifacts", dqn.model)
 positive_observation, test_observation = load_and_split_observation(concept, 0.8)
-negative_observation, _ = load_and_split_observation("random_10_negative", 0.8)
+negative_observation, _ = load_and_split_observation("random_negative", 0.8)
 
 probes = get_probes(model_artifacts, positive_observation, negative_observation)
 
@@ -82,7 +82,7 @@ for grad, obs in zip(grads_img, test_observation):
     plot_heatmap(grad_sum, background=img, alpha=0.5, title=concept, show=False)
 
 image_matrices = images_to_element_matrix(
-    grads_img.detach().numpy(), test_observation, average=False
+    grads_img.detach().numpy(), test_observation, average=False, absolute=True
 )
 elements = flatten_element_matrices(image_matrices)
 
@@ -94,8 +94,8 @@ for key, value in elements.items():
         title = "agent"
     else:
         title = str(WorldObject.from_array(key))
-    value = np.array([sum(v) for v in value])
-    box_plot(value, title)
+    values = [_ for _ in zip(*value)]
+    box_plot(values, title, labels=["type", "color", "state"], y_label="grads")
 
 image_matrices = images_to_element_matrix(
     grads_img.detach().numpy(), test_observation, absolute=True

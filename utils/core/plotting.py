@@ -10,21 +10,29 @@ from typing import Dict, Any
 from matplotlib import cm
 
 
-def box_plot(data: NDArray, title: str, style: str = "_mpl-gallery"):
-    print(data)
-    plt.style.use(style)
-    fig, ax = plt.subplots(figsize=(12, 8))
-    VP = ax.boxplot(
+def box_plot(
+    data: List,
+    title: str,
+    labels=["red", "green", "blue"],
+    colors=["red", "green", "blue"],
+    x_label="",
+    y_label="",
+):
+    fig, ax = plt.subplots(figsize=(15, 10))
+    ax.set_ylabel(y_label)
+    ax.set_xlabel(x_label)
+
+    bplot = ax.boxplot(
         data,
-        widths=1.5,
-        patch_artist=True,
-        showmeans=False,
-        showfliers=False,
-        medianprops={"color": "white", "linewidth": 0.5},
-        boxprops={"facecolor": "C0", "edgecolor": "white", "linewidth": 0.5},
-        whiskerprops={"color": "C0", "linewidth": 1.5},
-        capprops={"color": "C0", "linewidth": 1.5},
-    )
+        patch_artist=True,  # fill with color
+        tick_labels=labels,
+    )  # will be used to label x-ticks
+
+    # fill with colors
+    for patch, color in zip(bplot["boxes"], colors):
+        patch.set_facecolor(color)
+
+    plt.title(title)
     plt.show()
 
 
@@ -40,7 +48,7 @@ def show_image(
         image = (image * 255).astype(np.uint8)
 
     if rgb is True:
-        fig, axes = plt.subplots(1, 3, figsize=(15, 5))
+        fig, axes = plt.subplots(1, 3, figsize=(15, 10))
 
         for i, ax in enumerate(axes):
             channel_image = image.copy()
