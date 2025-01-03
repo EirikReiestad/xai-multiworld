@@ -2,6 +2,7 @@ from collections import defaultdict
 import numpy as np
 from numpy.typing import NDArray
 from typing import Dict, List
+from itertools import chain
 
 from utils.common.observation import Observation
 
@@ -75,3 +76,18 @@ def images_to_element_matrix(
     if average:
         return element_matrix_average(element_matrices)
     return element_matrices
+
+
+def flatten_element_matrices(matrices: Dict[List, NDArray]) -> Dict[List, NDArray]:
+    return {key: flatten_element_matrix(value) for key, value in matrices.items()}
+
+
+def flatten_element_matrix(matrix: NDArray) -> NDArray:
+    flat_list = []
+    for row in matrix:
+        for col in row:
+            if col is None:
+                flat_list.append(np.nan)
+                continue
+            flat_list.extend(col)
+    return np.array(flat_list, dtype=object)

@@ -17,12 +17,13 @@ from xailib.common.activations import compute_activations_from_artifacts
 from xailib.common.concept_backpropagation import feature_concept_importance
 from xailib.common.probes import get_probes
 from xailib.common.tcav_score import tcav_scores
-from xailib.core.plotting.heatmap import plot_heatmap
 from utils.common.image import normalize_image
 from utils.common.element_matrix import (
     images_to_element_matrix,
+    flatten_element_matrices,
 )
-from utils.core.plotting import show_image
+from utils.common.numpy import remove_nan
+from utils.core.plotting import show_image, box_plot, plot_heatmap
 from multigrid.core.world_object import WorldObject
 from multigrid.core.constants import WorldObjectType, Color
 
@@ -44,12 +45,12 @@ config = (
 
 dqn = DQN(config)
 
-concept = "goal"
+concept = "goal_10"
 layer = 0
 
 model_artifacts = ModelLoader.load_latest_model_from_path("artifacts", dqn.model)
 positive_observation, test_observation = load_and_split_observation(concept, 0.8)
-negative_observation, _ = load_and_split_observation("random_negative", 0.8)
+negative_observation, _ = load_and_split_observation("random_10_negative", 0.8)
 
 probes = get_probes(model_artifacts, positive_observation, negative_observation)
 
@@ -79,6 +80,22 @@ for grad, obs in zip(grads_img, test_observation):
 
     grad_sum = numpy_grad.sum(axis=2)  # sum of gradients for the observation object
     plot_heatmap(grad_sum, background=img, alpha=0.5, title=concept, show=False)
+
+image_matrices = images_to_element_matrix(
+    grads_img.detach().numpy(), test_observation, average=False
+)
+elements = flatten_element_matrices(image_matrices)
+
+for key, value in elements.items():
+    value = remove_nan(value)
+    if key[WorldObject.TYPE] == WorldObjectType.unseen.to_index():
+        title = "unseen"
+    elif key[WorldObject.TYPE] == WorldObjectType.agent.to_index():
+        title = "agent"
+    else:
+        title = str(WorldObject.from_array(key))
+    value = np.array([sum(v) for v in value])
+    box_plot(value, title)
 
 image_matrices = images_to_element_matrix(
     grads_img.detach().numpy(), test_observation, absolute=True
