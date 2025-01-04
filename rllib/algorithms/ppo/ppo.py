@@ -17,6 +17,7 @@ from rllib.utils.torch.processing import (
 import torch.nn as nn
 from rllib.core.memory.trajectory_buffer import TrajectoryBuffer, Trajectory
 from rllib.utils.ppo.calculations import compute_advantages, compute_log_probs, ppo_loss
+from rllib.utils.dqn.misc import get_non_final_mask
 
 """
 PPO Paper: https://arxiv.org/abs/1707.06347
@@ -46,7 +47,13 @@ class PPO(Algorithm):
         truncations: dict[AgentID, bool],
         infos: dict[AgentID, dict[str, Any]],
     ):
-        self._trajectory_buffer.add(observations, actions, self._action_probs, rewards)
+        self._trajectory_buffer.add_dict(
+            keys=observations.keys(),
+            state=observations,
+            action=actions,
+            action_prob=self._action_probs,
+            reward=rewards,
+        )
         self._optimize_model()
 
     def log_episode(self):
@@ -79,9 +86,8 @@ class PPO(Algorithm):
         with torch.no_grad():
             torch_obs = observation_to_torch_unsqueeze(observation)
             action_prob, _ = self._policy_net(*torch_obs)
-            action = np.random.choice(
-                range(self.action_space.discrete), p=action_prob.detach().numpy()
-            )
+            action_prob = action_prob.squeeze().detach().numpy()
+            action = np.random.choice(range(self.action_space.discrete), p=action_prob)
         return action, action_prob
 
     def _optimize_model(self):
@@ -91,19 +97,17 @@ class PPO(Algorithm):
         for epoch in range(self._config.epochs):
             self._optimize_model_batch()
 
-    def _optimize_model_batch(self, trajectories: List[Trajectory]):
-        for batch in trajectories[: self._config.batch_size :]:
+    def _optimize_model_batch(self):
+        batch_size = self._config.batch_size
+        buffer_list = list(self._trajectory_buffer)
+        for i in range(0, len(buffer_list), batch_size):
+            batch = buffer_list[i : i + batch_size]
             self._optimize_model_minibatch(batch)
 
     def _optimize_model_minibatch(self, trajectories: List[Trajectory]):
-        batch = Transition(*zip(*transitions))
+        batch = Trajectory(*zip(*trajectories))
 
         num_agents = len(batch.state[0].values())
-
-        non_final_mask = get_non_final_mask(batch.next_state)
-        non_final_next_states = observations_seperate_to_torch(
-            batch.next_state, skip_none=True
-        )
 
         state_batch = observations_seperate_to_torch(batch.state)
         action_batch = torch.tensor(

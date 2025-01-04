@@ -31,32 +31,15 @@ def observation_to_torch_unsqueeze(
     ]
 
 
-def observations_to_torch(
-    observations: Dict[str, Dict[str, gym.spaces.Space]], skip_none=False
-) -> list[list[torch.Tensor]]:
-    """
-    Convert a dictionary of observations to a list of torch tensors
-    This is useful for multi-agent environments, where observations are e.g. {"0": ..., "1": ...}
-    """
-    return [
-        observation_to_torch(observation)
-        for observation in observations.values()
-        if observation is not None or not skip_none
-    ]
-
-
 def observations_seperate_to_torch(
-    observations: list[Dict[str, Dict[str, gym.spaces.Space]]], skip_none=False
-) -> list[torch.Tensor]:
-    """
-    Convert a dictionary of observations to a list of torch tensors
-    A list of observations is expected, where each observation is a dictionary with a dictionary
-    """
-    obs_list = [
-        observations_to_torch(observation, skip_none) for observation in observations
+    observations: List[Dict[str, gym.spaces.Space]], skip_none=False
+) -> List[torch.Tensor]:
+    torch_observations = [
+        observation_to_torch(obs)
+        for obs in observations
+        if obs is not None or not skip_none
     ]
-    obs_flattened = list(chain.from_iterable(obs_list))
-    transposed = [np.array(tensors) for tensors in zip(*obs_flattened)]
+    transposed = [np.array(tensors) for tensors in zip(*torch_observations)]
     return [torch.tensor(tensor) for tensor in transposed]
 
 

@@ -17,6 +17,8 @@ class AlgorithmConfig(ABC):
         self._wandb_tags = None
         self._wandb_dir = None
 
+        self._rendering_callback = empty_rendering_callback
+
     def environment(self, env: gym.Env):
         self._environment = env
         return self

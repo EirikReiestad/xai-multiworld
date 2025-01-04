@@ -30,9 +30,11 @@ class ActorCriticMultiInputNetwork(TorchModule):
         fc1_input_size = conv_output_size + fc_output_size
         self._fc1 = FCProcessor(fc1_input_size, hidden_units)
 
-        self._actor = FCProcessor(fc1_input_size, (), action_dim.discrete)
+        fc1_output_size = get_output_size(self._fc1, np.array([fc1_input_size]))
+
+        self._actor = FCProcessor(fc1_output_size, (), action_dim.discrete)
         self._actor.fc_layers.append(nn.Softmax(dim=-1))
-        self._critic = FCProcessor(fc1_input_size, (), 1)
+        self._critic = FCProcessor(fc1_output_size, (), 1)
 
     def forward(
         self, x_img: torch.Tensor, x_dir: torch.Tensor
