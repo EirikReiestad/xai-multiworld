@@ -46,9 +46,10 @@ def ppo_loss(
 
 
 def compute_log_probs(
-    actions: Dict[AgentID, int], action_probs: Dict[AgentID, NDArray]
+    actions: List[int], action_probs: List[torch.Tensor]
 ) -> List[float]:
     log_probs = []
-    for agent_id, action in actions.items():
-        log_probs.append(torch.log(action_probs[agent_id][action]))
+    for action, action_prob in zip(actions, action_probs):
+        print(action, action_prob)
+        log_probs.append(torch.log(action_prob[int(action)]))
     return log_probs
