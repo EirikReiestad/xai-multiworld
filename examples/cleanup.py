@@ -3,11 +3,11 @@ from rllib.algorithms.dqn.dqn import DQN
 from multigrid.envs.cleanup import CleanUpEnv
 
 env = CleanUpEnv(
-    width=15,
-    height=15,
-    max_steps=500,
-    boxes=10,
-    agents=6,
+    width=8,
+    height=8,
+    max_steps=250,
+    boxes=4,
+    agents=3,
     success_termination_mode="any",
 )
 
