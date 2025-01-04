@@ -19,7 +19,12 @@ class PPOConfig(AlgorithmConfig):
     ):
         super().__init__("PPO")
         self.batch_size = batch_size
+        self.max_grad_norm = max_grad_norm
+        self.num_epochs = num_epochs
+        self.clip_epsilon = clip_epsilon
         self.gamma = gamma
+        self.lmbda = lmbda
+        self.entropy_eps = entropy_eps
         self.learning_rate = learning_rate
         self.eps_start = eps_start
         self.eps_end = eps_end
