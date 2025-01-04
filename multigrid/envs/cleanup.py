@@ -25,7 +25,9 @@ class CleanUpEnv(MultiGridEnv):
 
         container_obj = lambda: Container()
         area_sizes = [(1, 1), (2, 2)]
+        area_sizes = [(2, 2)]
         num_areas = random.randint(1, 5)
+        num_areas = 1
         self._area = 0
         for _ in range(num_areas):
             area_size = self._rand_elem(area_sizes)
