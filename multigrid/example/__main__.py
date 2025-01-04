@@ -15,17 +15,15 @@ def run_episode(controller: Controller, env: MultiGridEnv):
 
 
 if __name__ == "__main__":
-    agents = 2
+    agents = 3
     env = CleanUpEnv(
-        width=10,
-        height=10,
+        width=8,
+        height=8,
         max_steps=250,
-        boxes=6,
-        agents=1,
+        boxes=4,
+        agents=agents,
         success_termination_mode="any",
-    )
-    env = CleanUpEnv(
-        boxes=5, agents=agents, width=11, height=11, success_termination_mode="any"
+        joint_reward=True,
     )
     controller = Controller(agents, same_keys=True)
     while True:
