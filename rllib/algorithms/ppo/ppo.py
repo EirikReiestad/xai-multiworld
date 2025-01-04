@@ -74,7 +74,7 @@ class PPO(Algorithm):
         return self._policy_net
 
     def _get_actions(
-        self, observations: Dict[AgentID, ObsType]
+        self, observations: List[ObsType]
     ) -> Tuple[Dict[AgentID, int], Dict[AgentID, NDArray]]:
         actions = {}
         action_probs = {}
@@ -110,16 +110,20 @@ class PPO(Algorithm):
         num_agents = len(batch.state[0].values())
 
         state_batch = observations_seperate_to_torch(batch.state)
-        action_batch = torch.tensor(
-            [torch.tensor(a) for reward in batch.action for a in reward.values()]
-        ).unsqueeze(1)
-        reward_batch = torch.tensor(
-            [torch.tensor(r) for reward in batch.reward for r in reward.values()]
-        )
-        log_probs = compute_log_probs(batch.action_probs, batch.action)
+        action_batch = torch.tensor(batch.action).unsqueeze(1)
+        reward_batch = torch.tensor(batch.reward)
+        action_prob_batch = torch.tensor(batch.action_prob)
 
-        new_actions, new_action_probs = self._get_actions(batch.state)
-        new_log_probs = compute_log_probs(new_action_probs, batch.action)
+        log_probs = compute_log_probs(batch.action, action_prob_batch)
+
+        new_actions = []
+        new_action_probs = []
+        for obs in batch.state:
+            action, action_prob = self._get_action(obs)
+            new_actions.append(action)
+            new_action_probs.append(torch.tensor(action_prob))
+
+        new_log_probs = compute_log_probs(batch.action, new_action_probs)
 
         state_action_values = self._predict_policy_values(state_batch, action_batch)
 
