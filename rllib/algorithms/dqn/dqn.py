@@ -1,4 +1,4 @@
-from typing import Any, List, Mapping, SupportsFloat
+from typing import Any, List, Mapping, SupportsFloat, Dict
 
 import numpy as np
 import torch
@@ -8,7 +8,7 @@ from multigrid.core.action import Action
 from multigrid.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.dqn.dqn_config import DQNConfig
-from rllib.algorithms.dqn.replay_memory import ReplayMemory, Transition
+from rllib.core.memory.replay_memory import ReplayMemory, Transition
 from rllib.core.network.multi_input_network import MultiInputNetwork
 from rllib.utils.dqn.misc import get_non_final_mask
 from rllib.utils.dqn.preprocessing import preprocess_next_observations
@@ -48,7 +48,13 @@ class DQN(Algorithm):
             next_observations, terminations, truncations
         )
 
-        self._memory.add(observations, actions, rewards, next_obs)
+        self._memory.add_dict(
+            keys=observations.keys(),
+            state=observations,
+            action=actions,
+            next_state=next_obs,
+            reward=rewards,
+        )
         self._optimize_model()
         self._hard_update_target()
 
@@ -58,14 +64,14 @@ class DQN(Algorithm):
         self.add_log("eps_threshold", self._eps_threshold)
 
     def predict(self, observation: dict[AgentID, ObsType]) -> dict[AgentID, int]:
-        sample = np.random.rand()
         self._eps_threshold = self._config.eps_end + (
             self._config.eps_start - self._config.eps_end
         ) * np.exp(-1.0 * self._steps_done / self._config.eps_decay)
-        if sample > self._eps_threshold:
-            actions = self._get_policy_actions(observation)
-        else:
-            actions = self._get_random_actions(observation)
+
+        actions = self._get_policy_actions(observation)
+        for key, _ in actions.items():
+            if np.random.rand() < self._eps_threshold:
+                actions[key] = self._get_random_action()
         return actions
 
     def load_model(self, model: Mapping[str, Any]):
@@ -92,13 +98,8 @@ class DQN(Algorithm):
             action = self._policy_net(*torch_obs).argmax().item()
         return action
 
-    def _get_random_actions(
-        self, observations: dict[AgentID, ObsType]
-    ) -> dict[AgentID, int]:
-        actions = {}
-        for agent_id in observations.keys():
-            actions[agent_id] = np.random.randint(self.action_space.discrete)
-        return actions
+    def _get_random_action(self):
+        return np.random.randint(self.action_space.discrete)
 
     def _optimize_model(self):
         if len(self._memory) < self._config.batch_size:
@@ -108,24 +109,18 @@ class DQN(Algorithm):
 
         batch = Transition(*zip(*transitions))
 
-        num_agents = len(batch.state[0].values())
-
         non_final_mask = get_non_final_mask(batch.next_state)
         non_final_next_states = observations_seperate_to_torch(
             batch.next_state, skip_none=True
         )
 
         state_batch = observations_seperate_to_torch(batch.state)
-        action_batch = torch.tensor(
-            [torch.tensor(a) for reward in batch.action for a in reward.values()]
-        ).unsqueeze(1)
-        reward_batch = torch.tensor(
-            [torch.tensor(r) for reward in batch.reward for r in reward.values()]
-        )
+        action_batch = torch.tensor(batch.action).unsqueeze(1)
+        reward_batch = torch.tensor(batch.reward)
 
         state_action_values = self._predict_policy_values(state_batch, action_batch)
 
-        next_state_values = torch.zeros(self._config.batch_size * num_agents)
+        next_state_values = torch.zeros(self._config.batch_size)
         self._predict_target_values(
             non_final_next_states, next_state_values, non_final_mask
         )
