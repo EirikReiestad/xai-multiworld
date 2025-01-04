@@ -146,6 +146,4 @@ class CleanUpEnv(MultiGridEnv):
             for agent in self.agents
         }
 
-        print(rewards)
-
         return observations, rewards, terminations, truncations, info
