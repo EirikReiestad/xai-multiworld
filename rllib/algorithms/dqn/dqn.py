@@ -48,7 +48,13 @@ class DQN(Algorithm):
             next_observations, terminations, truncations
         )
 
-        self._memory.add(observations, actions, rewards, next_obs)
+        self._memory.add_dict(
+            keys=observations.keys(),
+            state=observations,
+            action=actions,
+            next_state=next_obs,
+            reward=rewards,
+        )
         self._optimize_model()
         self._hard_update_target()
 
@@ -103,24 +109,18 @@ class DQN(Algorithm):
 
         batch = Transition(*zip(*transitions))
 
-        num_agents = len(batch.state[0].values())
-
         non_final_mask = get_non_final_mask(batch.next_state)
         non_final_next_states = observations_seperate_to_torch(
             batch.next_state, skip_none=True
         )
 
         state_batch = observations_seperate_to_torch(batch.state)
-        action_batch = torch.tensor(
-            [torch.tensor(a) for reward in batch.action for a in reward.values()]
-        ).unsqueeze(1)
-        reward_batch = torch.tensor(
-            [torch.tensor(r) for reward in batch.reward for r in reward.values()]
-        )
+        action_batch = torch.tensor(batch.action).unsqueeze(1)
+        reward_batch = torch.tensor(batch.reward)
 
         state_action_values = self._predict_policy_values(state_batch, action_batch)
 
-        next_state_values = torch.zeros(self._config.batch_size * num_agents)
+        next_state_values = torch.zeros(self._config.batch_size)
         self._predict_target_values(
             non_final_next_states, next_state_values, non_final_mask
         )
