@@ -367,7 +367,7 @@ class Container(WorldObject):
             Object contents
         """
         container = super().__new__(cls, color=color)
-        container.contains = contains
+        container._contains = contains
         return container
 
     def can_pickup(self) -> bool:
