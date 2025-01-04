@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from typing import Optional
 import numpy as np
 import torch
 import torch.nn as nn
@@ -30,9 +31,17 @@ def build_conv_layers(
 def build_fc_layers(
     input_dim: int,
     hidden_units: tuple[int, ...],
-    output_dim: int,
+    output_dim: Optional[int] = None,
 ) -> nn.Sequential:
+    if len(hidden_units) == 0:
+        if output_dim is None:
+            raise ValueError(
+                "At least one of hidden_units or output_dim must be specified."
+            )
+        return nn.Sequential(nn.Linear(input_dim, output_dim))
+
     layers = []
+
     for hidden_dim in hidden_units:
         layers.append(nn.Linear(input_dim, hidden_dim))
         layers.append(nn.ReLU())
