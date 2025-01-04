@@ -1,4 +1,4 @@
-from typing import Any, List, Mapping, SupportsFloat
+from typing import Any, List, Mapping, SupportsFloat, Dict
 
 import numpy as np
 import torch
@@ -8,7 +8,7 @@ from multigrid.core.action import Action
 from multigrid.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.dqn.dqn_config import DQNConfig
-from rllib.algorithms.dqn.replay_memory import ReplayMemory, Transition
+from rllib.core.memory.replay_memory import ReplayMemory, Transition
 from rllib.core.network.multi_input_network import MultiInputNetwork
 from rllib.utils.dqn.misc import get_non_final_mask
 from rllib.utils.dqn.preprocessing import preprocess_next_observations
@@ -58,14 +58,14 @@ class DQN(Algorithm):
         self.add_log("eps_threshold", self._eps_threshold)
 
     def predict(self, observation: dict[AgentID, ObsType]) -> dict[AgentID, int]:
-        sample = np.random.rand()
         self._eps_threshold = self._config.eps_end + (
             self._config.eps_start - self._config.eps_end
         ) * np.exp(-1.0 * self._steps_done / self._config.eps_decay)
-        if sample > self._eps_threshold:
-            actions = self._get_policy_actions(observation)
-        else:
-            actions = self._get_random_actions(observation)
+
+        actions = self._get_policy_actions(observation)
+        for key, _ in actions.items():
+            if np.random.rand() < self._eps_threshold:
+                actions[key] = self._get_random_action()
         return actions
 
     def load_model(self, model: Mapping[str, Any]):
@@ -92,13 +92,8 @@ class DQN(Algorithm):
             action = self._policy_net(*torch_obs).argmax().item()
         return action
 
-    def _get_random_actions(
-        self, observations: dict[AgentID, ObsType]
-    ) -> dict[AgentID, int]:
-        actions = {}
-        for agent_id in observations.keys():
-            actions[agent_id] = np.random.randint(self.action_space.discrete)
-        return actions
+    def _get_random_action(self):
+        return np.random.randint(self.action_space.discrete)
 
     def _optimize_model(self):
         if len(self._memory) < self._config.batch_size:
