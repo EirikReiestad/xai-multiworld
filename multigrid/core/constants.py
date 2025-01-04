@@ -90,11 +90,6 @@ class State(str, IndexedEnum):
     Enumeration of object states.
     """
 
-<<<<<<< Updated upstream
-    # TODO: Find out why I can not place contained below empty, as every new object start with contained as their state, which is wrong.
-    contained = "contained"
-=======
->>>>>>> Stashed changes
     empty = "empty"
     contained = "contained"
     open = "open"
