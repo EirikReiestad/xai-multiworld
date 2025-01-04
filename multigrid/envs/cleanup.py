@@ -96,7 +96,7 @@ class CleanUpEnv(MultiGridEnv):
                 self._success_move_box += 1
                 self._area -= 1
                 self.add_reward(
-                    agent, rewards, 0.1 * self._reward(), joint_reward=False
+                    agent, rewards, 0.5 * self._reward(), joint_reward=False
                 )
 
                 if self._success_move_box == self._num_boxes or self._area == 0:
@@ -132,7 +132,7 @@ class CleanUpEnv(MultiGridEnv):
                 self._success_move_box -= 1
                 self._area += 1
                 self.add_reward(
-                    agent, rewards, 0.1 * self._reward(), joint_reward=False
+                    agent, rewards, -0.5 * self._reward(), joint_reward=False
                 )
 
         observations, step_rewards, terms, truncations, info = super().step(actions)
@@ -145,5 +145,7 @@ class CleanUpEnv(MultiGridEnv):
             agent.index: bool(terminations[agent.index]) or bool(terms[agent.index])
             for agent in self.agents
         }
+
+        print(rewards)
 
         return observations, rewards, terminations, truncations, info
