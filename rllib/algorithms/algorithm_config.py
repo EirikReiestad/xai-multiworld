@@ -7,7 +7,7 @@ from rllib.common.callbacks import RenderingCallback, empty_rendering_callback
 
 
 class AlgorithmConfig(ABC):
-    def __init__(self, algorithm: Literal["DQN"]):
+    def __init__(self, algorithm: Literal["DQN", "PPO"]):
         self._algorithm = algorithm
         self._environment: Optional[gym.Env] = None
 
@@ -16,6 +16,8 @@ class AlgorithmConfig(ABC):
         self._wandb_reinit = None
         self._wandb_tags = None
         self._wandb_dir = None
+
+        self._rendering_callback = empty_rendering_callback
 
     def environment(self, env: gym.Env):
         self._environment = env
