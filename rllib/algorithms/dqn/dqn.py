@@ -137,6 +137,8 @@ class DQN(Algorithm):
 
         loss = self._compute_loss(state_action_values, expected_state_action_values)
 
+        self.add_log("loss", loss.item())
+
         self._optimizer.zero_grad()
         loss.backward()
         self._optimizer.step()
