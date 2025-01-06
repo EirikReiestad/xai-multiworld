@@ -51,4 +51,4 @@ config = (
 dqn = DQN(config)
 
 while True:
-    dqn.learn()
+    ppo.learn()
