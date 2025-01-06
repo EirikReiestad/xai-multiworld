@@ -1,7 +1,9 @@
 from collections import namedtuple
 from rllib.core.memory.memory import Memory
 
-Trajectory = namedtuple("Trajectory", ("state", "action", "action_prob", "reward"))
+Trajectory = namedtuple(
+    "Trajectory", ("states", "actions", "action_probs", "values", "rewards", "dones")
+)
 
 
 class TrajectoryBuffer(Memory[Trajectory]):
