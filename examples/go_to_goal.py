@@ -13,15 +13,22 @@ env = GoToGoalEnv(
     render_mode="human",
 )
 
-config = PPOConfig(
-    batch_size=1024,
-    mini_batch_size=64,
-    epochs=10,
-    gamma=0.99,
-    lambda_=0.95,
-    epsilon=0.2,
-    learning_rate=1e-4,
-).environment(env)
+config = (
+    PPOConfig(
+        batch_size=1024,
+        mini_batch_size=64,
+        epochs=10,
+        gamma=0.99,
+        lambda_=0.95,
+        epsilon=0.2,
+        learning_rate=1e-4,
+    )
+    .environment(env)
+    .training()
+    .debugging(log_level="INFO")
+    .rendering()
+    # .wandb(project="multigrid-go-to-goal-ppo")
+)
 ppo = PPO(config)
 
 config = (
@@ -39,7 +46,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="multigrid-go-to-goal-dqn")
+    # .wandb(project="multigrid-go-to-goal-dqn")
 )
 dqn = DQN(config)
 
