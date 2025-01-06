@@ -2,9 +2,10 @@ from collections import defaultdict
 import numpy as np
 from numpy.typing import NDArray
 from typing import Dict, List
-from itertools import chain
 
 from utils.common.observation import Observation
+
+# TODO: Should this really be here? Or at least rename it or something.
 
 
 def image_to_element_matrix(
