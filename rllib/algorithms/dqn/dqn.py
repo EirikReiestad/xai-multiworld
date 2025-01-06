@@ -1,5 +1,6 @@
 from typing import Any, List, Mapping, SupportsFloat, Dict
 
+import logging
 import numpy as np
 import torch
 import torch.nn as nn
@@ -85,18 +86,21 @@ class DQN(Algorithm):
         return self._policy_net
 
     def _get_policy_actions(
-        self, observations: dict[AgentID, ObsType]
+        self, observations: Dict[AgentID, ObsType]
     ) -> dict[AgentID, int]:
+        torch_observations = observations_seperate_to_torch(list(observations.values()))
+        with torch.no_grad():
+            pred_actions = self._policy_net(*torch_observations)
+
         actions = {}
-        for agent_id, obs in observations.items():
-            actions[agent_id] = self._get_policy_action(obs)
+        for key, action in zip(observations.keys(), pred_actions):
+            actions[key] = action.argmax().item()
         return actions
 
     def _get_policy_action(self, observation: ObsType) -> Action:
         with torch.no_grad():
             torch_obs = observation_to_torch_unsqueeze(observation)
-            action = self._policy_net(*torch_obs).argmax().item()
-        return action
+            return self._policy_net(*torch_obs).argmax().item()
 
     def _get_random_action(self):
         return np.random.randint(self.action_space.discrete)
@@ -113,6 +117,9 @@ class DQN(Algorithm):
         non_final_next_states = observations_seperate_to_torch(
             batch.next_state, skip_none=True
         )
+        if len(non_final_next_states) == 0:
+            logging.warning("No non final next states, consider increasing batch size.")
+            return
 
         state_batch = observations_seperate_to_torch(batch.state)
         action_batch = torch.tensor(batch.action).unsqueeze(1)
@@ -129,6 +136,8 @@ class DQN(Algorithm):
         )
 
         loss = self._compute_loss(state_action_values, expected_state_action_values)
+
+        self.add_log("loss", loss.item())
 
         self._optimizer.zero_grad()
         loss.backward()
