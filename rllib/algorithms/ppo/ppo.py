@@ -175,6 +175,8 @@ class PPO(Algorithm):
             self._config.epsilon,
         )
 
+        self.add_log("loss", loss.item())
+
         self._optimizer.zero_grad()
         loss.backward()
         self._optimizer.step()
