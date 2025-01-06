@@ -14,10 +14,13 @@ from rllib.utils.torch.processing import (
     observation_to_torch_unsqueeze,
     observations_seperate_to_torch,
 )
+from utils.common.collections import flatten_dicts
 import torch.nn as nn
 from rllib.core.memory.trajectory_buffer import TrajectoryBuffer, Trajectory
-from rllib.utils.ppo.calculations import compute_advantages, compute_log_probs, ppo_loss
+from rllib.utils.ppo.calculations import compute_log_probs, ppo_loss
 from rllib.utils.dqn.misc import get_non_final_mask
+from rllib.core.algorithms.gae import GAE
+from utils.common.numpy_collections import dict_list_to_ndarray
 
 """
 PPO Paper: https://arxiv.org/abs/1707.06347
@@ -35,7 +38,12 @@ class PPO(Algorithm):
         )
 
         self._action_probs = {}
+        self._values = {}
         self._trajectory_buffer = TrajectoryBuffer(self._config.target_update)
+
+        self._optimizer = torch.optim.AdamW(
+            self._policy_net.parameters(), lr=config.learning_rate, amsgrad=True
+        )
 
     def train_step(
         self,
@@ -47,12 +55,12 @@ class PPO(Algorithm):
         truncations: dict[AgentID, bool],
         infos: dict[AgentID, dict[str, Any]],
     ):
-        self._trajectory_buffer.add_dict(
-            keys=observations.keys(),
-            state=observations,
-            action=actions,
-            action_prob=self._action_probs,
-            reward=rewards,
+        self._trajectory_buffer.add(
+            states=observations,
+            actions=actions,
+            action_probs=self._action_probs,
+            values=self._values,
+            rewards=rewards,
         )
         self._optimize_model()
 
@@ -60,10 +68,30 @@ class PPO(Algorithm):
         super().log_episode()
         self.log_model(self._policy_net, f"model_{self._episodes_done}")
 
-    def predict(self, observation: dict[AgentID, ObsType]) -> Dict[AgentID, int]:
-        actions, action_probs = self._get_actions(observation)
+    def predict(self, observation: Dict[AgentID, ObsType]) -> Dict[AgentID, int]:
+        actions, action_probs, values = self._predict(observation)
         self._action_probs = action_probs
+        self._values = values
         return actions
+
+    def _predict(
+        self, observation: Dict[AgentID, ObsType]
+    ) -> Tuple[
+        Dict[AgentID, int],
+        Dict[AgentID, NDArray],
+        Dict[AgentID, float],
+    ]:  # NOTE: A but ugly code maybe...? as there already is a def predict(...) method
+        action_probabilities, policy_values = self._get_policy_values(
+            list(observation.values())
+        )
+        actions = {}
+        action_probs = {}
+        values = {}
+        for key, action_prob in zip(observation.keys(), action_probabilities):
+            action_probs[key] = action_prob.squeeze().detach().numpy()
+            actions[key] = self._get_action(action_probs[key])
+            values[key] = policy_values[key].squeeze().detach().numpy()
+        return actions, action_probs, values
 
     def load_model(self, model: Mapping[str, Any]):
         self._policy_net.load_state_dict(model)
@@ -73,22 +101,16 @@ class PPO(Algorithm):
     def model(self) -> nn.Module:
         return self._policy_net
 
-    def _get_actions(
-        self, observations: List[ObsType]
-    ) -> Tuple[Dict[AgentID, int], Dict[AgentID, NDArray]]:
-        actions = {}
-        action_probs = {}
-        for agent_id, obs in observations.items():
-            actions[agent_id], action_probs[agent_id] = self._get_action(obs)
-        return actions, action_probs
+    def _get_action(self, action_prob: NDArray) -> Action:
+        action = np.random.choice(range(self.action_space.discrete), p=action_prob)
+        return action
 
-    def _get_action(self, observation: ObsType) -> Tuple[Action, NDArray]:
+    def _get_policy_values(
+        self, observations: List[ObsType]
+    ) -> List[Tuple[torch.Tensor, torch.Tensor]]:
+        torch_observations = observations_seperate_to_torch(observations)
         with torch.no_grad():
-            torch_obs = observation_to_torch_unsqueeze(observation)
-            action_prob, _ = self._policy_net(*torch_obs)
-            action_prob = action_prob.squeeze().detach().numpy()
-            action = np.random.choice(range(self.action_space.discrete), p=action_prob)
-        return action, action_prob
+            return self._policy_net(*torch_observations)
 
     def _optimize_model(self):
         if len(self._trajectory_buffer) != self._trajectory_buffer.maxlen:
@@ -107,35 +129,54 @@ class PPO(Algorithm):
     def _optimize_model_minibatch(self, trajectories: List[Trajectory]):
         batch = Trajectory(*zip(*trajectories))
 
-        num_agents = len(batch.state[0].values())
+        num_agents = len(batch.states[0].keys())
 
-        state_batch = observations_seperate_to_torch(batch.state)
-        action_batch = torch.tensor(batch.action).unsqueeze(1)
-        reward_batch = torch.tensor(batch.reward)
-        action_prob_batch = torch.tensor(batch.action_prob)
+        action_prob_batch = dict_list_to_ndarray(batch.action_probs)
+        state_batch = dict_list_to_ndarray(batch.states)
+        action_batch = dict_list_to_ndarray(batch.actions)
+        reward_batch = dict_list_to_ndarray(batch.rewards)
+        value_batch = dict_list_to_ndarray(batch.values)
 
-        log_probs = compute_log_probs(batch.action, action_prob_batch)
+        assert (
+            (len(batch.states[0]), len(batch.states))
+            == state_batch.shape[:2]
+            == action_batch.shape[:2]
+            == reward_batch.shape[:2]
+            == action_prob_batch.shape[:2]
+            == value_batch.shape[:2]
+        ), f"All batch attributes should have the same shape. Should get {len(batch.states)}, got: {state_batch.shape}, {action_batch.shape}, {reward_batch.shape}, {action_prob_batch.shape}, {value_batch.shape}"
 
-        new_actions = []
+        # NOTE: The code is a bit confusing. So if there is an error or the algorithm doesn't work. Start here.
+        log_probs = compute_log_probs(action_batch, action_prob_batch)
+
+        observations = state_batch.astype(object)
+        done_mask = np.vectorize(lambda x: x is None)(state_batch)
+
+        gae = GAE(
+            num_agents, len(state_batch[0]), self._config.gamma, self._config.lambda_
+        )
+        advantages = gae(done_mask, reward_batch, value_batch)
+
+        # TODO: This can be more efficient by passing all the states at once.
         new_action_probs = []
-        for obs in batch.state:
-            action, action_prob = self._get_action(obs)
-            new_actions.append(action)
-            new_action_probs.append(torch.tensor(action_prob))
+        for state in batch.states:
+            _, action_probs, _ = self._predict(state)
+            new_action_probs.append(action_probs)
+        new_action_probs_batch = dict_list_to_ndarray(new_action_probs)
+        new_log_probs = compute_log_probs(action_batch, new_action_probs_batch)
 
-        new_log_probs = compute_log_probs(batch.action, new_action_probs)
+        old_log_probs_tensor = torch.tensor(log_probs, dtype=torch.float32)
+        new_log_probs_tensor = torch.tensor(new_log_probs, dtype=torch.float32)
+        advantages_tensor = torch.tensor(advantages, dtype=torch.float32)
 
-        state_action_values = self._predict_policy_values(state_batch, action_batch)
-
-        next_state_values = torch.zeros(self._config.batch_size * num_agents)
-        self._predict_target_values(
-            non_final_next_states, next_state_values, non_final_mask
+        loss = ppo_loss(
+            old_log_probs_tensor,
+            new_log_probs_tensor,
+            advantages_tensor,
+            self._config.epsilon,
         )
-        expected_state_action_values = self._expected_state_action_values(
-            next_state_values, reward_batch
-        )
 
-        loss = ppo_loss(log_probs, new_log_probs, expected_state_action_values)
+        print("loss", loss)
 
         self._optimizer.zero_grad()
         loss.backward()

@@ -1,55 +1,39 @@
 import torch
-from torch.nn import functional as F
-from rllib.core.memory.trajectory_buffer import Trajectory
-from typing import List, Any, Dict
+import numpy as np
 from numpy.typing import NDArray
-from multigrid.utils.typing import AgentID
-
-
-def compute_advantages(
-    trajectories: List[Trajectory], gamma: float, lam: float
-) -> List[float]:
-    rewards, values = [], []
-    for trajectory in trajectories:
-        rewards.append(trajectory.reward)
-        values.append(trajectory.value)
-    returns, advantages = [], []
-    G, A = 0, 0
-    for trajectory in reversed(range(len(rewards))):
-        G = rewards[trajectory] + gamma * G
-        A = (
-            rewards[trajectory]
-            + gamma * (1 - lam) * values[trajectory + 1]
-            - values[trajectory]
-        )
-        returns.insert(0, G)
-        advantages.insert(0, A)
-    returns, (advantages - advantages.mean()) / (advantages.std() + 1e-10)
 
 
 def ppo_loss(
-    old_log_probs: List[float],
-    new_log_probs: List[float],
-    advantages: List[float],
-    entropy: float,
-    values: Any,  # TODO: Any???
-    returns: Any,  # TODO: Any?????
+    old_log_probs: torch.Tensor,
+    new_log_probs: torch.Tensor,
+    advantages: torch.Tensor,
     epsilon: float,
-) -> float:
+) -> torch.Tensor:
     ratios = torch.exp(new_log_probs - old_log_probs)
     surr1 = ratios * advantages
     surr2 = torch.clamp(ratios, 1 - epsilon, 1 + epsilon) * advantages
     policy_loss = -torch.min(surr1, surr2).mean()
-    value_loss = F.mse_loss(values, returns)
-    entropy_loss = -entropy.mean()
-    return policy_loss + 0.5 * value_loss + 0.01 * entropy_loss
+    return torch.tensor(float(policy_loss), requires_grad=True)
+    # NOTE: There are other improvements to the loss that I believe codebases like stable-baselines3 implement, which include value loss and entropy loss.
+    # Might implement later. Suggestion:
+    # value_loss = F.mse_loss(values, returns)
+    # entropy_loss = -entropy.mean()
+    # return policy_loss + 0.5 * value_loss + 0.01 * entropy_loss
 
 
-def compute_log_probs(
-    actions: List[int], action_probs: List[torch.Tensor]
-) -> List[float]:
+def compute_log_probs(actions: NDArray, action_probs: NDArray) -> NDArray[np.float32]:
+    assert (
+        actions.shape[:2] == action_probs.shape[:2]
+    ), f"actions: {actions.shape}, action_probs: {action_probs.shape}"
+    log_probs = []
+    for i in range(actions.shape[1]):
+        log_probs.append(_compute_log_prob(actions[:, i], action_probs[:, i]))
+    return np.stack(log_probs, axis=1)
+
+
+def _compute_log_prob(actions: NDArray, action_probs: NDArray) -> NDArray[np.float32]:
     log_probs = []
     for action, action_prob in zip(actions, action_probs):
-        print(action, action_prob)
-        log_probs.append(torch.log(action_prob[int(action)]))
-    return log_probs
+        prob = action_prob[int(action)]
+        log_probs.append(torch.log(torch.tensor(prob, dtype=torch.float32)))
+    return np.array(log_probs, dtype=np.float32)
