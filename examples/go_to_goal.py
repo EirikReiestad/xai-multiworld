@@ -39,16 +39,16 @@ config = (
         learning_rate=1e-4,
         eps_start=0.2,
         eps_end=0.05,
-        eps_decay=1000000,
-        target_update=1000,
+        eps_decay=100000,
+        target_update=1024,
     )
     .environment(env=env)
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="multigrid-go-to-goal-dqn")
+    .wandb(project="multigrid-go-to-goal")
 )
 dqn = DQN(config)
 
 while True:
-    ppo.learn()
+    dqn.learn()
