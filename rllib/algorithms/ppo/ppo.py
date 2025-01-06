@@ -1,6 +1,5 @@
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.ppo.ppo_config import PPOConfig
-from rllib.utils.dqn.preprocessing import preprocess_next_observations
 from multigrid.utils.typing import AgentID, ObsType
 from typing import SupportsFloat, Mapping, Any, List, Dict, Tuple
 from rllib.core.network.actor_critic_multi_input_network import (
@@ -11,14 +10,11 @@ import torch
 import numpy as np
 from numpy.typing import NDArray
 from rllib.utils.torch.processing import (
-    observation_to_torch_unsqueeze,
     observations_seperate_to_torch,
 )
-from utils.common.collections import flatten_dicts
 import torch.nn as nn
 from rllib.core.memory.trajectory_buffer import TrajectoryBuffer, Trajectory
 from rllib.utils.ppo.calculations import compute_log_probs, ppo_loss
-from rllib.utils.dqn.misc import get_non_final_mask
 from rllib.core.algorithms.gae import GAE
 from utils.common.numpy_collections import dict_list_to_ndarray
 
@@ -39,7 +35,7 @@ class PPO(Algorithm):
 
         self._action_probs = {}
         self._values = {}
-        self._trajectory_buffer = TrajectoryBuffer(self._config.target_update)
+        self._trajectory_buffer = TrajectoryBuffer(self._config.batch_size)
 
         self._optimizer = torch.optim.AdamW(
             self._policy_net.parameters(), lr=config.learning_rate, amsgrad=True
@@ -55,12 +51,16 @@ class PPO(Algorithm):
         truncations: dict[AgentID, bool],
         infos: dict[AgentID, dict[str, Any]],
     ):
+        dones = {}
+        for key in terminations.keys():
+            dones[key] = terminations[key] or truncations[key]
         self._trajectory_buffer.add(
             states=observations,
             actions=actions,
             action_probs=self._action_probs,
             values=self._values,
             rewards=rewards,
+            dones=dones,
         )
         self._optimize_model()
 
@@ -120,11 +120,12 @@ class PPO(Algorithm):
             self._optimize_model_batch()
 
     def _optimize_model_batch(self):
-        batch_size = self._config.batch_size
+        mini_batch_size = self._config.mini_batch_size
         buffer_list = list(self._trajectory_buffer)
-        for i in range(0, len(buffer_list), batch_size):
-            batch = buffer_list[i : i + batch_size]
+        for i in range(0, len(buffer_list), mini_batch_size):
+            batch = buffer_list[i : i + mini_batch_size]
             self._optimize_model_minibatch(batch)
+        self._trajectory_buffer.clear()
 
     def _optimize_model_minibatch(self, trajectories: List[Trajectory]):
         batch = Trajectory(*zip(*trajectories))
@@ -136,6 +137,7 @@ class PPO(Algorithm):
         action_batch = dict_list_to_ndarray(batch.actions)
         reward_batch = dict_list_to_ndarray(batch.rewards)
         value_batch = dict_list_to_ndarray(batch.values)
+        dones = dict_list_to_ndarray(batch.dones)
 
         assert (
             (len(batch.states[0]), len(batch.states))
@@ -149,13 +151,10 @@ class PPO(Algorithm):
         # NOTE: The code is a bit confusing. So if there is an error or the algorithm doesn't work. Start here.
         log_probs = compute_log_probs(action_batch, action_prob_batch)
 
-        observations = state_batch.astype(object)
-        done_mask = np.vectorize(lambda x: x is None)(state_batch)
-
         gae = GAE(
             num_agents, len(state_batch[0]), self._config.gamma, self._config.lambda_
         )
-        advantages = gae(done_mask, reward_batch, value_batch)
+        advantages = gae(dones, reward_batch, value_batch)
 
         # TODO: This can be more efficient by passing all the states at once.
         new_action_probs = []
@@ -175,8 +174,6 @@ class PPO(Algorithm):
             advantages_tensor,
             self._config.epsilon,
         )
-
-        print("loss", loss)
 
         self._optimizer.zero_grad()
         loss.backward()

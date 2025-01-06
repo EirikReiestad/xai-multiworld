@@ -2,7 +2,7 @@ from collections import namedtuple
 from rllib.core.memory.memory import Memory
 
 Trajectory = namedtuple(
-    "Trajectory", ("states", "actions", "action_probs", "values", "rewards")
+    "Trajectory", ("states", "actions", "action_probs", "values", "rewards", "dones")
 )
 
 
