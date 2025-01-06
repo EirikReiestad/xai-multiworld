@@ -5,10 +5,10 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from multigrid.envs.go_to_goal import GoToGoalEnv
 
 env = GoToGoalEnv(
-    width=4,
-    height=4,
-    max_steps=300,
-    agents=3,
+    width=10,
+    height=10,
+    max_steps=200,
+    agents=10,
     success_termination_mode="all",
     render_mode="human",
 )
