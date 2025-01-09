@@ -66,7 +66,9 @@ class PPO(Algorithm):
 
     def log_episode(self):
         super().log_episode()
-        self.log_model(self._policy_net, f"model_{self._episodes_done}")
+        self.log_model(
+            self._policy_net, f"model_{self._episodes_done}", self._episodes_done
+        )
 
     def predict(self, observation: Dict[AgentID, ObsType]) -> Dict[AgentID, int]:
         actions, action_probs, values = self._predict(observation)
@@ -174,6 +176,8 @@ class PPO(Algorithm):
             advantages_tensor,
             self._config.epsilon,
         )
+
+        self.add_log("loss", loss.item())
 
         self._optimizer.zero_grad()
         loss.backward()

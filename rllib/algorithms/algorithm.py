@@ -20,6 +20,7 @@ class Algorithm(Environment, WandB, ABC):
             self._config._wandb_project,
             self._config._wandb_run_name,
             self._config._wandb_reinit,
+            self._config._wandb_log_interval,
             self._config._wandb_tags,
             self._config._wandb_dir,
         )
@@ -99,7 +100,7 @@ class Algorithm(Environment, WandB, ABC):
         observation, rewards, terminations, truncations, infos = self._env.step(actions)
         rgb_array = self._render()
         rgb_array = self._config._rendering_callback(rgb_array, observation)
-        self.log_frame(rgb_array)
+        self.log_frame(rgb_array, self._episodes_done)
 
         return observation, rewards, terminations, truncations, infos
 
