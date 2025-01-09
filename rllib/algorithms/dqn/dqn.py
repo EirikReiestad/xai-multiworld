@@ -61,7 +61,9 @@ class DQN(Algorithm):
 
     def log_episode(self):
         super().log_episode()
-        self.log_model(self._policy_net, f"model_{self._episodes_done}")
+        self.log_model(
+            self._policy_net, f"model_{self._episodes_done}", self._episodes_done
+        )
         self.add_log("eps_threshold", self._eps_threshold)
 
     def predict(self, observation: dict[AgentID, ObsType]) -> dict[AgentID, int]:
