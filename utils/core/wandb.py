@@ -5,7 +5,6 @@ from abc import ABC
 from typing import Optional
 
 import numpy as np
-import PIL
 import torch
 import torch.nn as nn
 
@@ -19,6 +18,7 @@ class WandB(ABC):
         project: str | None,
         run_name: str | None,
         reinit: bool | None,
+        save_steps: int | None,
         tags: list[str] | None,
         dir: str | None,
         only_api: bool = False,
@@ -39,11 +39,13 @@ class WandB(ABC):
             tags=tags,
             dir=dir,
         )
+        self._save_steps = save_steps
+
         self._log = {}
         self._artifact = None
         self._frames = []
 
-    def log_frame(self, frame: Optional[np.ndarray]):
+    def log_frame(self, frame: Optional[np.ndarray], step: int = 0):
         """
         Logging a frame, a rendering of the environment.
         """
@@ -51,13 +53,17 @@ class WandB(ABC):
             return
         if frame is None:
             return
+        if self._save_steps is not None and step % self._save_steps != 0:
+            return
         assert isinstance(
             frame, np.ndarray
         ), f"Frame must be a numpy array, but got {frame}"
         self._frames.append(frame)
 
-    def log_model(self, model: nn.Module, model_name: str = "model"):
+    def log_model(self, model: nn.Module, model_name: str = "model", step: int = 0):
         if self._api is None:
+            return
+        if self._save_steps is not None and step % self._save_steps != 0:
             return
         file_path = f"{model_name}.pth"
         torch.save(model.state_dict(), file_path)

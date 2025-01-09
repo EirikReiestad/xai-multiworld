@@ -11,7 +11,7 @@ from xailib.common.activations import (
 )
 from xailib.common.binary_concept_score import binary_concept_scores
 from xailib.common.probes import get_probes
-from xailib.core.plotting.plot3d import plot_3d
+from utils.core.plotting import plot_3d
 
 env = GoToGoalEnv(render_mode="rgb_array")
 config = (
@@ -31,7 +31,7 @@ config = (
 
 dqn = DQN(config)
 
-concept = "random"
+concept = "goal"
 
 model_artifacts = ModelLoader.load_models_from_path("artifacts", dqn.model)
 positive_observation, test_observation = load_and_split_observation(concept, 0.8)
