@@ -22,7 +22,7 @@ from utils.common.element_matrix import (
     images_to_element_matrix,
     flatten_element_matrices,
 )
-from utils.common.numpy import remove_nan
+from utils.common.numpy_collections import remove_nan
 from utils.core.plotting import show_image, box_plot, plot_heatmap
 from multigrid.core.world_object import WorldObject
 from multigrid.core.constants import WorldObjectType, Color

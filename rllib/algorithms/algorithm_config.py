@@ -50,6 +50,7 @@ class AlgorithmConfig(ABC):
         project: str,
         run_name: str | None = None,
         reinit: bool = True,
+        log_interval: int = 1,
         tags: list[str] = [],
         dir: str = ".",
     ):
@@ -58,6 +59,7 @@ class AlgorithmConfig(ABC):
         self._wandb_reinit = reinit
         self._wandb_tags = tags
         self._wandb_dir = dir
+        self._wandb_log_interval = log_interval
         return self
 
     def build(self) -> "AlgorithmConfig":

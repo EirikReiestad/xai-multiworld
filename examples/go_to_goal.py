@@ -7,10 +7,10 @@ from multigrid.envs.go_to_goal import GoToGoalEnv
 env = GoToGoalEnv(
     width=10,
     height=10,
-    max_steps=200,
-    agents=10,
+    max_steps=150,
+    agents=5,
     success_termination_mode="all",
-    render_mode="human",
+    render_mode="rgb_array",
 )
 
 config = (
@@ -27,10 +27,11 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="multigrid-go-to-goal-ppo")
+    .wandb(project="test")
 )
 ppo = PPO(config)
 
+"""
 config = (
     DQNConfig(
         batch_size=32,
@@ -46,9 +47,10 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="multigrid-go-to-goal-dqn")
+    .wandb(project="multigrid-go-to-goal-dqn")
 )
 dqn = DQN(config)
+"""
 
 while True:
-    dqn.learn()
+    ppo.learn()
