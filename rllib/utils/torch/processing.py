@@ -1,11 +1,22 @@
 from itertools import chain
 from numpy.typing import NDArray
-from typing import Dict, SupportsFloat, List
+from typing import Dict, SupportsFloat, List, Any
 from multigrid.utils.typing import ObsType
 
 import gymnasium as gym
 import numpy as np
 import torch
+
+
+def torch_stack_inner_list(value: List) -> torch.Tensor:
+    return torch.stack([torch.stack(v) for v in value])
+
+
+def torch_stack_inner_list_any(value: List) -> torch.Tensor:
+    result = []
+    for lst in value:
+        result.append(torch.stack([torch.tensor(v) for v in lst]))
+    return torch.stack(result)
 
 
 def observation_to_torch(

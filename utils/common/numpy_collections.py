@@ -1,6 +1,7 @@
-from numpy.typing import NDArray
 import numpy as np
 import json
+import torch
+from numpy.typing import NDArray
 from typing import Any
 
 
@@ -30,10 +31,3 @@ def remove_nan(arr: NDArray) -> NDArray:
         if isinstance(a, np.ndarray) or not np.isnan(a):
             nan_arr.append(a)
     return np.array(nan_arr)
-
-
-def dict_list_to_ndarray(dict_list: list[dict[str, Any]]) -> NDArray:
-    data = []
-    for key in dict_list[0].keys():
-        data.append(np.array([d[key] for d in dict_list]))
-    return np.stack(data)
