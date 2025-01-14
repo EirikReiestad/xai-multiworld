@@ -10,7 +10,7 @@ import torch
 from rllib.utils.torch.processing import (
     observations_seperate_to_torch,
     torch_stack_inner_list,
-    torch_stack_inner_list_any,
+    leaf_value_to_torch,
 )
 import torch.nn as nn
 from rllib.core.memory.trajectory_buffer import TrajectoryBuffer, Trajectory
@@ -150,8 +150,9 @@ class PPO(Algorithm):
         dones = zip_dict_list(batch.dones)
 
         # NOTE: The code is a bit confusing. So if there is an error or the algorithm doesn't work. Start here.
+        action_batch_torch = leaf_value_to_torch(action_batch)
         log_probs = compute_log_probs(
-            torch_stack_inner_list_any(action_batch),
+            torch_stack_inner_list(action_batch_torch),
             torch_stack_inner_list(action_prob_batch),
         )
         gae = GAE(
@@ -166,7 +167,7 @@ class PPO(Algorithm):
             new_action_probs.append(action_probs)
         new_action_probs_batch = zip_dict_list(new_action_probs)
         new_log_probs = compute_log_probs(
-            torch_stack_inner_list_any(action_batch),
+            torch_stack_inner_list(action_batch),
             torch_stack_inner_list(new_action_probs_batch),
         )
 
@@ -184,10 +185,9 @@ class PPO(Algorithm):
         self._optimizer.zero_grad()
         loss.backward()
 
+        # TODO: The critic layer has no grad. Probably should calculate the loss for the critic layer as well.
         for name, param in self._policy_net.named_parameters():
-            if param.grad is not None:
-                logging.info(f"{name}: {param.grad.norm().item()}")
-            else:
-                logging.info("No grad:(")
+            if param.grad is None:
+                logging.warning(f"{name}: no grad")
 
         self._optimizer.step()
