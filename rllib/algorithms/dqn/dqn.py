@@ -143,6 +143,9 @@ class DQN(Algorithm):
 
         self._optimizer.zero_grad()
         loss.backward()
+        for name, param in self._policy_net.named_parameters():
+            if param.grad is not None:
+                logging.info(f"{name}: {param.grad.norm().item()}")
         self._optimizer.step()
 
     def _predict_policy_values(

@@ -4,8 +4,8 @@ from rllib.algorithms.algorithm_config import AlgorithmConfig
 class PPOConfig(AlgorithmConfig):
     def __init__(
         self,
-        batch_size: int = 1024,
-        mini_batch_size: int = 64,
+        batch_size: int = 32,
+        mini_batch_size: int = 10,
         epochs: int = 10,
         gamma: float = 0.99,
         lambda_: float = 0.95,

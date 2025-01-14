@@ -3,19 +3,14 @@ from typing import Dict
 import numpy as np
 import torch
 import torch.nn as nn
-from sklearn.exceptions import ConvergenceWarning
 
-# from rl.src.regressor.logistic import LogisticRegression
 from sklearn.linear_model import LogisticRegression
 
 from utils.common.observation import (
     Observation,
-    split_observation,
     zip_observation_data,
 )
 from xailib.common.activations import ActivationTracker, preprocess_activations
-
-# warnings.filterwarnings("ignore", category=ConvergenceWarning)
 
 
 class LinearProbe:

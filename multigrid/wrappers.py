@@ -18,7 +18,7 @@ from multigrid.core.action import Action
 from multigrid.core.concept import get_concept_checks
 from multigrid.core.constants import Color, Direction, State, WorldObjectType
 from multigrid.core.world_object import WorldObject
-from utils.common.numpy_encoder import NumpyEncoder
+from utils.common.numpy_collections import NumpyEncoder
 
 
 class ConceptObsWrapper(gym.Wrapper):

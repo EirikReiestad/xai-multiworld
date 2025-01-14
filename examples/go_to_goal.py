@@ -10,13 +10,13 @@ env = GoToGoalEnv(
     max_steps=150,
     agents=5,
     success_termination_mode="all",
-    render_mode="rgb_array",
+    render_mode="human",
 )
 
 config = (
     PPOConfig(
-        batch_size=1024,
-        mini_batch_size=64,
+        batch_size=8,
+        mini_batch_size=4,
         epochs=10,
         gamma=0.99,
         lambda_=0.95,
@@ -27,11 +27,10 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="test")
+    # .wandb(project="test")
 )
 ppo = PPO(config)
 
-"""
 config = (
     DQNConfig(
         batch_size=32,
@@ -47,10 +46,9 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="multigrid-go-to-goal-dqn")
+    # .wandb(project="multigrid-go-to-goal-dqn")
 )
 dqn = DQN(config)
-"""
 
 while True:
     ppo.learn()
