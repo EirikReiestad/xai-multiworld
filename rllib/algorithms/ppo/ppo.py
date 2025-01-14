@@ -1,3 +1,4 @@
+from numpy import require
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.ppo.ppo_config import PPOConfig
 from multigrid.utils.typing import AgentID, ObsType
@@ -155,6 +156,7 @@ class PPO(Algorithm):
             torch_stack_inner_list(action_batch_torch),
             torch_stack_inner_list(action_prob_batch),
         )
+
         gae = GAE(
             num_agents, len(state_batch[0]), self._config.gamma, self._config.lambda_
         )
@@ -167,11 +169,10 @@ class PPO(Algorithm):
             new_action_probs.append(action_probs)
         new_action_probs_batch = zip_dict_list(new_action_probs)
         new_log_probs = compute_log_probs(
-            torch_stack_inner_list(action_batch),
+            torch_stack_inner_list(action_batch_torch),
             torch_stack_inner_list(new_action_probs_batch),
         )
-
-        advantages_tensor = torch.tensor(advantages)
+        advantages_tensor = torch.tensor(advantages, requires_grad=True)
 
         loss = ppo_loss(
             log_probs,
@@ -185,9 +186,8 @@ class PPO(Algorithm):
         self._optimizer.zero_grad()
         loss.backward()
 
-        # TODO: The critic layer has no grad. Probably should calculate the loss for the critic layer as well.
         for name, param in self._policy_net.named_parameters():
             if param.grad is None:
-                logging.warning(f"{name}: no grad")
+                logging.info(f"{name}: no grad")
 
         self._optimizer.step()

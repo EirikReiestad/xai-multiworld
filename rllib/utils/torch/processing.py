@@ -21,7 +21,7 @@ def leaf_value_to_torch(value: Any) -> Any:
     value: List[int] -> List[torch.Tensor]
     ----------
     """
-    if isinstance(value, int | float):
+    if isinstance(value, int | float | bool):
         return torch.tensor(value)
     if isinstance(value, List):
         return [leaf_value_to_torch(v) for v in value]
