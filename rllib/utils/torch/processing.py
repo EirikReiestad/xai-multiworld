@@ -1,6 +1,5 @@
-from itertools import chain
 from numpy.typing import NDArray
-from typing import Dict, SupportsFloat, List, Any
+from typing import Dict, List, Any
 from multigrid.utils.typing import ObsType
 
 import gymnasium as gym
@@ -10,6 +9,23 @@ import torch
 
 def torch_stack_inner_list(value: List) -> torch.Tensor:
     return torch.stack([torch.stack(v) for v in value])
+
+
+def leaf_value_to_torch(value: Any) -> Any:
+    """
+    Takes in a value of type Any.
+    Returns the type of the value, with the leaf value as a tensor.
+
+    Example:
+    ----------
+    value: List[int] -> List[torch.Tensor]
+    ----------
+    """
+    if isinstance(value, int | float):
+        return torch.tensor(value)
+    if isinstance(value, List):
+        return [leaf_value_to_torch(v) for v in value]
+    raise NotImplementedError(f"Can not handle value of type {type(value)}")
 
 
 def torch_stack_inner_list_any(value: List) -> torch.Tensor:
