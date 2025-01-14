@@ -18,9 +18,11 @@ class GAE:
         done: List[List[bool]],
         rewards: List[List[float]],
         values: List[List[torch.Tensor]],
-    ) -> List:
+    ) -> List[List[torch.Tensor]]:
         advantages = []
-        last_advantage = [0 for _ in range(self.n_workers)]
+        last_advantage: List[torch.Tensor] = [
+            torch.tensor(0) for _ in range(self.n_workers)
+        ]
         last_mask = [1.0 - d[-1] for d in done]
         last_value = [v[-1] * last_mask[i] for i, v in enumerate(values)]
 
@@ -30,7 +32,7 @@ class GAE:
                 rewards[i][t] + self.gamma * last_value[i] - values[i][t]
                 for i in range(self.n_workers)
             ]
-            last_advantage = [
+            last_advantage: List[torch.Tensor] = [
                 delta[i] + self.gamma * self.lambda_ * last_advantage[i]
                 for i in range(self.n_workers)
             ]
