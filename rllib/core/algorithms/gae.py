@@ -23,8 +23,8 @@ class GAE:
         last_advantage: List[torch.Tensor] = [
             torch.tensor(0) for _ in range(self.n_workers)
         ]
-        last_mask = [1.0 - d[-1] for d in done]
-        last_value = [v[-1] * last_mask[i] for i, v in enumerate(values)]
+        mask = [1.0 - d[-1] for d in done]
+        last_value = [v[-1] * mask[i] for i, v in enumerate(values)]
 
         for t in reversed(range(self.worker_steps)):
             mask = [1.0 - d[t] for d in done]
@@ -38,4 +38,6 @@ class GAE:
             ]
             advantages.append(last_advantage)
             last_value = [values[i][t] * mask[i] for i in range(self.n_workers)]
-        return advantages
+        advantages_transposed = list(zip(*advantages))
+        assert len(values) == len(advantages_transposed)
+        return advantages_transposed

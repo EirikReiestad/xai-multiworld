@@ -25,7 +25,7 @@ config = (
     )
     .environment(env)
     .training()
-    # .debugging(log_level="INFO")
+    .debugging(log_level="INFO")
     .rendering()
     # .wandb(project="test")
 )
@@ -45,11 +45,11 @@ config = (
     )
     .environment(env=env)
     .training()
-    # .debugging(log_level="INFO")
+    .debugging(log_level="INFO")
     .rendering()
     # .wandb(project="multigrid-go-to-goal-dqn")
 )
 dqn = DQN(config)
 
 while True:
-    ppo.learn()
+    dqn.learn()

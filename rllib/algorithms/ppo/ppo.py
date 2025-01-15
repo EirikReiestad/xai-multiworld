@@ -23,6 +23,8 @@ from utils.common.collections import zip_dict_list
 PPO Paper: https://arxiv.org/abs/1707.06347
 """
 
+torch.autograd.set_detect_anomaly(True)
+
 
 class PPO(Algorithm):
     _policy_net: ActorCriticMultiInputNetwork
@@ -78,7 +80,7 @@ class PPO(Algorithm):
         )
 
     def predict(self, observation: Dict[AgentID, ObsType]) -> Dict[AgentID, int]:
-        actions, action_probs, values = self._predict(observation)
+        actions, action_probs, values = self._predict(observation, requires_grad=True)
         self._action_probs = action_probs
         self._values = values
         return actions
@@ -97,7 +99,7 @@ class PPO(Algorithm):
         action_probs = {}
         values = {}
         for key, action_prob in zip(observation.keys(), action_probabilities):
-            action_probs[key] = action_prob
+            action_probs[key] = action_prob.detach()
             actions[key] = self._get_action(action_prob)
             values[key] = policy_values[key]
         return actions, action_probs, values
@@ -172,7 +174,8 @@ class PPO(Algorithm):
             torch_stack_inner_list(action_batch_torch),
             torch_stack_inner_list(new_action_probs_batch),
         )
-        advantages_tensor = torch.tensor(advantages, requires_grad=True)
+
+        advantages_tensor = torch_stack_inner_list(advantages)
 
         loss = ppo_loss(
             log_probs,
