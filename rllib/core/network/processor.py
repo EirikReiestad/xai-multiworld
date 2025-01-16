@@ -1,12 +1,8 @@
 import numpy as np
 import torch
-import torch.nn as nn
 
 from typing import Optional
 from rllib.core.torch.module import TorchModule, build_conv_layers, build_fc_layers
-import gymnasium as gym
-from gymnasium.spaces import Box, Discrete
-from rllib.utils.spaces import ObservationSpace, ActionSpace
 
 
 class ConvProcessor(TorchModule):

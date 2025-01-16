@@ -64,12 +64,40 @@ def _goal_in_front_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
     return False
 
 
+@staticmethod
+def _agent_in_view_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
+    image = view["image"]
+    dir = view["direction"]
+
+    for row in image:
+        for cell in row:
+            type_idx = cell[WorldObject.TYPE]
+            if type_idx == WorldObjectType.agent.to_index():
+                return True
+    return False
+
+
+@staticmethod
+def _wall_in_view_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
+    image = view["image"]
+    dir = view["direction"]
+
+    for row in image:
+        for cell in row:
+            type_idx = cell[WorldObject.TYPE]
+            if type_idx == WorldObjectType.wall.to_index():
+                return True
+    return False
+
+
 concept_checks: Dict[str, Callable] = {
     "random": _random_observation_concept,
-    "goal": _goal_in_view_concept,
+    "goal_in_view": _goal_in_view_concept,
     "goal_to_right": _goal_to_right_concept,
     "goal_to_left": _goal_to_left_concept,
     "goal_in_front": _goal_in_front_concept,
+    "agent_in_view": _agent_in_view_concept,
+    "wall_in_view": _wall_in_view_concept,
 }
 
 

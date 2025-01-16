@@ -21,14 +21,14 @@ class ActorCriticMultiInputNetwork(TorchModule):
         observation_space_check(state_dim)
         action_space_check(action_dim)
         self._conv0 = ConvProcessor(state_dim.box, conv_layers)
-        self._fc0 = FCProcessor(int(state_dim.discrete), hidden_units)
+        self._fc0 = FCProcessor(int(state_dim.discrete), (128, 128))
 
         rolled_state_dim = np.roll(state_dim.box, shift=1)  # Channels first
         conv_output_size = get_output_size(self._conv0, rolled_state_dim)
         fc_output_size = get_output_size(self._fc0, np.array([state_dim.discrete]))
 
         fc1_input_size = conv_output_size + fc_output_size
-        self._fc1 = FCProcessor(fc1_input_size, hidden_units)
+        self._fc1 = FCProcessor(fc1_input_size, (64, 64))
 
         fc1_output_size = get_output_size(self._fc1, np.array([fc1_input_size]))
 
@@ -39,7 +39,7 @@ class ActorCriticMultiInputNetwork(TorchModule):
     def forward(
         self, x_img: torch.Tensor, x_dir: torch.Tensor
     ) -> tuple[torch.Tensor, torch.Tensor]:
-        x_img = x_img.float()
+        x_img = x_img.to(torch.float32)
         x_img = x_img.permute(0, 3, 1, 2)
         x_img = self._conv0(x_img)
         x_img = x_img.view(x_img.size(0), -1)

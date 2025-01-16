@@ -45,7 +45,7 @@ config = (
 
 dqn = DQN(config)
 
-concept = "goal"
+concept = "wall_in_view"
 layer = 0
 
 model_artifacts = ModelLoader.load_latest_model_from_path("artifacts", dqn.model)

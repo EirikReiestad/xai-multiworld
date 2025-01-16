@@ -2,8 +2,8 @@
 source: https://nn.labml.ai/rl/ppo/gae.html
 """
 
-import numpy as np
-from numpy.typing import NDArray
+import torch
+from typing import List
 
 
 class GAE:
@@ -13,17 +13,32 @@ class GAE:
         self.gamma = gamma
         self.lambda_ = lambda_
 
-    def __call__(self, done: NDArray, rewards: NDArray, values: NDArray) -> NDArray:
-        advantages = np.zeros((self.n_workers, self.worker_steps), dtype=np.float32)
-        last_advantage = 0
-        last_mask = 1.0 - done[:, -1]
-        last_value = values[:, -1] * last_mask
+    def __call__(
+        self,
+        done: List[List[bool]],
+        rewards: List[List[float]],
+        values: List[List[torch.Tensor]],
+    ) -> List[List[torch.Tensor]]:
+        advantages = []
+        last_advantage: List[torch.Tensor] = [
+            torch.tensor(0) for _ in range(self.n_workers)
+        ]
+        mask = [1.0 - d[-1] for d in done]
+        last_value = [v[-1].clone() * mask[i] for i, v in enumerate(values)]
 
         for t in reversed(range(self.worker_steps)):
-            mask = 1.0 - done[:, t]
-            delta = rewards[:, t] + self.gamma * last_value - values[:, t]
-            last_advantage = delta + self.gamma * self.lambda_ * last_advantage
-            advantages[:, t] = last_advantage
-            last_value = values[:, t] * mask
-
-        return advantages
+            mask = [1.0 - d[t] for d in done]
+            delta = [
+                rewards[i][t]
+                + self.gamma * last_value[i].clone()
+                - values[i][t].clone()
+                for i in range(self.n_workers)
+            ]
+            last_advantage: List[torch.Tensor] = [
+                delta[i] + self.gamma * self.lambda_ * last_advantage[i].clone()
+                for i in range(self.n_workers)
+            ]
+            advantages.append(last_advantage)
+            last_value = [values[i][t].clone() * mask[i] for i in range(self.n_workers)]
+        advantages_transposed = list(zip(*advantages))
+        return advantages_transposed
