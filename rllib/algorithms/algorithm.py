@@ -79,7 +79,9 @@ class Algorithm(Environment, WandB, ABC):
     def train_step(
         self,
         observations: dict[AgentID, ObsType],
-        next_observations: dict[AgentID, ObsType],
+        next_observations: dict[
+            AgentID, ObsType
+        ],  # TODO: Should not pass this value. Next observation should be calculated inside the method.
         actions: dict[AgentID, int],
         rewards: dict[AgentID, SupportsFloat],
         terminations: dict[AgentID, bool],

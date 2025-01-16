@@ -12,5 +12,5 @@ def flatten_dicts(values: List[Dict[Any, T]]) -> List[T]:
 def zip_dict_list(dict_list: list[dict[str, Any]]) -> List[List[Any]]:
     data = []
     for key in dict_list[0].keys():
-        data.append([d[key] for d in dict_list])
+        data.append([dict_list[i][key] for i in range(len(dict_list))])
     return data

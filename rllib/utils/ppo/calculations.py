@@ -1,22 +1,24 @@
 import torch
+import torch.nn.functional as F
 
 
 def ppo_loss(
     old_log_probs: torch.Tensor,
     new_log_probs: torch.Tensor,
     advantages: torch.Tensor,
+    values: torch.Tensor,
+    returns: torch.Tensor,
     epsilon: float,
+    value_weight: float = 0.5,
+    entropy_weight: float = 0.01,
 ) -> torch.Tensor:
     ratios = torch.exp(new_log_probs - old_log_probs)
     surr1 = ratios * advantages
     surr2 = torch.clamp(ratios, 1 - epsilon, 1 + epsilon) * advantages
     policy_loss = -torch.min(surr1, surr2).mean()
-    return policy_loss
-    # NOTE: There are other improvements to the loss that I believe codebases like stable-baselines3 implement, which include value loss and entropy loss.
-    # Might implement later. Suggestion:
-    # value_loss = F.mse_loss(values, returns)
-    # entropy_loss = -entropy.mean()
-    # return policy_loss + 0.5 * value_loss + 0.01 * entropy_loss
+    value_loss = F.mse_loss(values.view(-1), returns.float().view(-1))
+    entropy_loss = -(new_log_probs * torch.exp(new_log_probs)).mean()
+    return policy_loss + value_weight * value_loss + entropy_weight * entropy_loss
 
 
 def compute_log_probs(

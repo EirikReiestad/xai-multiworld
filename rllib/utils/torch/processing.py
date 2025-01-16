@@ -37,12 +37,13 @@ def torch_stack_inner_list_any(value: List) -> torch.Tensor:
 
 def observation_to_torch(
     observation: Dict[str, gym.spaces.Space],
+    requires_grad: bool = False,
 ) -> list[torch.Tensor]:
     """
     Convert a dictionary of observations to a list of torch tensors
     """
     return [
-        torch.tensor(observation[key], dtype=torch.float32)
+        torch.tensor(observation[key], dtype=torch.float32, requires_grad=requires_grad)
         for key in observation.keys()
     ]
 
@@ -57,15 +58,15 @@ def observation_to_torch_unsqueeze(
 
 
 def observations_seperate_to_torch(
-    observations: List[ObsType], skip_none=False
+    observations: List[ObsType], requires_grad: bool = False, skip_none: bool = False
 ) -> List[torch.Tensor]:
     torch_observations = [
-        observation_to_torch(obs)
+        observation_to_torch(obs, requires_grad=requires_grad)
         for obs in observations
         if obs is not None or not skip_none
     ]
-    transposed = [np.array(tensors) for tensors in zip(*torch_observations)]
-    return [torch.tensor(tensor) for tensor in transposed]
+    transposed = [torch.stack(tensors) for tensors in zip(*torch_observations)]
+    return transposed
 
 
 def remove_none_dict(observations: Dict[str, Dict[str, NDArray]]):
