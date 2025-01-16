@@ -15,7 +15,7 @@ env = GoToGoalEnv(
 
 config = (
     PPOConfig(
-        batch_size=8,
+        batch_size=12,
         mini_batch_size=4,
         epochs=10,
         gamma=0.99,
@@ -52,4 +52,4 @@ config = (
 dqn = DQN(config)
 
 while True:
-    dqn.learn()
+    ppo.learn()
