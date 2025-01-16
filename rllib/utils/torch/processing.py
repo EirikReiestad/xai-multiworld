@@ -1,6 +1,5 @@
-from itertools import chain
 from numpy.typing import NDArray
-from typing import Dict, SupportsFloat, List
+from typing import Dict, List, Any
 from multigrid.utils.typing import ObsType
 
 import gymnasium as gym
@@ -8,14 +7,43 @@ import numpy as np
 import torch
 
 
+def torch_stack_inner_list(value: List) -> torch.Tensor:
+    return torch.stack([torch.stack(v) for v in value])
+
+
+def leaf_value_to_torch(value: Any) -> Any:
+    """
+    Takes in a value of type Any.
+    Returns the type of the value, with the leaf value as a tensor.
+
+    Example:
+    ----------
+    value: List[int] -> List[torch.Tensor]
+    ----------
+    """
+    if isinstance(value, int | float | bool):
+        return torch.tensor(value)
+    if isinstance(value, List):
+        return [leaf_value_to_torch(v) for v in value]
+    raise NotImplementedError(f"Can not handle value of type {type(value)}")
+
+
+def torch_stack_inner_list_any(value: List) -> torch.Tensor:
+    result = []
+    for lst in value:
+        result.append(torch.stack([torch.tensor(v) for v in lst]))
+    return torch.stack(result)
+
+
 def observation_to_torch(
     observation: Dict[str, gym.spaces.Space],
+    requires_grad: bool = False,
 ) -> list[torch.Tensor]:
     """
     Convert a dictionary of observations to a list of torch tensors
     """
     return [
-        torch.tensor(observation[key], dtype=torch.float32)
+        torch.tensor(observation[key], dtype=torch.float32, requires_grad=requires_grad)
         for key in observation.keys()
     ]
 
@@ -30,15 +58,15 @@ def observation_to_torch_unsqueeze(
 
 
 def observations_seperate_to_torch(
-    observations: List[ObsType], skip_none=False
+    observations: List[ObsType], requires_grad: bool = False, skip_none: bool = False
 ) -> List[torch.Tensor]:
     torch_observations = [
-        observation_to_torch(obs)
+        observation_to_torch(obs, requires_grad=requires_grad)
         for obs in observations
         if obs is not None or not skip_none
     ]
-    transposed = [np.array(tensors) for tensors in zip(*torch_observations)]
-    return [torch.tensor(tensor) for tensor in transposed]
+    transposed = [torch.stack(tensors) for tensors in zip(*torch_observations)]
+    return transposed
 
 
 def remove_none_dict(observations: Dict[str, Dict[str, NDArray]]):

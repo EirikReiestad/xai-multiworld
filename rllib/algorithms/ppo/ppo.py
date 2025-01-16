@@ -1,3 +1,4 @@
+from numpy import require
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.ppo.ppo_config import PPOConfig
 from multigrid.utils.typing import AgentID, ObsType
@@ -5,22 +6,26 @@ from typing import SupportsFloat, Mapping, Any, List, Dict, Tuple
 from rllib.core.network.actor_critic_multi_input_network import (
     ActorCriticMultiInputNetwork,
 )
-from multigrid.core.action import Action
+import logging
 import torch
-import numpy as np
-from numpy.typing import NDArray
 from rllib.utils.torch.processing import (
     observations_seperate_to_torch,
+    torch_stack_inner_list,
+    leaf_value_to_torch,
 )
 import torch.nn as nn
 from rllib.core.memory.trajectory_buffer import TrajectoryBuffer, Trajectory
 from rllib.utils.ppo.calculations import compute_log_probs, ppo_loss
 from rllib.core.algorithms.gae import GAE
-from utils.common.numpy_collections import dict_list_to_ndarray
+from utils.common.collections import flatten_dicts, zip_dict_list
+from collections import deque
+import copy
 
 """
 PPO Paper: https://arxiv.org/abs/1707.06347
 """
+
+torch.autograd.set_detect_anomaly(True)
 
 
 class PPO(Algorithm):
@@ -28,10 +33,16 @@ class PPO(Algorithm):
 
     def __init__(self, config: PPOConfig):
         super().__init__(config)
+        logging.info("PPO Algorithm")
         self._config = config
         self._policy_net = ActorCriticMultiInputNetwork(
             self.observation_space, self.action_space
         )
+
+        # NOTE: Remove when debug is resolved
+        for name, param in self._policy_net.named_parameters():
+            if not param.requires_grad:
+                logging.info(f"Parameter {name} requires grad: {param.requires_grad}")
 
         self._action_probs = {}
         self._values = {}
@@ -54,14 +65,22 @@ class PPO(Algorithm):
         dones = {}
         for key in terminations.keys():
             dones[key] = terminations[key] or truncations[key]
+        assert len(self._values) != 0
+        assert len(self._action_probs) != 0
+
         self._trajectory_buffer.add(
             states=observations,
             actions=actions,
-            action_probs=self._action_probs,
-            values=self._values,
+            action_probs={
+                key: value.clone() for key, value in self._action_probs.items()
+            },
+            values={key: value.clone() for key, value in self._values.items()},
             rewards=rewards,
             dones=dones,
         )
+        self._values.clear()
+        self._action_probs.clear()
+
         self._optimize_model()
 
     def log_episode(self):
@@ -71,28 +90,32 @@ class PPO(Algorithm):
         )
 
     def predict(self, observation: Dict[AgentID, ObsType]) -> Dict[AgentID, int]:
-        actions, action_probs, values = self._predict(observation)
-        self._action_probs = action_probs
-        self._values = values
+        actions, action_probs, values = self._predict(
+            copy.deepcopy(observation), requires_grad=True
+        )
+        self._action_probs = {
+            key: value.detach() for key, value in action_probs.items()
+        }
+        self._values = {key: value.clone() for key, value in values.items()}
         return actions
 
     def _predict(
-        self, observation: Dict[AgentID, ObsType]
+        self, observation: Dict[AgentID, ObsType], requires_grad: bool = False
     ) -> Tuple[
         Dict[AgentID, int],
-        Dict[AgentID, NDArray],
-        Dict[AgentID, float],
-    ]:  # NOTE: A but ugly code maybe...? as there already is a def predict(...) method
+        Dict[AgentID, torch.Tensor],
+        Dict[AgentID, torch.Tensor],
+    ]:
         action_probabilities, policy_values = self._get_policy_values(
-            list(observation.values())
+            list(observation.values()), requires_grad=requires_grad
         )
         actions = {}
         action_probs = {}
         values = {}
         for key, action_prob in zip(observation.keys(), action_probabilities):
-            action_probs[key] = action_prob.squeeze().detach().numpy()
-            actions[key] = self._get_action(action_probs[key])
-            values[key] = policy_values[key].squeeze().detach().numpy()
+            action_probs[key] = action_prob
+            actions[key] = self._get_action(action_prob)
+            values[key] = policy_values[key]
         return actions, action_probs, values
 
     def load_model(self, model: Mapping[str, Any]):
@@ -103,14 +126,16 @@ class PPO(Algorithm):
     def model(self) -> nn.Module:
         return self._policy_net
 
-    def _get_action(self, action_prob: NDArray) -> Action:
-        action = np.random.choice(range(self.action_space.discrete), p=action_prob)
+    def _get_action(self, action_prob: torch.Tensor) -> int:
+        action = torch.multinomial(action_prob, num_samples=1).item()
         return action
 
     def _get_policy_values(
-        self, observations: List[ObsType]
+        self, observations: List[ObsType], requires_grad: bool = False
     ) -> List[Tuple[torch.Tensor, torch.Tensor]]:
         torch_observations = observations_seperate_to_torch(observations)
+        if requires_grad:
+            return self._policy_net(*torch_observations)
         with torch.no_grad():
             return self._policy_net(*torch_observations)
 
@@ -134,46 +159,58 @@ class PPO(Algorithm):
 
         num_agents = len(batch.states[0].keys())
 
-        action_prob_batch = dict_list_to_ndarray(batch.action_probs)
-        state_batch = dict_list_to_ndarray(batch.states)
-        action_batch = dict_list_to_ndarray(batch.actions)
-        reward_batch = dict_list_to_ndarray(batch.rewards)
-        value_batch = dict_list_to_ndarray(batch.values)
-        dones = dict_list_to_ndarray(batch.dones)
-
-        assert (
-            (len(batch.states[0]), len(batch.states))
-            == state_batch.shape[:2]
-            == action_batch.shape[:2]
-            == reward_batch.shape[:2]
-            == action_prob_batch.shape[:2]
-            == value_batch.shape[:2]
-        ), f"All batch attributes should have the same shape. Should get {len(batch.states)}, got: {state_batch.shape}, {action_batch.shape}, {reward_batch.shape}, {action_prob_batch.shape}, {value_batch.shape}"
+        action_prob_batch = zip_dict_list(batch.action_probs)
+        state_batch = zip_dict_list(batch.states)
+        action_batch = zip_dict_list(batch.actions)
+        reward_batch = zip_dict_list(batch.rewards)
+        value_batch = zip_dict_list(batch.values)
+        dones = zip_dict_list(batch.dones)
 
         # NOTE: The code is a bit confusing. So if there is an error or the algorithm doesn't work. Start here.
-        log_probs = compute_log_probs(action_batch, action_prob_batch)
+        action_batch_torch = leaf_value_to_torch(action_batch)
+        log_probs = compute_log_probs(
+            torch_stack_inner_list(action_batch_torch),
+            torch_stack_inner_list(action_prob_batch),
+        )
+
+        # TODO: This can be more efficient by passing all the states at once.
+        new_action_probs = []
+        new_values = []
+        for state in batch.states:
+            _, action_probs, value = self._predict(state, requires_grad=True)
+            new_action_probs.append(action_probs)
+            new_values.append(value)
 
         gae = GAE(
             num_agents, len(state_batch[0]), self._config.gamma, self._config.lambda_
         )
-        advantages = gae(dones, reward_batch, value_batch)
 
-        # TODO: This can be more efficient by passing all the states at once.
-        new_action_probs = []
-        for state in batch.states:
-            _, action_probs, _ = self._predict(state)
-            new_action_probs.append(action_probs)
-        new_action_probs_batch = dict_list_to_ndarray(new_action_probs)
-        new_log_probs = compute_log_probs(action_batch, new_action_probs_batch)
+        value_batch_detached = [
+            [v.clone().detach() for v in values] for values in value_batch
+        ]
+        action_prob_batch = [
+            [v.clone().detach() for v in values] for values in action_prob_batch
+        ]
 
-        old_log_probs_tensor = torch.tensor(log_probs, dtype=torch.float32)
-        new_log_probs_tensor = torch.tensor(new_log_probs, dtype=torch.float32)
-        advantages_tensor = torch.tensor(advantages, dtype=torch.float32)
+        new_value_batch = zip_dict_list(new_values)
+        advantages = gae(dones, reward_batch, new_value_batch)
+        advantages_tensor = torch_stack_inner_list(advantages)
+
+        new_action_probs_batch = zip_dict_list(new_action_probs)
+        new_log_probs = compute_log_probs(
+            torch_stack_inner_list(action_batch_torch),
+            torch_stack_inner_list(new_action_probs_batch),
+        )
+        value_batch = torch_stack_inner_list(value_batch)
+        reward_batch = torch_stack_inner_list(leaf_value_to_torch(reward_batch))
+        new_values_batch = torch_stack_inner_list(new_value_batch)
 
         loss = ppo_loss(
-            old_log_probs_tensor,
-            new_log_probs_tensor,
+            log_probs,
+            new_log_probs,
             advantages_tensor,
+            new_values_batch,
+            reward_batch,
             self._config.epsilon,
         )
 
@@ -181,4 +218,7 @@ class PPO(Algorithm):
 
         self._optimizer.zero_grad()
         loss.backward()
+        for name, param in self._policy_net.named_parameters():
+            if param.grad is None:
+                logging.info(f"{name}: {param.grad}")
         self._optimizer.step()
