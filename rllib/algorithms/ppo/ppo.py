@@ -193,17 +193,26 @@ class PPO(Algorithm):
             torch_stack_inner_list(action_batch_torch),
             torch_stack_inner_list(new_action_probs_batch),
         )
-        value_batch = torch_stack_inner_list(value_batch)
         reward_batch = torch_stack_inner_list(leaf_value_to_torch(reward_batch))
         new_value_batch = torch_stack_inner_list(new_value_batch)
 
-        loss = ppo_loss(
+        policy_loss, value_loss, entropy_loss = ppo_loss(
             log_probs,
             new_log_probs,
             advantages_tensor,
             new_value_batch.view(-1),
             reward_batch.view(-1).to(torch.float32),
             self._config.epsilon,
+        )
+
+        self.add_log("policy_loss", policy_loss.item(), LogMethod.AVERAGE)
+        self.add_log("value_loss", value_loss.item(), LogMethod.AVERAGE)
+        self.add_log("entropy_loss", entropy_loss.item(), LogMethod.AVERAGE)
+
+        loss = (
+            policy_loss
+            + value_loss * self._config.value_weight
+            + entropy_loss * self._config.entropy_weight
         )
 
         self.add_log("loss", loss.item(), LogMethod.AVERAGE)
