@@ -33,7 +33,6 @@ class PPO(Algorithm):
 
     def __init__(self, config: PPOConfig):
         super().__init__(config)
-        logging.info("PPO Algorithm")
         self._config = config
         self._policy_net = ActorCriticMultiInputNetwork(
             self.observation_space, self.action_space
@@ -95,6 +94,8 @@ class PPO(Algorithm):
             key: value.detach() for key, value in action_probs.items()
         }
         self._values = {key: value.clone() for key, value in values.items()}
+        for value in actions.values():
+            self.add_log(f"action_{value}", 1, LogMethod.CUMULATIVE)
         return actions
 
     def _predict(
@@ -142,7 +143,6 @@ class PPO(Algorithm):
             return
 
         for epoch in range(self._config.epochs):
-            logging.info(f"Optimizing model. Epoch: {epoch+1}/{self._config.epochs}")
             self._optimize_model_batch()
         self._trajectory_buffer.clear()
 
