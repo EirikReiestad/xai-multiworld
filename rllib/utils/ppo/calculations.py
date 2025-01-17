@@ -18,7 +18,7 @@ def ppo_loss(
     policy_loss = -torch.min(surr1, surr2).mean()
     value_loss = F.mse_loss(values.view(-1), returns.float().view(-1))
     entropy_loss = -(new_log_probs * torch.exp(new_log_probs)).mean()
-    return policy_loss + value_weight * value_loss + entropy_weight * entropy_loss
+    return policy_loss + value_weight * value_loss # + entropy_weight * entropy_loss
 
 
 def compute_log_probs(
