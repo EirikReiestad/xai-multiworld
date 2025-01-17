@@ -17,7 +17,7 @@ config = (
     PPOConfig(
         batch_size=1024,
         mini_batch_size=64,
-        epochs=10,
+        epochs=5,
         gamma=0.99,
         lambda_=0.95,
         epsilon=0.2,
