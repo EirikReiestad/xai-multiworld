@@ -187,6 +187,9 @@ class PPO(Algorithm):
         new_value_batch = zip_dict_list(new_values)
         advantages = gae(dones, reward_batch, value_batch)
         advantages_tensor = torch_stack_inner_list(advantages)
+        normalized_advantages = (advantages_tensor - advantages_tensor.mean()) / (
+            advantages_tensor.std() + 1e-8
+        )
 
         new_action_probs_batch = zip_dict_list(new_action_probs)
         new_log_probs = compute_log_probs(
@@ -199,7 +202,7 @@ class PPO(Algorithm):
         policy_loss, value_loss, entropy_loss = ppo_loss(
             log_probs,
             new_log_probs,
-            advantages_tensor,
+            normalized_advantages,
             new_value_batch.view(-1),
             reward_batch.view(-1).to(torch.float32),
             self._config.epsilon,
