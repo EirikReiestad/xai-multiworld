@@ -143,6 +143,7 @@ class PPO(Algorithm):
 
         for epoch in range(self._config.epochs):
             self._optimize_model_batch()
+        self._trajectory_buffer.clear()
 
     def _optimize_model_batch(self):
         mini_batch_size = self._config.mini_batch_size
@@ -150,7 +151,6 @@ class PPO(Algorithm):
         for i in range(0, len(buffer_list), mini_batch_size):
             batch = buffer_list[i : i + mini_batch_size]
             self._optimize_model_minibatch(batch)
-        self._trajectory_buffer.clear()
 
     def _optimize_model_minibatch(self, trajectories: List[Trajectory]):
         batch = Trajectory(*zip(*trajectories))
