@@ -1,25 +1,25 @@
-from numpy import require
+import copy
+import logging
+from typing import Any, Dict, List, Mapping, SupportsFloat, Tuple
+
+import torch
+import torch.nn as nn
+
+from multigrid.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.ppo.ppo_config import PPOConfig
-from multigrid.utils.typing import AgentID, ObsType
-from typing import SupportsFloat, Mapping, Any, List, Dict, Tuple
+from rllib.core.algorithms.gae import GAE
+from rllib.core.memory.trajectory_buffer import Trajectory, TrajectoryBuffer
 from rllib.core.network.actor_critic_multi_input_network import (
     ActorCriticMultiInputNetwork,
 )
-import logging
-import torch
+from rllib.utils.ppo.calculations import compute_log_probs, ppo_loss
 from rllib.utils.torch.processing import (
+    leaf_value_to_torch,
     observations_seperate_to_torch,
     torch_stack_inner_list,
-    leaf_value_to_torch,
 )
-import torch.nn as nn
-from rllib.core.memory.trajectory_buffer import TrajectoryBuffer, Trajectory
-from rllib.utils.ppo.calculations import compute_log_probs, ppo_loss
-from rllib.core.algorithms.gae import GAE
-from utils.common.collections import flatten_dicts, zip_dict_list
-from collections import deque
-import copy
+from utils.common.collections import zip_dict_list
 
 """
 PPO Paper: https://arxiv.org/abs/1707.06347
@@ -90,9 +90,7 @@ class PPO(Algorithm):
         )
 
     def predict(self, observation: Dict[AgentID, ObsType]) -> Dict[AgentID, int]:
-        actions, action_probs, values = self._predict(
-            copy.deepcopy(observation), requires_grad=True
-        )
+        actions, action_probs, values = self._predict(observation, requires_grad=False)
         self._action_probs = {
             key: value.detach() for key, value in action_probs.items()
         }
@@ -185,15 +183,8 @@ class PPO(Algorithm):
             num_agents, len(state_batch[0]), self._config.gamma, self._config.lambda_
         )
 
-        value_batch_detached = [
-            [v.clone().detach() for v in values] for values in value_batch
-        ]
-        action_prob_batch = [
-            [v.clone().detach() for v in values] for values in action_prob_batch
-        ]
-
         new_value_batch = zip_dict_list(new_values)
-        advantages = gae(dones, reward_batch, new_value_batch)
+        advantages = gae(dones, reward_batch, value_batch)
         advantages_tensor = torch_stack_inner_list(advantages)
 
         new_action_probs_batch = zip_dict_list(new_action_probs)
