@@ -11,6 +11,8 @@ class PPOConfig(AlgorithmConfig):
         lambda_: float = 0.95,
         epsilon: float = 0.2,
         learning_rate: float = 1e-4,
+        value_weight: float = 0.5,
+        entropy_weight: float = 0.01,
     ):
         super().__init__("PPO")
         self.batch_size = batch_size
@@ -20,3 +22,5 @@ class PPOConfig(AlgorithmConfig):
         self.lambda_ = lambda_
         self.epsilon = epsilon
         self.learning_rate = learning_rate
+        self.value_weight = value_weight
+        self.entropy_weight = entropy_weight
