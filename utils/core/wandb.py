@@ -1,8 +1,10 @@
+from enum import Enum
 import json
 import logging
 import os
 from abc import ABC
 from typing import Optional
+from collections import defaultdict
 
 import numpy as np
 import torch
@@ -10,6 +12,12 @@ import torch.nn as nn
 
 import wandb
 from rllib.utils.image import save_gif
+
+
+class LogMethod(Enum):
+    OVERWRITE = "overwrite"
+    CUMULATIVE = "cumulative"
+    AVERAGE = "average"
 
 
 class WandB(ABC):
@@ -42,6 +50,7 @@ class WandB(ABC):
         self._save_steps = save_steps
 
         self._log = {}
+        self._log_average = defaultdict(list)
         self._artifact = None
         self._frames = []
 
@@ -80,14 +89,23 @@ class WandB(ABC):
             wandb.log_artifact(self._artifact)
         wandb.log(data)
 
-    def add_log(self, key: str, value: float, cumulative: bool = False):
+    def add_log(
+        self,
+        key: str,
+        value: float,
+        method: LogMethod = LogMethod.OVERWRITE,
+    ):
         if self._api is None:
             return
 
-        if cumulative:
-            self._log[key] = self._log.get(key, 0) + value
-        else:
+        if method == LogMethod.OVERWRITE:
             self._log[key] = value
+        elif method == LogMethod.CUMULATIVE:
+            self._log[key] = self._log.get(key, 0) + value
+        elif method == LogMethod.AVERAGE:
+            self._log_average[key].append(value)
+        else:
+            raise ValueError(f"Method {method} not recognized.")
 
     def download_model(
         self, run_path: str, model_artifact: str, version_number: str
@@ -119,10 +137,16 @@ class WandB(ABC):
         if self._api is None:
             return
 
+        print("test")
+
         self._commit_frames()
 
+        for key, values in self._log_average.items():
+            self._log[key] = np.mean(values)
+
         self.log(self._log)
-        self._log = {}
+        self._log.clear()
+        self._log_average.clear()
         self._artifact = None
 
     def _commit_frames(self):
