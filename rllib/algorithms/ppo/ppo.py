@@ -196,11 +196,7 @@ class PPO(Algorithm):
         reward_batch = torch_stack_inner_list(leaf_value_to_torch(reward_batch))
         new_value_batch = torch_stack_inner_list(new_value_batch)
 
-<<<<<<< HEAD
-        loss = ppo_loss(
-=======
         policy_loss, value_loss, entropy_loss = ppo_loss(
->>>>>>> dc87396b13c9701a0017d80c199afd05383ef9c1
             log_probs,
             new_log_probs,
             advantages_tensor,
