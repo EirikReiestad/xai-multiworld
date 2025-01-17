@@ -1,4 +1,3 @@
-import copy
 import logging
 from typing import Any, Dict, List, Mapping, SupportsFloat, Tuple
 
@@ -20,6 +19,7 @@ from rllib.utils.torch.processing import (
     torch_stack_inner_list,
 )
 from utils.common.collections import zip_dict_list
+from utils.core.wandb import LogMethod
 
 """
 PPO Paper: https://arxiv.org/abs/1707.06347
@@ -142,7 +142,9 @@ class PPO(Algorithm):
             return
 
         for epoch in range(self._config.epochs):
+            logging.info(f"Optimizing model. Epoch: {epoch+1}/{self._config.epochs}")
             self._optimize_model_batch()
+        self._trajectory_buffer.clear()
 
     def _optimize_model_batch(self):
         mini_batch_size = self._config.mini_batch_size
@@ -150,9 +152,8 @@ class PPO(Algorithm):
         for i in range(0, len(buffer_list), mini_batch_size):
             batch = buffer_list[i : i + mini_batch_size]
             self._optimize_model_minibatch(batch)
-        self._trajectory_buffer.clear()
 
-    def _optimize_model_minibatch(self, trajectories: List[Trajectory]):
+    def _optimize_model_minibatch(self, trajectories: List[Trajectory]) -> float:
         batch = Trajectory(*zip(*trajectories))
 
         num_agents = len(batch.states[0].keys())
@@ -194,18 +195,18 @@ class PPO(Algorithm):
         )
         value_batch = torch_stack_inner_list(value_batch)
         reward_batch = torch_stack_inner_list(leaf_value_to_torch(reward_batch))
-        new_values_batch = torch_stack_inner_list(new_value_batch)
+        new_value_batch = torch_stack_inner_list(new_value_batch)
 
         loss = ppo_loss(
             log_probs,
             new_log_probs,
             advantages_tensor,
-            new_values_batch,
-            reward_batch,
+            new_value_batch.view(-1),
+            reward_batch.view(-1).to(torch.float32),
             self._config.epsilon,
         )
 
-        self.add_log("loss", loss.item())
+        self.add_log("loss", loss.item(), LogMethod.AVERAGE)
 
         self._optimizer.zero_grad()
         loss.backward()
@@ -213,3 +214,5 @@ class PPO(Algorithm):
             if param.grad is None:
                 logging.info(f"{name}: {param.grad}")
         self._optimizer.step()
+
+        return loss.item()

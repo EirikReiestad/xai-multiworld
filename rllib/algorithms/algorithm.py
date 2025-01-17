@@ -3,7 +3,7 @@ import torch.nn as nn
 from itertools import count
 from rllib.algorithms.algorithm_config import AlgorithmConfig
 from rllib.core.environment.environment import Environment
-from utils.core.wandb import WandB
+from utils.core.wandb import LogMethod, WandB
 from multigrid.base import AgentID, ObsType
 from multigrid.core.action import Action, int_to_action
 from typing import Any, SupportsFloat, Mapping
@@ -65,7 +65,11 @@ class Algorithm(Environment, WandB, ABC):
             )
 
             for agent_id in observations.keys():
-                self.add_log("total_rewards", float(rewards[agent_id]), True)
+                self.add_log(
+                    "total_rewards",
+                    float(rewards[agent_id]),
+                    method=LogMethod.CUMULATIVE,
+                )
 
             for agent_id, value in infos.items():
                 for key, value in value.items():

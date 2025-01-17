@@ -16,7 +16,7 @@ def ppo_loss(
     surr1 = ratios * advantages
     surr2 = torch.clamp(ratios, 1 - epsilon, 1 + epsilon) * advantages
     policy_loss = -torch.min(surr1, surr2).mean()
-    value_loss = F.mse_loss(values.view(-1), returns.float().view(-1))
+    value_loss = F.mse_loss(values, returns)
     entropy_loss = -(new_log_probs * torch.exp(new_log_probs)).mean()
     return policy_loss + value_weight * value_loss + entropy_weight * entropy_loss
 
