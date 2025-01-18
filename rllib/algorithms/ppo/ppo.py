@@ -186,6 +186,8 @@ class PPO(Algorithm):
 
         new_value_batch = zip_dict_list(new_values)
         advantages = gae(dones, reward_batch, value_batch)
+        average_advantages = float(torch.mean(torch_stack_inner_list(advantages)))
+        self.add_log("advantages", average_advantages, LogMethod.AVERAGE)
         advantages_tensor = torch_stack_inner_list(advantages)
         normalized_advantages = (advantages_tensor - advantages_tensor.mean()) / (
             advantages_tensor.std() + 1e-8
