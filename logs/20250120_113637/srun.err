@@ -1,0 +1,43 @@
+mv: cannot stat 'log.txt': No such file or directory
+
+[notice] A new release of pip is available: 24.2 -> 24.3.1
+[notice] To update, run: pip install --upgrade pip
+wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu). Use `wandb login --relogin` to force relogin
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu). Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.19.1
+wandb: Run data is saved locally in ./wandb/run-20250120_113646-p1locpaz
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run comfy-plant-12
+wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/test
+wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/test/runs/p1locpaz
+wandb: WARNING A graphql request initiated by the public wandb API timed out (timeout=19 sec). Create a new API with an integer timeout larger than 19, e.g., `api = wandb.Api(timeout=29)` to increase the graphql timeout.
+ERROR:root:Error: Could not save gif: cannot identify image file '/cluster/work/eirre/multigrid/assets/temp.gif'
+Traceback (most recent call last):
+  File "/cluster/work/eirre/multigrid/examples/go_to_goal.py", line 33, in <module>
+    ppo.learn()
+  File "/cluster/work/eirre/multigrid/rllib/algorithms/algorithm.py", line 38, in learn
+    self.commit_log()
+  File "/cluster/work/eirre/multigrid/utils/core/wandb.py", line 142, in commit_log
+    self._commit_frames()
+  File "/cluster/work/eirre/multigrid/utils/core/wandb.py", line 156, in _commit_frames
+    save_gif(self._frames, gif_path)
+  File "/cluster/work/eirre/multigrid/rllib/utils/image.py", line 11, in save_gif
+    pil_images = [Image.fromarray(frame.transpose(1, 0, 2), "RGB") for frame in frames]
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/multigrid/rllib/utils/image.py", line 11, in <listcomp>
+    pil_images = [Image.fromarray(frame.transpose(1, 0, 2), "RGB") for frame in frames]
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/PIL/Image.py", line 3342, in fromarray
+    return frombuffer(mode, size, obj, "raw", rawmode, 0, 1)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/PIL/Image.py", line 3244, in frombuffer
+    return frombytes(mode, size, data, decoder_name, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/PIL/Image.py", line 3171, in frombytes
+    im = new(mode, size)
+         ^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/PIL/Image.py", line 3136, in new
+    return im._new(core.fill(mode, size, color))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
