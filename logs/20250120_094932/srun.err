@@ -12,3 +12,80 @@ wandb: Syncing run stellar-violet-8
 wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/test
 wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/test/runs/6ameza42
 ERROR:root:Error: Could not save gif: cannot identify image file '/cluster/work/eirre/multigrid/assets/temp.gif'
+ERROR:root:Error: Could not save gif: cannot identify image file '/cluster/work/eirre/multigrid/assets/temp.gif'
+Traceback (most recent call last):
+  File "/cluster/work/eirre/multigrid/examples/go_to_goal.py", line 33, in <module>
+    ppo.learn()
+  File "/cluster/work/eirre/multigrid/rllib/algorithms/algorithm.py", line 35, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/multigrid/rllib/algorithms/algorithm.py", line 57, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/multigrid/rllib/algorithms/ppo/ppo.py", line 84, in train_step
+    self._optimize_model()
+  File "/cluster/work/eirre/multigrid/rllib/algorithms/ppo/ppo.py", line 147, in _optimize_model
+    self._optimize_model_batch()
+  File "/cluster/work/eirre/multigrid/rllib/algorithms/ppo/ppo.py", line 155, in _optimize_model_batch
+    self._optimize_model_minibatch(batch)
+  File "/cluster/work/eirre/multigrid/rllib/algorithms/ppo/ppo.py", line 180, in _optimize_model_minibatch
+    _, action_probs, value = self._predict(state, requires_grad=True)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/multigrid/rllib/algorithms/ppo/ppo.py", line 109, in _predict
+    action_probabilities, policy_values = self._get_policy_values(
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/multigrid/rllib/algorithms/ppo/ppo.py", line 138, in _get_policy_values
+    return self._policy_net(*torch_observations)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/multigrid/rllib/core/network/actor_critic_multi_input_network.py", line 44, in forward
+    x_img = self._conv0(x_img)
+            ^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/multigrid/rllib/core/network/processor.py", line 14, in forward
+    return self.conv_layers(x)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/torch/nn/modules/container.py", line 250, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1736, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1747, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/torch/nn/modules/activation.py", line 1667, in forward
+    return F.softmax(input, self.dim, _stacklevel=5)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/torch/nn/functional.py", line 2140, in softmax
+    ret = input.softmax(dim)
+          ^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/torch/fx/traceback.py", line 72, in format_stack
+    return traceback.format_list(traceback.extract_stack()[:-1])
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/traceback.py", line 231, in extract_stack
+    stack = StackSummary.extract(walk_stack(f), limit=limit)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/traceback.py", line 393, in extract
+    return klass._extract_from_extended_frame_gen(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/traceback.py", line 432, in _extract_from_extended_frame_gen
+    linecache.checkcache(filename)
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/linecache.py", line 72, in checkcache
+    stat = os.stat(fullname)
+           ^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
