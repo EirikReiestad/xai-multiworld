@@ -1,8 +1,8 @@
-import torch.nn as nn
+from typing import Dict, List, Tuple
+
 import numpy as np
-import copy
 import torch
-from typing import List, Dict, Tuple
+import torch.nn as nn
 
 from utils.common.model_artifact import ModelArtifact
 
@@ -24,7 +24,7 @@ class ActivationTracker:
         hook_count = 0
         for _, processor in self._model.named_children():
             for _, layer in processor.named_children():
-                for name, sub_layer in layer.named_children():
+                for _, sub_layer in layer.named_children():
                     if not isinstance(sub_layer, nn.ReLU):
                         continue
                     hook_count += 1

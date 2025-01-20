@@ -41,15 +41,15 @@ class ConceptObsWrapper(gym.Wrapper):
         os.makedirs(self._save_dir, exist_ok=True)
 
         self._concepts: Dict[str, List[ObsType]] = defaultdict(list)
-        self._concepts_filled = defaultdict(lambda: False)
-        self._concepts_filled["flag"] = True  # Only write once
         self._concept_checks = get_concept_checks(concepts)
+        self._concepts_filled = {key: False for key in self._concept_checks.keys()}
 
         assert len(self._concept_checks) != 0, f"No concepts to check, {concepts}"
 
         self._method = method
         self._step_count = 0
         self._concepts_added = 0
+        self._previous_concepts_added = 0
 
     def step(
         self, actions: Dict[AgentID, Action | int]
@@ -68,25 +68,37 @@ class ConceptObsWrapper(gym.Wrapper):
             logging.info(
                 f"Number of concepts filled: {self._concepts_added} / {self._num_observations * len(self._concept_checks)}"
             )
+        if self._step_count % self._num_observations == 0:
+            if (
+                self._previous_concepts_added == self._concepts_added
+                and self._step_count > 0
+            ):
+                info_str = "\n"
+                for key in self._concept_checks.keys():
+                    info_str += f"{key} - {len(self._concepts.get(key) or [])}\n"
+                raise TimeoutError("Can not generate all concepts." + info_str)
+            self._previous_concepts_added = self._concepts_added
 
         observations, rewards, terminations, truncations, info = super().step(actions)
 
         for concept, check_fn in self._concept_checks.items():
+            if all(self._concepts_filled.values()):
+                self._write_concepts()
+                sys.exit()
+
             if self._concepts_filled[concept]:
                 continue
+
             for agent_id, obs in observations.items():
                 if not check_fn(obs):
                     continue
+
                 self._concepts_added += 1
                 self._concepts[concept].append(obs)
 
                 if len(self._concepts[concept]) >= self._num_observations:
                     self._concepts_filled[concept] = True
-
-                if all(self._concepts_filled.values()):
-                    self._write_concepts()
-                    self._concepts_filled["flag"] = False
-                    sys.exit()
+                    break
 
         self._step_count += 1
 
