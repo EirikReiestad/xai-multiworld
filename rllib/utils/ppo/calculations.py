@@ -21,8 +21,8 @@ def ppo_loss(
 
 
 def compute_log_probs(
-    actions: torch.Tensor, action_probs: torch.Tensor
+    actions: torch.Tensor, action_logits: torch.Tensor
 ) -> torch.Tensor:
-    selected_action_probs = action_probs.gather(dim=-1, index=actions.unsqueeze(-1))
-    log_probs = torch.log(selected_action_probs)
+    dist = torch.distributions.Categorical(logits=action_logits)
+    log_probs = dist.log_prob(actions)
     return log_probs
