@@ -115,7 +115,7 @@ class PPO(Algorithm):
         values = {}
         for key, action_logit in zip(observation.keys(), action_probabilities):
             action, log_prob = self._get_action(action_logit)
-            action_logits[key] = log_prob
+            action_logits[key] = action_logit
             actions[key] = action.item()
             values[key] = policy_values[key]
         return actions, action_logits, values
