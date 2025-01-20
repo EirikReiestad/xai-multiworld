@@ -29,7 +29,6 @@ class ActivationTracker:
                         continue
                     hook_count += 1
                     sub_layer.register_forward_hook(self._module_hook)
-
         assert hook_count > 0, "No hooks registered"
 
     def _module_hook(self, module: nn.Module, input, output):
@@ -52,11 +51,11 @@ def compute_activations_from_artifacts(
     inputs = {}
     outputs = {}
     for key, value in artifacts.items():
-        _activation, _input, _output = ActivationTracker(
+        _activations, _input, _output = ActivationTracker(
             value.model
         ).compute_activations(input)
 
-        activations[key] = _activation
+        activations[key] = _activations
         inputs[key] = _input
         outputs[key] = _output
     return activations, inputs, outputs
