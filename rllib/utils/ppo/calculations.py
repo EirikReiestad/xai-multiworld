@@ -12,6 +12,7 @@ def ppo_loss(
     epsilon: float,
 ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
     ratios = torch.exp(new_log_probs - old_log_probs)
+    advantages = advantages.squeeze(-1)
     surr1 = ratios * advantages
     surr2 = torch.clamp(ratios, 1 - epsilon, 1 + epsilon) * advantages
     policy_loss = -torch.min(surr1, surr2).mean()
