@@ -42,5 +42,8 @@ class GAE:
                 )
             advantages.append(last_advantage.copy())
             last_value = [values[i][t].clone() * mask[i] for i in range(self.n_workers)]
-        advantages = list(zip(*advantages))
+        advantages = [
+            list(reversed(worker_advantage)) for worker_advantage in advantages
+        ]
+        advantages = list(zip(*advantages[::-1]))
         return advantages
