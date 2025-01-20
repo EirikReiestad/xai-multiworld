@@ -184,7 +184,6 @@ class PPO(Algorithm):
         gae = GAE(
             num_agents, len(state_batch[0]), self._config.gamma, self._config.lambda_
         )
-        gae = MonteCarloAdvantage(num_agents, len(state_batch[0]), self._config.gamma)
 
         new_value_batch = zip_dict_list(new_values)
         advantages = gae(dones, reward_batch, value_batch)
