@@ -1,0 +1,41 @@
+mv: cannot stat 'log.txt': No such file or directory
+
+[notice] A new release of pip is available: 24.2 -> 24.3.1
+[notice] To update, run: pip install --upgrade pip
+wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu). Use `wandb login --relogin` to force relogin
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu). Use `wandb login --relogin` to force relogin
+wandb: Tracking run with wandb version 0.19.1
+wandb: Run data is saved locally in ./wandb/run-20250118_103657-t7r9lstv
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run dark-plasma-5
+wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/test
+wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/test/runs/t7r9lstv
+Traceback (most recent call last):
+  File "/cluster/work/eirre/multigrid/examples/go_to_goal.py", line 33, in <module>
+    ppo.learn()
+  File "/cluster/work/eirre/multigrid/rllib/algorithms/algorithm.py", line 38, in learn
+    self.commit_log()
+  File "/cluster/work/eirre/multigrid/utils/core/wandb.py", line 142, in commit_log
+    self._commit_frames()
+  File "/cluster/work/eirre/multigrid/utils/core/wandb.py", line 156, in _commit_frames
+    save_gif(self._frames, gif_path)
+  File "/cluster/work/eirre/multigrid/rllib/utils/image.py", line 18, in save_gif
+    pil_images[0].save(
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/PIL/Image.py", line 2605, in save
+    save_handler(self, fp, filename)
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/PIL/GifImagePlugin.py", line 774, in _save_all
+    _save(im, fp, filename, save_all=True)
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/PIL/GifImagePlugin.py", line 787, in _save
+    if not save_all or not _write_multiple_frames(im, fp, palette):
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/PIL/GifImagePlugin.py", line 663, in _write_multiple_frames
+    im_frame = _normalize_mode(im_frame.copy())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/PIL/GifImagePlugin.py", line 518, in _normalize_mode
+    im = im.convert("P", palette=Image.Palette.ADAPTIVE)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/multigrid-bWhHBrRx-py3.11/lib/python3.11/site-packages/PIL/Image.py", line 1104, in convert
+    im = self.im.quantize(colors)
+         ^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
