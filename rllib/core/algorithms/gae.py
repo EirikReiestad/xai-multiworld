@@ -2,8 +2,9 @@
 source: https://nn.labml.ai/rl/ppo/gae.html
 """
 
-import torch
 from typing import List
+
+import torch
 
 
 class GAE:
@@ -28,6 +29,9 @@ class GAE:
 
         for t in reversed(range(self.worker_steps)):
             mask = [1.0 - d[t] for d in done]
+            if any([rewards[i][t] > 0.0 for i in range(self.n_workers)]):
+                print([rewards[i][t] for i in range(self.n_workers)])
+                print(mask)
             delta = [
                 rewards[i][t] + self.gamma * last_value[i] - values[i][t]
                 for i in range(self.n_workers)

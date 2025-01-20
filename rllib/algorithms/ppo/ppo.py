@@ -8,6 +8,7 @@ from multigrid.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.ppo.ppo_config import PPOConfig
 from rllib.core.algorithms.gae import GAE
+from rllib.core.algorithms.monte_carlo_advantage import MonteCarloAdvantage
 from rllib.core.memory.trajectory_buffer import Trajectory, TrajectoryBuffer
 from rllib.core.network.actor_critic_multi_input_network import (
     ActorCriticMultiInputNetwork,
@@ -183,6 +184,7 @@ class PPO(Algorithm):
         gae = GAE(
             num_agents, len(state_batch[0]), self._config.gamma, self._config.lambda_
         )
+        gae = MonteCarloAdvantage(num_agents, len(state_batch[0]), self._config.gamma)
 
         new_value_batch = zip_dict_list(new_values)
         advantages = gae(dones, reward_batch, value_batch)
