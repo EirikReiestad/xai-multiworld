@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Mapping, SupportsFloat, Tuple
 
 import torch
 import torch.nn as nn
+from torch.types import Number
 
 from multigrid.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm import Algorithm
@@ -112,9 +113,8 @@ class PPO(Algorithm):
         actions = {}
         action_probs = {}
         values = {}
-        for key, action_prob in zip(observation.keys(), action_probabilities):
-            action_probs[key] = action_prob
-            actions[key] = self._get_action(action_prob)
+        for key, action_logits in zip(observation.keys(), action_probabilities):
+            action_probs[key], actions[key] = self._get_action(action_logits)
             values[key] = policy_values[key]
         return actions, action_probs, values
 
@@ -126,9 +126,10 @@ class PPO(Algorithm):
     def model(self) -> nn.Module:
         return self._policy_net
 
-    def _get_action(self, action_prob: torch.Tensor) -> int:
-        action = torch.multinomial(action_prob, num_samples=1).item()
-        return action
+    def _get_action(self, action_logits: torch.Tensor) -> Tuple[torch.Tensor, Number]:
+        action_probs = torch.softmax(action_logits, dim=-1)
+        action = torch.multinomial(action_probs, num_samples=1).item()
+        return action_probs, action
 
     def _get_policy_values(
         self, observations: List[ObsType], requires_grad: bool = False
@@ -184,7 +185,6 @@ class PPO(Algorithm):
         gae = GAE(
             num_agents, len(state_batch[0]), self._config.gamma, self._config.lambda_
         )
-        gae = MonteCarloAdvantage(num_agents, len(state_batch[0]), self._config.gamma)
 
         new_value_batch = zip_dict_list(new_values)
         advantages = gae(dones, reward_batch, value_batch)
