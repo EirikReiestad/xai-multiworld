@@ -3,10 +3,10 @@ from rllib.algorithms.ppo.ppo_config import PPOConfig
 from multigrid.envs.go_to_goal import GoToGoalEnv
 
 env = GoToGoalEnv(
-    width=10,
-    height=10,
-    max_steps=150,
-    agents=5,
+    width=5,
+    height=5,
+    max_steps=64,
+    agents=1,
     success_termination_mode="all",
     render_mode="rgb_array",
 )

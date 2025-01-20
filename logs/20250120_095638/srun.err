@@ -6,9 +6,8 @@ wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu). Use `wandb lo
 wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu). Use `wandb login --relogin` to force relogin
 wandb: Tracking run with wandb version 0.19.1
-wandb: Run data is saved locally in ./wandb/run-20250120_095134-6ameza42
+wandb: Run data is saved locally in ./wandb/run-20250120_095715-hf0vsmuj
 wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run stellar-violet-8
+wandb: Syncing run wandering-hill-9
 wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/test
-wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/test/runs/6ameza42
-ERROR:root:Error: Could not save gif: cannot identify image file '/cluster/work/eirre/multigrid/assets/temp.gif'
+wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/test/runs/hf0vsmuj
