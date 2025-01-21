@@ -3,18 +3,16 @@ from typing import Any, Dict, List, Mapping, SupportsFloat, Tuple
 
 import torch
 import torch.nn as nn
-from torch.types import Number
 
 from multigrid.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.ppo.ppo_config import PPOConfig
 from rllib.core.algorithms.gae import GAE
-from rllib.core.algorithms.monte_carlo_advantage import MonteCarloAdvantage
 from rllib.core.memory.trajectory_buffer import Trajectory, TrajectoryBuffer
 from rllib.core.network.actor_critic_multi_input_network import (
     ActorCriticMultiInputNetwork,
 )
-from rllib.utils.ppo.calculations import compute_log_probs, ppo_loss
+from rllib.utils.ppo.calculations import compute_log_probs, compute_returns, ppo_loss
 from rllib.utils.torch.processing import (
     leaf_value_to_torch,
     observations_seperate_to_torch,
@@ -208,12 +206,15 @@ class PPO(Algorithm):
         reward_batch = torch_stack_inner_list(leaf_value_to_torch(reward_batch))
         new_value_batch = torch_stack_inner_list(new_value_batch)
 
+        returns = compute_returns(reward_batch, self._config.gamma)
+        print(returns)
+
         policy_loss, value_loss, entropy_loss = ppo_loss(
             log_probs,
             new_log_probs,
             normalized_advantages,
-            new_value_batch,
-            reward_batch.view(-1).to(torch.float32),
+            new_value_batch.view(-1),
+            returns.view(-1),
             self._config.epsilon,
         )
 

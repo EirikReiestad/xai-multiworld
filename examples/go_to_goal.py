@@ -13,8 +13,8 @@ env = GoToGoalEnv(
 
 config = (
     PPOConfig(
-        batch_size=32,
-        mini_batch_size=8,
+        batch_size=64,
+        mini_batch_size=16,
         epochs=3,
         gamma=0.99,
         lambda_=0.95,
