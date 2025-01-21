@@ -11,8 +11,10 @@ env = GoToGoalEnv(
     success_termination_mode="all",
     render_mode="human",
 )
+concepts = ["wall_in_view"]
+concepts = None
 env_wrapped = ConceptObsWrapper(
-    env, observations=1000, concepts=["wall_in_view"], method="random"
+    env, observations=1000, concepts=concepts, method="random"
 )
 
 config = (
