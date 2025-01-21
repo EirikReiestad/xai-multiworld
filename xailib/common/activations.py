@@ -1,8 +1,8 @@
-import torch.nn as nn
+from typing import Dict, List, Tuple
+
 import numpy as np
-import copy
 import torch
-from typing import List, Dict, Tuple
+import torch.nn as nn
 
 from utils.common.model_artifact import ModelArtifact
 
@@ -24,12 +24,11 @@ class ActivationTracker:
         hook_count = 0
         for _, processor in self._model.named_children():
             for _, layer in processor.named_children():
-                for name, sub_layer in layer.named_children():
+                for _, sub_layer in layer.named_children():
                     if not isinstance(sub_layer, nn.ReLU):
                         continue
                     hook_count += 1
                     sub_layer.register_forward_hook(self._module_hook)
-
         assert hook_count > 0, "No hooks registered"
 
     def _module_hook(self, module: nn.Module, input, output):
@@ -52,11 +51,11 @@ def compute_activations_from_artifacts(
     inputs = {}
     outputs = {}
     for key, value in artifacts.items():
-        _activation, _input, _output = ActivationTracker(
+        _activations, _input, _output = ActivationTracker(
             value.model
         ).compute_activations(input)
 
-        activations[key] = _activation
+        activations[key] = _activations
         inputs[key] = _input
         outputs[key] = _output
     return activations, inputs, outputs
