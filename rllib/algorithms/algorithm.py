@@ -61,6 +61,7 @@ class Algorithm(Environment, WandB, ABC):
                 rewards,
                 terminations,
                 truncations,
+                t,
                 infos,
             )
 
@@ -90,6 +91,7 @@ class Algorithm(Environment, WandB, ABC):
         rewards: dict[AgentID, SupportsFloat],
         terminations: dict[AgentID, bool],
         truncations: dict[AgentID, bool],
+        step: int,
         infos: dict[AgentID, dict[str, Any]],
     ):
         raise NotImplementedError

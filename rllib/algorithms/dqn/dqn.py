@@ -43,6 +43,7 @@ class DQN(Algorithm):
         rewards: dict[AgentID, SupportsFloat],
         terminations: dict[AgentID, bool],
         truncations: dict[AgentID, bool],
+        step: int,
         infos: dict[AgentID, dict[str, Any]],
     ):
         next_obs = preprocess_next_observations(
