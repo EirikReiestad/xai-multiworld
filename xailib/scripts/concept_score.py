@@ -1,5 +1,3 @@
-from typing import List
-
 from multigrid.core.concept import concept_checks
 from multigrid.envs.go_to_goal import GoToGoalEnv
 from rllib.algorithms.dqn.dqn import DQN
