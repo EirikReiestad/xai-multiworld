@@ -5,7 +5,7 @@ from multigrid.envs.go_to_goal import GoToGoalEnv
 env = GoToGoalEnv(
     width=7,
     height=7,
-    max_steps=4,
+    max_steps=100,
     agents=3,
     success_termination_mode="all",
     render_mode="rgb_array",
@@ -25,7 +25,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="test", log_interval=1)
+    .wandb(project="test", log_interval=5)
 )
 ppo = PPO(config)
 
