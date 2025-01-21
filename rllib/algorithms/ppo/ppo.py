@@ -212,7 +212,7 @@ class PPO(Algorithm):
             log_probs,
             new_log_probs,
             normalized_advantages,
-            new_value_batch.view(-1),
+            new_value_batch,
             reward_batch.view(-1).to(torch.float32),
             self._config.epsilon,
         )
