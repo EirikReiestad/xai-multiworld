@@ -5,7 +5,7 @@ from multigrid.envs.go_to_goal import GoToGoalEnv
 env = GoToGoalEnv(
     width=7,
     height=7,
-    max_steps=150,
+    max_steps=4,
     agents=3,
     success_termination_mode="all",
     render_mode="human",
@@ -13,7 +13,7 @@ env = GoToGoalEnv(
 
 config = (
     PPOConfig(
-        batch_size=64,
+        batch_size=32,
         mini_batch_size=16,
         epochs=3,
         gamma=0.99,
