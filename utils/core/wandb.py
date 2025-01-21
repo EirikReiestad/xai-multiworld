@@ -137,8 +137,6 @@ class WandB(ABC):
         if self._api is None:
             return
 
-        print("test")
-
         self._commit_frames()
 
         for key, values in self._log_average.items():

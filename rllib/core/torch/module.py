@@ -25,7 +25,6 @@ def build_conv_layers(
         layers.append(nn.Conv2d(channels, hidden_dim, kernel_size=3, stride=1))
         layers.append(nn.ReLU())
         channels = hidden_dim
-    layers.append(nn.Softmax(dim=-1))
     return nn.Sequential(*layers)
 
 
