@@ -25,7 +25,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    #     .wandb(project="test", log_interval=1)
+    .wandb(project="test", log_interval=1)
 )
 ppo = PPO(config)
 
