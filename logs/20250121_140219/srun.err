@@ -1,0 +1,6 @@
+mv: cannot stat 'log.txt': No such file or directory
+
+[notice] A new release of pip is available: 24.2 -> 24.3.1
+[notice] To update, run: pip install --upgrade pip
+wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu). Use `wandb login --relogin` to force relogin
+slurmstepd: error: *** JOB 21098958 ON idun-04-35 CANCELLED AT 2025-01-21T14:05:17 ***
