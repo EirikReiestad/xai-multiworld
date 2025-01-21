@@ -16,7 +16,7 @@ def ppo_loss(
     surr1 = ratios * advantages
     surr2 = torch.clamp(ratios, 1 - epsilon, 1 + epsilon) * advantages
     policy_loss = -torch.min(surr1, surr2).mean()
-    value_loss = F.mse_loss(values.view(-1), advantages.view(-1))
+    value_loss = F.mse_loss(values, returns)
     entropy_loss = -(new_log_probs * torch.exp(new_log_probs)).mean()
     return policy_loss, value_loss, entropy_loss
 
@@ -27,3 +27,11 @@ def compute_log_probs(
     dist = torch.distributions.Categorical(logits=action_logits)
     log_probs = dist.log_prob(actions)
     return log_probs
+
+
+def compute_returns(rewards: torch.Tensor, gamma: float) -> torch.Tensor:
+    returns = torch.zeros_like(rewards).float()
+    returns[:, -1] = rewards[:, -1]
+    for t in reversed(range(len(rewards[0]) - 1)):
+        returns[:, t] = rewards[:, t] + gamma * returns[:, t + 1]
+    return returns
