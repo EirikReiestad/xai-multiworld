@@ -117,7 +117,7 @@ def plot_heatmap(
 
 def plot_3d(
     X: Dict[str, Dict[str, Any]],
-    filename: str = "plot3d.png",
+    filename: str = "plot3d",
     folder_path: str = "assets/figures",
     label: str = "",
     title: str = "Plot",
@@ -126,7 +126,7 @@ def plot_3d(
     max: float | None = None,
 ):
     os.makedirs(folder_path, exist_ok=True)
-    save_path = f"{folder_path}/{filename}"
+    save_path = f"{folder_path}/{filename}.png"
 
     x_keys = X.keys()
     y_keys = next(iter(X.values())).keys()
@@ -162,8 +162,6 @@ def plot_3d(
     ax.set_yticks(np.arange(matrix.shape[0]))
     ax.set_yticklabels(x_keys)
     ax.set_zlim(min, max)
-
-    fig.tight_layout()
 
     if show:
         plt.show()
