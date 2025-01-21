@@ -37,13 +37,6 @@ class GAE:
                 last_advantage[i] = (
                     delta[i] + self.gamma * self.lambda_ * last_advantage[i]
                 )
-            if any([rewards[i][t] > 0.0 for i in range(self.n_workers)]):
-                print([rewards[i][t] for i in range(self.n_workers)])
-                print([values[i][t].item() for i in range(self.n_workers)])
-                print(delta)
-                print(last_advantage)
-                print(mask)
-                print("\n")
             advantages.append(last_advantage.copy())
             last_value = [values[i][t].clone() * mask[i] for i in range(self.n_workers)]
         advantages = list(zip(*reversed(advantages)))
