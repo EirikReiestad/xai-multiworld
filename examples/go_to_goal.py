@@ -3,19 +3,19 @@ from rllib.algorithms.ppo.ppo_config import PPOConfig
 from multigrid.envs.go_to_goal import GoToGoalEnv
 
 env = GoToGoalEnv(
-    width=10,
-    height=10,
+    width=7,
+    height=7,
     max_steps=150,
-    agents=5,
+    agents=3,
     success_termination_mode="all",
     render_mode="rgb_array",
 )
 
 config = (
     PPOConfig(
-        batch_size=1028,
-        mini_batch_size=128,
-        epochs=5,
+        batch_size=32,
+        mini_batch_size=8,
+        epochs=3,
         gamma=0.99,
         lambda_=0.95,
         epsilon=0.2,
