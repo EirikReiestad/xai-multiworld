@@ -1,3 +1,4 @@
+from multigrid.core.concept import concept_checks
 from multigrid.envs.go_to_goal import GoToGoalEnv
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
@@ -12,7 +13,6 @@ from xailib.common.activations import (
 )
 from xailib.common.probes import get_probes
 from xailib.common.tcav_score import tcav_scores
-from multigrid.core.concept import concept_checks
 
 
 def run(concept: str):
@@ -33,7 +33,7 @@ def run(concept: str):
     plot_3d(
         scores,
         label=concept,
-        filename="concept_score",
+        filename="tcav_" + concept,
         min=0,
         max=1,
     )
