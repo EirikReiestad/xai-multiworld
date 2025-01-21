@@ -8,7 +8,7 @@ env = GoToGoalEnv(
     max_steps=150,
     agents=3,
     success_termination_mode="all",
-    render_mode="rgb_array",
+    render_mode="human",
 )
 
 config = (
@@ -25,7 +25,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="test", log_interval=1)
+    #     .wandb(project="test", log_interval=1)
 )
 ppo = PPO(config)
 
