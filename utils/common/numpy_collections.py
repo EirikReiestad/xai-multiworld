@@ -31,3 +31,12 @@ def remove_nan(arr: NDArray) -> NDArray:
         if isinstance(a, np.ndarray) or not np.isnan(a):
             nan_arr.append(a)
     return np.array(nan_arr)
+
+
+def normalize_ndarrays(arr: NDArray, a: float = 0, b: float = 1) -> NDArray:
+    global_min = np.min(arr)
+    global_max = np.max(arr)
+
+    states = (arr - global_min) / (global_max - global_min) * (b - a) + a
+
+    return states
