@@ -5,6 +5,8 @@ from typing import Dict, List, Tuple
 import numpy as np
 import torch
 
+from multigrid.utils.typing import ObsType
+
 
 class Observation(np.ndarray):
     ID = 0
@@ -96,3 +98,35 @@ def load_and_split_observation(
 ) -> Tuple[Observation, Observation]:
     observation = observation_from_file(os.path.join(concept_path, concept + ".json"))
     return split_observation(observation, split_ratio)
+
+
+def normalize_observations(
+    obs: List[ObsType], a: float = 0, b: float = 1
+) -> List[ObsType]:
+    global_image_min = np.min(np.array([o["image"] for o in obs]))
+    global_image_max = np.max(np.array([o["image"] for o in obs]))
+
+    global_dir_min = np.min(np.array([o["direction"] for o in obs]))
+    global_dir_max = np.max(np.array([o["direction"] for o in obs]))
+
+    for o in obs:
+        o["image"] = (o["image"] - global_image_min) / (
+            global_image_max - global_image_min
+        ) * (b - a) + a
+        o["direction"] = (
+            o["direction"]
+            - global_dir_min / (global_dir_max - global_dir_min) * (b - a)
+            + a
+        )
+
+    return obs
+
+
+def normalize_observation(obs: ObsType, a: float = 0, b: float = 1) -> ObsType:
+    image = obs["image"]
+    global_min = np.min(image)
+    global_max = np.max(image)
+
+    image = (obs - global_min) / (global_max - global_min) * (b - a) + a
+
+    return image
