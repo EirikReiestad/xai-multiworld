@@ -25,7 +25,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="multigrid-tag")
+    .wandb(project="multigrid-tag")
 )
 
 dqn = DQN(config)
