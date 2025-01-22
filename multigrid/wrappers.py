@@ -19,6 +19,52 @@ from multigrid.core.concept import get_concept_checks
 from multigrid.core.constants import Color, Direction, State, WorldObjectType
 from multigrid.core.world_object import WorldObject
 from utils.common.numpy_collections import NumpyEncoder
+from multigrid.utils.wrappers import Observations
+
+
+class ObservationCollectorWrapper(gym.Wrapper):
+    def __init__(
+        self,
+        env: MultiGridEnv,
+        observations: int = 1000,
+        directory: str = os.path.join("assets", "observations"),
+        filename: str = "observations",
+    ) -> None:
+        super().__init__(env)
+        self.env = env
+        self._filepath = os.path.join(directory, filename + ".json")
+        self._observations = observations
+
+        self._rollouts: List[Observations] = []
+
+    def step(
+        self,
+        actions: Dict[AgentID, int],
+    ):
+        observations, rewards, terminations, truncations, infos = super().step(actions)
+        self._rollouts.append(
+            Observations(
+                observations, actions, rewards, terminations, truncations, infos
+            )
+        )
+
+        if len(self._rollouts) % (self._observations // 10) == 0:
+            logging.info(
+                f"Collcted {len(self._rollouts)} / {self._observations} observations"
+            )
+
+        if len(self._rollouts) == self._observations:
+            logging.info(f"Saving rollouts to file {self._filepath}...")
+            self._save_rollouts()
+            sys.exit()
+
+        return observations, rewards, terminations, truncations, infos
+
+    def _save_rollouts(self):
+        data = [rollout.serialize() for rollout in self._rollouts]
+
+        with open(self._filepath, "w") as f:
+            json.dump(data, f, indent=4)
 
 
 class ConceptObsWrapper(gym.Wrapper):
