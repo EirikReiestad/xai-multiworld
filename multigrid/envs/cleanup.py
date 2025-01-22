@@ -122,7 +122,7 @@ class CleanUpEnv(MultiGridEnv):
                 if fwd_obj.contains is None:
                     continue
 
-                agent_present = np.array(self._agent_states.pos == fwd_pos).any()
+                agent_present = np.array(self._agent_states.pos == fwd_pos)
                 if agent_present:
                     continue
 
