@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Dict
 
 AgentID = int
-ObsType = dict[str, Any]
+ObsType = Dict[str, Any]
