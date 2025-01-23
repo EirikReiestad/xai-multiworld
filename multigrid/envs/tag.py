@@ -74,7 +74,6 @@ class TagEnv(MultiGridEnv):
         )
 
         if self._step_count == self._max_steps:
-            print("TEST")
             for agent in self.agents:
                 if agent.color == self._runner_color:
                     self.add_reward(agent, rewards, 1)

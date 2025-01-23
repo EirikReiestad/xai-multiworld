@@ -25,7 +25,7 @@ from utils.common.element_matrix import (
 from utils.common.numpy_collections import remove_nan
 from utils.core.plotting import show_image, box_plot, plot_heatmap
 from multigrid.core.world_object import WorldObject
-from multigrid.core.constants import WorldObjectType, Color
+from multigrid.core.constants import WorldObjectType
 
 env = GoToGoalEnv(render_mode="rgb_array")
 config = (
@@ -86,6 +86,23 @@ image_matrices = images_to_element_matrix(
 )
 elements = flatten_element_matrices(image_matrices)
 
+image_matrices = images_to_element_matrix(
+    grads_img.detach().numpy(), test_observation, absolute=True
+)
+normalized_images = {
+    key: normalize_image(value) for key, value in image_matrices.items()
+}
+
+
+for key, value in normalized_images.items():
+    if key[WorldObject.TYPE] == WorldObjectType.unseen.to_index():
+        title = "unseen"
+    elif key[WorldObject.TYPE] == WorldObjectType.agent.to_index():
+        title = "agent"
+    else:
+        title = str(WorldObject.from_array(key))
+    show_image(value, title, rgb=True, rgb_titles=("type", "color", "state"))
+
 for key, value in elements.items():
     value = remove_nan(value)
     if key[WorldObject.TYPE] == WorldObjectType.unseen.to_index():
@@ -96,21 +113,5 @@ for key, value in elements.items():
         title = str(WorldObject.from_array(key))
     values = [_ for _ in zip(*value)]
     box_plot(values, title, labels=["type", "color", "state"], y_label="grads")
-
-image_matrices = images_to_element_matrix(
-    grads_img.detach().numpy(), test_observation, absolute=True
-)
-normalized_images = {
-    key: normalize_image(value) for key, value in image_matrices.items()
-}
-
-for key, value in normalized_images.items():
-    if key[WorldObject.TYPE] == WorldObjectType.unseen.to_index():
-        title = "unseen"
-    elif key[WorldObject.TYPE] == WorldObjectType.agent.to_index():
-        title = "agent"
-    else:
-        title = str(WorldObject.from_array(key))
-    show_image(value, title, rgb=True, rgb_titles=("type", "color", "state"))
 
 tcav_scores = tcav_scores(test_activations, test_output, probes)
