@@ -21,11 +21,12 @@ from multiworld.utils.random import RandomMixin
 class World:
     _object_cache = {}
 
-    def __init__(self, width: int, height: int):
+    def __init__(self, width: int, height: int, object_size: int = OBJECT_SIZE):
         assert width >= 3
         assert height >= 3
         self.width = width
         self.height = height
+        self.object_size = object_size
 
         self._world_objects: dict[
             tuple[int, int], WorldObject
@@ -67,8 +68,8 @@ class World:
         )
 
         # Draw the grid lines (top and left edges)
-        fill_coords(img, point_in_rect(0, 0.031, 0, 1), (100, 100, 100))
-        fill_coords(img, point_in_rect(0, 1, 0, 0.031), (100, 100, 100))
+        # fill_coords(img, point_in_rect(0, 0.031, 0, 1), (100, 100, 100))
+        # fill_coords(img, point_in_rect(0, 1, 0, 0.031), (100, 100, 100))
 
         if obj is not None:
             obj.render(img)
@@ -104,10 +105,10 @@ class World:
         img = np.zeros((self.height, self.width, 3), dtype=np.uint8)
 
         for agent in agents:
-            ymin = agent.pos.y - object_size // 2
-            ymax = agent.pos.y + object_size // 2
-            xmin = agent.pos.x - object_size // 2
-            xmax = agent.pos.x + object_size // 2
+            xmin = agent.pos.x
+            xmax = min(agent.pos.x + object_size, self.width)
+            ymin = agent.pos.y
+            ymax = min(agent.pos.y + object_size, self.height)
             assert (
                 ymin >= 0 - object_size
                 and ymax <= self.height + object_size
@@ -125,19 +126,17 @@ class World:
                 highlight=False,
                 object_size=object_size,
             )
-            img[ymin:ymax, xmin:xmax, :] = object_img
+
+            mask = np.all(img[ymin:ymax, xmin:xmax, :].copy() == 0, axis=-1)
+            img[ymin:ymax, xmin:xmax, :][mask] = object_img[mask]
 
         return img
 
-    def in_bounds(
-        self, position: Position | list[Position], object_size: int = OBJECT_SIZE
-    ) -> bool | list[bool]:
+    def in_bounds(self, position: Position | list[Position]) -> bool | list[bool]:
         def in_bound(p: Position):
-            x_left = 0 <= p.x - object_size // 2 < self.width
-            x_right = 0 <= p.x + object_size // 2 < self.width
-            y_top = 0 <= p.y - object_size // 2 < self.height
-            y_bottom = 0 <= p.y + object_size // 2 < self.height
-            return x_left and x_right and y_top and y_bottom
+            x = 0 <= p.x < self.width - self.object_size
+            y = 0 <= p.y < self.height - self.object_size
+            return x and y
 
         if isinstance(position, Position):
             return in_bound(position)

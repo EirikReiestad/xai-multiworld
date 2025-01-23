@@ -2,7 +2,7 @@ from multiworld.base import MultiWorldEnv
 from multiworld.core.world import World
 
 
-class EmptyEnv(MultiWorldEnv):
+class FlockEnv(MultiWorldEnv):
     def _gen_world(self, width: int, height: int):
         self.world = World(width, height, self._object_size)
 

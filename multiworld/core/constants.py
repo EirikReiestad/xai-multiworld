@@ -4,7 +4,7 @@ from numpy.typing import NDArray as ndarray
 
 from multiworld.utils.enum import IndexedEnum
 
-OBJECT_SIZE = 64
+OBJECT_SIZE = 8
 
 COLORS = {
     "red": np.array([255, 0, 0]),

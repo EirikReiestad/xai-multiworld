@@ -33,13 +33,13 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         width: int = 1000,
         height: int = 1000,
         max_steps: int = 100,
-        agent_view_size: int = 7,
+        agent_view_size: int = 101,
         highlight: bool = False,
         see_through_walls: bool = False,
         joint_reward: bool = False,
         team_reward: bool = False,
-        object_size=OBJECT_SIZE,
-        screen_size: Tuple[int, int] = None,
+        object_size: int = OBJECT_SIZE,
+        screen_size: Tuple[int, int] | None = (1000, 1000),
         render_mode: Literal["human", "rgb_array"] = "human",
         success_termination_mode: Literal["all", "any"] = "all",
         failure_termination_mode: Literal["all", "any"] = "any",
@@ -71,9 +71,9 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         for i in range(self._num_agents):
             agent = Agent(i, agent_view_size, see_through_walls)
             self.agents.append(agent)
-        self.world = World(width, height)
+        self.world = World(width, height, object_size)
         if not hasattr(self, "grid"):
-            self.world = World(width, height)
+            self.world = World(width, height, object_size)
 
     def reset(
         self, seed: int | None = None, **kwargs
@@ -161,12 +161,11 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
             if self._clock is None:
                 self.clock = pg.time.Clock()
             surf = pg.surfarray.make_surface(img_transposed)
-            scaled_surf = pg.Surface(screen_size)
-            pg.transform.scale(surf, screen_size, scaled_surf)
+            surf = pg.transform.scale(surf, screen_size)
             bg = pg.Surface(screen_size)
             bg.convert()
             bg.fill((255, 255, 255))
-            bg.blit(scaled_surf, (0, 0))
+            bg.blit(surf, (0, 0))
             self._window.blit(bg, (0, 0))
             pg.event.pump()
             self.clock.tick(self.metadata["render_fps"])

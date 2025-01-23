@@ -1,4 +1,4 @@
-from multiworld.envs.empty import EmptyEnv
+from multiworld.envs.flock import FlockEnv
 from multiworld.base import MultiWorldEnv
 from multiworld.example.controller import Controller
 
@@ -15,14 +15,14 @@ def run_episode(controller: Controller, env: MultiWorldEnv):
 
 
 if __name__ == "__main__":
-    agents = 5
-    env = EmptyEnv(
-        width=100,
-        height=100,
+    agents = 100
+    env = FlockEnv(
+        width=1000,
+        height=1000,
         max_steps=250,
         agents=agents,
         success_termination_mode="all",
-        object_size=8,
+        object_size=16,
         screen_size=(1000, 1000),
     )
     controller = Controller(agents, same_keys=True)

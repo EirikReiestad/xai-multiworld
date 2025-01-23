@@ -41,6 +41,7 @@ def gen_obs_grid_encoding(
 ) -> ndarray[np.int_]:
     obs_grid = gen_obs_grid(grid_state, agent_state, agent_view_size)
     # Generate and apply visability mask
+    return obs_grid
     vis_mask = get_vis_mask(obs_grid)
     num_agents = len(agent_state)
     if see_through_walls:
