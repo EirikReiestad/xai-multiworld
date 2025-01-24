@@ -2,17 +2,23 @@ import numpy as np
 from gymnasium import spaces
 from numpy.typing import NDArray as ndarray
 
-from multigrid.core.action import Action
-from multigrid.core.constants import Color, Direction, WorldObjectType
-from multigrid.core.world_object import WorldObject
-from multigrid.utils.misc import PropertyAlias, front_pos
-from multigrid.utils.rendering import point_in_triangle, rotate_fn, fill_coords
-from multigrid.utils.position import Position
+from multiworld.core.action import Action
+from multiworld.core.constants import Color, Direction, WorldObjectType
+from multiworld.core.world_object import WorldObject
+from multiworld.utils.misc import PropertyAlias, front_pos
+from multiworld.utils.rendering import point_in_triangle, rotate_fn, fill_coords
+from multiworld.utils.position import Position
 import logging
 
 
 class Agent:
-    def __init__(self, index: int, view_size: int = 7, see_through_walls: bool = False):
+    def __init__(
+        self,
+        index: int,
+        num_agents: int,
+        view_size: int = 7,
+        see_through_walls: bool = False,
+    ):
         self.index = index
         assert view_size % 2 == 1, "View size must be odd for agent observation."
         assert view_size > 1, "View size must be greater than 1 for agent observation."
@@ -22,10 +28,10 @@ class Agent:
 
         self.observation_space = spaces.Dict(
             {
-                "image": spaces.Box(
+                "observation": spaces.Box(
                     low=0,
                     high=255,
-                    shape=(view_size, view_size, AgentState.encode_dim),
+                    shape=(1, num_agents, AgentState.encode_dim),
                     dtype=np.int_,
                 ),
                 "direction": spaces.Discrete(len(Direction)),
@@ -71,13 +77,13 @@ class AgentState(np.ndarray):
     TYPE = 0
     COLOR = 1
     DIR = 2
-    ENCODING = slice(0, 3)
     POS = slice(3, 5)
+    ENCODING = slice(0, 5)
     TERMINATED = 5
     CARRYING = slice(6, 6 + WorldObject.dim)
 
     dim = 6 + WorldObject.dim
-    encode_dim = ENCODING.stop - ENCODING.start
+    encode_dim = ENCODING.stop - ENCODING.start + 1  # distance
 
     def __new__(cls, *dims: int):
         obj = np.zeros(dims + (cls.dim,), dtype=np.int_).view(cls)
