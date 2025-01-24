@@ -1,6 +1,6 @@
-from typing import Any, List, Mapping, SupportsFloat, Dict
-
 import logging
+from typing import Any, Dict, List, Mapping, SupportsFloat
+
 import numpy as np
 import torch
 import torch.nn as nn
@@ -27,8 +27,18 @@ class DQN(Algorithm):
         super().__init__(config)
         self._config = config
         self._memory = ReplayMemory(config.replay_buffer_size)
-        self._policy_net = MultiInputNetwork(self.observation_space, self.action_space)
-        self._target_net = MultiInputNetwork(self.observation_space, self.action_space)
+        self._policy_net = MultiInputNetwork(
+            self.observation_space,
+            self.action_space,
+            conv_layers=self._config.conv_layers,
+            hidden_units=self._config.hidden_units,
+        )
+        self._target_net = MultiInputNetwork(
+            self.observation_space,
+            self.action_space,
+            conv_layers=self._config.conv_layers,
+            hidden_units=self._config.hidden_units,
+        )
         self._target_net.load_state_dict(self._policy_net.state_dict())
         self._optimizer = torch.optim.AdamW(
             self._policy_net.parameters(), lr=config.learning_rate, amsgrad=True
@@ -37,14 +47,14 @@ class DQN(Algorithm):
 
     def train_step(
         self,
-        observations: dict[AgentID, ObsType],
-        next_observations: dict[AgentID, ObsType],
-        actions: dict[AgentID, int],
-        rewards: dict[AgentID, SupportsFloat],
-        terminations: dict[AgentID, bool],
-        truncations: dict[AgentID, bool],
+        observations: Dict[AgentID, ObsType],
+        next_observations: Dict[AgentID, ObsType],
+        actions: Dict[AgentID, int],
+        rewards: Dict[AgentID, SupportsFloat],
+        terminations: Dict[AgentID, bool],
+        truncations: Dict[AgentID, bool],
         step: int,
-        infos: dict[AgentID, dict[str, Any]],
+        infos: Dict[AgentID, Dict[str, Any]],
     ):
         next_obs = preprocess_next_observations(
             next_observations, terminations, truncations
@@ -90,7 +100,7 @@ class DQN(Algorithm):
 
     def _get_policy_actions(
         self, observations: Dict[AgentID, ObsType]
-    ) -> dict[AgentID, int]:
+    ) -> Dict[AgentID, int]:
         torch_observations = observations_seperate_to_torch(list(observations.values()))
         with torch.no_grad():
             pred_actions = self._policy_net(*torch_observations)
