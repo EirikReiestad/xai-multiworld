@@ -5,8 +5,7 @@ from rllib.algorithms.algorithm_config import AlgorithmConfig
 from rllib.core.environment.environment import Environment
 from utils.core.wandb import LogMethod, WandB
 from multigrid.base import AgentID, ObsType
-from multigrid.core.action import Action, int_to_action
-from typing import Any, SupportsFloat, Mapping
+from typing import Any, Dict, SupportsFloat, Mapping
 import numpy as np
 
 
@@ -48,6 +47,7 @@ class Algorithm(Environment, WandB, ABC):
 
     def collect_rollouts(self):
         observations, _ = self._env.reset()
+
         for t in count():
             self._steps_done += 1
             actions = self.predict(observations)
@@ -99,11 +99,11 @@ class Algorithm(Environment, WandB, ABC):
     def step(
         self, actions: dict[AgentID, int]
     ) -> tuple[
-        dict[AgentID, ObsType],
-        dict[AgentID, SupportsFloat],
-        dict[AgentID, bool],
-        dict[AgentID, bool],
-        dict[AgentID, dict[str, Any]],
+        Dict[AgentID, ObsType],
+        Dict[AgentID, SupportsFloat],
+        Dict[AgentID, bool],
+        Dict[AgentID, bool],
+        Dict[AgentID, Dict[str, Any]],
     ]:
         observation, rewards, terminations, truncations, infos = self._env.step(actions)
         rgb_array = self._render()
