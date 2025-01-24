@@ -2,26 +2,26 @@ import math
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from itertools import repeat
-from typing import Any, Callable, Dict, Literal, Optional, SupportsFloat, Tuple
+from typing import Any, Callable, Dict, List, Literal, Optional, SupportsFloat, Tuple
 
 import gymnasium as gym
 import numpy as np
 import pygame as pg
 from gymnasium import spaces
 
-from multigrid.core.action import Action
-from multigrid.core.agent import Agent, AgentState
-from multigrid.core.constants import TILE_PIXELS, WorldObjectType
-from multigrid.core.grid import Grid
-from multigrid.core.world_object import Container, WorldObject
-from multigrid.utils.observation import gen_obs_grid_encoding
-from multigrid.utils.ohe import ohe_direction
-from multigrid.utils.position import Position
-from multigrid.utils.random import RandomMixin
-from multigrid.utils.typing import AgentID, ObsType
+from multiworld.core.action import Action
+from multiworld.core.agent import Agent, AgentState
+from multiworld.core.constants import OBJECT_SIZE, WorldObjectType
+from multiworld.core.world import World
+from multiworld.core.world_object import Container, WorldObject
+from multiworld.utils.observation import gen_obs_grid_encoding
+from multiworld.utils.ohe import ohe_direction
+from multiworld.utils.position import Position
+from multiworld.utils.random import RandomMixin
+from multiworld.utils.typing import AgentID, ObsType
 
 
-class MultiGridEnv(gym.Env, RandomMixin, ABC):
+class MultiWorldEnv(gym.Env, RandomMixin, ABC):
     metadata = {
         "render_modes": ["human", "rgb_array"],
         "render_fps": 20,
@@ -30,16 +30,15 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
     def __init__(
         self,
         agents: int = 1,
-        width: int = 20,
-        height: int = 20,
+        width: int = 1000,
+        height: int = 1000,
         max_steps: int = 100,
-        agent_view_size: int = 7,
-        highlight: bool = False,
+        agent_view_size: int = 101,
         see_through_walls: bool = False,
         joint_reward: bool = False,
         team_reward: bool = False,
-        tile_size=TILE_PIXELS,
-        screen_size: int | tuple[int, int] | None = None,
+        object_size: int = OBJECT_SIZE,
+        screen_size: Tuple[int, int] | None = (1000, 1000),
         render_mode: Literal["human", "rgb_array"] = "human",
         success_termination_mode: Literal["all", "any"] = "all",
         failure_termination_mode: Literal["all", "any"] = "any",
@@ -51,10 +50,9 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         self._num_agents = agents
         self._width = width
         self._height = height
-        self._highlight = highlight
         self._joint_reward = joint_reward
         self._team_reward = team_reward
-        self._tile_size = tile_size
+        self._object_size = object_size
         self._render_size = None
         self._window = None
         self._clock = None
@@ -64,22 +62,14 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         self._success_termination_mode = success_termination_mode
         self._failure_termination_mode = failure_termination_mode
 
-        if screen_size is None:
-            screen_size = (width * tile_size, height * tile_size)
-        elif isinstance(screen_size, int):
-            screen_size = (screen_size, screen_size)
-            tile_size = min(screen_size) // max(width, height)
-        self._screen_size = screen_size
-        assert isinstance(screen_size, tuple)
+        self._screen_size = (width, height) if screen_size is None else screen_size
 
         self._agent_states = AgentState(agents)
-        self.agents: list[Agent] = []
+        self.agents: List[Agent] = []
         for i in range(self._num_agents):
-            agent = Agent(i, agent_view_size, see_through_walls)
+            agent = Agent(i, agents, agent_view_size, see_through_walls)
             self.agents.append(agent)
-        self.grid = Grid(width, height)
-        if not hasattr(self, "grid"):
-            self.grid = Grid(width, height)
+        self.world = World(width, height, object_size)
 
     def reset(
         self, seed: int | None = None, **kwargs
@@ -96,13 +86,12 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
             agent.reset()
             agent.state.pos = self.place_agent(agent)
 
-        self._gen_grid(self._width, self._height)
+        self._gen_world(self._width, self._height)
 
-        # These fields should be defined by _gen_grid
-        assert np.all([self.grid.in_bounds(self._agent_states.pos)])
+        assert np.all([self.world.in_bounds(self._agent_states.pos)])
 
         for agent in self.agents:
-            start_cell = self.grid.get(agent.state.pos)
+            start_cell = self.world.get(agent.state.pos)
             assert start_cell is None or start_cell.can_overlap()
 
         self._step_count = 0
@@ -153,7 +142,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         return observations, rewards, terminations, truncations, infos
 
     def render(self) -> Optional[np.ndarray]:
-        img = self._get_frame(self._highlight, self._tile_size)
+        img = self._get_frame(self._object_size)
 
         if self.render_mode == "human":
             img_transposed = np.transpose(img, axes=(1, 0, 2))
@@ -163,11 +152,12 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
             if self._window is None:
                 pg.init()
                 pg.display.init()
-                pg.display.set_caption("MultiGrid")
+                pg.display.set_caption("MultiWorld")
                 self._window = pg.display.set_mode(screen_size)
             if self._clock is None:
                 self.clock = pg.time.Clock()
             surf = pg.surfarray.make_surface(img_transposed)
+            surf = pg.transform.scale(surf, screen_size)
             bg = pg.Surface(screen_size)
             bg.convert()
             bg.fill((255, 255, 255))
@@ -270,21 +260,12 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         if agent.state.terminated:
             return
 
-        # Rotate left
-        if action == Action.left:
-            agent.state.dir = (agent.dir - 1) % 4
-
-        # Rotate right
-        elif action == Action.right:
-            agent.state.dir = (agent.dir + 1) % 4
-
-        # Move forward
-        elif action == Action.forward:
+        def move_forward():
             fwd_pos = agent.front_pos
-            if not self.grid.in_bounds(fwd_pos):
+            if not self.world.in_bounds(fwd_pos):
                 return
 
-            fwd_obj = self.grid.get(fwd_pos)
+            fwd_obj = self.world.get(fwd_pos)
 
             if fwd_obj is not None and not fwd_obj.can_overlap():
                 return
@@ -298,129 +279,40 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
                 if fwd_obj.type == WorldObjectType.goal:
                     self.on_success(agent, rewards, {})
 
-        elif action == Action.pickup:
-            if agent.state.carrying is not None:
-                return
+        move_forward()
 
-            fwd_pos = agent.front_pos
-            fwd_obj = self.grid.get(fwd_pos)
-
-            if fwd_obj is None:
-                return
-
-            if isinstance(fwd_obj, Container):
-                if fwd_obj.can_pickup_contained() is False:
-                    return
-                agent.state.carrying = fwd_obj.contains
-                fwd_obj.contains = None
-                return
-
-            if not fwd_obj.can_pickup():
-                return
-
-            agent.state.carrying = fwd_obj
-            self.grid.set(fwd_pos, None)
-
-        elif action == Action.drop:
-            if agent.state.carrying is None:
-                return
-
-            fwd_pos = agent.front_pos
-            fwd_obj = self.grid.get(fwd_pos)
-
-            if not self.grid.in_bounds(fwd_pos):
-                return
-
-            agent_present = np.array(self._agent_states.pos == fwd_pos).any()
-            if agent_present:
-                return
-
-            if fwd_obj is not None and fwd_obj.can_contain():
-                fwd_obj.contains = agent.state.carrying
-                agent.state.carrying = None
-                return
-
-            if fwd_obj is not None:
-                return
-
-            self.grid.set(fwd_pos, agent.carrying)
-            agent.state.carrying.cur_pos = fwd_pos
-            agent.state.carrying = None
-
-        elif action == Action.toggle:
-            fwd_pos = agent.front_pos
-            fwd_obj = self.grid.get(fwd_pos)
-            if fwd_obj is not None:
-                fwd_obj.toggle(self, agent, fwd_pos)
-
-        elif action == Action.done:
-            pass
+        # Rotate left
+        if action == Action.left:
+            agent.state.dir = (agent.dir - 1) % 4
+        # Rotate right
+        elif action == Action.right:
+            agent.state.dir = (agent.dir + 1) % 4
         else:
             raise ValueError(f"Invalid action: {action}")
 
     @abstractmethod
-    def _gen_grid(self, width: int, height: int):
+    def _gen_world(self, width: int, height: int):
         raise NotImplementedError
 
-    def _get_frame(self, highlight: bool, tile_size: int) -> np.ndarray:
-        return self._get_full_render(highlight, tile_size)
+    def _get_frame(self, object_size: int) -> np.ndarray:
+        return self.world.render(object_size, agents=self.agents)
 
     def _gen_obs(self) -> Dict[AgentID, ObsType]:
         directions = self._agent_states.dir
-        image = gen_obs_grid_encoding(
-            self.grid.state,
-            self._agent_states,
-            self.agents[0].view_size,
-            self.agents[0].see_through_walls,
+        """
+        world_objects = gen_obs_encoding(
+            self.world._world_objects, self._agent_states, self.agents[0].view_size
         )
+        """
+        obs = gen_obs_grid_encoding(self._agent_states, self.agents[0].view_size)
         observations = {}
         for i in range(self._num_agents):
             ohe_dir = ohe_direction(directions[i])
             observations[i] = {
-                "image": image[i],
+                "observation": obs[i],
                 "direction": ohe_dir,
             }
-
         return observations
-
-    def _get_full_render(self, highlight: bool, tile_size: int) -> np.ndarray:
-        obs_shape = self.agents[0].observation_space["image"].shape[:-1]
-        vis_mask = np.zeros((self._num_agents, *obs_shape), dtype=bool)
-        for key, obs in self._gen_obs().items():
-            vis_mask[key] = obs["image"][..., 0] != WorldObjectType.unseen.to_index()
-
-        highlight_mask = np.zeros((self._width, self._height), dtype=bool)
-
-        for agent in self.agents:
-            if agent.state.terminated:
-                continue
-            # Compute the world coordinates of the bottom-left corner
-            # of the agent's view area
-            f_vec = agent.state.dir.to_vec()
-            r_vec = np.array((f_vec[1], -f_vec[0]))
-            top_left = (
-                agent.state.pos()
-                + f_vec * (agent.view_size - 1)
-                - r_vec * (agent.view_size // 2)
-            )
-
-            # For each cell in the visability mask
-            for vis_j in range(agent.view_size):
-                for vis_i in range(agent.view_size):
-                    if not vis_mask[agent.index][vis_j, vis_i]:
-                        pass
-                        # continue
-                    # Compute the world coordinates of this cell
-                    abs_i, abs_j = top_left - (f_vec * vis_i) + (r_vec * vis_j)
-                    # If the cell is within the grid bounds
-                    if 0 <= abs_i < self._width and 0 <= abs_j < self._height:
-                        highlight_mask[abs_i, abs_j] = True
-
-        # Render the whole grid
-        img = self.grid.render(
-            tile_size, agents=self.agents, highlight_mask=highlight_mask
-        )
-        return img
 
     def _on_failure(
         self,
@@ -448,7 +340,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         obj: WorldObject | None,
         top: tuple[int, int] | None = None,
         size: tuple[int, int] | None = None,
-        reject_fn: Callable[["MultiGridEnv", tuple[int, int]], bool] | None = None,
+        reject_fn: Callable[["MultiWorldEnv", tuple[int, int]], bool] | None = None,
         max_tries=math.inf,
     ) -> Position:
         """
@@ -473,7 +365,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
             top = (max(top[0], 0), max(top[1], 0))
 
         if size is None:
-            size = (self.grid.width, self.grid.height)
+            size = (self.world.width, self.world.height)
 
         num_tries = 0
 
@@ -486,12 +378,12 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
             num_tries += 1
 
             pos = Position(
-                self._rand_int(top[0], min(top[0] + size[0], self.grid.width)),
-                self._rand_int(top[1], min(top[1] + size[1], self.grid.height)),
+                self._rand_int(top[0], min(top[0] + size[0], self.world.width)),
+                self._rand_int(top[1], min(top[1] + size[1], self.world.height)),
             )
 
             # Don't place the object on top of another object
-            if self.grid.get(pos) is not None:
+            if self.world.get(pos) is not None:
                 continue
 
             # Don't place the object where agents are
@@ -504,7 +396,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
 
             break
 
-        self.grid.set(pos, obj)
+        self.world.set(pos, obj)
 
         if obj is not None:
             obj.init_pos = pos
@@ -516,7 +408,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         """
         Put an object at a specific position in the grid.
         """
-        self.grid.set(pos, obj)
+        self.world.set(pos, obj)
         obj.init_pos = pos
         obj.cur_pos = pos
 
