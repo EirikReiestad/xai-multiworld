@@ -28,9 +28,7 @@ class World:
         self.height = height
         self.object_size = object_size
 
-        self._world_objects: dict[
-            tuple[int, int], WorldObject
-        ] = {}  # index by position
+        self.world_objects: Dict[Tuple[int, int], WorldObject] = {}
 
         self.state: NDArray[np.int_] = np.zeros(
             (width, height, WorldObject.dim), dtype=int
@@ -145,15 +143,15 @@ class World:
     def get(self, pos: Position) -> WorldObject | None:
         if not self.in_bounds(pos):
             return None
-        if (pos.x, pos.y) not in self._world_objects:
+        if (pos.x, pos.y) not in self.world_objects:
             obj = WorldObject.from_array(self.state[pos.x, pos.y])
-            self._world_objects[pos.x, pos.y] = obj
-        return self._world_objects[pos.x, pos.y]
+            self.world_objects[pos.x, pos.y] = obj
+        return self.world_objects[pos.x, pos.y]
 
     def set(self, pos: Position, obj: WorldObject | None):
         if not self.in_bounds(pos):
             return
-        self._world_objects[pos.x, pos.y] = obj
+        self.world_objects[pos.x, pos.y] = obj
         if isinstance(obj, WorldObject):
             self.state[pos.x, pos.y] = obj
         elif obj is None:
@@ -168,7 +166,7 @@ class World:
         if max_iter == 0:
             raise RuntimeError("Could not find a position")
         random_position = random._rand_pos(0, self.width, 0, self.height)
-        if self._world_objects.get(random_position()) is None and self.in_bounds(
+        if self.world_objects.get(random_position()) is None and self.in_bounds(
             random_position
         ):
             return random_position

@@ -2,7 +2,7 @@ import math
 from abc import ABC, abstractmethod
 from collections import defaultdict
 from itertools import repeat
-from typing import Any, Callable, Dict, Literal, Optional, SupportsFloat, Tuple
+from typing import Any, Callable, Dict, List, Literal, Optional, SupportsFloat, Tuple
 
 import gymnasium as gym
 import numpy as np
@@ -14,6 +14,7 @@ from multiworld.core.agent import Agent, AgentState
 from multiworld.core.constants import OBJECT_SIZE, WorldObjectType
 from multiworld.core.world import World
 from multiworld.core.world_object import Container, WorldObject
+from multiworld.utils.misc import are_within_radius
 from multiworld.utils.observation import gen_obs_grid_encoding
 from multiworld.utils.ohe import ohe_direction
 from multiworld.utils.position import Position
@@ -34,7 +35,6 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         height: int = 1000,
         max_steps: int = 100,
         agent_view_size: int = 101,
-        highlight: bool = False,
         see_through_walls: bool = False,
         joint_reward: bool = False,
         team_reward: bool = False,
@@ -51,7 +51,6 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         self._num_agents = agents
         self._width = width
         self._height = height
-        self._highlight = highlight
         self._joint_reward = joint_reward
         self._team_reward = team_reward
         self._object_size = object_size
@@ -67,13 +66,11 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         self._screen_size = (width, height) if screen_size is None else screen_size
 
         self._agent_states = AgentState(agents)
-        self.agents: list[Agent] = []
+        self.agents: List[Agent] = []
         for i in range(self._num_agents):
             agent = Agent(i, agent_view_size, see_through_walls)
             self.agents.append(agent)
         self.world = World(width, height, object_size)
-        if not hasattr(self, "grid"):
-            self.world = World(width, height, object_size)
 
     def reset(
         self, seed: int | None = None, **kwargs
@@ -146,7 +143,7 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         return observations, rewards, terminations, truncations, infos
 
     def render(self) -> Optional[np.ndarray]:
-        img = self._get_frame(self._highlight, self._object_size)
+        img = self._get_frame(self._object_size)
 
         if self.render_mode == "human":
             img_transposed = np.transpose(img, axes=(1, 0, 2))
@@ -356,65 +353,25 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
     def _gen_world(self, width: int, height: int):
         raise NotImplementedError
 
-    def _get_frame(self, highlight: bool, object_size: int) -> np.ndarray:
-        return self._get_full_render(highlight, object_size)
+    def _get_frame(self, object_size: int) -> np.ndarray:
+        return self.world.render(object_size, agents=self.agents)
 
     def _gen_obs(self) -> Dict[AgentID, ObsType]:
         directions = self._agent_states.dir
-        image = gen_obs_grid_encoding(
-            self.world.state,
-            self._agent_states,
-            self.agents[0].view_size,
-            self.agents[0].see_through_walls,
+        """
+        world_objects = gen_obs_encoding(
+            self.world._world_objects, self._agent_states, self.agents[0].view_size
         )
+        """
+        obs = gen_obs_grid_encoding(self.agent_states, self.agents[0].view_size)
         observations = {}
         for i in range(self._num_agents):
             ohe_dir = ohe_direction(directions[i])
             observations[i] = {
-                "image": image[i],
+                "observations": obs[i],
                 "direction": ohe_dir,
             }
-
         return observations
-
-    def _get_full_render(self, highlight: bool, object_size: int) -> np.ndarray:
-        obs_shape = self.agents[0].observation_space["image"].shape[:-1]
-        vis_mask = np.zeros((self._num_agents, *obs_shape), dtype=bool)
-        for key, obs in self._gen_obs().items():
-            vis_mask[key] = obs["image"][..., 0] != WorldObjectType.unseen.to_index()
-
-        highlight_mask = np.zeros((self._width, self._height), dtype=bool)
-
-        for agent in self.agents:
-            if agent.state.terminated:
-                continue
-            # Compute the world coordinates of the bottom-left corner
-            # of the agent's view area
-            f_vec = agent.state.dir.to_vec()
-            r_vec = np.array((f_vec[1], -f_vec[0]))
-            top_left = (
-                agent.state.pos()
-                + f_vec * (agent.view_size - 1)
-                - r_vec * (agent.view_size // 2)
-            )
-
-            # For each cell in the visability mask
-            for vis_j in range(agent.view_size):
-                for vis_i in range(agent.view_size):
-                    if not vis_mask[agent.index][vis_j, vis_i]:
-                        pass
-                        # continue
-                    # Compute the world coordinates of this cell
-                    abs_i, abs_j = top_left - (f_vec * vis_i) + (r_vec * vis_j)
-                    # If the cell is within the grid bounds
-                    if 0 <= abs_i < self._width and 0 <= abs_j < self._height:
-                        highlight_mask[abs_i, abs_j] = True
-
-        # Render the whole grid
-        img = self.world.render(
-            object_size, agents=self.agents, highlight_mask=highlight_mask
-        )
-        return img
 
     def _on_failure(
         self,

@@ -1,10 +1,10 @@
-from rllib.algorithms.ppo.ppo import PPO
-from rllib.algorithms.ppo.ppo_config import PPOConfig
+from rllib.algorithms.dqn.dqn import DQN
+from rllib.algorithms.dqn.dqn_config import DQNConfig
 from multiworld.envs.flock import FlockEnv
 
 env = FlockEnv(
-    width=7,
-    height=7,
+    width=100,
+    height=100,
     max_steps=4,
     agents=3,
     success_termination_mode="all",
@@ -12,22 +12,24 @@ env = FlockEnv(
 )
 
 config = (
-    PPOConfig(
+    DQNConfig(
         batch_size=32,
-        mini_batch_size=16,
-        epochs=3,
+        replay_buffer_size=10000,
         gamma=0.99,
-        lambda_=0.95,
-        epsilon=0.2,
-        learning_rate=1e-3,
+        learning_rate=1e-4,
+        eps_start=0.2,
+        eps_end=0.05,
+        eps_decay=100000,
+        target_update=1000,
     )
-    .environment(env)
+    .environment(env=env)
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    #     .wandb(project="test", log_interval=1)
+    # .wandb(project="multigrid-cleanupv0")
 )
-ppo = PPO(config)
+
+dqn = DQN(config)
 
 while True:
-    ppo.learn()
+    dqn.learn()

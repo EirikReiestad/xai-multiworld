@@ -1,12 +1,12 @@
-from typing import List
+from typing import Dict, List, Tuple
 
 import numpy as np
 from numpy.typing import NDArray as ndarray
-from multigrid.utils.position import Position
 
 from multigrid.core.agent import Agent, AgentState
 from multigrid.core.constants import Color, Direction, WorldObjectType
 from multigrid.core.world_object import Wall, WorldObject
+from multigrid.utils.position import Position
 
 WALL_ENCODING = Wall().encode()
 UNSEEN_ENCODING = WorldObject(WorldObjectType.unseen, Color.from_index(0)).encode()
@@ -34,24 +34,31 @@ DOWN = int(Direction.down)
 
 
 def gen_obs_grid_encoding(
-    grid_state: ndarray[np.int_],
     agent_state: ndarray[np.int_],
     agent_view_size: int,
-    see_through_walls: bool,
 ) -> ndarray[np.int_]:
+    grid_state = np.empty((agent_view_size, agent_view_size, ENCODE_DIM), dtype=np.int_)
     obs_grid = gen_obs_grid(grid_state, agent_state, agent_view_size)
-    # Generate and apply visability mask
     return obs_grid
-    vis_mask = get_vis_mask(obs_grid)
-    num_agents = len(agent_state)
-    if see_through_walls:
-        return obs_grid
-    for agent in range(num_agents):
-        for i in range(agent_view_size):
-            for j in range(agent_view_size):
-                if not vis_mask[agent, i, j]:
-                    obs_grid[agent, i, j] = UNSEEN_ENCODING
-    return obs_grid
+
+
+def gen_obs_encoding(
+    agent_state: ndarray[np.int_],
+    agent_view_size: int,
+) -> ndarray[np.int_]:
+    agent_pos = agent_state[..., AGENT_POS_IDX]
+
+    results = np.array((len(agent_pos), agent_view_size, agent_view_size))
+    for pos in agent_pos:
+        diffs = np.abs(agent_pos - pos)
+        within_radius = np.where(
+            (diffs[:, 0] <= agent_view_size) & (diffs[:, 1] <= agent_view_size)
+        )
+        obs_grid = gen_obs_grid(
+            (agent_view_size, agent_view_size), agent_state, within_radius
+        )
+        results.append(obs_grid)
+    return np.array(results)
 
 
 def gen_obs_grid(
@@ -66,6 +73,22 @@ def gen_obs_grid(
     agent_pos = agent_state[..., AGENT_POS_IDX]
     agent_terminated = agent_state[..., AGENT_TERMINATED_IDX]
     agent_carrying = agent_state[..., AGENT_CARRYING_IDX]
+
+    obs_grid = np.empty((num_agents, obs_height, obs_width, ENCODE_DIM), dtype=np.int_)
+
+    if num_agents > 1:
+        for agent in range(num_agents):
+            if agent_terminated[agent]:
+                continue
+            pos = agent_pos[agent]
+            diffs = np.abs(agent_pos - pos)
+            within_radius = np.where(
+                (diffs[:, 0] <= agent_view_size) & (diffs[:, 1] <= agent_view_size)
+            )
+            for idx in within_radius:
+                relative_pos = agent_pos[idx] - pos
+                centered_pos = relative_pos - agent_view_size // 2
+                obs_grid[agent, centered_pos, GRID_ENCODING_IDX] = agent_state[idx]
 
     if num_agents > 1:
         grid_encoding = np.empty((*grid_state.shape[:-1], ENCODE_DIM), dtype=np.int_)
@@ -85,10 +108,9 @@ def gen_obs_grid(
 
     # Population observation grid
     num_left_rotations = (agent_dir + 1) % 4
-    obs_grid = np.empty(
-        (num_agents, obs_height, obs_width, ENCODE_DIM), dtype=np.int_
-    )  # Note that we use height - width instead of width - height because of the way numpy is indexed
     for agent in range(num_agents):
+        x, y = topX[agent] + i, topY[agent] + j
+
         for j in range(obs_height):
             for i in range(obs_width):
                 x, y = topX[agent] + i, topY[agent] + j

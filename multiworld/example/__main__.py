@@ -15,10 +15,10 @@ def run_episode(controller: Controller, env: MultiWorldEnv):
 
 
 if __name__ == "__main__":
-    agents = 100
+    agents = 3
     env = FlockEnv(
-        width=1000,
-        height=1000,
+        width=100,
+        height=100,
         max_steps=250,
         agents=agents,
         success_termination_mode="all",

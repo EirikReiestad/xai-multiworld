@@ -1,5 +1,13 @@
 import functools
+import math
+
 from ..core.constants import Direction
+from typing import Tuple
+
+
+def are_within_radius(tuple0: Tuple[int, int], tuple1: Tuple[int, int], radius: float):
+    distance = math.sqrt(sum((a - b) ** 2 for a, b in zip(tuple0, tuple1)))
+    return distance <= radius
 
 
 @functools.cache
