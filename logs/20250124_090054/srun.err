@@ -1,0 +1,10 @@
+mv: cannot stat 'log.txt': No such file or directory
+
+[notice] A new release of pip is available: 24.2 -> 24.3.1
+[notice] To update, run: pip install --upgrade pip
+wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu). Use `wandb login --relogin` to force relogin
+Traceback (most recent call last):
+  File "/cluster/work/eirre/multigrid/examples/go_to_goal.py", line 15, in <module>
+    DQNConfig(
+    ^^^^^^^^^
+NameError: name 'DQNConfig' is not defined. Did you mean: 'PPOConfig'?
