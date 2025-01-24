@@ -1,5 +1,5 @@
-from rllib.algorithms.ppo.ppo import PPO
-from rllib.algorithms.ppo.ppo_config import PPOConfig
+from rllib.algorithms.dqn.dqn import DQN
+from rllib.algorithms.dqn.dqn import DQNConfig
 from multigrid.envs.go_to_goal import GoToGoalEnv
 
 env = GoToGoalEnv(
