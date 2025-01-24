@@ -25,7 +25,7 @@ class Agent:
                 "image": spaces.Box(
                     low=0,
                     high=255,
-                    shape=(view_size, view_size, WorldObject.dim),
+                    shape=(view_size, view_size, AgentState.encode_dim),
                     dtype=np.int_,
                 ),
                 "direction": spaces.Discrete(len(Direction)),
@@ -77,6 +77,7 @@ class AgentState(np.ndarray):
     CARRYING = slice(6, 6 + WorldObject.dim)
 
     dim = 6 + WorldObject.dim
+    encode_dim = ENCODING.stop - ENCODING.start
 
     def __new__(cls, *dims: int):
         obj = np.zeros(dims + (cls.dim,), dtype=np.int_).view(cls)

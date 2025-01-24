@@ -1,6 +1,7 @@
-from abc import ABC
-from typing import Literal, Optional, Callable
 import logging
+from abc import ABC
+from typing import Literal, Optional, Tuple
+
 import gymnasium as gym
 
 from rllib.common.callbacks import RenderingCallback, empty_rendering_callback
@@ -19,6 +20,24 @@ class AlgorithmConfig(ABC):
 
         self._wandb_log_interval = 1
         self._rendering_callback = empty_rendering_callback
+
+        self.conv_layers: Tuple[int, ...] = tuple(
+            (32, 64, 64),
+        )
+        self.hidden_units: Tuple[int, ...] = tuple(
+            (128, 128),
+        )
+
+    def network(
+        self,
+        conv_layers: Tuple[int, ...] | None = None,
+        hidden_units: Tuple[int, ...] | None = None,
+    ):
+        if conv_layers is not None:
+            self.conv_layers = conv_layers
+        if hidden_units is not None:
+            self.hidden_units = hidden_units
+        return self
 
     def environment(self, env: gym.Env):
         self._environment = env

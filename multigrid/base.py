@@ -90,7 +90,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         super().reset(seed=seed, **kwargs)
 
         # Reset agents
-        self.agent_states = AgentState(self._num_agents)
+        self._agent_states = AgentState(self._num_agents)
         for agent in self.agents:
             agent.state = self._agent_states[agent.index]
             agent.reset()
@@ -495,7 +495,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
                 continue
 
             # Don't place the object where agents are
-            if np.array(self.agent_states.pos == pos).any():
+            if np.array(self._agent_states.pos == pos).any():
                 continue
 
             # Check if there is a filtering criterion

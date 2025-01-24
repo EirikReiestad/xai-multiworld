@@ -14,7 +14,6 @@ from multiworld.core.agent import Agent, AgentState
 from multiworld.core.constants import OBJECT_SIZE, WorldObjectType
 from multiworld.core.world import World
 from multiworld.core.world_object import Container, WorldObject
-from multiworld.utils.misc import are_within_radius
 from multiworld.utils.observation import gen_obs_grid_encoding
 from multiworld.utils.ohe import ohe_direction
 from multiworld.utils.position import Position
@@ -68,7 +67,7 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         self._agent_states = AgentState(agents)
         self.agents: List[Agent] = []
         for i in range(self._num_agents):
-            agent = Agent(i, agent_view_size, see_through_walls)
+            agent = Agent(i, agents, agent_view_size, see_through_walls)
             self.agents.append(agent)
         self.world = World(width, height, object_size)
 
@@ -81,7 +80,7 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         super().reset(seed=seed, **kwargs)
 
         # Reset agents
-        self.agent_states = AgentState(self._num_agents)
+        self._agent_states = AgentState(self._num_agents)
         for agent in self.agents:
             agent.state = self._agent_states[agent.index]
             agent.reset()
@@ -261,16 +260,7 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         if agent.state.terminated:
             return
 
-        # Rotate left
-        if action == Action.left:
-            agent.state.dir = (agent.dir - 1) % 4
-
-        # Rotate right
-        elif action == Action.right:
-            agent.state.dir = (agent.dir + 1) % 4
-
-        # Move forward
-        elif action == Action.forward:
+        def move_forward():
             fwd_pos = agent.front_pos
             if not self.world.in_bounds(fwd_pos):
                 return
@@ -289,63 +279,14 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
                 if fwd_obj.type == WorldObjectType.goal:
                     self.on_success(agent, rewards, {})
 
-        elif action == Action.pickup:
-            if agent.state.carrying is not None:
-                return
+        move_forward()
 
-            fwd_pos = agent.front_pos
-            fwd_obj = self.world.get(fwd_pos)
-
-            if fwd_obj is None:
-                return
-
-            if isinstance(fwd_obj, Container):
-                if fwd_obj.can_pickup_contained() is False:
-                    return
-                agent.state.carrying = fwd_obj.contains
-                fwd_obj.contains = None
-                return
-
-            if not fwd_obj.can_pickup():
-                return
-
-            agent.state.carrying = fwd_obj
-            self.world.set(fwd_pos, None)
-
-        elif action == Action.drop:
-            if agent.state.carrying is None:
-                return
-
-            fwd_pos = agent.front_pos
-            fwd_obj = self.world.get(fwd_pos)
-
-            if not self.world.in_bounds(fwd_pos):
-                return
-
-            agent_present = np.array(self._agent_states.pos == fwd_pos).any()
-            if agent_present:
-                return
-
-            if fwd_obj is not None and fwd_obj.can_contain():
-                fwd_obj.contains = agent.state.carrying
-                agent.state.carrying = None
-                return
-
-            if fwd_obj is not None:
-                return
-
-            self.world.set(fwd_pos, agent.carrying)
-            agent.state.carrying.cur_pos = fwd_pos
-            agent.state.carrying = None
-
-        elif action == Action.toggle:
-            fwd_pos = agent.front_pos
-            fwd_obj = self.world.get(fwd_pos)
-            if fwd_obj is not None:
-                fwd_obj.toggle(self, agent, fwd_pos)
-
-        elif action == Action.done:
-            pass
+        # Rotate left
+        if action == Action.left:
+            agent.state.dir = (agent.dir - 1) % 4
+        # Rotate right
+        elif action == Action.right:
+            agent.state.dir = (agent.dir + 1) % 4
         else:
             raise ValueError(f"Invalid action: {action}")
 
@@ -363,12 +304,12 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
             self.world._world_objects, self._agent_states, self.agents[0].view_size
         )
         """
-        obs = gen_obs_grid_encoding(self.agent_states, self.agents[0].view_size)
+        obs = gen_obs_grid_encoding(self._agent_states, self.agents[0].view_size)
         observations = {}
         for i in range(self._num_agents):
             ohe_dir = ohe_direction(directions[i])
             observations[i] = {
-                "observations": obs[i],
+                "observation": obs[i],
                 "direction": ohe_dir,
             }
         return observations
@@ -446,7 +387,7 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
                 continue
 
             # Don't place the object where agents are
-            if np.array(self.agent_states.pos == pos).any():
+            if np.array(self._agent_states.pos == pos).any():
                 continue
 
             # Check if there is a filtering criterion

@@ -1,12 +1,12 @@
-from typing import Dict, List, Tuple
+from typing import List
 
 import numpy as np
 from numpy.typing import NDArray as ndarray
 
-from multigrid.core.agent import Agent, AgentState
-from multigrid.core.constants import Color, Direction, WorldObjectType
-from multigrid.core.world_object import Wall, WorldObject
-from multigrid.utils.position import Position
+from multiworld.core.agent import Agent, AgentState
+from multiworld.core.constants import Color, Direction, WorldObjectType
+from multiworld.core.world_object import Wall, WorldObject
+from multiworld.utils.position import Position
 
 WALL_ENCODING = Wall().encode()
 UNSEEN_ENCODING = WorldObject(WorldObjectType.unseen, Color.from_index(0)).encode()
@@ -20,6 +20,7 @@ AGENT_POS_IDX = AgentState.POS
 AGENT_TERMINATED_IDX = AgentState.TERMINATED
 AGENT_CARRYING_IDX = AgentState.CARRYING
 AGENT_ENCODING_IDX = AgentState.ENCODING
+AGENT_ENCODE_DIM = AgentState.encode_dim
 
 TYPE = WorldObject.TYPE
 STATE = WorldObject.STATE
@@ -37,104 +38,34 @@ def gen_obs_grid_encoding(
     agent_state: ndarray[np.int_],
     agent_view_size: int,
 ) -> ndarray[np.int_]:
-    grid_state = np.empty((agent_view_size, agent_view_size, ENCODE_DIM), dtype=np.int_)
-    obs_grid = gen_obs_grid(grid_state, agent_state, agent_view_size)
-    return obs_grid
-
-
-def gen_obs_encoding(
-    agent_state: ndarray[np.int_],
-    agent_view_size: int,
-) -> ndarray[np.int_]:
-    agent_pos = agent_state[..., AGENT_POS_IDX]
-
-    results = np.array((len(agent_pos), agent_view_size, agent_view_size))
-    for pos in agent_pos:
-        diffs = np.abs(agent_pos - pos)
-        within_radius = np.where(
-            (diffs[:, 0] <= agent_view_size) & (diffs[:, 1] <= agent_view_size)
-        )
-        obs_grid = gen_obs_grid(
-            (agent_view_size, agent_view_size), agent_state, within_radius
-        )
-        results.append(obs_grid)
-    return np.array(results)
-
-
-def gen_obs_grid(
-    grid_state: ndarray[np.int_], agent_state: ndarray[np.int_], agent_view_size: int
-) -> ndarray[np.int_]:
-    num_agents = len(agent_state)
-    obs_width, obs_height = agent_view_size, agent_view_size
-
-    # Process agent states
+    """
+    This function returns the encoded agents that is in a certain radius of the other agents.
+    Currenlty: type, color, dir, pos
+    """
+    # obs_grid = gen_obs_grid(agent_state, agent_view_size)
     agent_grid = agent_state[..., AGENT_ENCODING_IDX]
-    agent_dir = agent_state[..., AGENT_DIR_IDX]
     agent_pos = agent_state[..., AGENT_POS_IDX]
     agent_terminated = agent_state[..., AGENT_TERMINATED_IDX]
-    agent_carrying = agent_state[..., AGENT_CARRYING_IDX]
 
-    obs_grid = np.empty((num_agents, obs_height, obs_width, ENCODE_DIM), dtype=np.int_)
-
-    if num_agents > 1:
-        for agent in range(num_agents):
-            if agent_terminated[agent]:
-                continue
-            pos = agent_pos[agent]
-            diffs = np.abs(agent_pos - pos)
-            within_radius = np.where(
-                (diffs[:, 0] <= agent_view_size) & (diffs[:, 1] <= agent_view_size)
-            )
-            for idx in within_radius:
-                relative_pos = agent_pos[idx] - pos
-                centered_pos = relative_pos - agent_view_size // 2
-                obs_grid[agent, centered_pos, GRID_ENCODING_IDX] = agent_state[idx]
-
-    if num_agents > 1:
-        grid_encoding = np.empty((*grid_state.shape[:-1], ENCODE_DIM), dtype=np.int_)
-        grid_encoding[...] = grid_state[..., GRID_ENCODING_IDX]
-
-        # Insert agent grid encodings
-        for agent in range(num_agents):
-            if agent_terminated[agent]:
-                continue
-            x, y = agent_pos[agent]
-            grid_encoding[y, x, GRID_ENCODING_IDX] = agent_grid[agent]
-    else:
-        grid_encoding = grid_state[..., GRID_ENCODING_IDX]
-
-    top_left = get_view_exts(agent_dir, agent_pos, agent_view_size)
-    topX, topY = top_left[:, 0], top_left[:, 1]
-
-    # Population observation grid
-    num_left_rotations = (agent_dir + 1) % 4
+    num_agents = len(agent_state)
+    obs = np.zeros(
+        (num_agents, 1, num_agents, AGENT_ENCODE_DIM), dtype=np.int_
+    )  # The 1 is just to make it an img type so we can use it on the same network
     for agent in range(num_agents):
-        x, y = topX[agent] + i, topY[agent] + j
+        if agent_terminated[agent]:
+            continue
+        pos = agent_pos[agent]
+        distances = np.linalg.norm(agent_pos - pos, axis=1)
+        mask = distances <= agent_view_size
+        masked_grid = np.zeros((num_agents, AGENT_ENCODE_DIM))
+        masked_grid[mask, : agent_grid.shape[1]] = agent_grid[
+            mask, : agent_grid.shape[1]
+        ]
+        normalized_distance = distances[mask] / agent_view_size
+        masked_grid[mask, agent_grid.shape[1]] = normalized_distance
+        obs[agent] = [masked_grid]
 
-        for j in range(obs_height):
-            for i in range(obs_width):
-                x, y = topX[agent] + i, topY[agent] + j
-                # Rotated relative coordinates for observation grid
-                if num_left_rotations[agent] == 0:
-                    i_rot, j_rot = i, j
-                elif num_left_rotations[agent] == 1:
-                    i_rot, j_rot = j, obs_width - 1 - i
-                elif num_left_rotations[agent] == 2:
-                    i_rot, j_rot = obs_width - 1 - i, obs_height - 1 - j
-                elif num_left_rotations[agent] == 3:
-                    i_rot, j_rot = obs_height - 1 - j, i
-                else:
-                    raise ValueError("Invalid rotation")
-
-                # Set observation grid
-                if 0 <= x < grid_state.shape[0] and 0 <= y < grid_state.shape[1]:
-                    obs_grid[agent, j_rot, i_rot] = grid_encoding[x, y]
-                else:
-                    obs_grid[agent, j_rot, i_rot] = WALL_ENCODING
-
-    # Make it so the agent sees what it is carrying
-    obs_grid[:, obs_height - 1, obs_width // 2] = agent_carrying
-    return obs_grid
+    return obs
 
 
 def see_behind(world_object: ndarray[np.int_] | None) -> bool:

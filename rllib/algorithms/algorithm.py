@@ -47,6 +47,7 @@ class Algorithm(Environment, WandB, ABC):
 
     def collect_rollouts(self):
         observations, _ = self._env.reset()
+
         for t in count():
             self._steps_done += 1
             actions = self.predict(observations)

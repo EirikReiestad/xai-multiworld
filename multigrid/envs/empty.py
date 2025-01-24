@@ -1,11 +1,11 @@
-from multiworld.base import MultiWorldEnv
-from multiworld.core.grid import Grid
-from multiworld.core.world_object import Box, Wall, Container
-from multiworld.core.area import Area
-from multiworld.utils.position import Position
+from multigrid.base import MultiGridEnv
+from multigrid.core.grid import Grid
+from multigrid.core.world_object import Box, Wall, Container
+from multigrid.core.area import Area
+from multigrid.utils.position import Position
 
 
-class EmptyEnv(MultiWorldEnv):
+class EmptyEnv(MultiGridEnv):
     def _gen_grid(self, width: int, height: int):
         self.grid = Grid(width, height)
 
