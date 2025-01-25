@@ -281,12 +281,16 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
 
         move_forward()
 
-        # Rotate left
-        if action == Action.left:
-            agent.state.dir = (agent.dir - 1) % 4
-        # Rotate right
-        elif action == Action.right:
-            agent.state.dir = (agent.dir + 1) % 4
+        if action == Action.left45:
+            agent.state.dir = (agent.dir - 1) % 8
+        elif action == Action.left90:
+            agent.state.dir = (agent.dir - 2) % 8
+        if action == Action.forward:
+            pass
+        if action == Action.right45:
+            agent.state.dir = (agent.dir + 1) % 8
+        elif action == Action.right90:
+            agent.state.dir = (agent.dir + 2) % 8
         else:
             raise ValueError(f"Invalid action: {action}")
 
