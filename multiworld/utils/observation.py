@@ -28,11 +28,6 @@ STATE = WorldObject.STATE
 WALL = int(WorldObjectType.wall)
 BOX = int(WorldObjectType.box)
 
-RIGHT = int(Direction.right)
-LEFT = int(Direction.left)
-UP = int(Direction.up)
-DOWN = int(Direction.down)
-
 
 def gen_obs_grid_encoding(
     agent_state: ndarray[np.int_],
@@ -148,31 +143,6 @@ def get_vis_mask(obs_grid: ndarray[np.int_]) -> ndarray[np.bool_]:
                     vis_mask[agent, j, i - 1] = True
 
     return vis_mask
-
-
-def get_view_exts(
-    agent_dir: ndarray[np.int_], agent_pos: ndarray[np.int_], agent_view_size: int
-) -> ndarray[np.int_]:
-    agent_x, agent_y = agent_pos[:, 0], agent_pos[:, 1]
-    top_left = np.zeros((len(agent_dir), 2), dtype=np.int_)
-
-    # Facing right
-    top_left[agent_dir == RIGHT, 0] = agent_x[agent_dir == RIGHT]
-    top_left[agent_dir == RIGHT, 1] = agent_y[agent_dir == RIGHT] - agent_view_size // 2
-
-    # Facing down
-    top_left[agent_dir == DOWN, 0] = agent_x[agent_dir == DOWN] - agent_view_size // 2
-    top_left[agent_dir == DOWN, 1] = agent_y[agent_dir == DOWN]
-
-    # Facing left
-    top_left[agent_dir == LEFT, 0] = agent_x[agent_dir == LEFT] - agent_view_size + 1
-    top_left[agent_dir == LEFT, 1] = agent_y[agent_dir == LEFT] - agent_view_size // 2
-
-    # Facing up
-    top_left[agent_dir == UP, 0] = agent_x[agent_dir == UP] - agent_view_size // 2
-    top_left[agent_dir == UP, 1] = agent_y[agent_dir == UP] - agent_view_size + 1
-
-    return top_left
 
 
 def agents_from_agent_observation(obs_grid: ndarray[np.int_]) -> List[Agent]:

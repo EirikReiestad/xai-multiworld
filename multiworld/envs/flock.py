@@ -4,11 +4,9 @@ import numpy as np
 
 from multiworld.base import MultiWorldEnv
 from multiworld.core.action import Action
-from multiworld.core.agent import Agent
+from multiworld.core.agent import Agent, AgentState
 from multiworld.core.world import World
 from multiworld.utils.typing import AgentID, ObsType
-from multiworld.core.agent import Agent, AgentState
-
 
 AGENT_POS_IDX = AgentState.POS
 
@@ -69,7 +67,6 @@ class FlockEnv(MultiWorldEnv):
             agent.index: float(rewards[agent.index]) + float(step_rewards[agent.index])
             for agent in self.agents
         }
-        print(rewards)
 
         return observations, rewards, terminations, truncations, infos
 

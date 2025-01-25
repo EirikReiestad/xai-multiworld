@@ -66,10 +66,14 @@ class Direction(enum.IntEnum):
     Enumeration of agent directions.
     """
 
-    right = 0
-    down = 1
-    left = 2
-    up = 3
+    north = 0
+    northeast = 1
+    east = 2
+    southeast = 3
+    south = 4
+    southwest = 5
+    west = 6
+    northwest = 7
 
     def to_vec(self) -> ndarray[np.int8]:
         """
