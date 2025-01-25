@@ -1,9 +1,11 @@
+import math
+import random
 import numpy as np
 from gymnasium import spaces
 from numpy.typing import NDArray as ndarray
 
 from multiworld.core.action import Action
-from multiworld.core.constants import Color, Direction, WorldObjectType
+from multiworld.core.constants import Color, WorldObjectType
 from multiworld.core.world_object import WorldObject
 from multiworld.utils.misc import PropertyAlias, front_pos
 from multiworld.utils.rendering import point_in_triangle, rotate_fn, fill_coords
@@ -34,7 +36,7 @@ class Agent:
                     shape=(1, num_agents, AgentState.encode_dim),
                     dtype=np.int_,
                 ),
-                "direction": spaces.Discrete(len(Direction)),
+                "direction": spaces.Discrete(1),
             }
         )
         self.action_space = spaces.Discrete(len(Action))
@@ -69,7 +71,7 @@ class Agent:
         tri_fn = point_in_triangle((0.12, 0.19), (0.87, 0.50), (0.12, 0.81))
 
         # Rotate agent based on direction
-        tri_fn = rotate_fn(tri_fn, cx=0.5, cy=0.5, theta=0.5 * np.pi * self.state.dir)
+        tri_fn = rotate_fn(tri_fn, cx=0.5, cy=0.5, theta=math.radians(self.state.dir))
         fill_coords(img, tri_fn, self.state.color.rgb())
 
 
@@ -128,12 +130,12 @@ class AgentState(np.ndarray):
         self[..., AgentState.COLOR] = np.vectorize(lambda c: Color(c).to_index())(value)
 
     @property
-    def dir(self) -> Direction | ndarray[np.int_]:
+    def dir(self) -> int | ndarray[np.int_]:
         out = self._view[..., AgentState.DIR]
-        return Direction(out.item()) if out.ndim == 0 else out
+        return out.item() if out.ndim == 0 else out
 
     @dir.setter
-    def dir(self, value: Direction | ndarray[np.int_]):
+    def dir(self, value: int | ndarray[np.int_]):
         self._view[..., AgentState.DIR] = value
 
     @property

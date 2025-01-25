@@ -15,7 +15,6 @@ from multiworld.core.constants import OBJECT_SIZE, WorldObjectType
 from multiworld.core.world import World
 from multiworld.core.world_object import Container, WorldObject
 from multiworld.utils.observation import gen_obs_grid_encoding
-from multiworld.utils.ohe import ohe_direction
 from multiworld.utils.position import Position
 from multiworld.utils.random import RandomMixin
 from multiworld.utils.typing import AgentID, ObsType
@@ -82,8 +81,8 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         # Reset agents
         self._agent_states = AgentState(self._num_agents)
         for agent in self.agents:
-            agent.state = self._agent_states[agent.index]
             agent.reset()
+            agent.state = self._agent_states[agent.index]
             agent.state.pos = self.place_agent(agent)
 
         self._gen_world(self._width, self._height)
@@ -279,16 +278,20 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
                 if fwd_obj.type == WorldObjectType.goal:
                     self.on_success(agent, rewards, {})
 
-        move_forward()
-
-        # Rotate left
-        if action == Action.left:
-            agent.state.dir = (agent.dir - 1) % 4
-        # Rotate right
-        elif action == Action.right:
-            agent.state.dir = (agent.dir + 1) % 4
+        if action == Action.left45:
+            agent.state.dir = (agent.dir - 45) % 360
+        elif action == Action.left90:
+            agent.state.dir = (agent.dir - 90) % 360
+        elif action == Action.forward:
+            pass
+        elif action == Action.right45:
+            agent.state.dir = (agent.dir + 45) % 360
+        elif action == Action.right90:
+            agent.state.dir = (agent.dir + 90) % 360
         else:
             raise ValueError(f"Invalid action: {action}")
+
+        move_forward()
 
     @abstractmethod
     def _gen_world(self, width: int, height: int):
@@ -307,10 +310,9 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         obs = gen_obs_grid_encoding(self._agent_states, self.agents[0].view_size)
         observations = {}
         for i in range(self._num_agents):
-            ohe_dir = ohe_direction(directions[i])
             observations[i] = {
                 "observation": obs[i],
-                "direction": ohe_dir,
+                "direction": directions[i],
             }
         return observations
 
@@ -423,6 +425,6 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         agent.state.pos = pos
 
         if rand_dir:
-            agent.state.dir = self._rand_int(0, 4)
+            agent.state.dir = self._rand_int(0, 360)
 
         return pos

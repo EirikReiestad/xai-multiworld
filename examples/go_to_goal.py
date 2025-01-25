@@ -9,7 +9,7 @@ env = GoToGoalEnv(
     agents=20,
     agent_view_size=9,
     success_termination_mode="all",
-    render_mode="rgb_array",
+    render_mode="human",
 )
 
 config = (

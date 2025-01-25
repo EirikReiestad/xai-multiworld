@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, final
 
 import numpy as np
 import torch
@@ -51,6 +51,7 @@ class MultiInputNetwork(TorchModule):
             x0 = self._conv0(x0)
         x0 = x0.reshape(x0.size(0), -1)
 
+        x1 = x1.reshape(x1.size(0), -1)
         x1 = self._fc0(x1)
 
         x = torch.cat([x0, x1], dim=1)
