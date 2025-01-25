@@ -4,7 +4,7 @@ import numpy as np
 from numpy.typing import NDArray as ndarray
 
 from multiworld.core.agent import Agent, AgentState
-from multiworld.core.constants import Color, Direction, WorldObjectType
+from multiworld.core.constants import Color, WorldObjectType
 from multiworld.core.world_object import Wall, WorldObject
 from multiworld.utils.position import Position
 
