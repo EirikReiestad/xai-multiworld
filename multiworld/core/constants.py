@@ -16,14 +16,14 @@ COLORS = {
 }
 
 DIR_TO_VEC = [
-    # Pointing right (positive X)
-    np.array((1, 0)),
-    # Down (positive Y)
-    np.array((0, 1)),
-    # Pointing left (negative X)
-    np.array((-1, 0)),
-    # Up (negative Y)
-    np.array((0, -1)),
+    np.array((0, -1)),  # North
+    np.array((1, -1)),  # Northeast
+    np.array((1, -1)),  # East
+    np.array((1, 1)),  # Southeast
+    np.array((0, 1)),  # South
+    np.array((-1, 1)),  # Southwest
+    np.array((-1, 0)),  # West
+    np.array((-1, -1)),  # Northwest
 ]
 
 
