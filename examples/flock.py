@@ -19,10 +19,10 @@ config = (
         replay_buffer_size=100000,
         gamma=0.99,
         learning_rate=1e-4,
-        eps_start=0.2,
+        eps_start=0.9,
         eps_end=0.05,
-        eps_decay=2000000,
-        target_update=5000,
+        eps_decay=1000000,
+        target_update=2000,
     )
     .network(conv_layers=())
     .environment(env=env)
