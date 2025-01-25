@@ -16,14 +16,14 @@ COLORS = {
 }
 
 DIR_TO_VEC = [
-    np.array((0, -1)),  # North
-    np.array((1, -1)),  # Northeast
     np.array((1, -1)),  # East
     np.array((1, 1)),  # Southeast
     np.array((0, 1)),  # South
     np.array((-1, 1)),  # Southwest
     np.array((-1, 0)),  # West
     np.array((-1, -1)),  # Northwest
+    np.array((0, -1)),  # North
+    np.array((1, -1)),  # Northeast
 ]
 
 
@@ -59,34 +59,6 @@ class Color(str, IndexedEnum):
         Return the RGB value of this ``Color``.
         """
         return COLORS[self]
-
-
-class Direction(enum.IntEnum):
-    """
-    Enumeration of agent directions.
-    """
-
-    north = 0
-    northeast = 1
-    east = 2
-    southeast = 3
-    south = 4
-    southwest = 5
-    west = 6
-    northwest = 7
-
-    def to_vec(self) -> ndarray[np.int8]:
-        """
-        Return the vector corresponding to this ``Direction``.
-        """
-        return DIR_TO_VEC[self]
-
-    @staticmethod
-    def sample(n: np.int_):
-        """
-        Sample a random direction.
-        """
-        return np.random.choice(list(Direction), size=n)
 
 
 class State(str, IndexedEnum):

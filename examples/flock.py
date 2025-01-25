@@ -3,10 +3,10 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from multiworld.envs.flock import FlockEnv
 
 env = FlockEnv(
-    width=1000,
-    height=1000,
+    width=100,
+    height=100,
     max_steps=1000,
-    agents=100,
+    agents=10,
     object_size=8,
     agent_view_size=65,
     success_termination_mode="all",
