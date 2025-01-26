@@ -5,6 +5,7 @@ import numpy as np
 from multiworld.base import MultiWorldEnv
 from multiworld.core.action import Action
 from multiworld.core.agent import Agent, AgentState
+from multiworld.core.constants import COLORS, Color
 from multiworld.core.world import World
 from multiworld.utils.typing import AgentID, ObsType
 
@@ -18,6 +19,7 @@ class FlockEnv(MultiWorldEnv):
         for agent in self.agents:
             position = self.world.get_empty_position(self.np_random)
             agent.state.pos = position
+            self._agent_stamina = 10
 
     def step(
         self, actions: Dict[AgentID, Action | int]
@@ -40,10 +42,24 @@ class FlockEnv(MultiWorldEnv):
             agents_view_count = (
                 self._get_agents_view_count(self.agents[agent].pos(), 20) - 1
             )
+
+            if self.agents[agent].stamina <= 0:
+                self.agents[agent].terminated = True
+                self.agents[agent].pos = (-1, -1)
+                self.add_reward(
+                    self.agents[agent], rewards, -self._max_steps / len(self.agents)
+                )
+
             self.add_reward(
                 self.agents[agent],
                 rewards,
                 np.exp(0.2 * agents_view_count) * 0.1 * (agents_view_count > 0),
+            )
+
+            self.agents[agent].stamina = min(
+                self.agents[agent].stamina
+                + agents_view_count / (len(self.agents) / 10),
+                self._agent_stamina,
             )
 
         rewards = {
