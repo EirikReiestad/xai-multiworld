@@ -36,7 +36,7 @@ class Agent:
                     shape=(1, num_agents, AgentState.encode_dim),
                     dtype=np.int_,
                 ),
-                "direction": spaces.Discrete(1),
+                "other": spaces.Discrete(1),
             }
         )
         self.action_space = spaces.Discrete(len(Action))
@@ -44,11 +44,15 @@ class Agent:
     def reset(self):
         self.state.pos = (-1, -1)
         self.state.dir = -1
+        self.state.stamina = -1
         self.state.terminated = False
         self.state.carrying = None
 
     color = PropertyAlias("state", "color", doc="Alias for :attr:`AgentState.color`.")
     dir = PropertyAlias("state", "dir", doc="Alias for :attr:`AgentState.dir`.")
+    stamina = PropertyAlias(
+        "state", "stamina", doc="Alias for :attr:`AgentState.stamina`."
+    )
     pos = PropertyAlias("state", "pos", doc="Alias for :attr:`AgentState.pos`.")
     terminated = PropertyAlias(
         "state", "terminated", doc="Alias for :attr:`AgentState.terminated`."
@@ -79,12 +83,12 @@ class AgentState(np.ndarray):
     TYPE = 0
     COLOR = 1
     DIR = 2
-    POS = slice(3, 5)
-    ENCODING = slice(0, 5)
-    TERMINATED = 5
-    CARRYING = slice(6, 6 + WorldObject.dim)
+    STAMINA = 3
+    POS = slice(4, 6)
+    ENCODING = slice(0, 6)
+    TERMINATED = 6
 
-    dim = 6 + WorldObject.dim
+    dim = 7
     encode_dim = ENCODING.stop - ENCODING.start + 1  # distance
 
     def __new__(cls, *dims: int):
@@ -94,10 +98,10 @@ class AgentState(np.ndarray):
         obj[..., AgentState.TYPE] = WorldObjectType.agent
         obj[..., AgentState.COLOR].flat = Color.cycle(np.prod(dims))
         obj[..., AgentState.DIR] = -1
+        obj[..., AgentState.STAMINA] = -1
         obj[..., AgentState.POS] = (-1, -1)
 
         # Other attributes
-        obj._carried_obj = np.empty(dims, dtype=object)  # Object references
         obj._terminated = np.zeros(dims, dtype=bool)  # Cache for faster access
         obj._view = obj.view(
             np.ndarray
@@ -111,7 +115,6 @@ class AgentState(np.ndarray):
                 logging.warning("AgentState object was not initialized properly.")
                 return out
             out._view = self._view[idx, ...]
-            out._carried_obj = self._carried_obj[idx, ...]
             out._terminated = self._terminated[idx, ...]
         return out
 
@@ -137,6 +140,15 @@ class AgentState(np.ndarray):
     @dir.setter
     def dir(self, value: int | ndarray[np.int_]):
         self._view[..., AgentState.DIR] = value
+
+    @property
+    def stamina(self) -> int | ndarray[np.int_]:
+        out = self._view[..., AgentState.STAMINA]
+        return out.item() if out.ndim == 0 else out
+
+    @stamina.setter
+    def stamina(self, value: int | ndarray[np.int_]):
+        self._view[..., AgentState.STAMINA] = value
 
     @property
     def pos(self) -> Position:
@@ -167,22 +179,3 @@ class AgentState(np.ndarray):
     def terminated(self, value: bool | ndarray[np.bool]):
         self[..., AgentState.TERMINATED] = value
         self._terminated[...] = value
-
-    @property
-    def carrying(self) -> WorldObject | None | ndarray[np.object_]:
-        """
-        Return the object the agent is carrying.
-        """
-        out = self._carried_obj
-        return out.item() if out.ndim == 0 else out
-
-    @carrying.setter
-    def carrying(self, obj: WorldObject | None):
-        """
-        Set the object the agent is carrying.
-        """
-        self[..., AgentState.CARRYING] = WorldObject.empty() if obj is None else obj
-        if isinstance(obj, (WorldObject, type(None))):
-            self._carried_obj[...].fill(obj)
-        else:
-            self._carried_obj[...] = obj

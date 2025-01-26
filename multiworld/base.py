@@ -13,7 +13,7 @@ from multiworld.core.action import Action
 from multiworld.core.agent import Agent, AgentState
 from multiworld.core.constants import OBJECT_SIZE, WorldObjectType
 from multiworld.core.world import World
-from multiworld.core.world_object import Container, WorldObject
+from multiworld.core.world_object import WorldObject
 from multiworld.utils.observation import gen_obs_grid_encoding
 from multiworld.utils.position import Position
 from multiworld.utils.random import RandomMixin
@@ -29,6 +29,7 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
     def __init__(
         self,
         agents: int = 1,
+        agent_stamina: int = 100,
         width: int = 1000,
         height: int = 1000,
         max_steps: int = 100,
@@ -47,6 +48,7 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         RandomMixin.__init__(self, self.np_random)
         assert agents > 0, "Number of agents must be greater than 0"
         self._num_agents = agents
+        self._agent_stamina = agent_stamina
         self._width = width
         self._height = height
         self._joint_reward = joint_reward
@@ -114,6 +116,11 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         self._step_count += 1
 
         rewards = self._handle_actions(actions)
+
+        for agent in self.agents:
+            if agent.terminated:
+                continue
+            agent.stamina -= 1
 
         observations: Dict[AgentID, ObsType] = self._gen_obs()
         terminations: Dict[AgentID, bool] = {
@@ -426,5 +433,6 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
 
         if rand_dir:
             agent.state.dir = self._rand_int(0, 360)
+        agent.stamina = self._agent_stamina
 
         return pos
