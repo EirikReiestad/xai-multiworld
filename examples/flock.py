@@ -3,14 +3,14 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from multiworld.envs.flock import FlockEnv
 
 env = FlockEnv(
-    width=100,
-    height=100,
+    width=1000,
+    height=1000,
     max_steps=1000,
-    agents=10,
+    agents=100,
     object_size=8,
     agent_view_size=65,
     success_termination_mode="all",
-    render_mode="human",
+    render_mode="rgb_array",
 )
 
 config = (
@@ -29,7 +29,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="mw-flock")
+    .wandb(project="mw-flock")
 )
 
 dqn = DQN(config)
