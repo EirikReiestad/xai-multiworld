@@ -18,7 +18,6 @@ GRID_ENCODING_IDX = slice(None)
 AGENT_DIR_IDX = AgentState.DIR
 AGENT_POS_IDX = AgentState.POS
 AGENT_TERMINATED_IDX = AgentState.TERMINATED
-AGENT_CARRYING_IDX = AgentState.CARRYING
 AGENT_ENCODING_IDX = AgentState.ENCODING
 AGENT_ENCODE_DIM = AgentState.encode_dim
 
@@ -51,7 +50,7 @@ def gen_obs_grid_encoding(
             continue
         pos = agent_pos[agent]
         distances = np.linalg.norm(agent_pos - pos, axis=1)
-        mask = distances <= agent_view_size
+        mask = (distances <= agent_view_size)[agent_terminated]
         masked_grid = np.zeros((num_agents, AGENT_ENCODE_DIM))
         masked_grid[mask, : agent_grid.shape[1]] = agent_grid[
             mask, : agent_grid.shape[1]
