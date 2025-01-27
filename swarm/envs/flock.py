@@ -30,8 +30,11 @@ class FlockEnv(SwarmEnv):
         for i in range(self._num_active_agents, self._num_agents):
             self.agents[i].color = "red"
 
-        self._predator_info = []
         self._predator_steps = 100
+        self._predator_info = [
+            {"following": None, "steps_left": self._predator_steps}
+            for _ in range(self._num_predators)
+        ]
 
     def step(
         self, actions: Dict[AgentID, Action | int]
@@ -57,33 +60,33 @@ class FlockEnv(SwarmEnv):
             if self.agents[agent].stamina <= 0:
                 self.agents[agent].terminated = True
                 self.agents[agent].pos = (-1, -1)
-                self.add_reward(
-                    self.agents[agent], rewards, -self._max_steps / len(self.agents)
-                )
-            self.add_reward(self.agents[agent], rewards, agents_view_count * 0.1)
+                self.add_reward(self.agents[agent], rewards, -self._max_steps)
+            self.add_reward(self.agents[agent], rewards, 1)
             self.agents[agent].stamina = min(
                 self.agents[agent].stamina + agents_view_count,
                 self._agent_stamina,
             )
 
-        rewards = {
-            agent.index: float(rewards[agent.index]) + float(step_rewards[agent.index])
-            for agent in self.agents
-        }
-
         for i in range(self._num_predators):
             predator = self.agents[self._num_active_agents + i]
             predator_info = self._predator_info[i]
 
-            if predator_info.get("steps_left") in [None, 0]:
+            if predator_info["steps_left"] == 0:
                 predator_info["following"] = None
                 predator_info["steps_left"] = self._predator_steps
 
             if predator_info["following"] is None:
-                predator_info["following"] = self._find_closest_agent(predator.pos())
+                following = self._find_closest_agent(predator.pos)
+                if following is None:
+                    break
+                predator_info["following"] = following
 
-            # Make the predator follow the assigned agent
-            self._follow_agent(i, predator_info["following"])
+            self._follow_agent(i, predator_info["following"], rewards)
+
+        rewards = {
+            agent.index: float(rewards[agent.index]) + float(step_rewards[agent.index])
+            for agent in self.agents
+        }
 
         return (
             dict(list(observations.items())[: self._num_active_agents]),
@@ -108,41 +111,33 @@ class FlockEnv(SwarmEnv):
         predator = self.agents[self._num_active_agents + predator_idx]
         agent = self.agents[agent_idx]
 
+        if agent.terminated:
+            self._predator_info[predator_idx]["following"] = None
+
         dx = agent.pos.x - predator.pos.x
         dy = agent.pos.y - predator.pos.y
 
-        magnitude = (dx**2 + dy**2) ** 0.5
-        dx_normalized = dx / magnitude
-        dy_normalized = dy / magnitude
         angle = math.atan2(dy, dx)
         angle_degrees = math.degrees(angle)
-        new_pos = (
-            predator.pos.x + dx_normalized,
-            predator.pos.y + dy_normalized,
-        )
-        self.agents[self._num_active_agents + predator_idx].dir = angle_degrees
-        self.agents[self._num_active_agents + predator_idx].pos = new_pos
+        predator.dir = angle_degrees
+        predator.pos = predator.front_pos
 
-        for i in range(self._num_active_agents):
-            if self.agents[i].pos == new_pos:
-                self.agents[i].terminated = True
-                self.add_reward(self.agents[i], rewards, -self._max_steps)
-                self.agents[i].pos = (-1, -1)
+        if agent.pos == predator.pos:
+            agent.terminated = True
+            agent.pos = (-1, -1)
+            self.add_reward(agent, rewards, -self._max_steps)
+            self._predator_info[predator_idx]["steps_left"] = 0
 
-    def _find_closest_agent(self, pos: Tuple[int, int]) -> int:
+    def _find_closest_agent(self, pos: Position) -> int | None:
         closest_agent = None
         closest_distance = None
         for i in range(self._num_active_agents):
             if self.agents[i].terminated is True:
                 continue
-            distance = np.linalg.norm(np.array(pos) - np.array(self.agents[i]))
+            distance = np.linalg.norm(pos.to_numpy() - self.agents[i].pos.to_numpy())
             if closest_distance is None or distance < closest_distance:
                 closest_agent = i
                 closest_distance = distance
-        if closest_agent is None:
-            raise EnvironmentError(
-                "For some reason there are no more agents and the episode is not terminated..."
-            )
         return closest_agent
 
     def _get_agents_view_count(self, pos: Agent, radius: int):

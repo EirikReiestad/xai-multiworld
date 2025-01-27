@@ -3,12 +3,12 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from swarm.envs.flock import FlockEnv
 
 env = FlockEnv(
-    width=500,
-    height=500,
+    width=1000,
+    height=1000,
     max_steps=1000,
     agent_stamina=1000,
-    agents=50,
-    predators=10,
+    agents=200,
+    predators=5,
     object_size=8,
     agent_view_size=65,
     success_termination_mode="all",
