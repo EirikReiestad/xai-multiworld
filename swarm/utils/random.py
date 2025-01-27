@@ -2,8 +2,8 @@ from typing import Iterable, TypeVar
 
 import numpy as np
 
-from multiworld.core.constants import Color
-from multiworld.utils.position import Position
+from swarm.core.constants import Color
+from swarm.utils.position import Position
 
 T = TypeVar("T")
 

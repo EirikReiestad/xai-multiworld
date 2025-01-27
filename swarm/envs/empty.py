@@ -1,8 +1,8 @@
-from multiworld.base import MultiWorldEnv
-from multiworld.core.world import World
+from swarm.base import SwarmEnv
+from swarm.core.world import World
 
 
-class EmptyEnv(MultiWorldEnv):
+class EmptyEnv(SwarmEnv):
     def _gen_world(self, width: int, height: int):
         self.world = World(width, height, self._object_size)
 
