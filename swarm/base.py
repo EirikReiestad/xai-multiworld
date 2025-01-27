@@ -9,18 +9,18 @@ import numpy as np
 import pygame as pg
 from gymnasium import spaces
 
-from multiworld.core.action import Action
-from multiworld.core.agent import Agent, AgentState
-from multiworld.core.constants import OBJECT_SIZE, WorldObjectType
-from multiworld.core.world import World
-from multiworld.core.world_object import WorldObject
-from multiworld.utils.observation import gen_obs_grid_encoding
-from multiworld.utils.position import Position
-from multiworld.utils.random import RandomMixin
-from multiworld.utils.typing import AgentID, ObsType
+from swarm.core.action import Action
+from swarm.core.agent import Agent, AgentState
+from swarm.core.constants import OBJECT_SIZE, WorldObjectType
+from swarm.core.world import World
+from swarm.core.world_object import WorldObject
+from swarm.utils.observation import gen_obs_grid_encoding
+from swarm.utils.position import Position
+from swarm.utils.random import RandomMixin
+from swarm.utils.typing import AgentID, ObsType
 
 
-class MultiWorldEnv(gym.Env, RandomMixin, ABC):
+class SwarmEnv(gym.Env, RandomMixin, ABC):
     metadata = {
         "render_modes": ["human", "rgb_array"],
         "render_fps": 20,
@@ -74,7 +74,7 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
 
     def reset(
         self, seed: int | None = None, **kwargs
-    ) -> tuple[
+    ) -> Tuple[
         Dict[AgentID, ObsType],
         Dict[AgentID, Dict[str, Any]],
     ]:
@@ -158,7 +158,7 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
             if self._window is None:
                 pg.init()
                 pg.display.init()
-                pg.display.set_caption("MultiWorld")
+                pg.display.set_caption("swarm")
                 self._window = pg.display.set_mode(screen_size)
             if self._clock is None:
                 self.clock = pg.time.Clock()
@@ -305,7 +305,11 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         raise NotImplementedError
 
     def _get_frame(self, object_size: int) -> np.ndarray:
-        return self.world.render(object_size, agents=self.agents)
+        return self.world.render(
+            object_size,
+            agents=self.agents,
+            world_objects=self.world.world_objects.values(),
+        )
 
     def _gen_obs(self) -> Dict[AgentID, ObsType]:
         directions = self._agent_states.dir
@@ -349,7 +353,7 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
         obj: WorldObject | None,
         top: tuple[int, int] | None = None,
         size: tuple[int, int] | None = None,
-        reject_fn: Callable[["MultiWorldEnv", tuple[int, int]], bool] | None = None,
+        reject_fn: Callable[["MultiSwarmEnv", tuple[int, int]], bool] | None = None,
         max_tries=math.inf,
     ) -> Position:
         """

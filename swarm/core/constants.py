@@ -1,8 +1,7 @@
-import aenum as enum
 import numpy as np
 from numpy.typing import NDArray as ndarray
 
-from multiworld.utils.enum import IndexedEnum
+from swarm.utils.enum import IndexedEnum
 
 OBJECT_SIZE = 8
 
@@ -13,6 +12,7 @@ COLORS = {
     "purple": np.array([112, 39, 195]),
     "yellow": np.array([255, 255, 0]),
     "grey": np.array([100, 100, 100]),
+    "white": np.array([255, 255, 255]),
 }
 
 DIR_TO_VEC = [
@@ -30,6 +30,7 @@ DIR_TO_VEC = [
 class WorldObjectType(str, IndexedEnum):
     unseen = "unseen"
     empty = "empty"
+    circle = "circle"
     wall = "wall"
     floor = "floor"
     box = "box"
@@ -46,6 +47,7 @@ class Color(str, IndexedEnum):
     yellow = "yellow"
     grey = "grey"
     black = "black"
+    white = "white"
 
     @staticmethod
     def cycle(n: np.int_):

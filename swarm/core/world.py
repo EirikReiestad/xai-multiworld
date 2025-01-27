@@ -4,18 +4,16 @@ import numpy as np
 from numpy.random import Generator
 from numpy.typing import NDArray
 
-from multiworld.core.constants import OBJECT_SIZE
-from multiworld.core.world_object import WorldObject
-from multiworld.utils.position import Position
-from multiworld.utils.rendering import (
+from swarm.core.constants import OBJECT_SIZE
+from swarm.core.world_object import WorldObject
+from swarm.utils.position import Position
+from swarm.utils.rendering import (
     downsample,
-    fill_coords,
     highlight_img,
-    point_in_rect,
 )
 
 from .agent import Agent
-from multiworld.utils.random import RandomMixin
+from swarm.utils.random import RandomMixin
 
 
 class World:
@@ -101,6 +99,27 @@ class World:
 
         # Initialize pixel array
         img = np.zeros((self.height, self.width, 3), dtype=np.uint8)
+
+        for obj in world_objects:
+            if obj is None:
+                continue
+            xmin = obj.pos.x
+            xmax = min(obj.pos.x + obj.object_size, self.width)
+            ymin = obj.pos.y
+            ymax = min(obj.pos.y + obj.object_size, self.height)
+            assert (
+                ymin >= 0 - object_size
+                and ymax <= self.height + object_size
+                and ymin < ymax
+            )
+            assert (
+                xmin >= 0 - object_size
+                and xmax <= self.width + object_size
+                and xmin < xmax
+            )
+            object_img = World.render_object(obj, object_size=obj.object_size)
+            mask = np.all(img[ymin:ymax, xmin:xmax, :].copy() == 0, axis=-1)
+            img[ymin:ymax, xmin:xmax, :][mask] = object_img[mask]
 
         for agent in agents:
             xmin = agent.pos.x
