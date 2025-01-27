@@ -1,7 +1,7 @@
 import enum
 from typing import Dict
 
-from multiworld.utils.typing import AgentID
+from swarm.utils.typing import AgentID
 
 
 class Action(enum.IntEnum):

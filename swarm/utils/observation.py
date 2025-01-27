@@ -3,10 +3,10 @@ from typing import List
 import numpy as np
 from numpy.typing import NDArray as ndarray
 
-from multiworld.core.agent import Agent, AgentState
-from multiworld.core.constants import Color, WorldObjectType
-from multiworld.core.world_object import Wall, WorldObject
-from multiworld.utils.position import Position
+from swarm.core.agent import Agent, AgentState
+from swarm.core.constants import Color, WorldObjectType
+from swarm.core.world_object import Wall, WorldObject
+from swarm.utils.position import Position
 
 WALL_ENCODING = Wall().encode()
 UNSEEN_ENCODING = WorldObject(WorldObjectType.unseen, Color.from_index(0)).encode()
