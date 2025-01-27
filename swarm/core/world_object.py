@@ -1,16 +1,20 @@
 import functools
-from typing import TYPE_CHECKING, Union, Optional
+from typing import TYPE_CHECKING, List, Tuple, Union, Optional
 
 import numpy as np
 from numpy.typing import NDArray
 
-from multiworld.core.constants import Color, State, WorldObjectType
-from multiworld.utils.position import Position
-from multiworld.utils.rendering import fill_coords, point_in_rect
+from swarm.core.constants import OBJECT_SIZE, Color, State, WorldObjectType
+from swarm.utils.position import Position
+from swarm.utils.rendering import (
+    fill_coords,
+    point_in_circle,
+    point_in_rect,
+)
 
 if TYPE_CHECKING:
-    from multiworld.base import MultiWorldEnv
-    from multiworld.core.agent import Agent
+    from swarm.base import SwarmEnv
+    from swarm.core.agent import Agent
 
 
 class WorldObjectMeta(type):
@@ -61,20 +65,28 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
     TYPE = 0
     COLOR = 1
     STATE = 2
+    POS = slice(3, 5)
 
-    dim = len([TYPE, COLOR, STATE])
+    dim = 5
 
     def __new__(
         cls,
         type_name: str | None = None,
         color: str = Color.from_index(0),
+        object_size: int = OBJECT_SIZE,
     ) -> "WorldObject":
         type_name = type_name or getattr(cls, "type_name", cls.__name__.lower())
         type_idx = WorldObjectType(type_name).to_index()
 
+        assert isinstance(type_name, str)
+        assert isinstance(color, str), f"Espected type {str} not {type(color)}"
+        assert isinstance(object_size, int)
+
         obj = np.zeros(cls.dim, dtype=int).view(cls)
+
         obj[WorldObject.TYPE] = type_idx
         obj[WorldObject.COLOR] = Color(color).to_index()
+        obj._object_size = object_size
         obj._contains: WorldObject | None = None
         obj._init_pos: tuple[int, int] | None = None
         obj._cur_pos: tuple[int, int] | None = None
@@ -82,7 +94,7 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
         return obj
 
     def __str__(self):
-        return f"{self.type}({self.color}, {self.state})"
+        return f"{self.type}({self.color}, {self.state}, {self.pos})"
 
     @staticmethod
     @functools.cache
@@ -136,6 +148,23 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
         """
         self[WorldObject.STATE] = State(value).to_index()
 
+    @property
+    def pos(self) -> Position:
+        """
+        Return the position of the object.
+        """
+        return Position(*self[WorldObject.POS])
+
+    @pos.setter
+    def pos(self, value: Tuple[int, int] | Position):
+        if isinstance(value, Position):
+            value = value()
+        self[WorldObject.POS] = value
+
+    @property
+    def object_size(self) -> int:
+        return self._object_size
+
     def can_overlap(self) -> bool:
         """
         Can an agent overlap with this?
@@ -160,13 +189,13 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
         """
         return False
 
-    def toggle(self, env: "MultiWorldEnv", agent: "Agent", pos: Position) -> bool:
+    def toggle(self, env: "SwarmEnv", agent: "Agent", pos: Position) -> bool:
         """
         Toggle the state of this object or trigger an action this object performs.
 
         Parameters
         ----------
-        env : MultiWorldEnv
+        env : swarmEnv
             The environment this object is contained in
         agent : Agent
             The agent performing the toggle action
@@ -216,6 +245,29 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
 
     def render(self, img: NDArray[np.uint8]):
         raise NotImplementedError
+
+
+class Circle(WorldObject):
+    """
+    Empty object
+    """
+
+    def __new__(
+        cls,
+        color: str = Color.green,
+        object_size: int = OBJECT_SIZE,
+    ):
+        return super().__new__(cls, color=color, object_size=object_size)
+
+    def render(self, img):
+        """
+        :meta private:
+        """
+        fill_coords(
+            img,
+            point_in_circle(0, 0, 50),
+            self.color.rgb(),
+        )
 
 
 class Goal(WorldObject):

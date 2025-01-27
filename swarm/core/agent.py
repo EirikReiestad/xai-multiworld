@@ -4,12 +4,12 @@ import numpy as np
 from gymnasium import spaces
 from numpy.typing import NDArray as ndarray
 
-from multiworld.core.action import Action
-from multiworld.core.constants import Color, WorldObjectType
-from multiworld.core.world_object import WorldObject
-from multiworld.utils.misc import PropertyAlias, front_pos
-from multiworld.utils.rendering import point_in_triangle, rotate_fn, fill_coords
-from multiworld.utils.position import Position
+from swarm.core.action import Action
+from swarm.core.constants import Color, WorldObjectType
+from swarm.core.world_object import WorldObject
+from swarm.utils.misc import PropertyAlias, front_pos
+from swarm.utils.rendering import point_in_triangle, rotate_fn, fill_coords
+from swarm.utils.position import Position
 import logging
 
 
