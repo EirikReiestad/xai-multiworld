@@ -196,8 +196,8 @@ class PPO(Algorithm):
         new_action_logits = []
         new_values = []
         for state in batch.states:
-            _, action_probs, value = self._predict(state, requires_grad=True)
-            new_action_logits.append(action_probs)
+            _, action_logits, value = self._predict(state, requires_grad=True)
+            new_action_logits.append(action_logits)
             new_values.append(value)
 
         gae = GAE(
