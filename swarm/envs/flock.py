@@ -1,6 +1,7 @@
 import math
 from typing import Any, Dict, SupportsFloat, Tuple
 
+from annotated_types import Predicate
 import numpy as np
 
 from swarm.base import SwarmEnv
@@ -14,9 +15,17 @@ AGENT_POS_IDX = AgentState.POS
 
 
 class FlockEnv(SwarmEnv):
-    def __init__(self, agents: int = 4, predators: int = 1, *args, **kwargs):
+    def __init__(
+        self,
+        agents: int = 4,
+        predators: int = 1,
+        predator_steps: int = 100,
+        *args,
+        **kwargs,
+    ):
         super().__init__(agents=agents + predators, *args, **kwargs)
         self._num_predators = predators
+        self._predator_steps = predator_steps
         self._num_active_agents = self._num_agents - predators
 
     def _gen_world(self, width: int, height: int):
@@ -30,7 +39,6 @@ class FlockEnv(SwarmEnv):
         for i in range(self._num_active_agents, self._num_agents):
             self.agents[i].color = "red"
 
-        self._predator_steps = 100
         self._predator_info = [
             {"following": None, "steps_left": self._predator_steps}
             for _ in range(self._num_predators)
@@ -54,20 +62,7 @@ class FlockEnv(SwarmEnv):
         }
 
         for agent, _ in actions.items():
-            agents_view_count = (
-                self._get_agents_view_count(self.agents[agent].pos(), 20) - 1
-            )
-            """
-            if self.agents[agent].stamina <= 0:
-                self.agents[agent].terminated = True
-                self.agents[agent].pos = (-1, -1)
-                self.add_reward(self.agents[agent], rewards, -self._max_steps)
-            """
-            self.add_reward(self.agents[agent], rewards, 1)
-            self.agents[agent].stamina = min(
-                self.agents[agent].stamina + agents_view_count,
-                self._agent_stamina,
-            )
+            self.add_reward(self.agents[agent], rewards, 1 / self._num_active_agents)
 
         for i in range(self._num_predators):
             predator = self.agents[self._num_active_agents + i]
@@ -127,17 +122,17 @@ class FlockEnv(SwarmEnv):
         if agent.pos == predator.pos:
             agent.terminated = True
             agent.pos = (-1, -1)
-            self.add_reward(agent, rewards, -self._max_steps)
+            self.add_reward(agent, rewards, -1)
             self._predator_info[predator_idx]["steps_left"] = 0
 
     def _find_closest_agent(self, pos: Position) -> int | None:
         closest_agent = None
-        closest_distance = None
+        closest_distance = np.inf
         for i in range(self._num_active_agents):
             if self.agents[i].terminated is True:
                 continue
             distance = np.linalg.norm(pos.to_numpy() - self.agents[i].pos.to_numpy())
-            if closest_distance is None or distance < closest_distance:
+            if distance < closest_distance:
                 closest_agent = i
                 closest_distance = distance
         return closest_agent
