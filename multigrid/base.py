@@ -59,7 +59,7 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
         self._window = None
         self._clock = None
         self._step_count = 0
-        self._max_steps = max_steps * agents
+        self._max_steps = max_steps
         self.render_mode = render_mode
         self._success_termination_mode = success_termination_mode
         self._failure_termination_mode = failure_termination_mode
@@ -89,7 +89,6 @@ class MultiGridEnv(gym.Env, RandomMixin, ABC):
     ]:
         super().reset(seed=seed, **kwargs)
 
-        # Reset agents
         self._agent_states = AgentState(self._num_agents)
         for agent in self.agents:
             agent.state = self._agent_states[agent.index]
