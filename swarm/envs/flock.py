@@ -89,7 +89,7 @@ class FlockEnv(SwarmEnv):
             dict(list(observations.items())[: self._num_active_agents]),
             dict(list(rewards.items())[: self._num_active_agents]),
             dict(list(terminations.items())[: self._num_active_agents]),
-            dict(list(terminations.items())[: self._num_active_agents]),
+            dict(list(truncations.items())[: self._num_active_agents]),
             dict(list(infos.items())[: self._num_active_agents]),
         )
 
