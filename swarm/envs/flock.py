@@ -57,10 +57,12 @@ class FlockEnv(SwarmEnv):
             agents_view_count = (
                 self._get_agents_view_count(self.agents[agent].pos(), 20) - 1
             )
+            """
             if self.agents[agent].stamina <= 0:
                 self.agents[agent].terminated = True
                 self.agents[agent].pos = (-1, -1)
                 self.add_reward(self.agents[agent], rewards, -self._max_steps)
+            """
             self.add_reward(self.agents[agent], rewards, 1)
             self.agents[agent].stamina = min(
                 self.agents[agent].stamina + agents_view_count,
