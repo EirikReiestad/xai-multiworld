@@ -255,6 +255,7 @@ class Circle(WorldObject):
     def __new__(
         cls,
         color: str = Color.green,
+        pos: Tuple[int, int] = (0, 0),
         object_size: int = OBJECT_SIZE,
     ):
         return super().__new__(cls, color=color, object_size=object_size)

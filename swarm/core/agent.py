@@ -1,12 +1,10 @@
 import math
-import random
 import numpy as np
 from gymnasium import spaces
 from numpy.typing import NDArray as ndarray
 
 from swarm.core.action import Action
 from swarm.core.constants import Color, WorldObjectType
-from swarm.core.world_object import WorldObject
 from swarm.utils.misc import PropertyAlias, front_pos
 from swarm.utils.rendering import point_in_triangle, rotate_fn, fill_coords
 from swarm.utils.position import Position
@@ -17,7 +15,7 @@ class Agent:
     def __init__(
         self,
         index: int,
-        num_agents: int,
+        observations: int,
         view_size: int = 7,
         see_through_walls: bool = False,
     ):
@@ -28,12 +26,13 @@ class Agent:
         self.see_through_walls = see_through_walls
         self.state = AgentState()
 
+        self.observations = observations
         self.observation_space = spaces.Dict(
             {
                 "observation": spaces.Box(
                     low=0,
                     high=255,
-                    shape=(1, num_agents, AgentState.encode_dim),
+                    shape=(1, observations, AgentState.encode_dim),
                     dtype=np.int_,
                 ),
                 "other": spaces.Discrete(1),
@@ -44,15 +43,11 @@ class Agent:
     def reset(self):
         self.state.pos = (-1, -1)
         self.state.dir = -1
-        self.state.stamina = -1
         self.state.terminated = False
         self.state.carrying = None
 
     color = PropertyAlias("state", "color", doc="Alias for :attr:`AgentState.color`.")
     dir = PropertyAlias("state", "dir", doc="Alias for :attr:`AgentState.dir`.")
-    stamina = PropertyAlias(
-        "state", "stamina", doc="Alias for :attr:`AgentState.stamina`."
-    )
     pos = PropertyAlias("state", "pos", doc="Alias for :attr:`AgentState.pos`.")
     terminated = PropertyAlias(
         "state", "terminated", doc="Alias for :attr:`AgentState.terminated`."
@@ -83,12 +78,11 @@ class AgentState(np.ndarray):
     TYPE = 0
     COLOR = 1
     DIR = 2
-    STAMINA = 3
-    POS = slice(4, 6)
-    ENCODING = slice(0, 6)
-    TERMINATED = 6
+    POS = slice(3, 5)
+    ENCODING = slice(0, 5)
+    TERMINATED = 5
 
-    dim = 7
+    dim = 6
     encode_dim = ENCODING.stop - ENCODING.start + 1  # distance
 
     def __new__(cls, *dims: int):
@@ -98,7 +92,6 @@ class AgentState(np.ndarray):
         obj[..., AgentState.TYPE] = WorldObjectType.agent
         obj[..., AgentState.COLOR].flat = Color.cycle(np.prod(dims))
         obj[..., AgentState.DIR] = -1
-        obj[..., AgentState.STAMINA] = -1
         obj[..., AgentState.POS] = (-1, -1)
 
         # Other attributes
@@ -140,15 +133,6 @@ class AgentState(np.ndarray):
     @dir.setter
     def dir(self, value: int | ndarray[np.int_]):
         self._view[..., AgentState.DIR] = value
-
-    @property
-    def stamina(self) -> int | ndarray[np.int_]:
-        out = self._view[..., AgentState.STAMINA]
-        return out.item() if out.ndim == 0 else out
-
-    @stamina.setter
-    def stamina(self, value: int | ndarray[np.int_]):
-        self._view[..., AgentState.STAMINA] = value
 
     @property
     def pos(self) -> Position:
