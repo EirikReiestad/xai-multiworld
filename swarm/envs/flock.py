@@ -100,8 +100,8 @@ class FlockEnv(SwarmEnv):
         Dict[AgentID, Dict[str, Any]],
     ]:
         observations, infos = super().reset(seed=seed, **kwargs)
-        return dict(list(observations.items())[: self._num_predators]), dict(
-            list(infos.items())[: self._num_predators]
+        return dict(list(observations.items())[: self._num_active_agents]), dict(
+            list(infos.items())[: self._num_active_agents]
         )
 
     def _follow_agent(self, predator_idx: int, agent_idx: int, rewards: Dict):

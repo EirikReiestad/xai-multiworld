@@ -29,11 +29,11 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
     def __init__(
         self,
         agents: int = 1,
-        agent_stamina: int = 100,
         width: int = 1000,
         height: int = 1000,
         max_steps: int = 100,
         agent_view_size: int = 101,
+        observations: int = 10,
         see_through_walls: bool = False,
         joint_reward: bool = False,
         team_reward: bool = False,
@@ -48,7 +48,6 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
         RandomMixin.__init__(self, self.np_random)
         assert agents > 0, "Number of agents must be greater than 0"
         self._num_agents = agents
-        self._agent_stamina = agent_stamina
         self._width = width
         self._height = height
         self._joint_reward = joint_reward
@@ -68,7 +67,7 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
         self._agent_states = AgentState(agents)
         self.agents: List[Agent] = []
         for i in range(self._num_agents):
-            agent = Agent(i, agents, agent_view_size, see_through_walls)
+            agent = Agent(i, observations, agent_view_size, see_through_walls)
             self.agents.append(agent)
         self.world = World(width, height, object_size)
 
@@ -120,7 +119,6 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
         for agent in self.agents:
             if agent.terminated:
                 continue
-            agent.stamina -= 1
 
         observations: Dict[AgentID, ObsType] = self._gen_obs()
         terminations: Dict[AgentID, bool] = {
@@ -318,7 +316,9 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
             self.world._world_objects, self._agent_states, self.agents[0].view_size
         )
         """
-        obs = gen_obs_grid_encoding(self._agent_states, self.agents[0].view_size)
+        obs = gen_obs_grid_encoding(
+            self._agent_states, self.agents[0].view_size, self.agents[0].observations
+        )
         observations = {}
         for i in range(self._num_agents):
             observations[i] = {
@@ -437,6 +437,5 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
 
         if rand_dir:
             agent.state.dir = self._rand_int(0, 360)
-        agent.stamina = self._agent_stamina
 
         return pos

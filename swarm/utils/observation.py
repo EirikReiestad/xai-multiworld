@@ -1,6 +1,7 @@
 from typing import List
 
 import numpy as np
+from numpy.linalg import norm
 from numpy.typing import NDArray as ndarray
 
 from swarm.core.agent import Agent, AgentState
@@ -29,34 +30,49 @@ BOX = int(WorldObjectType.box)
 
 
 def gen_obs_grid_encoding(
-    agent_state: ndarray[np.int_],
+    agent_state: np.ndarray,
     agent_view_size: int,
-) -> ndarray[np.int_]:
+    max_observations: int,
+) -> np.ndarray:
     """
-    This function returns the encoded agents that is in a certain radius of the other agents.
-    Currenlty: type, color, dir, pos
+    This function returns the encoded agents that are within a certain radius of the observing agent.
+    The closest agents will be prioritized and only the first `max_observations` agents will be included.
     """
-    # obs_grid = gen_obs_grid(agent_state, agent_view_size)
+
     agent_grid = agent_state[..., AGENT_ENCODING_IDX]
     agent_pos = agent_state[..., AGENT_POS_IDX]
     agent_terminated = agent_state[..., AGENT_TERMINATED_IDX]
 
     num_agents = len(agent_state)
     obs = np.zeros(
-        (num_agents, 1, num_agents, AGENT_ENCODE_DIM), dtype=np.int_
-    )  # The 1 is just to make it an img type so we can use it on the same network
+        (num_agents, 1, max_observations, AGENT_ENCODE_DIM), dtype=np.float32
+    )
+
     for agent in range(num_agents):
         if agent_terminated[agent]:
             continue
+
         pos = agent_pos[agent]
         distances = np.linalg.norm(agent_pos - pos, axis=1)
-        mask = (distances <= agent_view_size)[agent_terminated]
-        masked_grid = np.zeros((num_agents, AGENT_ENCODE_DIM))
-        masked_grid[mask, : agent_grid.shape[1]] = agent_grid[
-            mask, : agent_grid.shape[1]
-        ]
-        normalized_distance = distances[mask] / agent_view_size
-        masked_grid[mask, agent_grid.shape[1]] = normalized_distance
+
+        valid_mask = (distances <= agent_view_size) & (~agent_terminated)
+        valid_agents = np.where(valid_mask)[0]
+        valid_distances = distances[valid_agents]
+        valid_agent_grid = agent_grid[valid_agents]
+
+        sorted_indices = np.argsort(valid_distances)
+        sorted_valid_agents = valid_agents[sorted_indices]
+        sorted_valid_distances = valid_distances[sorted_indices]
+        sorted_valid_agent_grid = valid_agent_grid[sorted_indices]
+
+        num_observations = min(len(sorted_valid_agents), max_observations)
+        masked_grid = np.zeros((max_observations, AGENT_ENCODE_DIM), dtype=np.float32)
+
+        for i in range(num_observations):
+            masked_grid[i, : agent_grid.shape[1]] = sorted_valid_agent_grid[i]
+            normalized_distance = sorted_valid_distances[i] / agent_view_size
+            masked_grid[i, -1] = normalized_distance
+
         obs[agent] = [masked_grid]
 
     return obs
