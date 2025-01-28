@@ -19,9 +19,10 @@ class GoToGoalEnv(MultiGridEnv):
         self.goal = Goal()
         self.grid.set(goal_pos, self.goal)
 
-        for agent in self.agents:
-            placeable_positions = self.grid.get_empty_positions()
-            pos = self._rand_elem(placeable_positions)
+        placeable_positions = np.array(self.grid.get_empty_positions())
+        np.random.shuffle(placeable_positions)
+        for i, agent in enumerate(self.agents):
+            pos = placeable_positions[i]
             agent.state.pos = pos
 
     def step(
