@@ -53,4 +53,4 @@ class Position:
 
     def to_numpy(self) -> NDArray[np.int_]:
         """Return the position as a numpy array."""
-        return np.array(np.int_(self.x), np.int_(self.y))
+        return np.array([np.int_(self.x), np.int_(self.y)])

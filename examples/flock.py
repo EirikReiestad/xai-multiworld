@@ -12,7 +12,7 @@ env = FlockEnv(
     object_size=8,
     agent_view_size=65,
     success_termination_mode="all",
-    render_mode="human",
+    render_mode="rgb_array",
 )
 
 config = (
@@ -31,7 +31,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="mw-flock")
+    .wandb(project="mw-flock")
 )
 
 dqn = DQN(config)
