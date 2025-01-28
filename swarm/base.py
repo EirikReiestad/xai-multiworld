@@ -58,7 +58,7 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
         self._window = None
         self._clock = None
         self._step_count = 0
-        self._max_steps = max_steps * agents
+        self._max_steps = max_steps
         self.render_mode = render_mode
         self._success_termination_mode = success_termination_mode
         self._failure_termination_mode = failure_termination_mode
