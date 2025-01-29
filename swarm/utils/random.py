@@ -1,6 +1,8 @@
 from typing import Iterable, TypeVar
 
 import numpy as np
+from numpy._typing import _ArrayLikeFloat_co
+from numpy.typing import ArrayLike
 
 from swarm.core.constants import Color
 from swarm.utils.position import Position
@@ -55,6 +57,13 @@ class RandomMixin:
         lst = list(iterable)
         idx = self._rand_int(0, len(lst))
         return lst[idx]
+
+    def _rand_choice(self, iterable: Iterable[T], p: _ArrayLikeFloat_co | None):
+        """
+        Pick a random element in a list based on probabilities p
+        """
+        lst = np.array(iterable)
+        return self.__np_random.choice(lst, p=p)
 
     def _rand_subset(self, iterable: Iterable[T], num_elems: int) -> list[T]:
         """
