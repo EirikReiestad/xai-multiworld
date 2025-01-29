@@ -4,7 +4,7 @@ from typing import Literal, Optional, Tuple
 
 import gymnasium as gym
 
-from rllib.common.callbacks import RenderingCallback, empty_rendering_callback
+from utils.common.callbacks import RenderingCallback, empty_rendering_callback
 
 
 class AlgorithmConfig(ABC):

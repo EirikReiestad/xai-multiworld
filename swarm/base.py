@@ -18,6 +18,7 @@ from swarm.utils.observation import gen_obs_grid_encoding
 from swarm.utils.position import Position
 from swarm.utils.random import RandomMixin
 from swarm.utils.typing import AgentID, ObsType
+from utils.common.callbacks import RenderingCallback, empty_rendering_callback
 
 
 class SwarmEnv(gym.Env, RandomMixin, ABC):
@@ -40,6 +41,7 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
         object_size: int = OBJECT_SIZE,
         screen_size: Tuple[int, int] | None = (1000, 1000),
         render_mode: Literal["human", "rgb_array"] = "human",
+        rendering_callback: RenderingCallback = empty_rendering_callback,
         success_termination_mode: Literal["all", "any"] = "all",
         failure_termination_mode: Literal["all", "any"] = "any",
     ):
@@ -59,6 +61,7 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
         self._step_count = 0
         self._max_steps = max_steps
         self.render_mode = render_mode
+        self._rendering_callback = rendering_callback
         self._success_termination_mode = success_termination_mode
         self._failure_termination_mode = failure_termination_mode
 
@@ -149,6 +152,7 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
         img = self._get_frame(self._object_size)
 
         if self.render_mode == "human":
+            img = self._rendering_callback(img, None)
             img_transposed = np.transpose(img, axes=(1, 0, 2))
             screen_size = tuple(map(int, self._screen_size))
             if self._render_size is None:
