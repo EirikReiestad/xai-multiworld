@@ -1,6 +1,7 @@
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from swarm.envs.flock import FlockEnv
+from utils.common.callbacks import kernel_density_estimation_callback
 
 env = FlockEnv(
     width=1000,
@@ -14,6 +15,7 @@ env = FlockEnv(
     agent_view_size=65,
     success_termination_mode="all",
     render_mode="human",
+    rendering_callback=kernel_density_estimation_callback,
 )
 
 config = (
@@ -33,6 +35,7 @@ config = (
     .debugging(log_level="INFO")
     .rendering()
     # .wandb(project="mw-flock")
+    .rendering(callback=kernel_density_estimation_callback)
 )
 
 dqn = DQN(config)
