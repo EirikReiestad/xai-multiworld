@@ -18,7 +18,7 @@ class FlockEnv(SwarmEnv):
     def __init__(
         self,
         agents: int = 4,
-        predators: int = 1,
+        predators: int = 10,
         predator_steps: int = 100,
         *args,
         **kwargs,
@@ -76,8 +76,10 @@ class FlockEnv(SwarmEnv):
                 following = self._find_closest_agent(predator.pos)
                 if following is None:
                     break
+                predator_info["steps_left"] = self._predator_steps
                 predator_info["following"] = following
 
+            predator_info["steps_left"] -= 1
             self._follow_agent(i, predator_info["following"], rewards)
 
         rewards = {
@@ -126,16 +128,29 @@ class FlockEnv(SwarmEnv):
             self._predator_info[predator_idx]["steps_left"] = 0
 
     def _find_closest_agent(self, pos: Position) -> int | None:
-        closest_agent = None
-        closest_distance = np.inf
+        probabilities = []
+        total_probability = 0
+        p = 2
+
         for i in range(self._num_active_agents):
             if self.agents[i].terminated is True:
+                probabilities.append(0)
                 continue
+
             distance = np.linalg.norm(pos.to_numpy() - self.agents[i].pos.to_numpy())
-            if distance < closest_distance:
-                closest_agent = i
-                closest_distance = distance
-        return closest_agent
+
+            probability = 1 / (distance + 1e-6) ** p
+            probabilities.append(probability)
+            total_probability += probability
+
+        if total_probability == 0:
+            return None
+
+        normalized_probabilities = [p / total_probability for p in probabilities]
+        chosen_agent = self._rand_choice(
+            range(self._num_active_agents), p=normalized_probabilities
+        )
+        return chosen_agent
 
     def _get_agents_view_count(self, pos: Agent, radius: int):
         agent_pos = self._agent_states[..., AGENT_POS_IDX]
