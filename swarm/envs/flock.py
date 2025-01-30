@@ -8,6 +8,7 @@ from swarm.base import SwarmEnv
 from swarm.core.action import Action
 from swarm.core.agent import Agent, AgentState
 from swarm.core.world import World
+from swarm.utils.observation import wrapped_distance
 from swarm.utils.position import Position
 from swarm.utils.typing import AgentID, ObsType
 
@@ -116,10 +117,19 @@ class FlockEnv(SwarmEnv):
         dx = agent.pos.x - predator.pos.x
         dy = agent.pos.y - predator.pos.y
 
+        dx = (dx + self._width / 2) % self._width - self._width / 2
+        dy = (dy + self._height / 2) % self._height - self._height / 2
+
         angle = math.atan2(dy, dx)
         angle_degrees = math.degrees(angle)
+
         predator.dir = angle_degrees
-        predator.pos = predator.front_pos
+        fwd_pos = predator.front_pos
+        if not self.world.in_bounds(fwd_pos):
+            x = fwd_pos.x % (self._width - self.world.object_size)
+            y = fwd_pos.y % (self._height - self.world.object_size)
+            fwd_pos = Position(x, y)
+        predator.pos = fwd_pos
 
         if agent.pos == predator.pos:
             agent.terminated = True
@@ -138,6 +148,11 @@ class FlockEnv(SwarmEnv):
                 continue
 
             distance = np.linalg.norm(pos.to_numpy() - self.agents[i].pos.to_numpy())
+            distance = wrapped_distance(
+                pos.to_numpy(),
+                self.agents[i].pos.to_numpy(),
+                (self._width, self._height),
+            )
 
             probability = 1 / (distance + 1e-6) ** p
             probabilities.append(probability)

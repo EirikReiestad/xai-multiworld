@@ -126,15 +126,18 @@ class World:
             xmax = min(agent.pos.x + object_size, self.width)
             ymin = agent.pos.y
             ymax = min(agent.pos.y + object_size, self.height)
+
             assert (
                 ymin >= 0 - object_size
                 and ymax <= self.height + object_size
                 and ymin < ymax
+                and ymax - ymin == object_size
             )
             assert (
                 xmin >= 0 - object_size
                 and xmax <= self.width + object_size
                 and xmin < xmax
+                and xmax - xmin == object_size
             )
             cell = self.get(agent.pos)
             object_img = World.render_object(
@@ -143,7 +146,6 @@ class World:
                 highlight=False,
                 object_size=object_size,
             )
-
             mask = np.all(img[ymin:ymax, xmin:xmax, :].copy() == 0, axis=-1)
             img[ymin:ymax, xmin:xmax, :][mask] = object_img[mask]
 
