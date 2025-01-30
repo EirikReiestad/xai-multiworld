@@ -271,7 +271,9 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
         def move_forward():
             fwd_pos = agent.front_pos
             if not self.world.in_bounds(fwd_pos):
-                return
+                x = fwd_pos.x % (self._width - self.world.object_size)
+                y = fwd_pos.y % (self._height - self.world.object_size)
+                fwd_pos = Position(x, y)
 
             fwd_obj = self.world.get(fwd_pos)
 
@@ -321,7 +323,10 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
         )
         """
         obs = gen_obs_grid_encoding(
-            self._agent_states, self.agents[0].view_size, self.agents[0].observations
+            self._agent_states,
+            self.agents[0].view_size,
+            self.agents[0].observations,
+            world_size=(self._width, self._height),
         )
         observations = {}
         for i in range(self._num_agents):
