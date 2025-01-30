@@ -33,11 +33,11 @@ class MultiInputNetwork(TorchModule):
             conv_output_size = get_output_size(self._conv0, rolled_state_dim)
 
         self._fc0 = FCProcessor(
-            int(state_dim.discrete), hidden_units, int(action_dim.discrete)
+            int(state_dim.discrete), hidden_units, int(action_dim.n)
         )
         fc_output_size = get_output_size(self._fc0, np.array([state_dim.discrete]))
         final_input_size = conv_output_size + fc_output_size
-        self._create_fc_final(final_input_size, hidden_units, int(action_dim.discrete))
+        self._create_fc_final(final_input_size, hidden_units, int(action_dim.n))
 
     def _create_fc_final(
         self, final_input_size: int, hidden_units: tuple[int, ...], action_dim: int

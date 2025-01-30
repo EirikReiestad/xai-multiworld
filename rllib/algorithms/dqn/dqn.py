@@ -116,7 +116,7 @@ class DQN(Algorithm):
             return self._policy_net(*torch_obs).argmax().item()
 
     def _get_random_action(self):
-        return np.random.randint(self.action_space.discrete)
+        return np.random.randint(self.action_space.n)
 
     def _optimize_model(self):
         if len(self._memory) < self._config.batch_size:

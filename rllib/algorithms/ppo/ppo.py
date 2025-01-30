@@ -35,7 +35,10 @@ class PPO(Algorithm):
         super().__init__(config)
         self._config = config
         self._policy_net = ActorCriticMultiInputNetwork(
-            self.observation_space, self.action_space
+            self.observation_space,
+            self.action_space,
+            self._config.conv_layers,
+            self._config.hidden_units,
         )
 
         # NOTE: Remove when debug is resolved
@@ -129,12 +132,17 @@ class PPO(Algorithm):
         return self._policy_net
 
     def _get_action(
-        self, action_logits: torch.Tensor
+        self, action_logits: torch.Tensor, std: float = 1.0
     ) -> Tuple[torch.Tensor, torch.Tensor]:
-        dist = torch.distributions.Categorical(logits=action_logits)
-        action = dist.sample()
-        log_prob = dist.log_prob(action)
-        return action, log_prob
+        dist = torch.distributions.Normal(action_logits, std)
+        normal_sample = dist.sample()
+        action = torch.tanh(normal_sample)
+        action = (
+            action * (self.action_space.high - self.action_space.low) / 2.0
+            + (self.action_space.high + self.action_space.low) / 2.0
+        )
+        log_prob = dist.log_prob(action).sum(-1)
+        return action_logits, log_prob
 
     def _get_policy_values(
         self, observations: List[ObsType], requires_grad: bool = False
