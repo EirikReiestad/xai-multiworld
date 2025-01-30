@@ -100,6 +100,8 @@ class AgentState(np.ndarray):
         out = super().__getitem__(idx)
 
         if isinstance(out, AgentState):
+            if not hasattr(self, "_view"):
+                return out
             if out.shape and out.shape[-1] == self.dim:
                 out._view = self._view[idx, ...]
                 out._carried_obj = self._carried_obj[idx, ...]
