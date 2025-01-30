@@ -1,7 +1,14 @@
-from typing import Tuple, Union, Optional
+from typing import SupportsFloat, Tuple, Union, Optional
 from dataclasses import dataclass
 import gymnasium as gym
 import numpy as np
+from abc import ABC, abstractmethod
+from dataclasses import dataclass
+from typing import Optional
+import numpy as np
+from numpy.typing import NDArray
+
+from swarm.core import action
 
 
 @dataclass
@@ -50,14 +57,51 @@ def build_observation_space(
     return current_observation_space
 
 
+class ActionSpace(ABC):
+    low: float
+    high: float
+    n: int | float
+
+    @abstractmethod
+    def sample(self) -> int | NDArray[np.float64]:
+        pass
+
+    @abstractmethod
+    def contains(self, x: int | float) -> bool:
+        pass
+
+
 @dataclass
-class ActionSpace:
-    discrete: Optional[np.int_] = None
+class DiscreteActionSpace(ActionSpace):
+    n: int
+
+    def sample(self) -> int:
+        return np.random.randint(self.n)
+
+    def contains(self, x: int) -> bool:
+        return 0 <= x < self.n
+
+
+@dataclass
+class BoxActionSpace(ActionSpace):
+    low: float
+    high: float
+    n: float
+
+    def sample(self) -> int:
+        return np.random.randint(low=self.low, high=self.high)
+
+    def contains(self, x: float) -> bool:
+        return self.low <= x < self.high
 
 
 def build_action_space(
     action_space: gym.spaces.Space,
 ) -> ActionSpace:
     if isinstance(action_space, gym.spaces.Discrete):
-        return ActionSpace(discrete=action_space.n)
+        return DiscreteActionSpace(n=action_space.n)
+    if isinstance(action_space, gym.spaces.Box):
+        return BoxActionSpace(
+            low=action_space.low, high=action_space.high, n=action_space.shape[0]
+        )
     raise ValueError(f"Unsupported action space: {action_space}")

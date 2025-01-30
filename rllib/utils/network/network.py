@@ -20,7 +20,7 @@ def observation_space_check(state_dim: ObservationSpace):
     ), f"State space must be discrete, got {state_dim}"
 
 
-def action_space_check(action_dim: ActionSpace):
-    assert (
-        action_dim.discrete is not None
-    ), f"Action space must be discrete, got {action_dim}"
+def action_space_check(action_space: ActionSpace):
+    assert hasattr(
+        action_space, "n"
+    ), f"Action space must have attribute 'n', got {action_space}"

@@ -1,6 +1,6 @@
 from abc import ABC
 import numpy as np
-from typing import Literal, Optional
+from typing import Optional
 from gymnasium import spaces
 from rllib.utils.spaces import (
     build_observation_space,

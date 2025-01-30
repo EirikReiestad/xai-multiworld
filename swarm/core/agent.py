@@ -18,6 +18,7 @@ class Agent:
         observations: int,
         view_size: int = 7,
         see_through_walls: bool = False,
+        continuous: bool = False,
     ):
         self.index = index
         assert view_size % 2 == 1, "View size must be odd for agent observation."
@@ -38,7 +39,10 @@ class Agent:
                 "other": spaces.Discrete(1),
             }
         )
-        self.action_space = spaces.Discrete(len(Action))
+        if continuous:
+            self.action_space = spaces.Box(low=-30, high=30, shape=(1,), dtype=np.int_)
+        else:
+            self.action_space = spaces.Discrete(len(Action))
 
     def reset(self):
         self.state.pos = (-1, -1)

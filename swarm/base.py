@@ -44,6 +44,7 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
         rendering_callback: RenderingCallback = empty_rendering_callback,
         success_termination_mode: Literal["all", "any"] = "all",
         failure_termination_mode: Literal["all", "any"] = "any",
+        continuous_action_space: bool = False,
     ):
         gym.Env.__init__(self)
         ABC.__init__(self)
@@ -70,9 +71,17 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
         self._agent_states = AgentState(agents)
         self.agents: List[Agent] = []
         for i in range(self._num_agents):
-            agent = Agent(i, observations, agent_view_size, see_through_walls)
+            agent = Agent(
+                i,
+                observations,
+                agent_view_size,
+                see_through_walls,
+                continuous_action_space,
+            )
             self.agents.append(agent)
         self.world = World(width, height, object_size)
+
+        self._continuous_action_space = continuous_action_space
 
     def reset(
         self, seed: int | None = None, **kwargs
@@ -289,18 +298,21 @@ class SwarmEnv(gym.Env, RandomMixin, ABC):
                 if fwd_obj.type == WorldObjectType.goal:
                     self.on_success(agent, rewards, {})
 
-        if action == Action.left45:
-            agent.state.dir = (agent.dir - 45) % 360
-        elif action == Action.left90:
-            agent.state.dir = (agent.dir - 90) % 360
-        elif action == Action.forward:
-            pass
-        elif action == Action.right45:
-            agent.state.dir = (agent.dir + 45) % 360
-        elif action == Action.right90:
-            agent.state.dir = (agent.dir + 90) % 360
+        if self._continuous_action_space:
+            agent.state.dir = (agent.dir + action % 360) % 360
         else:
-            raise ValueError(f"Invalid action: {action}")
+            if action == Action.left45:
+                agent.state.dir = (agent.dir - 45) % 360
+            elif action == Action.left90:
+                agent.state.dir = (agent.dir - 90) % 360
+            elif action == Action.forward:
+                pass
+            elif action == Action.right45:
+                agent.state.dir = (agent.dir + 45) % 360
+            elif action == Action.right90:
+                agent.state.dir = (agent.dir + 90) % 360
+            else:
+                raise ValueError(f"Invalid action: {action}")
 
         move_forward()
 
