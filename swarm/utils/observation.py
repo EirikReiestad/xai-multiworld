@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 import numpy as np
 from numpy.linalg import norm
@@ -33,6 +33,7 @@ def gen_obs_grid_encoding(
     agent_state: np.ndarray,
     agent_view_size: int,
     max_observations: int,
+    world_size: Tuple[int, int],
 ) -> np.ndarray:
     """
     This function returns the encoded agents that are within a certain radius of the observing agent.
@@ -53,6 +54,9 @@ def gen_obs_grid_encoding(
             continue
 
         pos = agent_pos[agent]
+        distances = np.array(
+            [wrapped_distance(other_pos, pos, world_size) for other_pos in agent_pos]
+        )
         distances = np.linalg.norm(agent_pos - pos, axis=1)
 
         valid_mask = (distances <= agent_view_size) & (~agent_terminated)
@@ -76,6 +80,18 @@ def gen_obs_grid_encoding(
         obs[agent] = [masked_grid]
 
     return obs
+
+
+def wrapped_distance(
+    pos1: ndarray[np.int_], pos2: ndarray[np.int_], world_size: Tuple[int, int]
+):
+    """
+    Computes the minimum distance between two positions on a wrapped grid.
+    Assumes the positions are in a 2D space and `world_size` is a tuple (width, height).
+    """
+    delta = np.abs(pos1 - pos2)
+    delta = np.minimum(delta, world_size - delta)  # Wrap around on each axis
+    return np.linalg.norm(delta)
 
 
 def see_behind(world_object: ndarray[np.int_] | None) -> bool:

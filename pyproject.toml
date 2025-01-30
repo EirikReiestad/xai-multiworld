@@ -18,6 +18,7 @@ isort = "^5.13.2"
 llvmlite = "^0.44.0"
 setuptools = "^75.8.0"
 shap = "^0.46.0"
+opencv-python = "^4.11.0.86"
 
 [tool.pyright]
 venvPath = "."
