@@ -5,7 +5,7 @@ from typing import Dict, List, Tuple
 import numpy as np
 import torch
 
-from multigrid.utils.typing import ObsType
+from multiworld.utils.typing import ObsType
 
 
 class Observation(np.ndarray):

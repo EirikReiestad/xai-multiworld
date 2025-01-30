@@ -1,9 +1,8 @@
 from numpy.typing import NDArray
 from typing import Dict, List, Any
-from multigrid.utils.typing import ObsType
+from multiworld.utils.typing import ObsType
 
 import gymnasium as gym
-import numpy as np
 import torch
 
 

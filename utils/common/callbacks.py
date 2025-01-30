@@ -3,7 +3,7 @@ import numpy as np
 
 from numpy.typing import NDArray
 
-from multigrid.utils.typing import ObsType
+from multiworld.utils.typing import ObsType
 import seaborn as sns
 import matplotlib.pyplot as plt
 from io import BytesIO

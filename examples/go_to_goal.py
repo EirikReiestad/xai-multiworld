@@ -1,4 +1,4 @@
-from multigrid.envs.go_to_goal import GoToGoalEnv
+from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 
@@ -20,8 +20,8 @@ config = (
         learning_rate=1e-4,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=2000000,
-        target_update=5000,
+        eps_decay=200,
+        target_update=200,
     )
     .environment(env=env)
     .training()
