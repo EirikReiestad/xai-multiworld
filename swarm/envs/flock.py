@@ -21,12 +21,14 @@ class FlockEnv(SwarmEnv):
         agents: int = 4,
         predators: int = 10,
         predator_steps: int = 100,
+        max_predator_angle_change: int = 30,
         *args,
         **kwargs,
     ):
         super().__init__(agents=agents + predators, *args, **kwargs)
         self._num_predators = predators
         self._predator_steps = predator_steps
+        self._max_predator_angle_change = max_predator_angle_change
         self._num_active_agents = self._num_agents - predators
 
     def _gen_world(self, width: int, height: int):
@@ -120,10 +122,17 @@ class FlockEnv(SwarmEnv):
         dx = (dx + self._width / 2) % self._width - self._width / 2
         dy = (dy + self._height / 2) % self._height - self._height / 2
 
-        angle = math.atan2(dy, dx)
-        angle_degrees = math.degrees(angle)
+        target_angle = math.atan2(dy, dx)
+        target_angle_degrees = math.degrees(target_angle)
 
-        predator.dir = angle_degrees
+        angle_diff = target_angle_degrees - predator.dir
+
+        angle_diff = max(
+            -self._max_predator_angle_change,
+            min(angle_diff, self._max_predator_angle_change),
+        )
+
+        predator.dir += angle_diff
         fwd_pos = predator.front_pos
         if not self.world.in_bounds(fwd_pos):
             x = fwd_pos.x % (self._width - self.world.object_size)
