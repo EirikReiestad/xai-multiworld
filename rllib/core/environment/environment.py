@@ -10,13 +10,14 @@ from rllib.utils.spaces import (
 )
 from rllib.utils.validation import all_same_values_in_dict
 
-from multigrid.base import MultiGridEnv
+from multiworld.multigrid.base import MultiGridEnv
+from multiworld.swarm.base import SwarmEnv
 
 
 class Environment(ABC):
     def __init__(
         self,
-        env: MultiGridEnv,
+        env: MultiGridEnv | SwarmEnv,
     ):
         self._env = env
 

@@ -5,8 +5,8 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from multigrid.core.action import Action
-from multigrid.utils.typing import AgentID, ObsType
+from multiworld.utils.advanced_typing import Action
+from multiworld.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.memory.replay_memory import ReplayMemory, Transition

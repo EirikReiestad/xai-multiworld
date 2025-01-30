@@ -1,6 +1,6 @@
 import numpy as np
 
-from multigrid.utils.typing import AgentID, ObsType
+from multiworld.utils.typing import AgentID, ObsType
 
 
 def preprocess_next_observations(
