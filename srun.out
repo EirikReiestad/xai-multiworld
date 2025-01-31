@@ -1,8 +1,8 @@
 Cleaning up
 Running from this directory: /cluster/work/eirre/xai-multiworld
 Name of job: multi-agent-rl
-ID of job: 21116984
-The jo was run on these nodes: idun-04-32
+ID of job: 21116986
+The jo was run on these nodes: idun-04-30
 
 Currently Loaded Modules:
   1) GCCcore/13.2.0                       7) Tcl/8.6.13-GCCcore-13.2.0    (H)
@@ -157,3 +157,22 @@ typing-extensions        4.12.2      Backported and Experimental Type Hints...
 tzdata                   2025.1      Provider of IANA time zone data
 urllib3                  2.3.0       HTTP library with thread-safe connecti...
 wandb                    0.19.5      A CLI and library for interacting with...
+tensor([[[[0., 0., 0., 0., 0.],
+          [0., 0., 0., 0., 0.],
+          [0., 0., 0., 0., 0.],
+          [0., 0., 0., 0., 0.],
+          [0., 0., 0., 0., 0.]],
+
+         [[0., 0., 0., 0., 0.],
+          [0., 0., 0., 0., 0.],
+          [0., 0., 0., 0., 0.],
+          [0., 0., 0., 0., 0.],
+          [0., 0., 0., 0., 0.]],
+
+         [[0., 0., 0., 0., 0.],
+          [0., 0., 0., 0., 0.],
+          [0., 0., 0., 0., 0.],
+          [0., 0., 0., 0., 0.],
+          [0., 0., 0., 0., 0.]]]])
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mdark-moon-1[0m at: [34mhttps://wandb.ai/eirikreiestad-ntnu/multi-go-to-goal/runs/z3gra8yz[0m
