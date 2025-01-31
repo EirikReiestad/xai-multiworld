@@ -1,4 +1,3 @@
-cp: cannot stat 'log.txt': No such file or directory
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
 Traceback (most recent call last):
   File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 1, in <module>
