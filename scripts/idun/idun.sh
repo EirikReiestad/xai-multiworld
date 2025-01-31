@@ -33,6 +33,7 @@ pip install poetry
 poetry install
 
 poetry env info
+poetry show
 
 poetry run wandb login
 
