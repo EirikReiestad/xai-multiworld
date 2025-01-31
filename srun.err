@@ -1,10 +1,12 @@
 cp: cannot stat 'log.txt': No such file or directory
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
-wandb: Tracking run with wandb version 0.19.5
-wandb: Run data is saved locally in ./wandb/run-20250131_151612-65n7v5li
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run easy-grass-2
-wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/flockppo
-wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/flockppo/runs/65n7v5li
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 1, in <module>
+    from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
+  File "/cluster/work/eirre/xai-multiworld/multiworld/multigrid/envs/go_to_goal.py", line 6, in <module>
+    from multiworld.multigrid.base import MultiGridEnv
+  File "/cluster/work/eirre/xai-multiworld/multiworld/multigrid/base.py", line 6, in <module>
+    from multiworld.base import MultiWorldEnv
+  File "/cluster/work/eirre/xai-multiworld/multiworld/base.py", line 26, in <module>
+    from utils.common.callbacks import RenderingCallback, empty_rendering_callback
+ModuleNotFoundError: No module named 'utils.common'
