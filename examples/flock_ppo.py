@@ -34,7 +34,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="mw-flockppo")
+    .wandb(project="flockppo")
 )
 ppo = PPO(config)
 
