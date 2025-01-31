@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "multigrid"
+name = "xai-multiworld"
 version = "0.1.0"
 description = ""
 authors = ["Eirik Reiestad <eirik@reiestad.no>"]
 readme = "readme.md"
-packages = [{ include = "multigrid", from = "." }]
+packages = [{ include = "multiworld", from = "." }]
 
 [tool.poetry.dependencies]
 
