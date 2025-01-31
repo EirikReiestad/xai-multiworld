@@ -32,6 +32,8 @@ pip install --upgrade pip
 pip install poetry
 poetry install
 
+poetry env info
+
 poetry run wandb login
 
 poetry run python -O examples
