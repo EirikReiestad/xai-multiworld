@@ -14,7 +14,7 @@ env = FlockEnv(
     object_size=8,
     agent_view_size=65,
     success_termination_mode="all",
-    render_mode="human",
+    render_mode="rgb_array",
 )
 
 # env = ObservationCollectorWrapper(env, observations=10)
@@ -28,7 +28,7 @@ config = (
         learning_rate=1e-4,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=2000000,
+        eps_decay=100000,
         target_update=5000,
     )
     .network(conv_layers=())
@@ -36,7 +36,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="mg-go-to-goal")
+    .wandb(project="flock")
 )
 
 dqn = DQN(config)

@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Mapping, SupportsFloat, Tuple
 import torch
 import torch.nn as nn
 
-from multigrid.utils.typing import AgentID, ObsType
+from multiworld.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.ppo.ppo_config import PPOConfig
 from rllib.core.algorithms.gae import GAE
@@ -99,8 +99,6 @@ class PPO(Algorithm):
             key: value.detach() for key, value in action_logits.items()
         }
         self._values = {key: value.clone() for key, value in values.items()}
-        for value in actions.values():
-            self.add_log(f"action_{value}", 1, LogMethod.CUMULATIVE)
         return actions
 
     def _predict(
