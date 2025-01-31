@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Mapping, SupportsFloat
 
 import numpy as np
 import torch
+import torch.nn as nn
 
 from multiworld.utils.advanced_typing import Action
 from multiworld.utils.typing import AgentID, ObsType
@@ -117,9 +118,9 @@ class DQN(Algorithm):
     def _get_random_action(self):
         return np.random.randint(self.action_space.n)
 
-    def _optimize_model(self):
+    def _optimize_model(self) -> float | None:
         if len(self._memory) < self._config.batch_size:
-            return
+            return None
 
         transitions = self._memory.sample(self._config.batch_size)
 
@@ -131,7 +132,7 @@ class DQN(Algorithm):
         )
         if len(non_final_next_states) == 0:
             logging.warning("No non final next states, consider increasing batch size.")
-            return
+            return None
 
         state_batch = observations_seperate_to_torch(batch.state)
         action_batch = torch.tensor(batch.action).unsqueeze(1)
@@ -154,6 +155,8 @@ class DQN(Algorithm):
         self._optimizer.zero_grad()
         loss.backward()
         self._optimizer.step()
+
+        return loss.item()
 
     def _predict_policy_values(
         self, state: List[torch.Tensor], action_batch: torch.Tensor

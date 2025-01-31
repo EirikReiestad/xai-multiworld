@@ -73,6 +73,11 @@ class Algorithm(Environment, WandB, ABC):
                     float(rewards[agent_id]),
                     method=LogMethod.CUMULATIVE,
                 )
+                self.add_log(
+                    f"rewards_{agent_id}",
+                    float(rewards[agent_id]),
+                    method=LogMethod.CUMULATIVE,
+                )
 
             for agent_id, value in infos.items():
                 for key, value in value.items():

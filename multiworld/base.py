@@ -91,9 +91,6 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
 
         observations = self._gen_obs()
 
-        if self.render_mode == "human":
-            self.render()
-
         return observations, defaultdict(Dict)
 
     def step(
