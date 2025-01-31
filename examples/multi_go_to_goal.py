@@ -10,7 +10,7 @@ env = GoToGoalEnv(
     height=7,
     max_steps=200,
     agents=agents,
-    agent_view_size=5,
+    agent_view_size=7,
     success_termination_mode="all",
     render_mode="rgb_array",
 )

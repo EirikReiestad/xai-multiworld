@@ -2,58 +2,8 @@ wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
 wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
 wandb: Tracking run with wandb version 0.19.5
-wandb: Run data is saved locally in ./wandb/run-20250131_161210-394pjiqi
+wandb: Run data is saved locally in ./wandb/run-20250131_162223-352qfg3p
 wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run rare-water-2
+wandb: Syncing run volcanic-galaxy-3
 wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/multi-go-to-goal
-wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/multi-go-to-goal/runs/394pjiqi
-Traceback (most recent call last):
-  File "/cluster/work/eirre/xai-multiworld/examples/multi_go_to_goal.py", line 45, in <module>
-    dqn = MDQN(agents, mconfig, config)
-          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/mdqn.py", line 20, in __init__
-    self._dqns = {key: DQN(dqn_config) for key in range(agents)}
-                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/mdqn.py", line 20, in <dictcomp>
-    self._dqns = {key: DQN(dqn_config) for key in range(agents)}
-                       ^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 30, in __init__
-    self._policy_net = MultiInputNetwork(
-                       ^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/multi_input_network.py", line 33, in __init__
-    conv_output_size = get_output_size(self._conv0, rolled_state_dim)
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/rllib/utils/network/network.py", line 13, in get_output_size
-    output = network(dummy_input)
-             ^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/processor.py", line 14, in forward
-    return self.conv_layers(x)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/container.py", line 250, in forward
-    input = module(input)
-            ^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/conv.py", line 554, in forward
-    return self._conv_forward(input, self.weight, self.bias)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/conv.py", line 549, in _conv_forward
-    return F.conv2d(
-           ^^^^^^^^^
-RuntimeError: Calculated padded input size per channel: (1 x 1). Kernel size: (3 x 3). Kernel size can't be greater than actual input size
+wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/multi-go-to-goal/runs/352qfg3p
