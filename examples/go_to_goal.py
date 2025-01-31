@@ -12,6 +12,10 @@ env = GoToGoalEnv(
     render_mode="rgb_array",
 )
 
+# env = ObservationCollectorWrapper(env, observations=10)
+# env = MultiGridConceptObsWrapper(
+#    env, observations=10, method="random", concepts=["random"]
+# )
 
 config = (
     DQNConfig(
@@ -21,8 +25,8 @@ config = (
         learning_rate=3e-4,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=10000,
-        target_update=500,
+        eps_decay=100000,
+        target_update=1000,
     )
     .environment(env=env)
     .training()

@@ -10,10 +10,10 @@
 #SBATCH --error=srun.err
 
 if [ ! -f scripts/idun/clean.sh ]; then
-  echo "No clean script found"
+    echo "No clean script found"
 else
-  echo "Cleaning up"
-  sh scripts/idun/clean.sh
+    echo "Cleaning up"
+    sh scripts/idun/clean.sh
 fi
 
 WORKDIR=${SLURM_SUBMIT_DIR}

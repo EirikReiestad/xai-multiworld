@@ -22,7 +22,9 @@ def build_conv_layers(
     layers = []
     channels = input_dim[-1]
     for hidden_dim in conv_layers:
-        layers.append(nn.Conv2d(channels, hidden_dim, kernel_size=3, stride=1))
+        layers.append(
+            nn.Conv2d(channels, hidden_dim, kernel_size=3, stride=1, padding=1)
+        )
         layers.append(nn.ReLU())
         channels = hidden_dim
     return nn.Sequential(*layers)

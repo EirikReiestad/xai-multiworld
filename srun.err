@@ -2,11 +2,11 @@ wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
 wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
 wandb: Tracking run with wandb version 0.19.5
-wandb: Run data is saved locally in ./wandb/run-20250131_161152-z3gra8yz
+wandb: Run data is saved locally in ./wandb/run-20250131_161210-394pjiqi
 wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run dark-moon-1
+wandb: Syncing run rare-water-2
 wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/multi-go-to-goal
-wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/multi-go-to-goal/runs/z3gra8yz
+wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/multi-go-to-goal/runs/394pjiqi
 Traceback (most recent call last):
   File "/cluster/work/eirre/xai-multiworld/examples/multi_go_to_goal.py", line 45, in <module>
     dqn = MDQN(agents, mconfig, config)
