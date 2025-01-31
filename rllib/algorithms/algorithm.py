@@ -1,12 +1,14 @@
 from abc import ABC, abstractmethod
-import torch.nn as nn
 from itertools import count
+from typing import Any, Dict, Mapping, SupportsFloat
+
+import numpy as np
+import torch.nn as nn
+
+from multiworld.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm_config import AlgorithmConfig
 from rllib.core.environment.environment import Environment
 from utils.core.wandb import LogMethod, WandB
-from multigrid.base import AgentID, ObsType
-from typing import Any, Dict, SupportsFloat, Mapping
-import numpy as np
 
 
 class Algorithm(Environment, WandB, ABC):
@@ -68,6 +70,11 @@ class Algorithm(Environment, WandB, ABC):
             for agent_id in observations.keys():
                 self.add_log(
                     "total_rewards",
+                    float(rewards[agent_id]),
+                    method=LogMethod.CUMULATIVE,
+                )
+                self.add_log(
+                    f"rewards_{agent_id}",
                     float(rewards[agent_id]),
                     method=LogMethod.CUMULATIVE,
                 )

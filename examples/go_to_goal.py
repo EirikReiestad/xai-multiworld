@@ -1,4 +1,5 @@
-from multigrid.envs.go_to_goal import GoToGoalEnv
+from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
+from multiworld.multigrid.utils.wrappers import MultiGridConceptObsWrapper
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 
@@ -12,6 +13,11 @@ env = GoToGoalEnv(
     render_mode="human",
 )
 
+# env = ObservationCollectorWrapper(env, observations=10)
+env = MultiGridConceptObsWrapper(
+    env, observations=10, method="random", concepts=["random"]
+)
+
 config = (
     DQNConfig(
         batch_size=64,
@@ -20,8 +26,8 @@ config = (
         learning_rate=1e-4,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=2000000,
-        target_update=5000,
+        eps_decay=200,
+        target_update=200,
     )
     .environment(env=env)
     .training()
