@@ -3,14 +3,16 @@ from rllib.algorithms.algorithm_config import AlgorithmConfig
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.mdqn import MDQN
 
+agents = 5
+
 env = GoToGoalEnv(
-    width=10,
-    height=10,
+    width=15,
+    height=15,
     max_steps=200,
-    agents=5,
-    agent_view_size=9,
+    agents=agents,
+    agent_view_size=7,
     success_termination_mode="all",
-    render_mode="human",
+    render_mode="rgb_array",
 )
 
 
@@ -22,8 +24,8 @@ config = (
         learning_rate=1e-4,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=200,
-        target_update=200,
+        eps_decay=10000,
+        target_update=500,
     )
     .environment(env=env)
     .training()
@@ -37,10 +39,10 @@ mconfig = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="test")
+    .wandb(project="test", log_interval=10 * agents)
 )
 
-dqn = MDQN(5, mconfig, config)
+dqn = MDQN(agents, mconfig, config)
 
 while True:
     dqn.learn()

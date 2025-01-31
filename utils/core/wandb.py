@@ -51,7 +51,7 @@ class WandB(ABC):
 
         self._log = {}
         self._log_average = defaultdict(list)
-        self._artifact = None
+        self._artifacts = {}
         self._frames = []
 
     def log_frame(self, frame: Optional[np.ndarray], step: int = 0):
@@ -77,15 +77,17 @@ class WandB(ABC):
         file_path = f"{model_name}.pth"
         torch.save(model.state_dict(), file_path)
 
-        self._artifact = wandb.Artifact(model_name, type="model")
-        self._artifact.add_file(file_path)
+        self._artifacts[model_name] = wandb.Artifact(model_name, type="model")
+        self._artifacts[model_name].add_file(file_path)
         os.remove(file_path)
 
     def log(self, data: dict):
         if self._api is None:
             return
-        if self._artifact is not None:
-            wandb.log_artifact(self._artifact)
+        if len(self._artifacts) > 0:
+            for _, value in self._artifacts.items():
+                wandb.log_artifact(value)
+            self._artifacts.clear()
         wandb.log(data)
 
     def add_log(
