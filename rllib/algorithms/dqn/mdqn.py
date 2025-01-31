@@ -35,6 +35,8 @@ class MDQN(Algorithm):
         )
 
         for key in self._dqns.keys():
+            self._dqns[key]._steps_done = self._steps_done
+
             self._dqns[key]._memory.add_dict(
                 keys=[key],
                 state={key: observations[key]},
