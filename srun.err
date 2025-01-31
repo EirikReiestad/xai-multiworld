@@ -3,9 +3,11 @@ cp: cannot stat 'log.txt': No such file or directory
 [notice] A new release of pip is available: 24.2 -> 25.0
 [notice] To update, run: pip install --upgrade pip
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-Traceback (most recent call last):
-  File "/cluster/work/eirre/xai-multiworld/examples/flock_ppo.py", line 1, in <module>
-    from rllib.algorithms.ppo.ppo import PPO
-  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 7, in <module>
-    from multigrid.utils.typing import AgentID, ObsType
-ModuleNotFoundError: No module named 'multigrid.utils.typing'
+wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Tracking run with wandb version 0.19.5
+wandb: Run data is saved locally in ./wandb/run-20250131_144149-n0tjj25a
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run deep-fire-2
+wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/flockppo
+wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/flockppo/runs/n0tjj25a
