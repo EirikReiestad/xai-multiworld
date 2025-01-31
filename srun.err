@@ -1,9 +1,9 @@
-Warning: The current project could not be installed: No file/folder found for package xai-multiworld
-If you do not want to install the current project use --no-root.
-If you want to use Poetry only for dependency management but not for packaging, you can disable package mode by setting package-mode = false in your pyproject.toml file.
-In a future version of Poetry this warning will become an error!
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-Traceback (most recent call last):
-  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 1, in <module>
-    from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
-ModuleNotFoundError: No module named 'multiworld'
+wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Tracking run with wandb version 0.19.5
+wandb: Run data is saved locally in ./wandb/run-20250131_160843-pymua0gd
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run swept-grass-7
+wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/go-to-goal
+wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/go-to-goal/runs/pymua0gd
