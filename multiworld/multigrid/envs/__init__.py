@@ -18,7 +18,6 @@ Configurations
     * ``MultiGrid-Empty-Random-6x6-v0``
     * ``MultiGrid-Empty-8x8-v0``
     * ``MultiGrid-Empty-16x16-v0``
-"""
 
 from gymnasium.envs.registration import register
 
@@ -43,3 +42,4 @@ CONFIGURATIONS = {
 
 for name, (env_cls, config) in CONFIGURATIONS.items():
     register(id=name, entry_point=env_cls, kwargs=config)
+"""
