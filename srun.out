@@ -1,7 +1,7 @@
 Cleaning up
 Running from this directory: /cluster/work/eirre/xai-multiworld
 Name of job: multi-agent-rl
-ID of job: 21116797
+ID of job: 21116807
 The jo was run on these nodes: idun-04-31
 
 Currently Loaded Modules:
@@ -17,6 +17,7 @@ Currently Loaded Modules:
 
  
 
+Defaulting to user installation because normal site-packages is not writeable
 Defaulting to user installation because normal site-packages is not writeable
 Requirement already satisfied: poetry in /cluster/home/eirre/.local/lib/python3.11/site-packages (1.8.3)
 Requirement already satisfied: build<2.0.0,>=1.0.3 in /cluster/home/eirre/.local/lib/python3.11/site-packages (from poetry) (1.2.2)

@@ -27,7 +27,7 @@ module purge
 module load Python/3.11.5-GCCcore-13.2.0
 module list
 
-pip install --upgrade
+pip install --upgrade pip
 
 pip install poetry
 poetry install
