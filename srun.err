@@ -3,55 +3,9 @@ cp: cannot stat 'log.txt': No such file or directory
 [notice] A new release of pip is available: 24.2 -> 25.0
 [notice] To update, run: pip install --upgrade pip
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
-wandb: Tracking run with wandb version 0.19.5
-wandb: Run data is saved locally in ./wandb/run-20250131_143601-synwiv1v
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run rural-wood-1
-wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/go-to-goal
-wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/go-to-goal/runs/synwiv1v
 Traceback (most recent call last):
-  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 34, in <module>
-    dqn = DQN(config)
-          ^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 30, in __init__
-    self._policy_net = MultiInputNetwork(
-                       ^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/multi_input_network.py", line 33, in __init__
-    conv_output_size = get_output_size(self._conv0, rolled_state_dim)
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/rllib/utils/network/network.py", line 12, in get_output_size
-    output = network(dummy_input)
-             ^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/processor.py", line 14, in forward
-    return self.conv_layers(x)
-           ^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/container.py", line 250, in forward
-    input = module(input)
-            ^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/conv.py", line 554, in forward
-    return self._conv_forward(input, self.weight, self.bias)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/conv.py", line 549, in _conv_forward
-    return F.conv2d(
-           ^^^^^^^^^
-RuntimeError: Calculated padded input size per channel: (1 x 1). Kernel size: (3 x 3). Kernel size can't be greater than actual input size
+  File "/cluster/work/eirre/xai-multiworld/examples/flock_ppo.py", line 1, in <module>
+    from rllib.algorithms.ppo.ppo import PPO
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 7, in <module>
+    from multigrid.utils.typing import AgentID, ObsType
+ModuleNotFoundError: No module named 'multigrid.utils.typing'

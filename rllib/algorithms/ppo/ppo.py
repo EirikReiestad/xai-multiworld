@@ -4,7 +4,7 @@ from typing import Any, Dict, List, Mapping, SupportsFloat, Tuple
 import torch
 import torch.nn as nn
 
-from multigrid.utils.typing import AgentID, ObsType
+from multiworld.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.ppo.ppo_config import PPOConfig
 from rllib.core.algorithms.gae import GAE
