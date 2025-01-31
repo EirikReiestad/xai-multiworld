@@ -6,9 +6,7 @@ wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api
 Traceback (most recent call last):
   File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 1, in <module>
     from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
-  File "/cluster/work/eirre/xai-multiworld/multiworld/multigrid/envs/__init__.py", line 25, in <module>
-    from .empty import EmptyEnv
-  File "/cluster/work/eirre/xai-multiworld/multiworld/multigrid/envs/empty.py", line 1, in <module>
+  File "/cluster/work/eirre/xai-multiworld/multiworld/multigrid/envs/go_to_goal.py", line 6, in <module>
     from multiworld.multigrid.base import MultiGridEnv
   File "/cluster/work/eirre/xai-multiworld/multiworld/multigrid/base.py", line 6, in <module>
     from multiworld.base import MultiWorldEnv
