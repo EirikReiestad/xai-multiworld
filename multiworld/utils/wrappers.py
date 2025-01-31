@@ -9,7 +9,6 @@ from collections import defaultdict
 from dataclasses import dataclass
 from typing import Any, Callable, Dict, List, Literal, SupportsFloat, Tuple
 
-from annotated_types import Not
 import gymnasium as gym
 import numpy as np
 from gymnasium import spaces
