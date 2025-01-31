@@ -6,14 +6,14 @@ from multiworld.utils.typing import ObsType
 
 
 def serialize_observation(obs_dict: ObsType):
-    image_list = obs_dict["image"].tolist()
+    image_list = obs_dict["observation"].tolist()
     direction_list = obs_dict["direction"].tolist()
-    serialized_dict = {"image": image_list, "direction": direction_list}
+    serialized_dict = {"observation": image_list, "direction": direction_list}
     return serialized_dict
 
 
 def deserialize_observation(data: Dict[str, Any]) -> ObsType:
     return {
-        "image": np.array(data["image"]),
+        "observation": np.array(data["observation"]),
         "direction": np.array(data["direction"]),
     }

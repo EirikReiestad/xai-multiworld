@@ -49,7 +49,7 @@ class SwarmEnv(MultiWorldEnv):
         )
         self._object_size = object_size
 
-        self.test = AgentState(agents)
+        self._agent_states = AgentState(agents)
         self._agents: List[Agent] = []
         for i in range(self._num_agents):
             agent = Agent(

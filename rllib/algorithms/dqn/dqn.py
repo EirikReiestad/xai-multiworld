@@ -3,7 +3,6 @@ from typing import Any, Dict, List, Mapping, SupportsFloat
 
 import numpy as np
 import torch
-import torch.nn as nn
 
 from multiworld.utils.advanced_typing import Action
 from multiworld.utils.typing import AgentID, ObsType

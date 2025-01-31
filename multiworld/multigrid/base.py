@@ -206,17 +206,19 @@ class MultiGridEnv(MultiWorldEnv):
         for i in range(self._num_agents):
             ohe_dir = ohe_direction(directions[i])
             observations[i] = {
-                "image": image[i],
+                "observation": image[i],
                 "direction": ohe_dir,
             }
 
         return observations
 
     def _get_full_render(self, highlight: bool, tile_size: int) -> np.ndarray:
-        obs_shape = self._agents[0].observation_space["image"].shape[:-1]
+        obs_shape = self._agents[0].observation_space["observation"].shape[:-1]
         vis_mask = np.zeros((self._num_agents, *obs_shape), dtype=bool)
         for key, obs in self._gen_obs().items():
-            vis_mask[key] = obs["image"][..., 0] != WorldObjectType.unseen.to_index()
+            vis_mask[key] = (
+                obs["observation"][..., 0] != WorldObjectType.unseen.to_index()
+            )
 
         highlight_mask = np.zeros((self._width, self._height), dtype=bool)
 
