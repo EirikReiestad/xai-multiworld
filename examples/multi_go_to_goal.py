@@ -1,4 +1,5 @@
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
+from rllib.algorithms.algorithm_config import AlgorithmConfig
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.mdqn import MDQN
 
@@ -28,10 +29,18 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="mg-go-to-goal")
 )
 
-dqn = MDQN(5, config)
+mconfig = (
+    AlgorithmConfig("DQN")
+    .environment(env=env)
+    .training()
+    .debugging(log_level="INFO")
+    .rendering()
+    .wandb(project="test")
+)
+
+dqn = MDQN(5, mconfig, config)
 
 while True:
     dqn.learn()

@@ -4,20 +4,20 @@ import torch.nn as nn
 
 from multiworld.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm import Algorithm
+from rllib.algorithms.algorithm_config import AlgorithmConfig
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.utils.dqn.preprocessing import preprocess_next_observations
 
 
 class MDQN(Algorithm):
-    def __init__(self, agents: int, config: DQNConfig):
-        if isinstance(config, List):
-            assert (
-                len(config) == agents
-            ), "Number of Configs much match the number of agents"
+    def __init__(self, agents: int, config: AlgorithmConfig, dqn_config: DQNConfig):
+        assert (
+            dqn_config._wandb_project is None
+        ), "Ups, we will only run one wandb project at a time:) So please deactivate wandb for the DQN Config and add it to the AlgorithmConfig, thank you!"
         super().__init__(config)
         self._config = config
-        self._dqns = {key: DQN(config) for key in range(agents)}
+        self._dqns = {key: DQN(dqn_config) for key in range(agents)}
 
     def train_step(
         self,
@@ -54,7 +54,7 @@ class MDQN(Algorithm):
                 f"model_{key}_{self._episodes_done}",
                 self._episodes_done,
             )
-            self.add_log("eps_threshold", self._dqns[key]._eps_threshold)
+            self.add_log(f"eps_threshold_{key}", self._dqns[key]._eps_threshold)
 
     def predict(self, observation: Dict[AgentID, ObsType]) -> Dict[AgentID, int]:
         actions = {}
