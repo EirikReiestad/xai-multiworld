@@ -30,6 +30,7 @@ class MultiInputNetwork(TorchModule):
         if len(conv_layers) != 0:
             self._conv0 = ConvProcessor(state_dim.box, conv_layers)
             rolled_state_dim = np.roll(state_dim.box, shift=1)  # Channels first
+            print(rolled_state_dim)
             conv_output_size = get_output_size(self._conv0, rolled_state_dim)
 
         self._fc0 = FCProcessor(
