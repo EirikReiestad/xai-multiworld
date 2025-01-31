@@ -10,10 +10,10 @@
 #SBATCH --error=srun.err
 
 if [ ! -f scripts/idun/clean.sh ]; then
-  echo "No clean script found"
+    echo "No clean script found"
 else
-  echo "Cleaning up"
-  sh scripts/idun/clean.sh
+    echo "Cleaning up"
+    sh scripts/idun/clean.sh
 fi
 
 WORKDIR=${SLURM_SUBMIT_DIR}
@@ -26,6 +26,8 @@ echo "The jo was run on these nodes: $SLURM_JOB_NODELIST"
 module purge
 module load Python/3.11.5-GCCcore-13.2.0
 module list
+
+pip install --upgrade pip
 
 pip install poetry
 poetry install
