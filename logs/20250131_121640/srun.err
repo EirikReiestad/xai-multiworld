@@ -1,0 +1,11 @@
+mv: cannot stat 'log.txt': No such file or directory
+
+[notice] A new release of pip is available: 24.2 -> 25.0
+[notice] To update, run: pip install --upgrade pip
+
+/cluster/work/eirre/xai-multiworld/multigrid does not contain any element
+Command not found: wandb
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/multi_go_to_goal.py", line 1, in <module>
+    from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
+ModuleNotFoundError: No module named 'multiworld'
