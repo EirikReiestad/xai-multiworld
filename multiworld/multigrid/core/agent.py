@@ -27,7 +27,7 @@ class Agent:
 
         self.observation_space = spaces.Dict(
             {
-                "image": spaces.Box(
+                "observation": spaces.Box(
                     low=0,
                     high=255,
                     shape=(view_size, view_size, AgentState.encode_dim),

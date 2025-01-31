@@ -1,10 +1,14 @@
+from os import stat
+from typing import Callable, Dict, List
+
 import numpy as np
-from typing import Dict, Callable, List
 from numpy.typing import NDArray
-from multiworld.core.constants import WorldObjectType
-from multiworld.core.world_object import WorldObject
+
+from multiworld.swarm.core.constants import WorldObjectType
+from multiworld.swarm.core.world_object import WorldObject
 
 
+@staticmethod
 def _random_observation_concept(_: NDArray[np.int_]) -> bool:
     rand_float = np.random.uniform()
     if rand_float < 0.2:
@@ -13,63 +17,11 @@ def _random_observation_concept(_: NDArray[np.int_]) -> bool:
 
 
 @staticmethod
-def _goal_in_view_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
-    image = view["image"]
-    dir = view["direction"]
-
-    for row in image:
-        for cell in row:
-            type_idx = cell[WorldObject.TYPE]
-            if type_idx == WorldObjectType.goal.to_index():
-                return True
-    return False
-
-
-@staticmethod
-def _goal_to_right_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
-    image = view["image"]
-    dir = view["direction"]
-
-    for row in image:
-        for cell in row[row.shape[0] // 2 :]:
-            type_idx = cell[WorldObject.TYPE]
-            if type_idx == WorldObjectType.goal.to_index():
-                return True
-    return False
-
-
-@staticmethod
-def _goal_to_left_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
-    image = view["image"]
-    dir = view["direction"]
-
-    for row in image:
-        for cell in row[0 : row.shape[0] // 2]:
-            type_idx = cell[WorldObject.TYPE]
-            if type_idx == WorldObjectType.goal.to_index():
-                return True
-    return False
-
-
-@staticmethod
-def _goal_in_front_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
-    image = view["image"]
-    dir = view["direction"]
-
-    for row in image[1:]:
-        for cell in row[0 : row.size // 2]:
-            type_idx = cell[WorldObject.TYPE]
-            if type_idx == WorldObjectType.goal.to_index():
-                return True
-    return False
-
-
-@staticmethod
 def _agent_in_view_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
-    image = view["image"]
+    observation = view["observation"]
     dir = view["direction"]
 
-    for row in image:
+    for row in observation:
         for cell in row:
             type_idx = cell[WorldObject.TYPE]
             if type_idx == WorldObjectType.agent.to_index():
@@ -77,27 +29,9 @@ def _agent_in_view_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
     return False
 
 
-@staticmethod
-def _wall_in_view_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
-    image = view["image"]
-    dir = view["direction"]
-
-    for row in image:
-        for cell in row:
-            type_idx = cell[WorldObject.TYPE]
-            if type_idx == WorldObjectType.wall.to_index():
-                return True
-    return False
-
-
 concept_checks: Dict[str, Callable] = {
     "random": _random_observation_concept,
-    "goal_in_view": _goal_in_view_concept,
-    "goal_to_right": _goal_to_right_concept,
-    "goal_to_left": _goal_to_left_concept,
-    "goal_in_front": _goal_in_front_concept,
-    "agent_in_view": _agent_in_view_concept,
-    "wall_in_view": _wall_in_view_concept,
+    # "agent_in_view": _agent_in_view_concept,
 }
 
 

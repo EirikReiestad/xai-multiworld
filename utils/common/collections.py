@@ -1,6 +1,6 @@
-from typing import Dict, Any, List, TypeVar
+import json
 from itertools import chain
-
+from typing import Any, Dict, List, TypeVar
 
 T = TypeVar("T")
 
@@ -14,3 +14,8 @@ def zip_dict_list(dict_list: list[dict[str, Any]]) -> List[List[Any]]:
     for key in dict_list[0].keys():
         data.append([dict_list[i][key] for i in range(len(dict_list))])
     return data
+
+
+class DefaultEncoder(json.JSONEncoder):
+    def default(self, o):
+        return super().default(o)
