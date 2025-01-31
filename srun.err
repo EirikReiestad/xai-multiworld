@@ -1,23 +1,11 @@
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
-wandb: Tracking run with wandb version 0.19.5
-wandb: Run data is saved locally in ./wandb/run-20250131_155457-z76zp5vr
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run astral-field-6
-wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/go-to-goal
-wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/go-to-goal/runs/z76zp5vr
 Traceback (most recent call last):
-  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 34, in <module>
-    dqn = DQN(config)
-          ^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 30, in __init__
-    self._policy_net = MultiInputNetwork(
-                       ^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/multi_input_network.py", line 33, in __init__
-    conv_output_size = get_output_size(self._conv0, rolled_state_dim)
-                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/rllib/utils/network/network.py", line 12, in get_output_size
-    print(dummpy_input)
-          ^^^^^^^^^^^^
-NameError: name 'dummpy_input' is not defined
+  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 1, in <module>
+    from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
+  File "/cluster/work/eirre/xai-multiworld/multiworld/multigrid/envs/go_to_goal.py", line 6, in <module>
+    from multiworld.multigrid.base import MultiGridEnv
+  File "/cluster/work/eirre/xai-multiworld/multiworld/multigrid/base.py", line 6, in <module>
+    from multiworld.base import MultiWorldEnv
+  File "/cluster/work/eirre/xai-multiworld/multiworld/base.py", line 26, in <module>
+    from utils.common.callbacks import RenderingCallback, empty_rendering_callback
+ModuleNotFoundError: No module named 'utils.common'

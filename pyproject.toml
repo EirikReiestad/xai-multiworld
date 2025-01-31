@@ -4,12 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Eirik Reiestad <eirik@reiestad.no>"]
 readme = "readme.md"
-packages = [
-    { include = "multiworld", from = "." },
-    { include = "utils", from = "." },
-    { include = "multigrid", from = "multiworld" },
-    { include = "swarm", from = "multiworld" },
-]
+packages = []
 
 [tool.poetry.dependencies]
 
