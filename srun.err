@@ -3,11 +3,11 @@ wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
 wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
 wandb: Tracking run with wandb version 0.19.5
-wandb: Run data is saved locally in ./wandb/run-20250131_153819-8xhn8sat
+wandb: Run data is saved locally in ./wandb/run-20250131_154238-wdpj6hdg
 wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run clear-pine-4
+wandb: Syncing run deft-resonance-5
 wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/go-to-goal
-wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/go-to-goal/runs/8xhn8sat
+wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/go-to-goal/runs/wdpj6hdg
 Traceback (most recent call last):
   File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 34, in <module>
     dqn = DQN(config)
@@ -15,7 +15,7 @@ Traceback (most recent call last):
   File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 30, in __init__
     self._policy_net = MultiInputNetwork(
                        ^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/multi_input_network.py", line 33, in __init__
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/multi_input_network.py", line 34, in __init__
     conv_output_size = get_output_size(self._conv0, rolled_state_dim)
                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   File "/cluster/work/eirre/xai-multiworld/rllib/utils/network/network.py", line 12, in get_output_size
