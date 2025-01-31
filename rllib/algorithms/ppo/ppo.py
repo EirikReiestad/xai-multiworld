@@ -99,8 +99,6 @@ class PPO(Algorithm):
             key: value.detach() for key, value in action_logits.items()
         }
         self._values = {key: value.clone() for key, value in values.items()}
-        for value in actions.values():
-            self.add_log(f"action_{value}", 1, LogMethod.CUMULATIVE)
         return actions
 
     def _predict(
