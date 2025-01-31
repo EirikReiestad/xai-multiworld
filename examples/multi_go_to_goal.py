@@ -6,11 +6,11 @@ from rllib.algorithms.dqn.mdqn import MDQN
 agents = 5
 
 env = GoToGoalEnv(
-    width=15,
-    height=15,
+    width=10,
+    height=10,
     max_steps=200,
     agents=agents,
-    agent_view_size=7,
+    agent_view_size=5,
     success_termination_mode="all",
     render_mode="rgb_array",
 )
