@@ -19,6 +19,11 @@ llvmlite = "^0.44.0"
 setuptools = "^75.8.0"
 shap = "^0.46.0"
 opencv-python = "^4.11.0.86"
+gymnasium = "^1.0.0"
+pygame = "^2.6.1"
+aenum = "^3.1.15"
+torch = "^2.6.0"
+wandb = "^0.19.5"
 
 [tool.pyright]
 venvPath = "."
