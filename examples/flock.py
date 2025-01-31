@@ -1,3 +1,4 @@
+# from multiworld.swarm.utils.wrappers import SwarmConceptObsWrapper
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from multiworld.swarm.envs.flock import FlockEnv
@@ -15,6 +16,9 @@ env = FlockEnv(
     success_termination_mode="all",
     render_mode="rgb_array",
 )
+
+# env = ObservationCollectorWrapper(env, observations=10)
+# env = SwarmConceptObsWrapper(env, observations=10, method="random")
 
 config = (
     DQNConfig(
