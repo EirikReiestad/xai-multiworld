@@ -1,8 +1,8 @@
 Cleaning up
 Running from this directory: /cluster/work/eirre/xai-multiworld
 Name of job: multi-agent-rl
-ID of job: 21117026
-The jo was run on these nodes: idun-04-25
+ID of job: 21117029
+The jo was run on these nodes: idun-03-39
 
 Currently Loaded Modules:
   1) GCCcore/13.2.0                       7) Tcl/8.6.13-GCCcore-13.2.0    (H)
@@ -157,3 +157,9 @@ typing-extensions        4.12.2      Backported and Experimental Type Hints...
 tzdata                   2025.1      Provider of IANA time zone data
 urllib3                  2.3.0       HTTP library with thread-safe connecti...
 wandb                    0.19.5      A CLI and library for interacting with...
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mdifferent-bird-9[0m at: [34mhttps://wandb.ai/eirikreiestad-ntnu/go-to-goal/runs/fdwlklzs[0m
+Linux idun-03-41 5.14.0-427.13.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Wed May 1 19:11:28 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mwoven-sea-8[0m at: [34mhttps://wandb.ai/eirikreiestad-ntnu/go-to-goal/runs/78g0r22s[0m
+Linux idun-03-47 5.14.0-427.13.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Wed May 1 19:11:28 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
