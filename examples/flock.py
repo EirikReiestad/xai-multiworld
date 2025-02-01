@@ -37,7 +37,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="flock")
+    .wandb(project="flock", log_interval=100)
 )
 
 dqn = DQN(config)
