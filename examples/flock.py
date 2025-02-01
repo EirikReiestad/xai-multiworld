@@ -29,7 +29,7 @@ config = (
         learning_rate=3e-4,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=200000,
+        eps_decay=100000,
         target_update=2000,
     )
     .network(conv_layers=())
