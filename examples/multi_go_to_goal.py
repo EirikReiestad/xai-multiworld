@@ -6,11 +6,11 @@ from rllib.algorithms.dqn.mdqn import MDQN
 agents = 5
 
 env = GoToGoalEnv(
-    width=7,
-    height=7,
+    width=10,
+    height=10,
     max_steps=200,
     agents=agents,
-    agent_view_size=5,
+    agent_view_size=7,
     success_termination_mode="all",
     render_mode="rgb_array",
 )
@@ -39,7 +39,7 @@ mconfig = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="multi-go-to-goal", log_interval=10 * agents)
+    .wandb(project="multi-go-to-goal", log_interval=100)
 )
 
 dqn = MDQN(agents, mconfig, config)
