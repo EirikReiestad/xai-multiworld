@@ -3,12 +3,12 @@ from rllib.algorithms.ppo.ppo_config import PPOConfig
 from multiworld.swarm.envs.flock import FlockEnv
 
 env = FlockEnv(
-    width=500,
-    height=500,
+    width=400,
+    height=400,
     max_steps=1000,
-    agents=100,
+    agents=50,
     observations=10,
-    predators=5,
+    predators=2,
     predator_steps=100,
     object_size=8,
     agent_view_size=65,
