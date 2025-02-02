@@ -3,10 +3,10 @@ from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 
 env = GoToGoalEnv(
-    width=15,
-    height=15,
+    width=20,
+    height=20,
     max_steps=200,
-    agents=10,
+    agents=25,
     agent_view_size=7,
     success_termination_mode="all",
     render_mode="rgb_array",
@@ -25,7 +25,7 @@ config = (
         learning_rate=3e-4,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=10000,
+        eps_decay=100000,
         target_update=400,
     )
     .environment(env=env)
