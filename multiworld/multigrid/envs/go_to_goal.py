@@ -14,7 +14,7 @@ class GoToGoalEnv(MultiGridEnv):
     def _gen_world(self, width: int, height: int):
         self._world = Grid(width, height)
 
-        for _ in range(3):
+        for _ in range(1):
             placeable_positions = self._world.get_empty_positions()
             goal_pos = self._rand_elem(placeable_positions)
             self.goal = Goal()
