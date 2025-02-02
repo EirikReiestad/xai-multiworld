@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List
 
 import numpy as np
 import torch
@@ -19,6 +19,7 @@ class LinearProbe:
         model: nn.Module,
         positive_observations: Observation,
         negative_observations: Observation,
+        ignore: List[str] = [],
     ):
         self._model = model
         self._model.eval()
@@ -26,7 +27,7 @@ class LinearProbe:
         self._positive_observations = positive_observations
         self._negative_observations = negative_observations
 
-        self._activation_tracker = ActivationTracker(self._model)
+        self._activation_tracker = ActivationTracker(self._model, ignore)
 
         np.random.seed(None)
 

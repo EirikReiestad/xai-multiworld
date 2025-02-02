@@ -1,7 +1,7 @@
-from rllib.algorithms.dqn.dqn_config import DQNConfig
+from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from rllib.algorithms.dqn.dqn import DQN
-from multigrid.envs.go_to_goal import GoToGoalEnv
-from multigrid.wrappers import ConceptObsWrapper
+from rllib.algorithms.dqn.dqn_config import DQNConfig
+from multiworld.multigrid.utils.wrappers import MultiGridConceptObsWrapper
 
 env = GoToGoalEnv(
     width=10,
@@ -11,18 +11,18 @@ env = GoToGoalEnv(
     success_termination_mode="all",
     render_mode="human",
 )
-concepts = ["wall_in_view"]
 concepts = None
-env_wrapped = ConceptObsWrapper(
-    env, observations=1000, concepts=concepts, method="random"
+concepts = ["random"]
+env_wrapped = MultiGridConceptObsWrapper(
+    env, observations=10, concepts=concepts, method="random"
 )
 
 config = (
     DQNConfig(
-        batch_size=32,
+        batch_size=64,
         replay_buffer_size=10000,
         gamma=0.99,
-        learning_rate=1e-4,
+        learning_rate=3e-4,
         eps_start=0.9,
         eps_end=0.05,
         eps_decay=100000,
