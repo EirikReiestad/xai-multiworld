@@ -39,7 +39,7 @@ mconfig = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="multi-go-to-goal", log_interval=100)
+    .wandb(project="multi-go-to-goalv0", log_interval=100)
 )
 
 dqn = MDQN(agents, mconfig, config)
