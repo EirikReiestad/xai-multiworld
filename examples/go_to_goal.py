@@ -25,14 +25,14 @@ config = (
         learning_rate=3e-4,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=10000,
-        target_update=200,
+        eps_decay=100000,
+        target_update=400,
     )
     .environment(env=env)
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="go-to-goalv0", log_interval=100)
+    .wandb(project="go-to-goalv1", log_interval=100)
 )
 
 dqn = DQN(config)
