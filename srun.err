@@ -2,8 +2,63 @@ wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
 wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
 wandb: Tracking run with wandb version 0.19.5
-wandb: Run data is saved locally in ./wandb/run-20250202_183540-pzmhp38w
+wandb: Run data is saved locally in ./wandb/run-20250202_184812-zmg793op
 wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run wandering-snowflake-3
-wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/go-to-goalv1
-wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/go-to-goalv1/runs/pzmhp38w
+wandb: Syncing run polished-water-1
+wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/go-to-goalv2
+wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/go-to-goalv2/runs/zmg793op
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 41, in <module>
+    dqn.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 70, in train_step
+    self._optimize_model()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 141, in _optimize_model
+    state_action_values = self._predict_policy_values(state_batch, action_batch)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 164, in _predict_policy_values
+    return self._policy_net(*state).gather(1, action_batch)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/multi_input_network.py", line 51, in forward
+    x0 = self._conv0(x0)
+         ^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/processor.py", line 14, in forward
+    return self.conv_layers(x)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/container.py", line 250, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/conv.py", line 554, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/conv.py", line 549, in _conv_forward
+    return F.conv2d(
+           ^^^^^^^^^
+KeyboardInterrupt
