@@ -32,7 +32,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="go-to-goalv3", log_interval=100)
+    .wandb(project="go-to-goalv4", log_interval=100)
 )
 
 dqn = DQN(config)
