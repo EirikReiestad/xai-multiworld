@@ -14,9 +14,11 @@ class ActivationTracker:
         self._activations = {}
 
         self._register_hooks(ignore)
+        self._key = 0
 
     def compute_activations(self, inputs: List) -> tuple[dict, List, torch.Tensor]:
         self._activations.clear()
+        self._key = 0
         outputs = self._model(*inputs)
         activations_cloned = {key: value for key, value in self._activations.items()}
         return activations_cloned, inputs, outputs
@@ -37,15 +39,16 @@ class ActivationTracker:
                         continue
                     if not isinstance(sub_layer, nn.ReLU):
                         continue
-                    hook_count += 1
                     sub_layer.register_forward_hook(self._module_hook)
+                    hook_count += 1
         assert hook_count > 0, "No hooks registered"
 
     def _module_hook(self, module: nn.Module, input, output):
-        self._activations[module] = {
+        self._activations[str(self._key) + "-" + str(module)] = {
             "input": input[0],
             "output": output,
         }
+        self._key += 1
 
 
 def preprocess_activations(activations: dict) -> np.ndarray:

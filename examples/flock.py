@@ -4,17 +4,17 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from multiworld.swarm.envs.flock import FlockEnv
 
 env = FlockEnv(
-    width=500,
-    height=500,
-    max_steps=1000,
-    agents=100,
+    width=100,
+    height=100,
+    max_steps=200,
+    agents=1,
     observations=10,
-    predators=5,
+    predators=1,
     predator_steps=100,
     object_size=8,
     agent_view_size=65,
     success_termination_mode="all",
-    render_mode="human",
+    render_mode="rgb_array",
 )
 
 # env = ObservationCollectorWrapper(env, observations=10)
@@ -36,7 +36,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="flock")
+    .wandb(project="bird")
 )
 
 dqn = DQN(config)

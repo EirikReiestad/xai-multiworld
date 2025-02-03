@@ -21,18 +21,17 @@ def run(concept: str):
     positive_observation, test_observation = load_and_split_observation(concept, 0.8)
     negative_observation, _ = load_and_split_observation("random_negative", 0.8)
 
-    probes = get_probes(
-        model_artifacts, positive_observation, negative_observation, ignore
-    )
-
     test_observation_zipped = zip_observation_data(test_observation)
 
     test_activations, test_input, test_output = compute_activations_from_artifacts(
         model_artifacts, test_observation_zipped, ignore
     )
 
+    probes = get_probes(
+        model_artifacts, positive_observation, negative_observation, ignore
+    )
+
     concept_scores = binary_concept_scores(test_activations, probes)
-    print(concept_scores)
 
     plot_3d(
         concept_scores,
@@ -70,6 +69,7 @@ if __name__ == "__main__":
         "goal_to_left",
         "goal_in_front",
         "agent_in_view",
+        "random",
     ]
     concepts = ["random"]
 
