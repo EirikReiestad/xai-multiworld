@@ -1,17 +1,10 @@
-import getpass
-import json
-import os
-import traceback
 import shutil
+import traceback
 
-import torch
-
-from utils.core.wandb import WandB
-from rllib.algorithms.dqn.dqn_config import DQNConfig
-from rllib.algorithms.dqn.dqn import DQN
-from rllib.algorithms.algorithm import Algorithm
 import torch.nn as nn
+
 from utils.core.model_loader import ModelLoader
+from utils.core.wandb import WandB
 
 
 class ModelDownloader(WandB):
@@ -28,6 +21,7 @@ class ModelDownloader(WandB):
             project=project_folder,
             run_name=None,
             reinit=True,
+            save_steps=None,
             tags=[],
             dir=".",
             only_api=True,
