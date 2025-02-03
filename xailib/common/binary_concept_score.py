@@ -24,7 +24,7 @@ def binary_concept_scores(
     for model_name in activations.keys():
         assert (
             len(activations[model_name].keys()) == len(probes[model_name].keys())
-        ), f"Activations and probes must have the number of keys, got {activations[model_name].keys()} and {probes[model_name].keys()}"
+        ), f"Activations and probes must have the number of keys, got {len(activations[model_name].keys())} and {len(probes[model_name].keys())}"
 
     scores = defaultdict(dict)
     for model_name, model in probes.items():
