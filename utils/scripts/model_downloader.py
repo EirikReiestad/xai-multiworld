@@ -1,19 +1,17 @@
-import logging
-
-from utils.core.model_downloader import ModelDownloader
-
+from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
-from multigrid.envs.go_to_goal import GoToGoalEnv
+from utils.core.model_downloader import ModelDownloader
 
-project_folder = "multigrid-go-to-goal"
+project_folder = "go-to-goalv0"
 model_name = "model"
 
 models = []
-for i in range(0, 1401, 200):
-    models.append(f"model_{i}:latest")
+for i in range(0, 1001, 200):
+    models.append(f"model_{i}:v0")
 
 env = GoToGoalEnv(render_mode="rgb_array")
+
 dqn_config = (
     DQNConfig(
         batch_size=16,
@@ -30,9 +28,7 @@ dqn_config = (
     .debugging(log_level="INFO")
     .rendering()
 )
-
 dqn = DQN(dqn_config)
-
 model_downloader = ModelDownloader(
     project_folder=project_folder,
     model_name=model_name,

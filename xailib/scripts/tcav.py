@@ -1,5 +1,4 @@
-from multigrid.core.concept import concept_checks
-from multigrid.envs.go_to_goal import GoToGoalEnv
+from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from utils.common.observation import (
@@ -16,16 +15,20 @@ from xailib.common.tcav_score import tcav_scores
 
 
 def run(concept: str):
+    ignore = ["_fc0"]
+
     model_artifacts = ModelLoader.load_models_from_path("artifacts", dqn.model)
     positive_observation, test_observation = load_and_split_observation(concept, 0.8)
     negative_observation, _ = load_and_split_observation("random_negative", 0.8)
 
-    probes = get_probes(model_artifacts, positive_observation, negative_observation)
+    probes = get_probes(
+        model_artifacts, positive_observation, negative_observation, ignore
+    )
 
     test_observation_zipped = zip_observation_data(test_observation)
 
     test_activations, test_input, test_output = compute_activations_from_artifacts(
-        model_artifacts, test_observation_zipped
+        model_artifacts, test_observation_zipped, ignore
     )
 
     scores = tcav_scores(test_activations, test_output, probes)
@@ -58,6 +61,13 @@ if __name__ == "__main__":
     dqn = DQN(config)
 
     concepts = ["random"]
-    concepts = concept_checks.keys()
+    # concepts = concept_checks.keys()
+    concepts = [
+        "goal_in_view",
+        "goal_to_right",
+        "goal_to_left",
+        "goal_in_front",
+        "agent_in_view",
+    ]
     for concept in concepts:
         run(concept)
