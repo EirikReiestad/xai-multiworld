@@ -1,5 +1,4 @@
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
-from multiworld.multigrid.utils.wrappers import get_concept_checks
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from utils.common.observation import (
