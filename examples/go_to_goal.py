@@ -5,7 +5,7 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 env = GoToGoalEnv(
     width=25,
     height=25,
-    max_steps=200,
+    max_steps=300,
     agents=50,
     agent_view_size=7,
     success_termination_mode="all",
