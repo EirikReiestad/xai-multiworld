@@ -11,10 +11,10 @@ env = GoToGoalEnv(
     success_termination_mode="all",
     render_mode="human",
 )
-concepts = None
 concepts = ["random"]
+concepts = None
 env_wrapped = MultiGridConceptObsWrapper(
-    env, observations=10, concepts=concepts, method="random"
+    env, observations=100, concepts=concepts, method="random"
 )
 
 config = (

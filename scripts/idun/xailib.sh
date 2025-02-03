@@ -9,11 +9,19 @@
 #SBATCH --output=srun.out
 #SBATCH --error=srun.err
 
+echo "test"
+echo "$@"
+
 if [ ! -f scripts/idun/clean.sh ]; then
     echo "No clean script found"
 else
     echo "Cleaning up"
     sh scripts/idun/clean.sh
+fi
+
+if [ -z "$0" ]; then
+    echo "Error: run with additional options."
+    exit 1
 fi
 
 WORKDIR=${SLURM_SUBMIT_DIR}
@@ -34,6 +42,6 @@ poetry install
 
 poetry run wandb login
 
-poetry run python -O examples
+poetry run python -O xailib "$1"
 
 uname -a
