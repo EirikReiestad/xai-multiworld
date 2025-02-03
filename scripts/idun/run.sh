@@ -33,7 +33,17 @@ while true; do
     esac
 done
 
-if [ "$help_flag" = true ]; then
+if [ "$example_flag" = true ]; then
+    sbatch scripts/idun/example.sh
+    exit 0
+fi
+
+if [ "$concept_score_flag" = true ]; then
+    sbatch scripts/idun/xailib.sh "--concept-score"
+    exit 0
+fi
+
+if [ "$help_flag" = true ] || true ; then
     echo "Usage: $0 [options]"
     echo "Options:"
     echo "  --help           Show this help message"
@@ -42,12 +52,3 @@ if [ "$help_flag" = true ]; then
     exit 0
 fi
 
-if [ "$example_flag" = true ]; then
-    sh scripts/idun/example.sh
-    sbatch scripts/idun/example.sh
-fi
-
-if [ "$concept_score_flag" = true ]; then
-    sh scripts/idun/xailib.sh "--concept-score"
-    sbatch scripts/idun/xailib.sh "--concept-score"
-fi
