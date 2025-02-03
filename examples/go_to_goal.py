@@ -3,10 +3,10 @@ from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 
 env = GoToGoalEnv(
-    width=20,
-    height=20,
+    width=25,
+    height=25,
     max_steps=200,
-    agents=20,
+    agents=50,
     agent_view_size=7,
     success_termination_mode="all",
     render_mode="rgb_array",
@@ -32,7 +32,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="go-to-goalv4", log_interval=100)
+    .wandb(project="go-to-goalv5", log_interval=100)
 )
 
 dqn = DQN(config)
