@@ -64,7 +64,11 @@ class FlockEnv(SwarmEnv):
         }
 
         for agent, _ in actions.items():
-            self.add_reward(self.agents[agent], rewards, 1 / self._num_active_agents)
+            self.add_reward(
+                self.agents[agent],
+                rewards,
+                1 / self._num_active_agents / self._max_steps,
+            )
 
         for i in range(self._num_predators):
             predator = self.agents[self._num_active_agents + i]

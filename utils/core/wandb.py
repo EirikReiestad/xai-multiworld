@@ -3,7 +3,7 @@ import json
 import logging
 import os
 from abc import ABC
-from typing import Optional
+from typing import Dict, Optional
 from collections import defaultdict
 
 import numpy as np
@@ -69,7 +69,13 @@ class WandB(ABC):
         ), f"Frame must be a numpy array, but got {frame}"
         self._frames.append(frame)
 
-    def log_model(self, model: nn.Module, model_name: str = "model", step: int = 0):
+    def log_model(
+        self,
+        model: nn.Module,
+        model_name: str = "model",
+        step: int = 0,
+        metadata: Dict = {},
+    ):
         if self._api is None:
             return
         if self._save_steps is not None and step % self._save_steps != 0:
@@ -77,7 +83,9 @@ class WandB(ABC):
         file_path = f"{model_name}.pth"
         torch.save(model.state_dict(), file_path)
 
-        self._artifacts[model_name] = wandb.Artifact(model_name, type="model")
+        artifact = wandb.Artifact(model_name, type="model")
+        artifact.metadata = metadata
+        self._artifacts[model_name] = artifact
         self._artifacts[model_name].add_file(file_path)
         os.remove(file_path)
 
