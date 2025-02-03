@@ -1,7 +1,7 @@
 from utils.common.model_artifact import ModelArtifact
 from utils.common.observation import Observation
 from xailib.core.linear_probing.linear_probe import LinearProbe
-from typing import Dict
+from typing import Dict, List
 from sklearn.linear_model import LogisticRegression
 
 
@@ -9,6 +9,7 @@ def get_probes(
     model_artifacts: Dict[str, ModelArtifact],
     positive_observation: Observation,
     negative_observation: Observation,
+    ignore: List["str"] = [],
 ) -> Dict[str, Dict[str, LogisticRegression]]:
     regressors = {}
 
@@ -20,6 +21,7 @@ def get_probes(
             model_artifact.model,
             positive_observation,
             negative_observation,
+            ignore,
         )
         model_regressors = linear_probe.train()
         regressors[model_name] = model_regressors

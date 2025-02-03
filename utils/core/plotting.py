@@ -1,13 +1,17 @@
-from numpy.typing import NDArray
-import numpy as np
-import matplotlib.pyplot as plt
-from typing import Tuple
-from typing import List
-import matplotlib.colors as mcolors
-import seaborn as sns
 import os
-from typing import Dict, Any
+from typing import Any, Dict, List, Tuple
+
+import matplotlib as mpl
+import matplotlib.colors as mcolors
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
 from matplotlib import cm
+from numpy.typing import NDArray
+
+mpl.rcParams["axes3d.mouserotationstyle"] = (
+    "azel"  # 'azel', 'trackball', 'sphere', or 'arcball'
+)
 
 
 def box_plot(

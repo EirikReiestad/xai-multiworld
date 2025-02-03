@@ -85,8 +85,8 @@ class AgentState(np.ndarray):
     TYPE = 0
     COLOR = 1
     DIR = 2
+    ENCODING = slice(0, 3)
     POS = slice(3, 5)
-    ENCODING = slice(0, 5)
     TERMINATED = 5
 
     dim = 6

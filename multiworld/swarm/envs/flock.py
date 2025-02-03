@@ -20,7 +20,7 @@ class FlockEnv(SwarmEnv):
         agents: int = 4,
         predators: int = 10,
         predator_steps: int = 100,
-        max_predator_angle_change: int = 30,
+        max_predator_angle_change: int = 45,
         *args,
         **kwargs,
     ):
