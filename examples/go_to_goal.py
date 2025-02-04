@@ -23,7 +23,7 @@ config = (
         batch_size=64,
         replay_buffer_size=10000,
         gamma=0.99,
-        learning_rate=1e-3,
+        learning_rate=3e-4,
         eps_start=0.9,
         eps_end=0.05,
         eps_decay=10000,
@@ -34,7 +34,7 @@ config = (
     # .training("model_1500:v0")
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="go-to-goal-full", log_interval=100)
+    .wandb(project="go-to-goal-full", log_interval=50)
 )
 
 dqn = DQN(config)
