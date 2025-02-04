@@ -6,8 +6,13 @@ env = GoToGoalEnv(
     width=10,
     height=10,
     max_steps=200,
+<<<<<<< Updated upstream
     agents=20,
     agent_view_size=5,
+=======
+    agents=1,
+    agent_view_size=7,
+>>>>>>> Stashed changes
     success_termination_mode="all",
     render_mode="rgb_array",
 )
