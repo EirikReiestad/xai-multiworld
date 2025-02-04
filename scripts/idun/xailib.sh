@@ -9,9 +9,6 @@
 #SBATCH --output=srun.out
 #SBATCH --error=srun.err
 
-echo "test"
-echo "$@"
-
 if [ ! -f scripts/idun/clean.sh ]; then
     echo "No clean script found"
 else
