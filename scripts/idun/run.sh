@@ -44,6 +44,7 @@ if [ "$concept_score_flag" = true ]; then
 fi
 
 if [ "$help_flag" = true ] || true ; then
+if [ "$help_flag" = true ]; then
     echo "Usage: $0 [options]"
     echo "Options:"
     echo "  --help           Show this help message"
@@ -51,4 +52,3 @@ if [ "$help_flag" = true ] || true ; then
     echo "  --xailib         Run the xailib script with additional arguments"
     exit 0
 fi
-

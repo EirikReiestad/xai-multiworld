@@ -21,7 +21,7 @@ config = (
         batch_size=64,
         replay_buffer_size=10000,
         gamma=0.99,
-        learning_rate=3e-4,
+        learning_rate=1e-3,
         eps_start=0.9,
         eps_end=0.05,
         eps_decay=100000,
@@ -39,7 +39,7 @@ mconfig = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="multi-go-to-goalv0", log_interval=100)
+    .wandb(project="multi-go-to-goalv0", log_interval=10 * agents)
 )
 
 dqn = MDQN(agents, mconfig, config)

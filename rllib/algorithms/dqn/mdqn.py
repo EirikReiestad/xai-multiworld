@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Mapping, SupportsFloat
+from typing import Any, Dict, Mapping, SupportsFloat
 
 import torch.nn as nn
 
@@ -51,10 +51,19 @@ class MDQN(Algorithm):
     def log_episode(self):
         super().log_episode()
         for key in self._dqns.keys():
+            metadata = {
+                "agents": len(self._env.agents),
+                "width": self._env._width,
+                "height": self._env._height,
+                "eps_threshold": self._dqns[key]._eps_threshold,
+                "conv_layers": self._config.conv_layers,
+                "hidden_units": self._config.hidden_units,
+            }
             self.log_model(
                 self._dqns[key].model,
                 f"model_{key}_{self._episodes_done}",
                 self._episodes_done,
+                metadata,
             )
             self.add_log(f"eps_threshold_{key}", self._dqns[key]._eps_threshold)
 
