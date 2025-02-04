@@ -9,12 +9,14 @@
 #SBATCH --output=srun.out
 #SBATCH --error=srun.err
 
+echo "test"
 if [ ! -f scripts/idun/clean.sh ]; then
     echo "No clean script found"
 else
     echo "Cleaning up"
     sh scripts/idun/clean.sh
 fi
+echo "test0"
 
 if [ -z "$0" ]; then
     echo "Error: run with additional options."
@@ -42,6 +44,6 @@ poetry show
 
 poetry run wandb login
 
-poetry run python -O "$0"
+poetry run python -O examples
 
 uname -a

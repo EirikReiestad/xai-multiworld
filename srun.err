@@ -1,11 +1,9 @@
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-  File "/var/slurm_spool/job21123635/slurm_script", line 12
-    if [ ! -f scripts/idun/clean.sh ]; then
-         ^
-SyntaxError: invalid syntax
-WARNING:root:No non final next states, consider increasing batch size.
-WARNING:root:No non final next states, consider increasing batch size.
-WARNING:root:No non final next states, consider increasing batch size.
-WARNING:root:No non final next states, consider increasing batch size.
-WARNING:root:No non final next states, consider increasing batch size.
-WARNING:root:No non final next states, consider increasing batch size.
+wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Tracking run with wandb version 0.19.5
+wandb: Run data is saved locally in ./wandb/run-20250204_072746-cvnrugls
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run soft-sun-1
+wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/go-to-goalv6
+wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/go-to-goalv6/runs/cvnrugls
