@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TEMP=$(getopt -o '' --long help,example,concept-score -- "$@")
+TEMP=$(getopt -o hec: --long help,example,concept-score -- "$@")
 eval set -- "$TEMP"
 
 help_flag=false
@@ -9,15 +9,15 @@ concept_score_flag=false
 
 while true; do
     case "$1" in
-    --help)
+    -h | --help)
         help_flag=true
         shift
         ;;
-    --example)
+    -e | --example)
         example_flag=true
         shift
         ;;
-    --concept-score)
+    -c | --concept-score)
         concept_score_flag=true
         shift
         break

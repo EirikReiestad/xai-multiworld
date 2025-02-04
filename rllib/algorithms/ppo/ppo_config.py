@@ -1,4 +1,5 @@
 from rllib.algorithms.algorithm_config import AlgorithmConfig
+from rllib.core.network.network import NetworkType
 
 
 class PPOConfig(AlgorithmConfig):
@@ -24,3 +25,4 @@ class PPOConfig(AlgorithmConfig):
         self.learning_rate = learning_rate
         self.value_weight = value_weight
         self.entropy_weight = entropy_weight
+        self.network(network_type=NetworkType.MULTI_ACTORCRITIC)
