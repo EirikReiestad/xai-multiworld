@@ -25,4 +25,4 @@ class PPOConfig(AlgorithmConfig):
         self.learning_rate = learning_rate
         self.value_weight = value_weight
         self.entropy_weight = entropy_weight
-        self.network(network_type=NetworkType.MULTI_ACTORCRITIC)
+        self.network(network_type=NetworkType.FEED_FORWARD)

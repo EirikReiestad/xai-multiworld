@@ -70,7 +70,7 @@ def gen_obs_grid(
     agent_terminated = agent_state[..., AGENT_TERMINATED_IDX]
     agent_carrying = agent_state[..., AGENT_CARRYING_IDX]
 
-    if num_agents > 1:
+    if num_agents > 0:
         grid_encoding = np.empty((*grid_state.shape[:-1], ENCODE_DIM), dtype=np.int_)
         grid_encoding[...] = grid_state[..., GRID_ENCODING_IDX]
 
