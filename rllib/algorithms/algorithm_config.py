@@ -1,4 +1,5 @@
 import logging
+import os
 from abc import ABC
 from typing import Literal, Optional, Tuple
 
@@ -20,6 +21,8 @@ class AlgorithmConfig(ABC):
 
         self._wandb_log_interval = 1
         self._rendering_callback = empty_rendering_callback
+
+        self._model_path = None
 
         self.conv_layers: Tuple[int, ...] = tuple(
             (32, 64, 64),
@@ -43,8 +46,10 @@ class AlgorithmConfig(ABC):
         self._environment = env
         return self
 
-    def training(self):
+    def training(self, model: str | None = None):
         self._training = True
+        if model is not None:
+            self._model_path = os.path.join("artifacts", model)
         return self
 
     def debugging(

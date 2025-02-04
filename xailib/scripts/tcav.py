@@ -60,7 +60,6 @@ if __name__ == "__main__":
     )
     dqn = DQN(config)
 
-    concepts = ["random"]
     # concepts = concept_checks.keys()
     concepts = [
         "goal_in_view",
@@ -69,5 +68,6 @@ if __name__ == "__main__":
         "goal_in_front",
         "agent_in_view",
     ]
+    concepts = ["random"]
     for concept in concepts:
         run(concept)

@@ -3,11 +3,13 @@ from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from utils.core.model_downloader import ModelDownloader
 
-project_folder = "go-to-goalv0"
+project_folder = "go-to-goalv5"
 model_name = "model"
 
+models = ["model_1500:v0"]
+
 models = []
-for i in range(0, 1001, 200):
+for i in range(0, 1600, 200):
     models.append(f"model_{i}:v0")
 
 env = GoToGoalEnv(render_mode="rgb_array")
