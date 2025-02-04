@@ -19,13 +19,21 @@ class PrioritizedReplayMemory(Memory[Transition]):
         """
         super().__init__(capacity, Transition)
         self.alpha = alpha
+        self.priorities = [1.0] * capacity
 
     def add(self, **kwargs):
         """
         Add a transition to the buffer with a priority.
         """
-        kwargs["priority"] = 1.0
-        super().add(**kwargs)
+        priority = kwargs.get("priority", 1.0)
+
+        if self.maxlen is None or len(self) < self.maxlen:
+            super().add(**kwargs)
+            self.priorities[len(self) - 1] = priority
+        else:
+            min_priority_index = self.priorities.index(min(self.priorities))
+            self[min_priority_index] = self._item_type(**kwargs)
+            self.priorities[min_priority_index] = priority
 
     def sample(self, batch_size: int) -> Tuple[List[Transition], List[int]]:
         """
