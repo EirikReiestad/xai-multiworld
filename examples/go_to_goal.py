@@ -7,7 +7,7 @@ env = GoToGoalEnv(
     height=10,
     max_steps=200,
     agents=1,
-    agent_view_size=7,
+    agent_view_size=None,
     success_termination_mode="all",
     render_mode="rgb_array",
 )
@@ -34,7 +34,7 @@ config = (
     # .training("model_1500:v0")
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="go-to-goalv6", log_interval=100)
+    .wandb(project="go-to-goal-full", log_interval=100)
 )
 
 dqn = DQN(config)

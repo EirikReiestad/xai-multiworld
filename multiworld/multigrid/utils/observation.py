@@ -37,9 +37,11 @@ DOWN = int(Direction.down)
 def gen_obs_grid_encoding(
     grid_state: ndarray[np.int_],
     agent_state: ndarray[np.int_],
-    agent_view_size: int,
+    agent_view_size: int | None,
     see_through_walls: bool,
 ) -> ndarray[np.int_]:
+    if agent_view_size is None:
+        return grid_state
     obs_grid = gen_obs_grid(grid_state, agent_state, agent_view_size)
     # Generate and apply visability mask
     vis_mask = get_vis_mask(obs_grid)
