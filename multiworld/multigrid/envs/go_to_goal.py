@@ -16,6 +16,7 @@ class GoToGoalEnv(MultiGridEnv):
 
         placeable_positions = self._world.get_empty_positions()
         goal_pos = self._rand_elem(placeable_positions)
+        goal_pos = Position(self._width // 2, self._height // 2)
         self.goal = Goal()
         self._world.set(goal_pos, self.goal)
 
@@ -40,5 +41,6 @@ class GoToGoalEnv(MultiGridEnv):
             if obj is None:
                 continue
             if np.array_equal(obj, self.goal):
-                agent.pos = Position(-1, -1)
+                pass
+                # agent.pos = Position(-1, -1)
         return observations, rewards, terminations, truncations, info

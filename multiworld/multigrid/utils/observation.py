@@ -40,12 +40,12 @@ def gen_obs_grid_encoding(
     agent_view_size: int | None,
     see_through_walls: bool,
 ) -> ndarray[np.int_]:
-    if agent_view_size is None:
-        return grid_state
+    num_agents = len(agent_state)
     obs_grid = gen_obs_grid(grid_state, agent_state, agent_view_size)
+    if agent_view_size is None:
+        return obs_grid
     # Generate and apply visability mask
     vis_mask = get_vis_mask(obs_grid)
-    num_agents = len(agent_state)
     if see_through_walls:
         return obs_grid
     for agent in range(num_agents):
@@ -57,10 +57,11 @@ def gen_obs_grid_encoding(
 
 
 def gen_obs_grid(
-    grid_state: ndarray[np.int_], agent_state: ndarray[np.int_], agent_view_size: int
+    grid_state: ndarray[np.int_],
+    agent_state: ndarray[np.int_],
+    agent_view_size: int | None,
 ) -> ndarray[np.int_]:
     num_agents = len(agent_state)
-    obs_width, obs_height = agent_view_size, agent_view_size
 
     # Process agent states
     agent_grid = agent_state[..., AGENT_ENCODING_IDX]
@@ -69,7 +70,7 @@ def gen_obs_grid(
     agent_terminated = agent_state[..., AGENT_TERMINATED_IDX]
     agent_carrying = agent_state[..., AGENT_CARRYING_IDX]
 
-    if num_agents > 1:
+    if num_agents > 0:
         grid_encoding = np.empty((*grid_state.shape[:-1], ENCODE_DIM), dtype=np.int_)
         grid_encoding[...] = grid_state[..., GRID_ENCODING_IDX]
 
@@ -81,6 +82,16 @@ def gen_obs_grid(
             grid_encoding[y, x, GRID_ENCODING_IDX] = agent_grid[agent]
     else:
         grid_encoding = grid_state[..., GRID_ENCODING_IDX]
+
+    if agent_view_size is None:
+        width = grid_state.shape[0]
+        height = grid_state.shape[1]
+        obs_grid = np.empty((num_agents, height, width, ENCODE_DIM), dtype=np.int_)
+        for agent in range(num_agents):
+            obs_grid[agent, ...] = grid_encoding.copy()
+        return obs_grid
+
+    obs_width, obs_height = agent_view_size, agent_view_size
 
     top_left = get_view_exts(agent_dir, agent_pos, agent_view_size)
     topX, topY = top_left[:, 0], top_left[:, 1]
