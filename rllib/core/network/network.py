@@ -4,6 +4,8 @@ from rllib.core.network.actor_critic_multi_input_network import (
     ActorCriticMultiInputNetwork,
 )
 from rllib.core.network.actor_critic_network import ActorCriticNetwork
+from rllib.core.network.feed_forward_network import FeedForwardNetwork
+from rllib.core.network.multi_input_network import MultiInputNetwork
 from rllib.core.torch.module import TorchModule
 from rllib.utils.spaces import ActionSpace, ObservationSpace
 
@@ -11,7 +13,8 @@ from rllib.utils.spaces import ActionSpace, ObservationSpace
 class NetworkType(enum.Enum):
     ACTORCRITIC = "actorcritic"
     MULTI_ACTORCRITIC = "multi_actorcritic"
-    BASIC = "basic"
+    MULTI_INPUT = "multi_input"
+    FEED_FORWARD = "feed_forward"
 
 
 class Network:
@@ -30,7 +33,7 @@ class Network:
         hidden_units: tuple[int, ...],
     ) -> None:
         if T is None:
-            T = NetworkType.BASIC
+            T = NetworkType.FEED_FORWARD
         self.T = T
         self.state_dim = state_dim
         self.action_dim = action_dim
@@ -46,7 +49,13 @@ class Network:
             return ActorCriticMultiInputNetwork(
                 self.state_dim, self.action_dim, self.conv_layers, self.hidden_units
             )
-        else:
-            raise ValueError(
-                f"Network type not supported: Err trying to parse {self.T}"
+        if self.T == NetworkType.MULTI_INPUT:
+            return MultiInputNetwork(
+                self.state_dim, self.action_dim, self.conv_layers, self.hidden_units
             )
+        if self.T == NetworkType.FEED_FORWARD:
+            return FeedForwardNetwork(
+                self.state_dim, self.action_dim, self.conv_layers, self.hidden_units
+            )
+
+        raise ValueError(f"Network type not supported: Err trying to parse {self.T}")

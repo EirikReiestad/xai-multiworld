@@ -28,7 +28,8 @@ torch.autograd.set_detect_anomaly(True)
 
 
 class PPO(Algorithm):
-    _policy_net: TorchModule
+    _actor_net: TorchModule
+    _critic_net: TorchModule
 
     def __init__(self, config: PPOConfig):
         super().__init__(config)
@@ -40,10 +41,11 @@ class PPO(Algorithm):
             self._config.conv_layers,
             self._config.hidden_units,
         )
-        self._policy_net = network()
+        self._actor_net = network()
+        self._critic_net = network()
 
         # NOTE: Remove when debug is resolved
-        for name, param in self._policy_net.named_parameters():
+        for name, param in self._actor_net.named_parameters():
             if not param.requires_grad:
                 logging.info(f"Parameter {name} requires grad: {param.requires_grad}")
 
@@ -52,7 +54,7 @@ class PPO(Algorithm):
         self._trajectory_buffer = TrajectoryBuffer(self._config.batch_size)
 
         self._optimizer = torch.optim.AdamW(
-            self._policy_net.parameters(), lr=config.learning_rate, amsgrad=True
+            self._actor_net.parameters(), lr=config.learning_rate, amsgrad=True
         )
 
     def train_step(
@@ -91,7 +93,10 @@ class PPO(Algorithm):
     def log_episode(self):
         super().log_episode()
         self.log_model(
-            self._policy_net, f"model_{self._episodes_done}", self._episodes_done
+            self._actor_net, f"model_actor_{self._episodes_done}", self._episodes_done
+        )
+        self.log_model(
+            self._critic_net, f"model_critic_{self._episodes_done}", self._episodes_done
         )
 
     def predict(self, observation: Dict[AgentID, ObsType]) -> Dict[AgentID, int]:
@@ -122,13 +127,15 @@ class PPO(Algorithm):
             values[key] = policy_values[key]
         return actions, action_logits, values
 
-    def load_model(self, model: Mapping[str, Any]):
-        self._policy_net.load_state_dict(model)
-        self._policy_net.eval()
+    def load_model(self, models: Tuple[Mapping[str, Any], Mapping[str, Any]]):
+        self._actor_net.load_state_dict(models[0])
+        self._actor_net.eval()
+        self._critic_net.load_state_dict(models[0])
+        self._critic_net.eval()
 
     @property
-    def model(self) -> nn.Module:
-        return self._policy_net
+    def model(self) -> Tuple[nn.Module, nn.Module]:
+        return self._actor_net, self._critic_net
 
     def _get_action(
         self, action_logits: torch.Tensor, std: float = 1.0
@@ -148,9 +155,13 @@ class PPO(Algorithm):
     ) -> List[Tuple[torch.Tensor, torch.Tensor]]:
         torch_observations = observations_seperate_to_torch(observations)
         if requires_grad:
-            return self._policy_net(*torch_observations)
+            return self._actor_net(*torch_observations), self._critic_net(
+                *torch_observations
+            )
         with torch.no_grad():
-            return self._policy_net(*torch_observations)
+            return self._actor_net(*torch_observations), self._critic_net(
+                *torch_observations
+            )
 
     def _optimize_model(self):
         if len(self._trajectory_buffer) != self._trajectory_buffer.maxlen:
@@ -253,7 +264,7 @@ class PPO(Algorithm):
 
         self._optimizer.zero_grad()
         loss.backward()
-        for name, param in self._policy_net.named_parameters():
+        for name, param in self._actor_net.named_parameters():
             if param.grad is None:
                 logging.info(f"{name}: {param.grad}")
         self._optimizer.step()
