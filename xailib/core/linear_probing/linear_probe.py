@@ -51,7 +51,8 @@ class LinearProbe:
         assert len(positive_activations.keys()) > 0, "No activations found"
 
         for i, layer in enumerate(positive_activations.keys()):
-            name = f"{i}_{layer.__class__.__name__}"
+            # name = f"{i}_{layer.__class__.__name__}"
+            name = layer
             regressor = LinearProbe.compute_regressor(
                 positive_activations[layer], negative_activations[layer]
             )

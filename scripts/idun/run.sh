@@ -33,6 +33,16 @@ while true; do
     esac
 done
 
+if [ "$example_flag" = true ]; then
+    sbatch scripts/idun/example.sh
+    exit 0
+fi
+
+if [ "$concept_score_flag" = true ]; then
+    sbatch scripts/idun/xailib.sh "--concept-score"
+    exit 0
+fi
+
 if [ "$help_flag" = true ]; then
     echo "Usage: $0 [options]"
     echo "Options:"
@@ -40,14 +50,4 @@ if [ "$help_flag" = true ]; then
     echo "  --example        Run the example script"
     echo "  --xailib         Run the xailib script with additional arguments"
     exit 0
-fi
-
-if [ "$example_flag" = true ]; then
-    sh scripts/idun/example.sh
-    sbatch scripts/idun/example.sh
-fi
-
-if [ "$concept_score_flag" = true ]; then
-    sh scripts/idun/xailib.sh "--concept-score"
-    sbatch scripts/idun/xailib.sh "--concept-score"
 fi

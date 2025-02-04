@@ -6,20 +6,16 @@ env = GoToGoalEnv(
     width=10,
     height=10,
     max_steps=200,
-<<<<<<< Updated upstream
-    agents=20,
-    agent_view_size=5,
-=======
     agents=1,
     agent_view_size=7,
->>>>>>> Stashed changes
     success_termination_mode="all",
     render_mode="rgb_array",
 )
 
 # env = ObservationCollectorWrapper(env, observations=10)
+# concepts = None
 # env = MultiGridConceptObsWrapper(
-#    env, observations=10, method="random", concepts=["random"]
+#    env, observations=200, method="random", concepts=concepts
 # )
 
 config = (
@@ -27,17 +23,18 @@ config = (
         batch_size=64,
         replay_buffer_size=10000,
         gamma=0.99,
-        learning_rate=3e-4,
+        learning_rate=1e-3,
         eps_start=0.9,
         eps_end=0.05,
         eps_decay=100000,
-        target_update=1000,
+        target_update=200,
     )
     .environment(env=env)
     .training()
+    # .training("model_1500:v0")
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="go-to-goal")
+    .wandb(project="go-to-goalv6", log_interval=100)
 )
 
 dqn = DQN(config)

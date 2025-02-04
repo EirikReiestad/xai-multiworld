@@ -17,6 +17,7 @@ from rllib.utils.torch.processing import (
     observation_to_torch_unsqueeze,
     observations_seperate_to_torch,
 )
+from utils.core.model_loader import ModelLoader
 
 
 class DQN(Algorithm):
@@ -39,6 +40,9 @@ class DQN(Algorithm):
             conv_layers=self._config.conv_layers,
             hidden_units=self._config.hidden_units,
         )
+
+        if self._config._model_path is not None:
+            ModelLoader.load_model_from_path(self._config._model_path, self._policy_net)
         self._target_net.load_state_dict(self._policy_net.state_dict())
         self._optimizer = torch.optim.AdamW(
             self._policy_net.parameters(), lr=config.learning_rate, amsgrad=True
@@ -72,10 +76,23 @@ class DQN(Algorithm):
 
     def log_episode(self):
         super().log_episode()
+        metadata = {
+            "agents": len(self._env.agents),
+            "width": self._env._width,
+            "height": self._env._height,
+            "eps_threshold": self._eps_threshold,
+            "learning_rate": self._config.learning_rate,
+            "conv_layers": self._config.conv_layers,
+            "hidden_units": self._config.hidden_units,
+        }
         self.log_model(
-            self._policy_net, f"model_{self._episodes_done}", self._episodes_done
+            self._policy_net,
+            f"model_{self._episodes_done}",
+            self._episodes_done,
+            metadata,
         )
         self.add_log("eps_threshold", self._eps_threshold)
+        # self.add_log("learning_rate", scheduler._optimizer.get_lr())
 
     def predict(self, observation: dict[AgentID, ObsType]) -> dict[AgentID, int]:
         self._eps_threshold = self._config.eps_end + (
