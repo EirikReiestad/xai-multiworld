@@ -88,7 +88,7 @@ def gen_obs_grid(
         height = grid_state.shape[1]
         obs_grid = np.empty((num_agents, height, width, ENCODE_DIM), dtype=np.int_)
         for agent in range(num_agents):
-            obs_grid[agent, ...] = grid_state.copy()
+            obs_grid[agent, ...] = grid_encoding.copy()
         return obs_grid
 
     obs_width, obs_height = agent_view_size, agent_view_size

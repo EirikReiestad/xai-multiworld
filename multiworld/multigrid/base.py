@@ -131,6 +131,7 @@ class MultiGridEnv(MultiWorldEnv):
             if fwd_obj is not None:
                 if fwd_obj.type == WorldObjectType.goal:
                     self.on_success(agent, rewards, {})
+                    self.on_success(agent, rewards, {})
 
         elif action == Action.pickup:
             if agent.state.carrying is not None:
