@@ -4,8 +4,8 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from multiworld.swarm.envs.flock import FlockEnv
 
 env = FlockEnv(
-    width=100,
-    height=100,
+    width=50,
+    height=50,
     max_steps=200,
     agents=1,
     observations=10,
@@ -26,11 +26,11 @@ config = (
         batch_size=64,
         replay_buffer_size=10000,
         gamma=0.99,
-        learning_rate=3e-4,
+        learning_rate=1e-3,
         eps_start=0.9,
         eps_end=0.05,
         eps_decay=100000,
-        target_update=5000,
+        target_update=300,
     )
     .network(conv_layers=())
     .environment(env=env)

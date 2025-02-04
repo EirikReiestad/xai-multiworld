@@ -9,14 +9,12 @@
 #SBATCH --output=srun.out
 #SBATCH --error=srun.err
 
-echo "test"
 if [ ! -f scripts/idun/clean.sh ]; then
     echo "No clean script found"
 else
     echo "Cleaning up"
     sh scripts/idun/clean.sh
 fi
-echo "test0"
 
 if [ -z "$0" ]; then
     echo "Error: run with additional options."
