@@ -17,7 +17,6 @@ class GoToGoalEnv(MultiGridEnv):
         for _ in range(1):
             placeable_positions = self._world.get_empty_positions()
             goal_pos = self._rand_elem(placeable_positions)
-            goal_pos = Position(self._width//2, self._height//2)
             self.goal = Goal()
             self._world.set(goal_pos, self.goal)
 
