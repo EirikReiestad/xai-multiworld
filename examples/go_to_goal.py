@@ -7,17 +7,17 @@ env = GoToGoalEnv(
     width=10,
     height=10,
     max_steps=200,
-    agents=5,
-    agent_view_size=7,
+    agents=1,
+    agent_view_size=None,
     success_termination_mode="all",
-    render_mode="rgb_array",
+    render_mode="human",
 )
 
 # env = ObservationCollectorWrapper(env, observations=10)
-concepts = None
-env = MultiGridConceptObsWrapper(
-    env, observations=200, method="random", concepts=concepts
-)
+# concepts = None
+# env = MultiGridConceptObsWrapper(
+#    env, observations=200, method="random", concepts=concepts
+# )
 
 config = (
     DQNConfig(
@@ -27,7 +27,7 @@ config = (
         learning_rate=1e-3,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=100000,
+        eps_decay=1000,
         target_update=200,
     )
     .environment(env=env)

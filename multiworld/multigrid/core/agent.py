@@ -20,7 +20,7 @@ class Agent:
     def __init__(self, index: int, view_size: int = 7, see_through_walls: bool = False):
         self.index = index
         assert view_size % 2 == 1, "View size must be odd for agent observation."
-        assert view_size > 1, "View size must be greater than 1 for agent observation."
+        assert view_size > 0, "View size must be greater than 1 for agent observation."
         self.view_size = view_size
         self.see_through_walls = see_through_walls
         self.state = AgentState()
