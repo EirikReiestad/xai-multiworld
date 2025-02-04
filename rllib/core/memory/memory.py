@@ -1,6 +1,6 @@
 import random
 from collections import deque
-from typing import TypeVar, Generic, List, Type
+from typing import Tuple, TypeVar, Generic, List, Type
 
 T = TypeVar("T")
 
@@ -38,7 +38,7 @@ class Memory(Generic[T], deque):
         for key in keys:
             self.add(**{field: kwargs[field][key] for field in kwargs})
 
-    def sample(self, batch_size: int) -> List[T]:
+    def sample(self, batch_size: int) -> Tuple[List[T], List[int]]:
         """
         Sample a batch of items from the buffer.
 
@@ -46,7 +46,9 @@ class Memory(Generic[T], deque):
         :return: A list of sampled items of type T.
         :raises ValueError: If the buffer contains fewer items than the requested batch size.
         """
-        return random.sample(self, batch_size)
+        indices = random.sample(range(len(self)), batch_size)  # Sample indices
+        sampled_items = [self[i] for i in indices]  # Get the items based on indices
+        return sampled_items, indices
 
     def reset(self):
         """
@@ -69,4 +71,3 @@ class Memory(Generic[T], deque):
                 f"Incorrect fields provided. Expected fields: {expected_fields}, "
                 f"but received: {provided_fields}"
             )
-

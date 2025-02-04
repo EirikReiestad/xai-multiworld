@@ -9,7 +9,11 @@ from multiworld.utils.advanced_typing import Action
 from multiworld.utils.typing import AgentID, ObsType
 from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.dqn.dqn_config import DQNConfig
-from rllib.core.memory.replay_memory import ReplayMemory, Transition
+from rllib.core.memory.prioritized_replay_memory import (
+    PrioritizedReplayMemory,
+    compute_td_errors,
+    Transition,
+)
 from rllib.core.network.multi_input_network import MultiInputNetwork
 from rllib.utils.dqn.misc import get_non_final_mask
 from rllib.utils.dqn.preprocessing import preprocess_next_observations
@@ -27,7 +31,8 @@ class DQN(Algorithm):
     def __init__(self, config: DQNConfig):
         super().__init__(config)
         self._config = config
-        self._memory = ReplayMemory(config.replay_buffer_size)
+        # self._memory = ReplayMemory(config.replay_buffer_size)
+        self._memory = PrioritizedReplayMemory(config.replay_buffer_size)
         self._policy_net = MultiInputNetwork(
             self.observation_space,
             self.action_space,
@@ -64,14 +69,18 @@ class DQN(Algorithm):
             next_observations, terminations, truncations
         )
 
+        priority = {key: 1.0 for key in next_obs.keys()}
+
         self._memory.add_dict(
             keys=observations.keys(),
             state=observations,
             action=actions,
             next_state=next_obs,
             reward=rewards,
+            priority=priority,
         )
         self._optimize_model()
+
         self._hard_update_target()
 
     def log_episode(self):
@@ -139,7 +148,7 @@ class DQN(Algorithm):
         if len(self._memory) < self._config.batch_size:
             return None
 
-        transitions = self._memory.sample(self._config.batch_size)
+        transitions, indices = self._memory.sample(self._config.batch_size)
 
         batch = Transition(*zip(*transitions))
 
@@ -157,9 +166,12 @@ class DQN(Algorithm):
 
         state_action_values = self._predict_policy_values(state_batch, action_batch)
 
+        next_state_actions = (
+            self._policy_net(*non_final_next_states).argmax(1).unsqueeze(1)
+        )
         next_state_values = torch.zeros(self._config.batch_size)
         self._predict_target_values(
-            non_final_next_states, next_state_values, non_final_mask
+            non_final_next_states, next_state_values, non_final_mask, next_state_actions
         )
         expected_state_action_values = self._expected_state_action_values(
             next_state_values, reward_batch
@@ -173,6 +185,10 @@ class DQN(Algorithm):
         loss.backward()
         self._optimizer.step()
 
+        if loss is not None:
+            td_errors = compute_td_errors(loss, self._config.batch_size)
+            self._memory.update_priorities(indices=indices, priorities=td_errors)
+
         return loss.item()
 
     def _predict_policy_values(
@@ -185,10 +201,13 @@ class DQN(Algorithm):
         non_final_next_states: List[torch.Tensor],
         next_state_values: torch.Tensor,
         non_final_mask: List[bool],
+        next_state_actions: torch.Tensor,
     ) -> torch.Tensor:
         with torch.no_grad():
-            output = self._target_net(*non_final_next_states).max(1).values
-            next_state_values[non_final_mask] = output
+            output = self._target_net(*non_final_next_states).gather(
+                1, next_state_actions
+            )
+            next_state_values[non_final_mask] = output.squeeze()
         return next_state_values
 
     def _expected_state_action_values(
