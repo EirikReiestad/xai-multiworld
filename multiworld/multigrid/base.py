@@ -63,10 +63,11 @@ class MultiGridEnv(MultiWorldEnv):
         self._screen_size = screen_size
         assert isinstance(screen_size, tuple)
 
+        self._agent_view_size = agent_view_size
         self._agent_states = AgentState(agents)
         self._agents: List[Agent] = []
         for i in range(self._num_agents):
-            agent = Agent(i, agent_view_size or 1, see_through_walls)
+            agent = Agent(i, agent_view_size or self._width, see_through_walls)
             self._agents.append(agent)
         self._world = Grid(width, height)
 
@@ -126,10 +127,11 @@ class MultiGridEnv(MultiWorldEnv):
             if agent_present:
                 return
 
-            agent.state.pos = fwd_pos
             if fwd_obj is not None:
                 if fwd_obj.type == WorldObjectType.goal:
                     self.on_success(agent, rewards, {})
+                    return
+            agent.state.pos = fwd_pos
 
         elif action == Action.pickup:
             if agent.state.carrying is not None:
@@ -199,7 +201,7 @@ class MultiGridEnv(MultiWorldEnv):
         image = gen_obs_grid_encoding(
             self._world.state,
             self._agent_states,
-            self._agents[0].view_size,
+            self._agent_view_size,
             self._agents[0].see_through_walls,
         )
         observations = {}
