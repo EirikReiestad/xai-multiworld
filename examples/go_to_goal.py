@@ -3,8 +3,8 @@ from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 
 env = GoToGoalEnv(
-    width=10,
-    height=10,
+    width=20,
+    height=20,
     max_steps=200,
     agents=1,
     agent_view_size=7,
