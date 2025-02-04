@@ -5,6 +5,7 @@ from typing import Literal, Optional, Tuple
 
 import gymnasium as gym
 
+from rllib.core.network.network import NetworkType
 from utils.common.callbacks import RenderingCallback, empty_rendering_callback
 
 
@@ -23,6 +24,7 @@ class AlgorithmConfig(ABC):
         self._rendering_callback = empty_rendering_callback
 
         self._model_path = None
+        self._network_type = None
 
         self.conv_layers: Tuple[int, ...] = tuple(
             (32, 64, 64),
@@ -33,9 +35,12 @@ class AlgorithmConfig(ABC):
 
     def network(
         self,
+        network_type: NetworkType | None = None,
         conv_layers: Tuple[int, ...] | None = None,
         hidden_units: Tuple[int, ...] | None = None,
     ):
+        if network_type is not None:
+            self._network_type = network_type
         if conv_layers is not None:
             self.conv_layers = conv_layers
         if hidden_units is not None:

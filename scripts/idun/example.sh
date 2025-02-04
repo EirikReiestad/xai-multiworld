@@ -39,6 +39,6 @@ poetry install
 
 poetry run wandb login
 
-poetry run python -O "$0"
+poetry run python -O examples
 
 uname -a

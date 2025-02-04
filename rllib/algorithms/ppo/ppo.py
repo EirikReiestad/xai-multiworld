@@ -9,9 +9,8 @@ from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.ppo.ppo_config import PPOConfig
 from rllib.core.algorithms.gae import GAE
 from rllib.core.memory.trajectory_buffer import Trajectory, TrajectoryBuffer
-from rllib.core.network.actor_critic_multi_input_network import (
-    ActorCriticMultiInputNetwork,
-)
+from rllib.core.network.network import Network
+from rllib.core.torch.module import TorchModule
 from rllib.utils.ppo.calculations import compute_log_probs, compute_returns, ppo_loss
 from rllib.utils.torch.processing import (
     leaf_value_to_torch,
@@ -29,17 +28,19 @@ torch.autograd.set_detect_anomaly(True)
 
 
 class PPO(Algorithm):
-    _policy_net: ActorCriticMultiInputNetwork
+    _policy_net: TorchModule
 
     def __init__(self, config: PPOConfig):
         super().__init__(config)
         self._config = config
-        self._policy_net = ActorCriticMultiInputNetwork(
+        network = Network(
+            self._config._network_type,
             self.observation_space,
             self.action_space,
             self._config.conv_layers,
             self._config.hidden_units,
         )
+        self._policy_net = network()
 
         # NOTE: Remove when debug is resolved
         for name, param in self._policy_net.named_parameters():
