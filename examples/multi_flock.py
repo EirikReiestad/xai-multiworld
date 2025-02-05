@@ -16,7 +16,7 @@ env = FlockEnv(
     object_size=8,
     agent_view_size=65,
     success_termination_mode="all",
-    render_mode="human",
+    render_mode="rgb_array",
 )
 
 config = (
@@ -43,7 +43,7 @@ mconfig = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="birds", log_interval=100)
+    .wandb(project="multi-birds", log_interval=100)
 )
 
 dqn = MDQN(agents, mconfig, config)
