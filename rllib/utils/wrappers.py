@@ -33,7 +33,7 @@ class GymnasiumWrapper(gym.Wrapper):
     def step(
         self, action: WrapperActType
     ) -> tuple[WrapperObsType, SupportsFloat, bool, bool, dict[str, Any]]:
-        action = [action.get(0)]
+        action = action.get(0)
         observation, rewards, terminations, truncations, infos = super().step(action)
         return (
             {0: {"observation": observation}},

@@ -14,6 +14,7 @@ class PPOConfig(AlgorithmConfig):
         learning_rate: float = 1e-4,
         value_weight: float = 0.5,
         entropy_weight: float = 0.01,
+        continuous: bool = True,
     ):
         super().__init__("PPO")
         self.batch_size = batch_size
@@ -26,3 +27,4 @@ class PPOConfig(AlgorithmConfig):
         self.value_weight = value_weight
         self.entropy_weight = entropy_weight
         self.network(network_type=NetworkType.FEED_FORWARD)
+        self.continuous = continuous
