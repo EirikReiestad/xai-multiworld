@@ -21,7 +21,7 @@ env = GoToGoalEnv(
 config = (
     DQNConfig(
         batch_size=64,
-        replay_buffer_size=100000,
+        replay_buffer_size=10000,
         gamma=0.99,
         learning_rate=3e-4,
         eps_start=0.9,
