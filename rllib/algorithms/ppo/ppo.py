@@ -12,6 +12,7 @@ from rllib.core.memory.trajectory_buffer import Trajectory, TrajectoryBuffer
 from rllib.core.network.network import Network
 from rllib.core.torch.module import TorchModule
 from rllib.utils.ppo.calculations import compute_log_probs, compute_returns, ppo_loss
+from rllib.utils.spaces import DiscreteActionSpace
 from rllib.utils.torch.processing import (
     leaf_value_to_torch,
     observations_seperate_to_torch,
@@ -34,15 +35,22 @@ class PPO(Algorithm):
     def __init__(self, config: PPOConfig):
         super().__init__(config)
         self._config = config
-        network = Network(
+        actor_network = Network(
             self._config._network_type,
             self.observation_space,
             self.action_space,
             self._config.conv_layers,
             self._config.hidden_units,
         )
-        self._actor_net = network()
-        self._critic_net = network()
+        critic_network = Network(
+            self._config._network_type,
+            self.observation_space,
+            DiscreteActionSpace(1),
+            self._config.conv_layers,
+            self._config.hidden_units,
+        )
+        self._actor_net = actor_network()
+        self._critic_net = critic_network()
 
         # NOTE: Remove when debug is resolved
         for name, param in self._actor_net.named_parameters():
@@ -138,6 +146,22 @@ class PPO(Algorithm):
         return self._actor_net, self._critic_net
 
     def _get_action(
+        self, action_logits: torch.Tensor, std: float = 1.0
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
+        if self._config.continuous:
+            return self._get_continuous_action(action_logits=action_logits, std=std)
+        else:
+            return self._get_discrete_action(action_logits=action_logits)
+
+    def _get_discrete_action(
+        self, action_logits: torch.Tensor
+    ) -> Tuple[torch.Tensor, torch.Tensor]:
+        dist = torch.distributions.Categorical(logits=action_logits)
+        action = dist.sample()
+        log_prob = dist.log_prob(action)
+        return action, log_prob
+
+    def _get_continuous_action(
         self, action_logits: torch.Tensor, std: float = 1.0
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         dist = torch.distributions.Normal(action_logits, std)
