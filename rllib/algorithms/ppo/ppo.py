@@ -206,11 +206,11 @@ class PPO(Algorithm):
         loss = 0
         buff = []
         for traj in trajectories:
-            if traj.step == 0 and len(buff) > 0:
+            if traj.step == 0 and len(buff) > 1:
                 loss += self._optimize_model_minibatch_episode(buff)
                 buff = []
             buff.append(traj)
-        if len(buff) != 0:
+        if len(buff) > 1:
             loss += self._optimize_model_minibatch_episode(buff)
         return loss
 

@@ -12,8 +12,8 @@ env = GymnasiumWrapper(env)
 
 config = (
     PPOConfig(
-        batch_size=2000,
-        mini_batch_size=200,
+        batch_size=1000,
+        mini_batch_size=100,
         epochs=5,
         gamma=0.99,
         lambda_=0.95,
@@ -24,7 +24,7 @@ config = (
         continuous=False,
     )
     .network(
-        conv_layers=(), hidden_units=(64, 64), network_type=NetworkType.FEED_FORWARD
+        conv_layers=(), hidden_units=(128, 128), network_type=NetworkType.FEED_FORWARD
     )
     .environment(env=env)
     .training()
