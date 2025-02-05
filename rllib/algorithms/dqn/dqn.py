@@ -73,14 +73,14 @@ class DQN(Algorithm):
 
         self._memory.add_dict(
             keys=observations.keys(),
-            state=observations,
             action=actions,
+            state=observations,
             next_state=next_obs,
             reward=rewards,
             priority=priority,
         )
-        self._optimize_model()
 
+        self._optimize_model()
         self._hard_update_target()
 
     def log_episode(self):
