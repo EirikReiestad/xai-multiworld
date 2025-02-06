@@ -59,6 +59,7 @@ if [ "$help_flag" = true ] || true; then
     echo "Options:"
     echo "  --help           Show this help message"
     echo "  --example        Run the example script"
+    echo "  --pipeline       Run the pipeline"
     echo "  --xailib         Run the xailib script with additional arguments"
     exit 0
 fi

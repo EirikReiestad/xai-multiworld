@@ -40,7 +40,7 @@ def run(concept: str):
         filename=concept,
         min=0,
         max=1,
-        show=True,
+        show=False,
     )
 
 
