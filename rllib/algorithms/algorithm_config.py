@@ -24,7 +24,7 @@ class AlgorithmConfig(ABC):
         self._rendering_callback = empty_rendering_callback
 
         self._model_path = None
-        self._network_type = None
+        self.network(network_type=NetworkType.FEED_FORWARD)
 
         self.conv_layers: Tuple[int, ...] = tuple(
             (32, 64, 64),

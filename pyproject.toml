@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Eirik Reiestad <eirik@reiestad.no>"]
 readme = "readme.md"
-packages = [{ include = "multiworld", from = "."}]
+packages = [{ include = "multiworld", from = "." }]
 
 [tool.poetry.dependencies]
 

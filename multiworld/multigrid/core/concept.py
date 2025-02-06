@@ -9,7 +9,14 @@ from multiworld.multigrid.core.world_object import WorldObject
 
 def _random_observation_concept(_: NDArray[np.int_]) -> bool:
     rand_float = np.random.uniform()
-    if rand_float < 0.2:
+    if rand_float < 0.1:
+        return True
+    return False
+
+
+def _random_negative_observation_concept(_: NDArray[np.int_]) -> bool:
+    rand_float = np.random.uniform()
+    if rand_float < 0.1:
         return True
     return False
 
@@ -133,6 +140,7 @@ def _agent_in_front_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
 
 concept_checks: Dict[str, Callable] = {
     "random": _random_observation_concept,
+    "random_negative": _random_observation_concept,
     "goal_in_view": _goal_in_view_concept,
     "goal_to_right": _goal_to_right_concept,
     "goal_to_left": _goal_to_left_concept,

@@ -164,6 +164,7 @@ class ConceptObsWrapper(gym.Wrapper):
         self._step_count = 0
         self._concepts_added = 0
         self._previous_concepts_added = 0
+        self._timeout = 10
 
     def step(
         self, actions: Dict[AgentID, Action | int]
@@ -187,10 +188,12 @@ class ConceptObsWrapper(gym.Wrapper):
                 self._previous_concepts_added == self._concepts_added
                 and self._step_count > 0
             ):
-                info_str = "\n"
-                for key in self._concept_checks.keys():
-                    info_str += f"{key} - {len(self._concepts.get(key) or [])}\n"
-                raise TimeoutError("Can not generate all concepts." + info_str)
+                self._timeout -= 1
+                if self._timeout == 0:
+                    info_str = "\n"
+                    for key in self._concept_checks.keys():
+                        info_str += f"{key} - {len(self._concepts.get(key) or [])}\n"
+                    raise TimeoutError("Can not generate all concepts." + info_str)
             self._previous_concepts_added = self._concepts_added
 
         observations, rewards, terminations, truncations, info = super().step(actions)

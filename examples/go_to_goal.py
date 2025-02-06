@@ -1,6 +1,7 @@
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
+from rllib.core.network.network import NetworkType
 
 env = GoToGoalEnv(
     width=15,
@@ -29,12 +30,13 @@ config = (
         eps_decay=10000,
         target_update=200,
     )
+    .network(network_type=NetworkType.MULTI_INPUT)
     .environment(env=env)
     .training()
     # .training("model_1500:v0")
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="go-to-goal-randomv0", log_interval=50)
+    # .wandb(project="go-to-goal-randomv0", log_interval=50)
 )
 
 dqn = DQN(config)
