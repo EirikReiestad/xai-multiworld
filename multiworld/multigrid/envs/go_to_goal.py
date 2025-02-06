@@ -14,11 +14,11 @@ class GoToGoalEnv(MultiGridEnv):
     def _gen_world(self, width: int, height: int):
         self._world = Grid(width, height)
 
-        placeable_positions = self._world.get_empty_positions()
-        goal_pos = self._rand_elem(placeable_positions)
-        goal_pos = Position(self._width // 2, self._height // 2)
-        self.goal = Goal()
-        self._world.set(goal_pos, self.goal)
+        for _ in range(1):
+            placeable_positions = self._world.get_empty_positions()
+            goal_pos = self._rand_elem(placeable_positions)
+            self.goal = Goal()
+            self._world.set(goal_pos, self.goal)
 
         placeable_positions = np.array(self._world.get_empty_positions())
         np.random.shuffle(placeable_positions)
