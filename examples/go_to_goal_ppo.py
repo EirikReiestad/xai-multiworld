@@ -10,11 +10,11 @@ env = GoToGoalEnv(
     agents=1,
     agent_view_size=None,
     success_termination_mode="all",
-    render_mode="human",
+    render_mode="rgb_array",
 )
 config = (
     PPOConfig(
-        batch_size=2048,
+        batch_size=200,
         mini_batch_size=10,
         epochs=5,
         gamma=0.99,
@@ -30,8 +30,9 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="go-to-goal-ppo")
+    .wandb(project="go-to-goal-ppo", log_interval=20)
 )
+
 ppo = PPO(config)
 
 while True:

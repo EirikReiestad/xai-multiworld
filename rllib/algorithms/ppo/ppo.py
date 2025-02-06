@@ -86,9 +86,9 @@ class PPO(Algorithm):
             states=observations,
             actions=actions,
             action_probs={
-                key: value.clone() for key, value in self._action_logits.items()
+                key: value.clone() for key, value in self._action_logits.copy().items()
             },
-            values={key: value.clone() for key, value in self._values.items()},
+            values={key: value.clone() for key, value in self._values.copy().items()},
             rewards=rewards,
             dones=dones,
             step=step,
@@ -198,6 +198,8 @@ class PPO(Algorithm):
     def _optimize_model_batch(self):
         mini_batch_size = self._config.mini_batch_size
         buffer_list = list(self._trajectory_buffer)
+        self._optimize_model_minibatch(buffer_list)
+        return
         for i in range(0, len(buffer_list), mini_batch_size):
             batch = buffer_list[i : i + mini_batch_size]
             self._optimize_model_minibatch(batch)
@@ -206,11 +208,13 @@ class PPO(Algorithm):
         loss = 0
         buff = []
         for traj in trajectories:
-            if traj.step == 0 and len(buff) > 0:
-                loss += self._optimize_model_minibatch_episode(buff)
+            if traj.step == 0:
+                if len(buff) > 1:
+                    loss += self._optimize_model_minibatch_episode(buff)
                 buff = []
             buff.append(traj)
-        if len(buff) != 0:
+        return loss
+        if len(buff) > 1:
             loss += self._optimize_model_minibatch_episode(buff)
         return loss
 
@@ -232,6 +236,7 @@ class PPO(Algorithm):
         log_probs = compute_log_probs(
             torch_stack_inner_list(action_batch_torch),
             torch_stack_inner_list(action_logits_batch),
+            continuous=self._config.continuous,
         )
 
         # TODO: This can be more efficient by passing all the states at once.
@@ -248,22 +253,30 @@ class PPO(Algorithm):
 
         new_value_batch = zip_dict_list(new_values)
         advantages = gae(dones, reward_batch, value_batch)
+        advantages_tensor = torch_stack_inner_list(advantages).detach()
+        normalized_advantages = (advantages_tensor - advantages_tensor.mean()) / (
+            advantages_tensor.std() + 1e-10
+        )
+
         average_advantages = float(torch.mean(torch_stack_inner_list(advantages)))
         self.add_log("advantages", average_advantages, LogMethod.AVERAGE)
-        advantages_tensor = torch_stack_inner_list(advantages)
-        normalized_advantages = (advantages_tensor - advantages_tensor.mean()) / (
-            advantages_tensor.std() + 1e-8
-        )
 
         new_action_logits_batch = zip_dict_list(new_action_logits)
         new_log_probs = compute_log_probs(
             torch_stack_inner_list(action_batch_torch),
             torch_stack_inner_list(new_action_logits_batch),
+            continuous=self._config.continuous,
         )
         reward_batch = torch_stack_inner_list(leaf_value_to_torch(reward_batch))
         new_value_batch = torch_stack_inner_list(new_value_batch)
+        value_batch = torch_stack_inner_list(value_batch)
 
         returns = compute_returns(reward_batch, self._config.gamma)
+        advantages = returns - value_batch
+        advantages = advantages.detach()
+        normalized_advantages = (advantages - advantages.mean()) / (
+            advantages.std() + 1e-10
+        )
 
         policy_loss, value_loss, entropy_loss = ppo_loss(
             log_probs,
@@ -285,6 +298,22 @@ class PPO(Algorithm):
         )
 
         self.add_log("loss", loss.item(), LogMethod.AVERAGE)
+
+        if torch.isinf(loss) or torch.isnan(loss):
+            logging.info(
+                "WOOOW the loss is really high (or nan)... I think we will skip this one for now. Please check this part of the code:)"
+            )
+            return loss.item()
+
+        """
+        self._optimizer.zero_grad()
+        policy_loss.backward()
+        self._optimizer.step()
+
+        self._optimizer.zero_grad()
+        value_loss.backward()
+        self._optimizer.step()
+        """
 
         self._optimizer.zero_grad()
         loss.backward()
