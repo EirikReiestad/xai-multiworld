@@ -1,12 +1,256 @@
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
 wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
 wandb: Tracking run with wandb version 0.19.5
-wandb: Run data is saved locally in ./wandb/run-20250205_090953-oacq42g9
+wandb: Run data is saved locally in ./wandb/run-20250205_103722-4yitcvu5
 wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run astral-totem-1
-wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/multi-birds
-wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/multi-birds/runs/oacq42g9
+wandb: Syncing run devout-firefly-4
+wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/CartPole-v1
+wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/CartPole-v1/runs/4yitcvu5
+wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Tracking run with wandb version 0.19.5
+wandb: Run data is saved locally in ./wandb/run-20250205_103724-fhvpmxh2
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run fresh-pond-5
+wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/CartPole-v1
+wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/CartPole-v1/runs/fhvpmxh2
+WARNING:root:No non final next states, consider increasing batch size.
+/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/autograd/graph.py:823: UserWarning: Error detected in ExpBackward0. Traceback of forward call that caused the error:
+  File "/cluster/work/eirre/xai-multiworld/examples/cartpole.py", line 38, in <module>
+    ppo.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 99, in train_step
+    self._optimize_model()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 195, in _optimize_model
+    self._optimize_model_batch()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 203, in _optimize_model_batch
+    self._optimize_model_minibatch(batch)
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 210, in _optimize_model_minibatch
+    loss += self._optimize_model_minibatch_episode(buff)
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 268, in _optimize_model_minibatch_episode
+    policy_loss, value_loss, entropy_loss = ppo_loss(
+  File "/cluster/work/eirre/xai-multiworld/rllib/utils/ppo/calculations.py", line 14, in ppo_loss
+    ratios = torch.exp(new_log_probs - old_log_probs)
+ (Triggered internally at /pytorch/torch/csrc/autograd/python_anomaly_mode.cpp:122.)
+  return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/cartpole.py", line 38, in <module>
+    ppo.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 99, in train_step
+    self._optimize_model()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 195, in _optimize_model
+    self._optimize_model_batch()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 203, in _optimize_model_batch
+    self._optimize_model_minibatch(batch)
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 210, in _optimize_model_minibatch
+    loss += self._optimize_model_minibatch_episode(buff)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 290, in _optimize_model_minibatch_episode
+    loss.backward()
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/_tensor.py", line 626, in backward
+    torch.autograd.backward(
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/autograd/__init__.py", line 347, in backward
+    _engine_run_backward(
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/autograd/graph.py", line 823, in _engine_run_backward
+    return Variable._execution_engine.run_backward(  # Calls into the C++ engine to run the backward pass
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: Function 'ExpBackward0' returned nan values in its 0th output.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/cartpole.py", line 38, in <module>
+    ppo.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 99, in train_step
+    self._optimize_model()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 195, in _optimize_model
+    self._optimize_model_batch()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 203, in _optimize_model_batch
+    self._optimize_model_minibatch(batch)
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 210, in _optimize_model_minibatch
+    loss += self._optimize_model_minibatch_episode(buff)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 241, in _optimize_model_minibatch_episode
+    _, action_logits, value = self._predict(state, requires_grad=True)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 125, in _predict
+    action_probabilities, policy_values = self._get_policy_values(
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 182, in _get_policy_values
+    return self._actor_net(*torch_observations), self._critic_net(
+                                                 ^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/feed_forward_network.py", line 51, in forward
+    x = self._fc_final(x)
+        ^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/processor.py", line 28, in forward
+    return self.fc_layers(x)
+           ^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/container.py", line 250, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/linear.py", line 125, in forward
+    return F.linear(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/fx/traceback.py", line 175, in format_stack
+    return traceback.format_list(traceback.extract_stack()[:-1])
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/traceback.py", line 231, in extract_stack
+    stack = StackSummary.extract(walk_stack(f), limit=limit)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/traceback.py", line 393, in extract
+    return klass._extract_from_extended_frame_gen(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/traceback.py", line 432, in _extract_from_extended_frame_gen
+    linecache.checkcache(filename)
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/linecache.py", line 72, in checkcache
+    stat = os.stat(fullname)
+           ^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+WARNING:root:No non final next states, consider increasing batch size.
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/cartpole.py", line 38, in <module>
+    ppo.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 99, in train_step
+    self._optimize_model()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 195, in _optimize_model
+    self._optimize_model_batch()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 203, in _optimize_model_batch
+    self._optimize_model_minibatch(batch)
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 214, in _optimize_model_minibatch
+    loss += self._optimize_model_minibatch_episode(buff)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 241, in _optimize_model_minibatch_episode
+    _, action_logits, value = self._predict(state, requires_grad=True)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 132, in _predict
+    action, log_prob = self._get_action(action_logit)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 154, in _get_action
+    return self._get_discrete_action(action_logits=action_logits)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 159, in _get_discrete_action
+    dist = torch.distributions.Categorical(logits=action_logits)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/distributions/categorical.py", line 66, in __init__
+    self.logits = logits - logits.logsumexp(dim=-1, keepdim=True)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/cartpole.py", line 38, in <module>
+    ppo.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 99, in train_step
+    self._optimize_model()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 195, in _optimize_model
+    self._optimize_model_batch()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 203, in _optimize_model_batch
+    self._optimize_model_minibatch(batch)
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 210, in _optimize_model_minibatch
+    loss += self._optimize_model_minibatch_episode(buff)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 241, in _optimize_model_minibatch_episode
+    _, action_logits, value = self._predict(state, requires_grad=True)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 125, in _predict
+    action_probabilities, policy_values = self._get_policy_values(
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 182, in _get_policy_values
+    return self._actor_net(*torch_observations), self._critic_net(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/feed_forward_network.py", line 51, in forward
+    x = self._fc_final(x)
+        ^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/processor.py", line 28, in forward
+    return self.fc_layers(x)
+           ^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/container.py", line 250, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/linear.py", line 125, in forward
+    return F.linear(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/fx/traceback.py", line 169, in format_stack
+    @compatibility(is_backward_compatible=False)
+    
+KeyboardInterrupt
 WARNING:root:No non final next states, consider increasing batch size.
 WARNING:root:No non final next states, consider increasing batch size.
 WARNING:root:No non final next states, consider increasing batch size.
@@ -189,3 +433,1820 @@ WARNING:root:No non final next states, consider increasing batch size.
 WARNING:root:No non final next states, consider increasing batch size.
 WARNING:root:No non final next states, consider increasing batch size.
 WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+wandb: WARNING A graphql request initiated by the public wandb API timed out (timeout=19 sec). Create a new API with an integer timeout larger than 19, e.g., `api = wandb.Api(timeout=29)` to increase the graphql timeout.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 43, in <module>
+    dqn.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 82, in train_step
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 151, in _optimize_model
+    transitions, indices = self._memory.sample(self._config.batch_size)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/memory/prioritized_replay_memory.py", line 41, in sample
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/random.py", line 495, in choices
+    cum_weights = list(_accumulate(weights))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 43, in <module>
+    dqn.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 82, in train_step
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 151, in _optimize_model
+    transitions, indices = self._memory.sample(self._config.batch_size)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/memory/prioritized_replay_memory.py", line 41, in sample
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/random.py", line 495, in choices
+    cum_weights = list(_accumulate(weights))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/flock.py", line 46, in <module>
+    dqn.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 82, in train_step
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 151, in _optimize_model
+    transitions, indices = self._memory.sample(self._config.batch_size)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/memory/prioritized_replay_memory.py", line 47, in sample
+    probabilities = [priority / total_priority for priority in priorities]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/memory/prioritized_replay_memory.py", line 47, in <listcomp>
+    probabilities = [priority / total_priority for priority in priorities]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/flock.py", line 46, in <module>
+    dqn.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 82, in train_step
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 151, in _optimize_model
+    transitions, indices = self._memory.sample(self._config.batch_size)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/memory/prioritized_replay_memory.py", line 47, in sample
+    probabilities = [priority / total_priority for priority in priorities]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/memory/prioritized_replay_memory.py", line 47, in <listcomp>
+    probabilities = [priority / total_priority for priority in priorities]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 43, in <module>
+    dqn.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 82, in train_step
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 151, in _optimize_model
+    transitions, indices = self._memory.sample(self._config.batch_size)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/memory/prioritized_replay_memory.py", line 49, in sample
+    indices = random.choices(range(len(self)), probabilities, k=batch_size)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/random.py", line 495, in choices
+    cum_weights = list(_accumulate(weights))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 43, in <module>
+    dqn.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 82, in train_step
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 151, in _optimize_model
+    transitions, indices = self._memory.sample(self._config.batch_size)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/memory/prioritized_replay_memory.py", line 50, in sample
+    sampled_items = [self[i] for i in indices]
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/memory/prioritized_replay_memory.py", line 50, in <listcomp>
+    sampled_items = [self[i] for i in indices]
+    
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 43, in <module>
+    dqn.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 82, in train_step
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 153, in _optimize_model
+    batch = Transition(*zip(*transitions))
+                        ^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 43, in <module>
+    dqn.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 82, in train_step
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 153, in _optimize_model
+    batch = Transition(*zip(*transitions))
+                        ^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 43, in <module>
+    dqn.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 82, in train_step
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 151, in _optimize_model
+    transitions, indices = self._memory.sample(self._config.batch_size)
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/memory/prioritized_replay_memory.py", line 49, in sample
+    indices = random.choices(range(len(self)), probabilities, k=batch_size)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/random.py", line 495, in choices
+    cum_weights = list(_accumulate(weights))
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 43, in <module>
+    dqn.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 82, in train_step
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/dqn.py", line 186, in _optimize_model
+    self._optimizer.step()
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/optim/optimizer.py", line 493, in wrapper
+    out = func(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/optim/optimizer.py", line 91, in _use_grad
+    ret = func(self, *args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/optim/adamw.py", line 243, in step
+    adamw(
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/optim/optimizer.py", line 154, in maybe_fallback
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/optim/adamw.py", line 875, in adamw
+    func(
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/optim/adamw.py", line 425, in _single_tensor_adamw
+    exp_avg.lerp_(grad, 1 - device_beta1)
+KeyboardInterrupt

@@ -12,8 +12,8 @@ env = GymnasiumWrapper(env)
 
 config = (
     PPOConfig(
-        batch_size=1000,
-        mini_batch_size=100,
+        batch_size=200,
+        mini_batch_size=50,
         epochs=5,
         gamma=0.99,
         lambda_=0.95,
@@ -30,7 +30,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="CartPole-v1")
+    .wandb(project="CartPole-v1", log_interval=50)
 )
 ppo = PPO(config)
 
