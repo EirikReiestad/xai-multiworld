@@ -1,5 +1,4 @@
 from rllib.algorithms.algorithm_config import AlgorithmConfig
-from typing import Tuple
 
 
 class DQNConfig(AlgorithmConfig):
@@ -13,8 +12,6 @@ class DQNConfig(AlgorithmConfig):
         eps_end: float = 0.05,
         eps_decay: int = 1000,
         target_update: int = 1000,
-        conv_layers: Tuple[int, ...] = (32, 64, 64),
-        hidden_units: Tuple[int, ...] = (128, 128),
     ):
         super().__init__("DQN")
         self.replay_buffer_size = replay_buffer_size
