@@ -1,17 +1,16 @@
-from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from multiworld.swarm.envs.flock import FlockEnv
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from utils.core.model_downloader import ModelDownloader
 
-project_folder = "bird"
+project_folder = "go-to-goal-random"
 model_name = "model"
 
 
 models = []
 for i in range(0, 1600, 200):
     models.append(f"model_{i}:v0")
-models = ["model_12800:v1"]
+models = ["model_1300:v5"]
 
 env = FlockEnv(render_mode="rgb_array")
 

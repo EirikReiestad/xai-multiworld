@@ -15,6 +15,8 @@ from rllib.core.memory.prioritized_replay_memory import (
     Transition,
 )
 from rllib.core.network.multi_input_network import MultiInputNetwork
+from rllib.core.network.network import Network
+from rllib.core.torch.module import TorchModule
 from rllib.utils.dqn.misc import get_non_final_mask
 from rllib.utils.dqn.preprocessing import preprocess_next_observations
 from rllib.utils.torch.processing import (
@@ -25,26 +27,23 @@ from utils.core.model_loader import ModelLoader
 
 
 class DQN(Algorithm):
-    _policy_net: MultiInputNetwork
-    _target_net: MultiInputNetwork
+    _policy_net: TorchModule
+    _target_net: TorchModule
 
     def __init__(self, config: DQNConfig):
         super().__init__(config)
         self._config = config
         # self._memory = ReplayMemory(config.replay_buffer_size)
         self._memory = PrioritizedReplayMemory(config.replay_buffer_size)
-        self._policy_net = MultiInputNetwork(
+        network = Network(
+            self._config._network_type,
             self.observation_space,
             self.action_space,
-            conv_layers=self._config.conv_layers,
-            hidden_units=self._config.hidden_units,
+            self._config.conv_layers,
+            self._config.hidden_units,
         )
-        self._target_net = MultiInputNetwork(
-            self.observation_space,
-            self.action_space,
-            conv_layers=self._config.conv_layers,
-            hidden_units=self._config.hidden_units,
-        )
+        self._policy_net = network()
+        self._target_net = network()
 
         if self._config._model_path is not None:
             ModelLoader.load_model_from_path(self._config._model_path, self._policy_net)
@@ -85,15 +84,20 @@ class DQN(Algorithm):
 
     def log_episode(self):
         super().log_episode()
-        metadata = {
-            "agents": len(self._env.agents),
-            "width": self._env._width,
-            "height": self._env._height,
-            "eps_threshold": self._eps_threshold,
-            "learning_rate": self._config.learning_rate,
-            "conv_layers": self._config.conv_layers,
-            "hidden_units": self._config.hidden_units,
-        }
+        metadata = {}
+        try:
+            metadata = {
+                "agents": len(self._env.agents),
+                "width": self._env._width,
+                "height": self._env._height,
+                "eps_threshold": self._eps_threshold,
+                "learning_rate": self._config.learning_rate,
+                "conv_layers": self._config.conv_layers,
+                "hidden_units": self._config.hidden_units,
+            }
+        except AttributeError:
+            pass
+
         self.log_model(
             self._policy_net,
             f"model_{self._episodes_done}",
