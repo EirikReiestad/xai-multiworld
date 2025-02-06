@@ -1,6 +1,7 @@
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
+from rllib.core.network.network import NetworkType
 from utils.common.observation import (
     load_and_split_observation,
     zip_observation_data,
@@ -39,6 +40,7 @@ def run(concept: str):
         filename="tcav_" + concept,
         min=0,
         max=1,
+        show=False,
     )
 
 
@@ -55,19 +57,25 @@ if __name__ == "__main__":
             eps_decay=50000,
             target_update=1000,
         )
+        .network(network_type=NetworkType.MULTI_INPUT)
         .debugging(log_level="INFO")
         .environment(env=env)
     )
     dqn = DQN(config)
 
     # concepts = concept_checks.keys()
-    concepts = [
-        "goal_in_view",
-        "goal_to_right",
-        "goal_to_left",
-        "goal_in_front",
-        "agent_in_view",
-    ]
     concepts = ["random"]
+    concepts = [
+        "agent_in_front",
+        "agent_in_view",
+        "agent_to_left",
+        "agent_to_right",
+        "goal_in_front",
+        "goal_in_view",
+        "goal_to_left",
+        "goal_to_right",
+        "random",
+    ]
+
     for concept in concepts:
         run(concept)

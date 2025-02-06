@@ -45,7 +45,7 @@ if [ "$example_flag" = true ]; then
 fi
 
 if [ "$pipeline_score_flag" = true ]; then
-    sbatch scripts/idun/pipeline.sh "--download-models go-to-goalv2 0 10000 1000" "--generate-concepts" "--concept-score"
+    sbatch scripts/idun/pipeline.sh "--download-models go-to-goalv2 0 10000 1000 --generate-concepts --concept-score --tcav-score"
     exit 0
 fi
 
@@ -59,6 +59,7 @@ if [ "$help_flag" = true ] || true ; then
     echo "Options:"
     echo "  --help           Show this help message"
     echo "  --example        Run the example script"
+    echo "  --pipeline       Run the pipeline"
     echo "  --xailib         Run the xailib script with additional arguments"
     exit 0
 fi
