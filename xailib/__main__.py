@@ -1,5 +1,9 @@
 import argparse
+import logging
 import subprocess
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 
 def main():
@@ -17,16 +21,37 @@ def main():
     )
     parser.add_argument("--shap", action="store_true", help="Run the shap script")
 
-    args = parser.parse_args()
+    args, unknown = parser.parse_known_args()
 
-    if args.concept_score:
-        subprocess.run(["python", "xailib/scripts/concept_score.py"])
-    if args.tcav_score:
-        subprocess.run(["python", "xailib/scripts/tcav.py"])
-    if args.concept_backprop:
-        subprocess.run(["python", "xailib/scripts/concept_backpropagation.py"])
-    if args.shap:
-        subprocess.run(["python", "xailib/scripts/shap_score.py"])
+    concept_score_subprocess_args = ["python", "xailib/scripts/concept_score.py"]
+    tcav_score_subprocess_args = ["python", "xailib/scripts/tcav.py"]
+    concept_backprop_subprocess_args = [
+        "python",
+        "xailib/scripts/concept_backpropagation.py",
+    ]
+    shap_subprocess_args = ["python", "xailib/scripts/shap_score.py"]
+
+    if args.concept_score is not None:
+        logging.info(f"Arguments for --concept-score: {args.concept_score}")
+        concept_score_subprocess_args += ["--concept-score"]
+    if args.tcav_score is not None:
+        logging.info(f"Arguments for --tcav-score: {args.tcav_score}")
+        tcav_score_subprocess_args += ["--tcav-score"]
+    if args.concept_backprop is not None:
+        logging.info(f"Arguments for --concept-backprop: {args.concept_backprop}")
+        concept_backprop_subprocess_args += ["--concept-backprop"]
+    if args.shap is not None:
+        logging.info(f"Arguments for --shap: {args.shap}")
+        shap_subprocess_args += ["--shap"]
+
+    for subprocess_args in [
+        concept_score_subprocess_args,
+        tcav_score_subprocess_args,
+        concept_backprop_subprocess_args,
+        shap_subprocess_args,
+    ]:
+        if len(subprocess_args) > 2:
+            subprocess.run(subprocess_args)
 
 
 if __name__ == "__main__":
