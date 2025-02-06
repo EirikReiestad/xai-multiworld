@@ -1,7 +1,7 @@
 import gymnasium as gym
 
-from rllib.algorithms.dqn.dqn import DQN
-from rllib.algorithms.dqn.dqn_config import DQNConfig
+from rllib.algorithms.ppo.ppo import PPO
+from rllib.algorithms.ppo.ppo_config import PPOConfig
 from rllib.core.network.network import NetworkType
 from rllib.utils.wrappers import GymnasiumWrapper
 
@@ -11,28 +11,28 @@ env.reset()
 env = GymnasiumWrapper(env)
 
 config = (
-    DQNConfig(
-        batch_size=64,
-        replay_buffer_size=10000,
+    PPOConfig(
+        batch_size=200,
+        mini_batch_size=50,
+        epochs=5,
         gamma=0.99,
+        lambda_=0.95,
+        epsilon=0.2,
         learning_rate=3e-4,
-        eps_start=0.9,
-        eps_end=0.05,
-        eps_decay=1000,
-        target_update=200,
+        value_weight=1.0,
+        entropy_weight=0.01,
+        continuous=False,
     )
     .network(
         conv_layers=(), hidden_units=(128, 128), network_type=NetworkType.FEED_FORWARD
     )
     .environment(env=env)
     .training()
-    # .training("model_1500:v0")
     .debugging(log_level="INFO")
     .rendering()
     .wandb(project="CartPole-v1", log_interval=10)
 )
-
-dqn = DQN(config)
+ppo = PPO(config)
 
 while True:
-    dqn.learn()
+    ppo.learn()

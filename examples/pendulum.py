@@ -4,7 +4,7 @@ from rllib.algorithms.ppo.ppo import PPO
 from rllib.algorithms.ppo.ppo_config import PPOConfig
 from rllib.utils.wrappers import GymnasiumWrapper
 
-env = gym.make("Pendulum-v1", render_mode="human")
+env = gym.make("Pendulum-v1", render_mode="rgb_array")
 env.reset()
 
 env = GymnasiumWrapper(env)
@@ -26,7 +26,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="Pendulum-v1")
+    .wandb(project="Pendulum-v1")
 )
 ppo = PPO(config)
 
