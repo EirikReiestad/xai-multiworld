@@ -12,9 +12,8 @@ env = GymnasiumWrapper(env)
 
 config = (
     PPOConfig(
-        batch_size=200,
-        mini_batch_size=50,
-        epochs=5,
+        batch_size=400,
+        epochs=10,
         gamma=0.99,
         lambda_=0.95,
         epsilon=0.2,

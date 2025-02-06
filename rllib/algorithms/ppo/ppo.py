@@ -272,11 +272,6 @@ class PPO(Algorithm):
         value_batch = torch_stack_inner_list(value_batch)
 
         returns = compute_returns(reward_batch, self._config.gamma)
-        advantages = returns - value_batch
-        advantages = advantages.detach()
-        normalized_advantages = (advantages - advantages.mean()) / (
-            advantages.std() + 1e-10
-        )
 
         policy_loss, value_loss, entropy_loss = ppo_loss(
             log_probs,
