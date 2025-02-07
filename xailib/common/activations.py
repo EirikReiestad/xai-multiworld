@@ -34,7 +34,7 @@ class ActivationTracker:
                         or sub_layer_name in ignore
                     ):
                         # logging.info(
-                        #    f"Ignoring layer: {processor_name} - {layer_name} - {sub_layer_name}"
+                        #     f"Ignoring layer: {processor_name} - {layer_name} - {sub_layer_name}"
                         # )
                         continue
                     if not isinstance(sub_layer, nn.ReLU):
