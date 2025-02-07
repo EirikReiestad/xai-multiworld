@@ -1,43 +1,81 @@
+import argparse
+import logging
+
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
-from multiworld.swarm.envs.flock import FlockEnv
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
+from rllib.core.network.network import NetworkType
 from utils.core.model_downloader import ModelDownloader
 
-project_folder = "bird"
-model_name = "model"
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 
-models = []
-for i in range(0, 1600, 200):
-    models.append(f"model_{i}:v0")
-models = ["model_12800:v1"]
-
-env = FlockEnv(render_mode="rgb_array")
-
-dqn_config = (
-    DQNConfig(
-        batch_size=64,
-        replay_buffer_size=10000,
-        gamma=0.99,
-        learning_rate=1e-4,
-        eps_start=0.9,
-        eps_end=0.05,
-        eps_decay=100000,
-        target_update=5000,
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "-dms",
+        "--download-models",
+        nargs=4,
+        metavar=("project_folder", "low", "high", "step"),
+        help="Download models with arguments: [project_folder] [low] [high] [step]",
     )
-    .network(conv_layers=())
-    .environment(env=env)
-    .training()
-    .debugging(log_level="INFO")
-    .rendering()
-)
-dqn = DQN(dqn_config)
+    parser.add_argument(
+        "-dm",
+        "--download-model",
+        nargs="*",
+        metavar=("model_name"),
+        help="Download model with optional arguments: [project_folder] [model_name]",
+    )
+    args = parser.parse_args()
 
-model_downloader = ModelDownloader(
-    project_folder=project_folder,
-    model_name=model_name,
-    models=models,
-    model=dqn.model,
-)
-model_downloader.download()
+    model_name = "model"
+    version = "latest"
+
+    if args.download_models:
+        project_folder, low, high, step = args.download_models
+        low, high, step = int(low), int(high), int(step)
+        models = [f"model_{i}:{version}" for i in range(low, high, step)]
+    elif args.download_model:
+        project_folder, model_name = args.download_model
+        models = [str(model_name)]
+    else:
+        logger.info("No valid arguments provided.")
+        return
+
+    download(project_folder, model_name, models)
+
+
+def download(project_folder: str, model_name: str, models: list[str]):
+    env = GoToGoalEnv(render_mode="rgb_array")
+
+    dqn_config = (
+        DQNConfig(
+            batch_size=64,
+            replay_buffer_size=10000,
+            gamma=0.99,
+            learning_rate=1e-4,
+            eps_start=0.9,
+            eps_end=0.05,
+            eps_decay=100000,
+            target_update=5000,
+        )
+        .network(network_type=NetworkType.MULTI_INPUT)
+        .environment(env=env)
+        .training()
+        .debugging(log_level="INFO")
+        .rendering()
+    )
+    dqn = DQN(dqn_config)
+
+    model_downloader = ModelDownloader(
+        project_folder=project_folder,
+        model_name=model_name,
+        models=models,
+        model=dqn.model,
+    )
+    model_downloader.download()
+
+
+if __name__ == "__main__":
+    main()

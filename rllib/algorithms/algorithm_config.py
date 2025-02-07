@@ -24,7 +24,7 @@ class AlgorithmConfig(ABC):
         self._rendering_callback = empty_rendering_callback
 
         self._model_path = None
-        self._network_type = None
+        self.network(network_type=NetworkType.FEED_FORWARD)
 
         self.conv_layers: Tuple[int, ...] = tuple(
             (32, 64, 64),
@@ -32,6 +32,8 @@ class AlgorithmConfig(ABC):
         self.hidden_units: Tuple[int, ...] = tuple(
             (128, 128),
         )
+
+        self._lr_scheduler = None
 
     def network(
         self,
@@ -51,10 +53,21 @@ class AlgorithmConfig(ABC):
         self._environment = env
         return self
 
-    def training(self, model: str | None = None):
+    def training(
+        self,
+        model: str | None = None,
+        lr_scheduler: Literal["cyclic", "step"] | None = None,
+        base_lr: float = 1e-5,
+        max_lr: float = 1e-2,
+        step_size: int = 1,
+    ):
         self._training = True
         if model is not None:
             self._model_path = os.path.join("artifacts", model)
+        self._lr_scheduler = lr_scheduler
+        self._base_lr = base_lr
+        self._max_lr = max_lr
+        self._scheduler_step_size = step_size
         return self
 
     def debugging(

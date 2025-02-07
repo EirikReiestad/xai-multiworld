@@ -1,5 +1,6 @@
+from typing import Literal
+
 from rllib.algorithms.algorithm_config import AlgorithmConfig
-from typing import Literal, Tuple
 
 
 class DQNConfig(AlgorithmConfig):

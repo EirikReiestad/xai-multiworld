@@ -37,12 +37,15 @@ class MDQN(Algorithm):
         for key in self._dqns.keys():
             self._dqns[key]._steps_done = self._steps_done
 
+            priority = {key: 1.0 for key in next_obs.keys()}
+
             self._dqns[key]._memory.add_dict(
                 keys=[key],
                 state={key: observations[key]},
                 action={key: actions[key]},
                 next_state={key: next_obs[key]},
                 reward={key: rewards[key]},
+                priority=priority,
             )
 
         self._optimize_model()
@@ -56,6 +59,7 @@ class MDQN(Algorithm):
                 "width": self._env._width,
                 "height": self._env._height,
                 "eps_threshold": self._dqns[key]._eps_threshold,
+                "learning_rate": self._dqns[key]._config.learning_rate,
                 "conv_layers": self._config.conv_layers,
                 "hidden_units": self._config.hidden_units,
             }

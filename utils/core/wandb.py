@@ -67,6 +67,7 @@ class WandB(ABC):
         assert isinstance(
             frame, np.ndarray
         ), f"Frame must be a numpy array, but got {frame}"
+        frame = np.rot90(frame)
         self._frames.append(frame)
 
     def log_model(
