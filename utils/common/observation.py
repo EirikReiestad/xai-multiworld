@@ -1,4 +1,5 @@
 import json
+import logging
 import os
 from typing import Dict, List, Tuple
 
@@ -22,10 +23,6 @@ class Observation(np.ndarray):
         obj[..., cls.DATA] = None
 
         return obj
-
-    @property
-    def features(self):
-        return self[..., self.DATA]
 
 
 def observation_from_file(path: str) -> Observation:
@@ -61,6 +58,14 @@ def split_observation(
 def observation_data_to_torch(observation: Observation) -> List:
     data = [
         [torch.tensor(v) for v in obs[0].values()]
+        for obs in observation[..., Observation.DATA]
+    ]
+    return data
+
+
+def observation_data_to_numpy(observation: Observation) -> List:
+    data = [
+        [np.array(v) for v in obs[0].values()]
         for obs in observation[..., Observation.DATA]
     ]
     return data

@@ -1,6 +1,8 @@
 import argparse
 import logging
 
+from multiworld.base import MultiWorldEnv
+from multiworld.multigrid.base import MultiGridEnv
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from multiworld.multigrid.utils.wrappers import MultiGridConceptObsWrapper
 from rllib.algorithms.dqn.dqn import DQN
@@ -26,18 +28,19 @@ def main():
     if args.generate_concepts is not None and len(args.generate_concepts) > 0:
         observations = int(args.generate_concepts[0])
 
-    generate_concepts(observations)
-
-
-def generate_concepts(observations: int):
     env = GoToGoalEnv(
-        width=15,
-        height=15,
+        width=7,
+        height=7,
         max_steps=200,
         agents=2,
         success_termination_mode="all",
         render_mode="human",
     )
+
+    generate_concepts(observations, env)
+
+
+def generate_concepts(observations: int, env: MultiGridEnv):
     concepts = ["random"]
     concepts = None
 
@@ -64,7 +67,6 @@ def generate_concepts(observations: int):
         .debugging(log_level="INFO")
         .rendering()
     )
-
     dqn = DQN(config)
 
     while True:
