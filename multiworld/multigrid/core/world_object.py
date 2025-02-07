@@ -94,10 +94,18 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
     def from_array(arr: list[int]) -> Optional["WorldObject"]:
         type_idx = arr[WorldObject.TYPE]
 
-        if type_idx == WorldObjectType.empty.to_index():
+        if (
+            type_idx
+            in [WorldObjectType.empty.to_index(), WorldObjectType.unseen.to_index()]
+        ):  # WARN: So I added also .unseen. However, this might cause some hidden conflicts. Start to look here if this messes stuff up.
             return None
 
-        cls = WorldObject._TYPE_IDX_TO_CLASS[type_idx]
+        try:
+            cls = WorldObject._TYPE_IDX_TO_CLASS[type_idx]
+        except KeyError as e:
+            raise KeyError(
+                f"Key is not available. Available keys (and corresponding values): {WorldObject._TYPE_IDX_TO_CLASS}. KeyError: {e}"
+            )
         obj = cls.__new__(cls)
         obj[...] = arr
         return obj
