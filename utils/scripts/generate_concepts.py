@@ -29,8 +29,8 @@ def main():
         observations = int(args.generate_concepts[0])
 
     env = GoToGoalEnv(
-        width=7,
-        height=7,
+        width=10,
+        height=10,
         max_steps=200,
         agents=2,
         success_termination_mode="all",

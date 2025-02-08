@@ -101,7 +101,6 @@ class MultiGridEnv(MultiWorldEnv):
                     self._agents.append(agent)
                     grid[pos.y, pos.x] = WorldObjectType.empty
                     continue
-        print("test")
 
         self._world = Grid.from_numpy(grid)
 

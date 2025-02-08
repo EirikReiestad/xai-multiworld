@@ -1,3 +1,5 @@
+import logging
+
 import torch
 import torch.optim as optim
 from sklearn.linear_model import LogisticRegression
@@ -34,8 +36,8 @@ class ProbeObservation:
         optimal_point = initial_point.detach().numpy()
         optimal_point_probability = self._probe.predict_proba([optimal_point])[0, 1]
 
-        print("Optimized point classified as positive:", optimal_point)
-        print(
+        logging.info("Optimized point classified as positive:", optimal_point)
+        logging.info(
             "Probability of the positive class for the optimized point:",
             optimal_point_probability,
         )
