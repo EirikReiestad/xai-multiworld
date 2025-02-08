@@ -4,11 +4,11 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.network.network import NetworkType
 
 env = GoToGoalEnv(
-    goals=5,
+    goals=1,
     width=10,
     height=10,
     max_steps=100,
-    agents=5,
+    agents=1,
     agent_view_size=7,
     success_termination_mode="all",
     render_mode="rgb_array",
@@ -38,7 +38,7 @@ config = (
     # .training("model_1500:v0")
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="test", log_interval=100)
+    # .wandb(project="test", log_interval=100)
 )
 
 dqn = DQN(config)

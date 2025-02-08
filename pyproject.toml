@@ -24,6 +24,8 @@ pygame = "^2.6.1"
 aenum = "^3.1.15"
 torch = "^2.6.0"
 wandb = "^0.19.5"
+stable-baselines3 = "^2.5.0"
+dm-tree = "^0.1.9"
 
 [tool.pyright]
 venvPath = "."

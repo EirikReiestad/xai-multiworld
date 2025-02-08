@@ -79,7 +79,7 @@ def gen_obs_grid(
             if agent_terminated[agent]:
                 continue
             x, y = agent_pos[agent]
-            grid_encoding[y, x, GRID_ENCODING_IDX] = agent_grid[agent]
+            grid_encoding[x, y, GRID_ENCODING_IDX] = agent_grid[agent]
     else:
         grid_encoding = grid_state[..., GRID_ENCODING_IDX]
 
