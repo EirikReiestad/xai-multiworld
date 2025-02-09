@@ -15,9 +15,9 @@ def get_output_size(network: nn.Module, input_dim: np.ndarray) -> int:
 
 def observation_space_check(state_dim: ObservationSpace):
     assert state_dim.box is not None, f"State space must be continuous, got {state_dim}"
-    assert (
-        state_dim.discrete is not None
-    ), f"State space must be discrete, got {state_dim}"
+    # assert (
+    #     state_dim.discrete is not None
+    # ), f"State space must be discrete, got {state_dim}"
 
 
 def action_space_check(action_space: ActionSpace):

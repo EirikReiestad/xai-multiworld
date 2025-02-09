@@ -1,7 +1,6 @@
 import argparse
 import logging
 
-from multiworld.base import MultiWorldEnv
 from multiworld.multigrid.base import MultiGridEnv
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from multiworld.multigrid.utils.wrappers import MultiGridConceptObsWrapper

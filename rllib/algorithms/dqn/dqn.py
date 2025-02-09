@@ -44,6 +44,10 @@ class DQN(Algorithm):
         self._policy_net = network()
         self._target_net = network()
 
+        if self._config._eval:
+            self._policy_net.eval()
+            self._target_net.eval()
+
         if self._config._model_path is not None:
             ModelLoader.load_model_from_path(self._config._model_path, self._policy_net)
         self._target_net.load_state_dict(self._policy_net.state_dict())
@@ -64,6 +68,8 @@ class DQN(Algorithm):
         step: int,
         infos: Dict[AgentID, Dict[str, Any]],
     ):
+        if self._config._training is False:
+            return
         next_obs = preprocess_next_observations(
             next_observations, terminations, truncations
         )
@@ -152,7 +158,9 @@ class DQN(Algorithm):
             )
         if self._config._lr_scheduler == "step":
             return torch.optim.lr_scheduler.StepLR(
-                self._optimizer, step_size=self._config._scheduler_step_size
+                self._optimizer,
+                step_size=self._config._scheduler_step_size,
+                gamma=self._config._scheduler_gamma,
             )
 
     def _get_policy_actions(
