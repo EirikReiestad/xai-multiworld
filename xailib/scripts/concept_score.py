@@ -40,7 +40,7 @@ def run(concept: str):
         filename=concept,
         min=0,
         max=1,
-        show=False,
+        show=True,
     )
 
 
@@ -67,6 +67,7 @@ if __name__ == "__main__":
     # concepts = concept_checks.keys()
     concepts = ["random"]
     concepts = [
+        "random",
         "agent_in_front",
         "agent_in_view",
         "agent_to_left",
@@ -75,7 +76,6 @@ if __name__ == "__main__":
         "goal_in_view",
         "goal_to_left",
         "goal_to_right",
-        "random",
     ]
 
     for concept in concepts:

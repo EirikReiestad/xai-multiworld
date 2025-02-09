@@ -9,12 +9,16 @@ logging.basicConfig(level=logging.INFO)
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--concept-score", action="store_true", help="Run the concept score script"
+        "-cs",
+        "--concept-score",
+        action="store_true",
+        help="Run the concept score script",
     )
     parser.add_argument(
-        "--tcav-score", action="store_true", help="Run the tcav score script"
+        "-ts", "--tcav-score", action="store_true", help="Run the tcav score script"
     )
     parser.add_argument(
+        "-cb",
         "--concept-backprop",
         action="store_true",
         help="Run the concept backpropagation script",
@@ -31,17 +35,13 @@ def main():
     ]
     shap_subprocess_args = ["python", "xailib/scripts/shap_score.py"]
 
-    if args.concept_score is not None:
-        logging.info(f"Arguments for --concept-score: {args.concept_score}")
+    if args.concept_score:
         concept_score_subprocess_args += ["--concept-score"]
-    if args.tcav_score is not None:
-        logging.info(f"Arguments for --tcav-score: {args.tcav_score}")
+    if args.tcav_score:
         tcav_score_subprocess_args += ["--tcav-score"]
-    if args.concept_backprop is not None:
-        logging.info(f"Arguments for --concept-backprop: {args.concept_backprop}")
+    if args.concept_backprop:
         concept_backprop_subprocess_args += ["--concept-backprop"]
-    if args.shap is not None:
-        logging.info(f"Arguments for --shap: {args.shap}")
+    if args.shap:
         shap_subprocess_args += ["--shap"]
 
     for subprocess_args in [
