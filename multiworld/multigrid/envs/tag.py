@@ -2,10 +2,10 @@ from typing import Any, SupportsFloat, Dict, Tuple
 
 import numpy as np
 
-from multigrid.base import MultiGridEnv
-from multigrid.core.action import Action
-from multigrid.core.grid import Grid
-from multigrid.utils.typing import AgentID, ObsType
+from multiworld.multigrid.base import MultiGridEnv
+from multiworld.multigrid.core.action import Action
+from multiworld.multigrid.core.grid import Grid
+from multiworld.utils.typing import AgentID, ObsType
 
 
 class TagEnv(MultiGridEnv):
@@ -14,7 +14,7 @@ class TagEnv(MultiGridEnv):
         self._runner_color = "green"
         self._tagger_color = "red"
 
-    def _gen_grid(self, width: int, height: int):
+    def _gen_world(self, width: int, height: int):
         self.grid = Grid(width, height)
 
         placeable_positions = self.grid.get_empty_positions(len(self.agents))
