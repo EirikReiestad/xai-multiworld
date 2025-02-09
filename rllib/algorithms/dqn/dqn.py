@@ -11,10 +11,9 @@ from rllib.algorithms.algorithm import Algorithm
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.memory.prioritized_replay_memory import (
     PrioritizedReplayMemory,
-    compute_td_errors,
     Transition,
+    compute_td_errors,
 )
-from rllib.core.network.multi_input_network import MultiInputNetwork
 from rllib.core.network.network import Network
 from rllib.core.torch.module import TorchModule
 from rllib.utils.dqn.misc import get_non_final_mask
@@ -51,6 +50,7 @@ class DQN(Algorithm):
         self._optimizer = torch.optim.AdamW(
             self._policy_net.parameters(), lr=config.learning_rate, amsgrad=True
         )
+        self._scheduler = self._gen_scheduler()
         self._eps_threshold = np.inf
 
     def train_step(
@@ -79,19 +79,32 @@ class DQN(Algorithm):
             priority=priority,
         )
 
+        if self._config.update_method == "soft":
+            self._soft_update_target()
+        else:
+            self._hard_update_target()
         self._optimize_model()
-        self._hard_update_target()
 
     def log_episode(self):
         super().log_episode()
         metadata = {}
+        learning_rate = (
+            self._scheduler.get_last_lr()
+            if self._scheduler is not None
+            else self._config.learning_rate,
+        )
+        if isinstance(learning_rate, tuple):
+            learning_rate = learning_rate[0]
+        if isinstance(learning_rate, list):
+            learning_rate = learning_rate[0]
+
         try:
             metadata = {
                 "agents": len(self._env.agents),
                 "width": self._env._width,
                 "height": self._env._height,
                 "eps_threshold": self._eps_threshold,
-                "learning_rate": self._config.learning_rate,
+                "learning_rate": learning_rate,
                 "conv_layers": self._config.conv_layers,
                 "hidden_units": self._config.hidden_units,
             }
@@ -105,7 +118,7 @@ class DQN(Algorithm):
             metadata,
         )
         self.add_log("eps_threshold", self._eps_threshold)
-        # self.add_log("learning_rate", scheduler._optimizer.get_lr())
+        self.add_log("learning_rate", learning_rate)
 
     def predict(self, observation: dict[AgentID, ObsType]) -> dict[AgentID, int]:
         self._eps_threshold = self._config.eps_end + (
@@ -127,6 +140,20 @@ class DQN(Algorithm):
     @property
     def model(self) -> nn.Module:
         return self._policy_net
+
+    def _gen_scheduler(self) -> torch.optim.lr_scheduler.LRScheduler | None:
+        if self._config._lr_scheduler is None:
+            return
+        if self._config._lr_scheduler == "cyclic":
+            return torch.optim.lr_scheduler.CyclicLR(
+                self._optimizer,
+                base_lr=self._config._base_lr,
+                max_lr=self._config._max_lr,
+            )
+        if self._config._lr_scheduler == "step":
+            return torch.optim.lr_scheduler.StepLR(
+                self._optimizer, step_size=self._config._scheduler_step_size
+            )
 
     def _get_policy_actions(
         self, observations: Dict[AgentID, ObsType]
@@ -188,6 +215,9 @@ class DQN(Algorithm):
         self._optimizer.zero_grad()
         loss.backward()
         self._optimizer.step()
+
+        if self._scheduler is not None:
+            self._scheduler.step()
 
         if loss is not None:
             td_errors = compute_td_errors(loss, self._config.batch_size)

@@ -2,6 +2,7 @@ import math
 from typing import Dict, List, Literal, SupportsFloat, Tuple
 
 import numpy as np
+from numpy.typing import NDArray
 
 from multiworld.base import MultiWorldEnv
 from multiworld.core.position import Position
@@ -9,7 +10,7 @@ from multiworld.multigrid.core.action import Action
 from multiworld.multigrid.core.agent import Agent, AgentState
 from multiworld.multigrid.core.constants import TILE_PIXELS, WorldObjectType
 from multiworld.multigrid.core.grid import Grid
-from multiworld.multigrid.core.world_object import Container
+from multiworld.multigrid.core.world_object import Container, WorldObject
 from multiworld.multigrid.utils.observation import gen_obs_grid_encoding
 from multiworld.multigrid.utils.ohe import ohe_direction
 from multiworld.utils.typing import AgentID, ObsType
@@ -64,12 +65,44 @@ class MultiGridEnv(MultiWorldEnv):
         assert isinstance(screen_size, tuple)
 
         self._agent_view_size = agent_view_size
+        self._agent_see_through_walls = see_through_walls
         self._agent_states = AgentState(agents)
         self._agents: List[Agent] = []
         for i in range(self._num_agents):
             agent = Agent(i, agent_view_size or self._width, see_through_walls)
             self._agents.append(agent)
         self._world = Grid(width, height)
+
+    def update_from_numpy(self, observation: NDArray):
+        grid: NDArray[np.int_] = observation[0]
+        direction = observation[1]
+        assert grid.ndim == 3, "Input grid must be 3-dimensional."
+        height, width, dim = grid.shape
+        assert (
+            dim == WorldObject.dim
+        ), f"Last dimension must match WorldObject.dim ({WorldObject.dim})."
+
+        self._agents = []
+
+        for j in range(height):  # Iterate over rows
+            for i in range(width):  # Iterate over columns
+                pos = Position(i, j)
+                grid_obj = grid[pos.y, pos.x]
+                type_idx = grid_obj[WorldObject.TYPE]
+                if type_idx == WorldObjectType.agent.to_index():
+                    previous_agent_idx = (
+                        self._agents[-1].index if len(self._agents) > 0 else 0
+                    )
+                    agent = Agent(
+                        previous_agent_idx, self._agent_view_size or self._width
+                    )
+                    agent.state.dir = self._rand_int(0, 4)
+                    agent.pos = pos
+                    self._agents.append(agent)
+                    grid[pos.y, pos.x] = WorldObjectType.empty
+                    continue
+
+        self._world = Grid.from_numpy(grid)
 
     def place_agent(
         self, agent: Agent, top=None, size=None, rand_dir=True, max_tries=math.inf
@@ -127,11 +160,10 @@ class MultiGridEnv(MultiWorldEnv):
             if agent_present:
                 return
 
+            agent.state.pos = fwd_pos
             if fwd_obj is not None:
                 if fwd_obj.type == WorldObjectType.goal:
                     self.on_success(agent, rewards, {})
-                    return
-            agent.state.pos = fwd_pos
 
         elif action == Action.pickup:
             if agent.state.carrying is not None:
@@ -202,7 +234,7 @@ class MultiGridEnv(MultiWorldEnv):
             self._world.state,
             self._agent_states,
             self._agent_view_size,
-            self._agents[0].see_through_walls,
+            self._agent_see_through_walls,
         )
         observations = {}
         for i in range(self._num_agents):
@@ -215,7 +247,9 @@ class MultiGridEnv(MultiWorldEnv):
         return observations
 
     def _get_full_render(self, highlight: bool, tile_size: int) -> np.ndarray:
-        obs_shape = self._agents[0].observation_space["observation"].shape[:-1]
+        obs_shape = (
+            Agent(-1).observation_space["observation"].shape[:-1]
+        )  # NOTE: Ups, look up for memory leaks by creating unecessary objects;)
         vis_mask = np.zeros((self._num_agents, *obs_shape), dtype=bool)
         for key, obs in self._gen_obs().items():
             vis_mask[key] = (
@@ -237,7 +271,6 @@ class MultiGridEnv(MultiWorldEnv):
                 - r_vec * (agent.view_size // 2)
             )
 
-            # For each cell in the visability mask
             for vis_j in range(agent.view_size):
                 for vis_i in range(agent.view_size):
                     if not vis_mask[agent.index][vis_j, vis_i]:
@@ -245,7 +278,6 @@ class MultiGridEnv(MultiWorldEnv):
                         # continue
                     # Compute the world coordinates of this cell
                     abs_i, abs_j = top_left - (f_vec * vis_i) + (r_vec * vis_j)
-                    # If the cell is within the grid bounds
                     if 0 <= abs_i < self._width and 0 <= abs_j < self._height:
                         highlight_mask[abs_i, abs_j] = True
 
