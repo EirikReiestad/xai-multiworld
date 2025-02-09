@@ -1,17 +1,13 @@
 from multiworld.multigrid.envs.tag import TagEnv
-from rllib.algorithms.algorithm_config import AlgorithmConfig
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
-from rllib.algorithms.dqn.mdqn import MDQN
 from rllib.core.network.network import NetworkType
-
-agents = 2
 
 env = TagEnv(
     width=7,
     height=7,
     max_steps=200,
-    agents=agents,
+    agents=2,
     success_termination_mode="all",
     render_mode="rgb_array",
 )
@@ -32,18 +28,10 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
+    .wandb(project="multi-tag-1v1", log_interval=100)
 )
 
-mconfig = (
-    AlgorithmConfig("DQN")
-    .environment(env=env)
-    .training()
-    .debugging(log_level="INFO")
-    .rendering()
-    .wandb(project="tag-1v1", log_interval=100)
-)
-
-dqn = MDQN(agents, mconfig, config)
+dqn = DQN(config)
 
 while True:
     dqn.learn()
