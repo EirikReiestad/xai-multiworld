@@ -23,8 +23,10 @@ class AlgorithmConfig(ABC):
         self._wandb_log_interval = 1
         self._rendering_callback = empty_rendering_callback
 
+        self._training = False
         self._model_path = None
         self.network(network_type=NetworkType.FEED_FORWARD)
+        self._eval = False
 
         self.conv_layers: Tuple[int, ...] = tuple(
             (32, 64, 64),
@@ -53,21 +55,27 @@ class AlgorithmConfig(ABC):
         self._environment = env
         return self
 
+    def model(self, model: str | None = None):
+        if model is not None:
+            self._model_path = os.path.join("artifacts", model)
+        return self
+
     def training(
         self,
-        model: str | None = None,
+        eval: bool = False,
         lr_scheduler: Literal["cyclic", "step"] | None = None,
         base_lr: float = 1e-5,
         max_lr: float = 1e-2,
         step_size: int = 1,
+        gamma: float = 0.99,
     ):
         self._training = True
-        if model is not None:
-            self._model_path = os.path.join("artifacts", model)
+        self._eval = eval
         self._lr_scheduler = lr_scheduler
         self._base_lr = base_lr
         self._max_lr = max_lr
         self._scheduler_step_size = step_size
+        self._scheduler_gamma = gamma
         return self
 
     def debugging(

@@ -39,7 +39,7 @@ class Agent:
                     shape=(1, observations, AgentState.encode_dim),
                     dtype=np.int_,
                 ),
-                "other": spaces.Discrete(1),
+                # "other": spaces.Discrete(1),
             }
         )
         if continuous:

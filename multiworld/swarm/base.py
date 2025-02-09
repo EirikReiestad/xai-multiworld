@@ -160,7 +160,7 @@ class SwarmEnv(MultiWorldEnv):
         for i in range(self._num_agents):
             observations[i] = {
                 "observation": obs[i],
-                "direction": directions[i],
+                # "direction": directions[i],
             }
         return observations
 

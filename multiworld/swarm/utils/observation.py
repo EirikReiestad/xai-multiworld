@@ -77,6 +77,7 @@ def gen_obs_grid_encoding(
             normalized_distance = sorted_valid_distances[i] / agent_view_size
             masked_grid[i, -1] = normalized_distance
 
+        np.random.shuffle(masked_grid[1:])
         obs[agent] = [masked_grid]
 
     return obs
