@@ -9,7 +9,7 @@ from utils.common.observation import (
 from utils.core.model_loader import ModelLoader
 from utils.core.plotting import plot_3d
 from xailib.common.activations import (
-    compute_activations_from_artifacts,
+    compute_activations_from_models,
 )
 from xailib.common.binary_concept_score import binary_concept_scores
 from xailib.common.probes import get_probes
@@ -24,7 +24,7 @@ def run(concept: str):
 
     test_observation_zipped = zip_observation_data(test_observation)
 
-    test_activations, test_input, test_output = compute_activations_from_artifacts(
+    test_activations, test_input, test_output = compute_activations_from_models(
         model_artifacts, test_observation_zipped, ignore
     )
 
@@ -45,10 +45,23 @@ def run(concept: str):
 
 
 if __name__ == "__main__":
-    env = GoToGoalEnv(render_mode="rgb_array")
+    artifact = ModelLoader.load_latest_model_artifacts_from_path("artifacts")
+
+    width = artifact.metadata.get("width")
+    height = artifact.metadata.get("height")
+    agents = artifact.metadata.get("agents")
+    conv_layers = artifact.metadata.get("conv_layers")
+    hidden_units = artifact.metadata.get("hidden_units")
+    eps_threshold = artifact.metadata.get("eps_threshold")
+    learning_rate = artifact.metadata.get("learning_rate")
+
+    env = GoToGoalEnv(
+        width=width, height=height, agents=agents, render_mode="rgb_array"
+    )
+
     config = (
         DQNConfig(
-            batch_size=64,
+            batch_size=128,
             replay_buffer_size=10000,
             gamma=0.99,
             learning_rate=3e-4,
@@ -57,7 +70,11 @@ if __name__ == "__main__":
             eps_decay=50000,
             target_update=1000,
         )
-        .network(network_type=NetworkType.MULTI_INPUT)
+        .network(
+            network_type=NetworkType.MULTI_INPUT,
+            conv_layers=conv_layers,
+            hidden_units=hidden_units,
+        )
         .debugging(log_level="INFO")
         .environment(env=env)
     )

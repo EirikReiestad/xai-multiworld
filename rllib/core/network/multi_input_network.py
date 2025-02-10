@@ -45,15 +45,18 @@ class MultiInputNetwork(TorchModule):
         self._fc_final = FCProcessor(final_input_size, hidden_units, action_dim)
 
     def forward(self, x0: torch.Tensor, x1: torch.Tensor) -> torch.Tensor:
+        x = x0.clone()
+        y = x1.clone()
+
         if self._conv0 is not None:
-            x0 = x0.float()
-            x0 = x0.permute(0, 3, 1, 2)
-            x0 = self._conv0(x0)
-        x0 = x0.reshape(x0.size(0), -1)
+            x = x.float()
+            x = x.permute(0, 3, 1, 2)
+            x = self._conv0(x)
+        x = x.reshape(x.size(0), -1)
 
-        x1 = x1.reshape(x1.size(0), -1)
-        x1 = self._fc0(x1)
+        y = y.reshape(y.size(0), -1)
+        y = self._fc0(y)
 
-        x = torch.cat([x0, x1], dim=1)
-        x = self._fc_final(x)
-        return x
+        c = torch.cat([x, y], dim=1)
+        f = self._fc_final(c)
+        return f

@@ -18,6 +18,12 @@ def main():
         "-ts", "--tcav-score", action="store_true", help="Run the tcav score script"
     )
     parser.add_argument(
+        "-po",
+        "--probe-observation",
+        action="store_true",
+        help="Run the probe observation script",
+    )
+    parser.add_argument(
         "-cb",
         "--concept-backprop",
         action="store_true",
@@ -33,12 +39,18 @@ def main():
         "python",
         "xailib/scripts/concept_backpropagation.py",
     ]
+    probe_observation_subprocess_args = [
+        "python",
+        "xailib/scripts/probe_observation.py",
+    ]
     shap_subprocess_args = ["python", "xailib/scripts/shap_score.py"]
 
     if args.concept_score:
         concept_score_subprocess_args += ["--concept-score"]
     if args.tcav_score:
         tcav_score_subprocess_args += ["--tcav-score"]
+    if args.probe_observation:
+        probe_observation_subprocess_args += ["--probe-observation"]
     if args.concept_backprop:
         concept_backprop_subprocess_args += ["--concept-backprop"]
     if args.shap:
@@ -47,6 +59,7 @@ def main():
     for subprocess_args in [
         concept_score_subprocess_args,
         tcav_score_subprocess_args,
+        probe_observation_subprocess_args,
         concept_backprop_subprocess_args,
         shap_subprocess_args,
     ]:
