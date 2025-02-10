@@ -1,11 +1,8 @@
-import logging
 from typing import Dict, List, Tuple
 
 import numpy as np
 import torch
 import torch.nn as nn
-
-from utils.common.model_artifact import ModelArtifact
 
 
 class ActivationTracker:
@@ -57,15 +54,15 @@ def preprocess_activations(activations: dict) -> np.ndarray:
     return reshaped_activations
 
 
-def compute_activations_from_artifacts(
-    artifacts: Dict[str, ModelArtifact], input: List, ignore: List[str] = []
+def compute_activations_from_models(
+    artifacts: Dict[str, nn.Module], input: List, ignore: List[str] = []
 ) -> Tuple[Dict[str, Dict], Dict[str, List], Dict[str, torch.Tensor]]:
     activations = {}
     inputs = {}
     outputs = {}
-    for key, value in artifacts.items():
+    for key, model in artifacts.items():
         _activations, _input, _output = ActivationTracker(
-            value.model, ignore
+            model, ignore
         ).compute_activations(input)
 
         activations[key] = _activations

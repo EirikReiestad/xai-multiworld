@@ -9,7 +9,7 @@ from utils.common.observation import (
 from utils.core.model_loader import ModelLoader
 from utils.core.plotting import plot_3d
 from xailib.common.activations import (
-    compute_activations_from_artifacts,
+    compute_activations_from_models,
 )
 from xailib.common.probes import get_probes
 from xailib.common.tcav_score import tcav_scores
@@ -18,18 +18,16 @@ from xailib.common.tcav_score import tcav_scores
 def run(concept: str):
     ignore = ["_fc0"]
 
-    model_artifacts = ModelLoader.load_models_from_path("artifacts", dqn.model)
+    models = ModelLoader.load_models_from_path("artifacts", dqn.model)
     positive_observation, test_observation = load_and_split_observation(concept, 0.8)
     negative_observation, _ = load_and_split_observation("random_negative", 0.8)
 
-    probes = get_probes(
-        model_artifacts, positive_observation, negative_observation, ignore
-    )
+    probes = get_probes(models, positive_observation, negative_observation, ignore)
 
     test_observation_zipped = zip_observation_data(test_observation)
 
-    test_activations, test_input, test_output = compute_activations_from_artifacts(
-        model_artifacts, test_observation_zipped, ignore
+    test_activations, test_input, test_output = compute_activations_from_models(
+        models, test_observation_zipped, ignore
     )
 
     scores = tcav_scores(test_activations, test_output, probes)
@@ -40,24 +38,41 @@ def run(concept: str):
         filename="tcav_" + concept,
         min=0,
         max=1,
-        show=False,
+        show=True,
     )
 
 
 if __name__ == "__main__":
-    env = GoToGoalEnv(render_mode="rgb_array")
+    artifact = ModelLoader.load_latest_model_artifacts_from_path("artifacts")
+
+    width = artifact.metadata.get("width")
+    height = artifact.metadata.get("height")
+    agents = artifact.metadata.get("agents")
+    conv_layers = artifact.metadata.get("conv_layers")
+    hidden_units = artifact.metadata.get("hidden_units")
+    eps_threshold = artifact.metadata.get("eps_threshold")
+    learning_rate = artifact.metadata.get("learning_rate")
+
+    env = GoToGoalEnv(
+        width=width, height=height, agents=agents, render_mode="rgb_array"
+    )
+
     config = (
         DQNConfig(
             batch_size=16,
             replay_buffer_size=10000,
             gamma=0.99,
-            learning_rate=1e-4,
+            learning_rate=3e-4,
             eps_start=0.9,
             eps_end=0.05,
             eps_decay=50000,
             target_update=1000,
         )
-        .network(network_type=NetworkType.MULTI_INPUT)
+        .network(
+            network_type=NetworkType.MULTI_INPUT,
+            conv_layers=conv_layers,
+            hidden_units=hidden_units,
+        )
         .debugging(log_level="INFO")
         .environment(env=env)
     )

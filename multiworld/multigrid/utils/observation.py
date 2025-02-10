@@ -1,12 +1,12 @@
-from typing import List
+from typing import List, Tuple
 
 import numpy as np
 from numpy.typing import NDArray as ndarray
 
-from multiworld.core.constants import Color
+from multiworld.core.constants import COLORS, Color
 from multiworld.core.position import Position
 from multiworld.multigrid.core.agent import Agent, AgentState
-from multiworld.multigrid.core.constants import Direction, WorldObjectType
+from multiworld.multigrid.core.constants import Direction, State, WorldObjectType
 from multiworld.multigrid.core.world_object import Wall, WorldObject
 
 WALL_ENCODING = Wall().encode()
@@ -32,6 +32,43 @@ RIGHT = int(Direction.right)
 LEFT = int(Direction.left)
 UP = int(Direction.up)
 DOWN = int(Direction.down)
+
+
+def pertubate_observation(
+    grid_state: ndarray[np.int_],
+    idx: List[int],
+) -> List[ndarray[np.int_]]:
+    observations = []
+
+    types = [
+        WorldObjectType.empty,
+        WorldObjectType.goal,
+        WorldObjectType.agent,
+        WorldObjectType.wall,
+    ]
+    colors = [Color.red, Color.green, Color.blue, Color.purple, Color.yellow]
+    states = [State.empty]
+
+    if idx[3] == 0:
+        for t in types:
+            state = grid_state.copy()
+            state[idx[0]][idx[1]][idx[2]][idx[3]] = int(t)
+            observations.append(state)
+        return observations
+    if idx[3] == 1:
+        for c in colors:
+            state = grid_state.copy()
+            state[idx[0]][idx[1]][idx[2]][idx[3]] = int(c)
+            observations.append(state)
+        return observations
+    if idx[3] == 2:
+        for s in states:
+            state = grid_state.copy()
+            state[idx[0]][idx[1]][idx[2]][idx[3]] = int(s)
+            observations.append(state)
+        return observations
+
+    return observations
 
 
 def gen_obs_grid_encoding(

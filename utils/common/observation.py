@@ -1,5 +1,4 @@
 import json
-import logging
 import os
 from typing import Dict, List, Tuple
 
@@ -7,6 +6,7 @@ import numpy as np
 import torch
 
 from multiworld.utils.typing import ObsType
+from utils.common.numpy_collections import NumpyEncoder
 
 
 class Observation(np.ndarray):
@@ -29,6 +29,12 @@ def observation_from_file(path: str) -> Observation:
     assert path.endswith(".json")
     json_data = json.load(open(path))
     return observation_from_dict(json_data)
+
+
+def observation_to_file(observations: Observation, path: str):
+    assert path.endswith(".json")
+    with open(path, "w") as f:
+        json.dump(observations, f, indent=4, cls=NumpyEncoder)
 
 
 def observation_from_dict(data: List[Dict]) -> Observation:
@@ -57,7 +63,10 @@ def split_observation(
 
 def observation_data_to_torch(observation: Observation) -> List:
     data = [
-        [torch.tensor(v) for v in obs[0].values()]
+        [
+            torch.tensor(v, dtype=torch.float32, requires_grad=True)
+            for v in obs[0].values()
+        ]
         for obs in observation[..., Observation.DATA]
     ]
     return data
@@ -75,7 +84,7 @@ def zipped_torch_observation_data(observation: List) -> List:
     """
     If the observation is a 2D array, this function will return a list of tuples.
     """
-    return [torch.tensor(np.array(tup)) for tup in zip(*observation)]
+    return [torch.stack(tup) for tup in zip(*observation)]
 
 
 def set_require_grad(observation: List):

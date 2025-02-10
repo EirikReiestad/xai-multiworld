@@ -68,4 +68,5 @@ class ModelDownloader(WandB):
             return
 
         # Test if model is loaded correctly
-        model_artifacts = ModelLoader.load_model_from_path(artifact_dir, self._model)
+        artifact = ModelLoader.load_model_artifact_from_path(artifact_dir)
+        model = ModelLoader.load_model_from_artifact(artifact, self._model)

@@ -12,9 +12,7 @@ from utils.common.model_artifact import ModelArtifact
 
 class ModelLoader:
     @staticmethod
-    def load_models_from_path(
-        path: str, network: nn.Module
-    ) -> Dict[str, ModelArtifact]:
+    def load_models_from_path(path: str, network: nn.Module) -> Dict[str, nn.Module]:
         models = {}
         model_dirs = os.listdir(path)
         sorted_model_dirs = sorted(
@@ -24,28 +22,43 @@ class ModelLoader:
             model_dir_path = os.path.join(path, model_dir)
             if not os.path.isdir(model_dir_path):
                 continue
-            model_artifact = ModelLoader.load_model_from_path(
-                model_dir_path, copy.deepcopy(network)
+            model_artifact = ModelLoader.load_model_artifact_from_path(model_dir_path)
+            model = ModelLoader.load_model_from_artifact(
+                model_artifact, copy.deepcopy(network)
             )
-            models[model_dir] = model_artifact
+            models[model_dir] = model
         return models
 
     @staticmethod
-    def load_latest_model_from_path(
-        path: str, network: nn.Module
-    ) -> Dict[str, ModelArtifact]:
+    def load_model_from_path(path: str, network: nn.Module) -> nn.Module:
+        model_artifact = ModelLoader.load_model_artifact_from_path(path)
+        model = ModelLoader.load_model_from_artifact(
+            model_artifact, copy.deepcopy(network)
+        )
+        return model
+
+    @staticmethod
+    def load_latest_model_from_path(path: str, network: nn.Module) -> nn.Module:
         model_dirs = os.listdir(path)
         sorted_model_dirs = sorted(
             model_dirs, key=lambda x: int(re.search(r"\d+", x).group())
         )
         latest_model_dir = sorted_model_dirs[-1]
         latest_model_dir_path = os.path.join(path, latest_model_dir)
-        return {
-            "latest": ModelLoader.load_model_from_path(latest_model_dir_path, network)
-        }
+        return ModelLoader.load_model_from_path(latest_model_dir_path, network)
 
     @staticmethod
-    def load_model_from_path(path: str, network: nn.Module) -> ModelArtifact:
+    def load_latest_model_artifacts_from_path(path: str) -> ModelArtifact:
+        model_dirs = os.listdir(path)
+        sorted_model_dirs = sorted(
+            model_dirs, key=lambda x: int(re.search(r"\d+", x).group())
+        )
+        latest_model_dir = sorted_model_dirs[-1]
+        latest_model_dir_path = os.path.join(path, latest_model_dir)
+        return ModelLoader.load_model_artifact_from_path(latest_model_dir_path)
+
+    @staticmethod
+    def load_model_artifact_from_path(path: str) -> ModelArtifact:
         model_file = None
         metadata_file = None
 
@@ -65,14 +78,15 @@ class ModelLoader:
         with open(metadata_file, "r") as f:
             metadata = json.load(f)
 
-        model = None
+        model_artifact = ModelArtifact(model_weights=model_weights, metadata=metadata)
+        return model_artifact
+
+    @staticmethod
+    def load_model_from_artifact(
+        model_artifact: ModelArtifact, network: nn.Module
+    ) -> nn.Module:
         try:
-            network.load_state_dict(model_weights)
-            model = network
+            network.load_state_dict(model_artifact.model_weights)
+            return network
         except AttributeError as e:
             raise AttributeError(f"Model class does not match network: {e}")
-
-        model_artifact = ModelArtifact(
-            model_weights=model_weights, metadata=metadata, model=model
-        )
-        return model_artifact

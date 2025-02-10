@@ -1,12 +1,14 @@
-from utils.common.model_artifact import ModelArtifact
+from typing import Dict, List
+
+import torch.nn as nn
+from sklearn.linear_model import LogisticRegression
+
 from utils.common.observation import Observation
 from xailib.core.linear_probing.linear_probe import LinearProbe
-from typing import Dict, List
-from sklearn.linear_model import LogisticRegression
 
 
 def get_probes(
-    model_artifacts: Dict[str, ModelArtifact],
+    models: Dict[str, nn.Module],
     positive_observation: Observation,
     negative_observation: Observation,
     ignore: List["str"] = [],
@@ -16,9 +18,9 @@ def get_probes(
     positive_observation[..., Observation.LABEL] = 1
     negative_observation[..., Observation.LABEL] = 0
 
-    for model_name, model_artifact in model_artifacts.items():
+    for model_name, model in models.items():
         linear_probe = LinearProbe(
-            model_artifact.model,
+            model,
             positive_observation,
             negative_observation,
             ignore,
