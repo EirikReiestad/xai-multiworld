@@ -3,27 +3,21 @@ import os
 import torch
 
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
-from multiworld.multigrid.utils.observation import pertubate_observation
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.network.network import NetworkType
 from utils.common.observation import (
     Observation,
     load_and_split_observation,
-    observation_from_dict,
     observation_from_file,
     observation_to_file,
     zip_observation_data,
-    zipped_torch_observation_data,
 )
 from utils.core.model_loader import ModelLoader
 from xailib.common.activations import (
     compute_activations_from_models,
 )
 from xailib.common.probes import get_probes
-from xailib.core.linear_probing.probe_to_observation import (
-    maximize_activation,
-)
 
 
 def run(concept: str):

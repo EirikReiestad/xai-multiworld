@@ -41,11 +41,13 @@ class GoToGoalEnv(MultiGridEnv):
         Dict[AgentID, bool],
         Dict[AgentID, Dict[str, Any]],
     ]:
+        print(actions)
         observations, rewards, terminations, truncations, info = super().step(actions)
         for agent in self.agents:
             obj = self._world.get(agent.state.pos)
             if obj is None:
                 continue
             if np.array_equal(obj, self.goal):
+                self.add_reward(agent, rewards, 10)
                 agent.pos = Position(-1, -1)
         return observations, rewards, terminations, truncations, info

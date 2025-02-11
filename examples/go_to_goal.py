@@ -25,22 +25,22 @@ env = GoToGoalEnv(
 config = (
     DQNConfig(
         batch_size=128,
-        replay_buffer_size=1000000,
+        replay_buffer_size=10000,
         gamma=0.99,
         learning_rate=3e-4,
         eps_start=0.0,
         eps_end=0.00,
-        eps_decay=100000,
+        eps_decay=1000,
         update_method="soft",
         target_update=100,
     )
     .network(network_type=NetworkType.MULTI_INPUT)
     .environment(env=env)
-    .model(model="single")
-    .training()
+    .model(model="model_5000:v0")
+    # .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="test", log_interval=20)
+    # .wandb(project="test", log_interval=20)
 )
 
 dqn = DQN(config)

@@ -3,7 +3,7 @@ from rllib.algorithms.algorithm_config import AlgorithmConfig
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.mdqn import MDQN
 
-agents = 10
+agents = 1
 
 env = FlockEnv(
     width=200,
@@ -25,20 +25,21 @@ config = (
         replay_buffer_size=10000,
         gamma=0.99,
         learning_rate=3e-4,
-        eps_start=0.2,
-        eps_end=0.05,
+        eps_start=0.0,
+        eps_end=0.00,
         eps_decay=10000,
         target_update=1000,
     )
     .network(conv_layers=())
     .environment(env=env)
-    .training("model_12800:v1")
+    .training()
     .debugging(log_level="INFO")
     .rendering()
 )
 
 mconfig = (
     AlgorithmConfig("DQN")
+    .model("model_800:v0")
     .environment(env=env)
     .training()
     .debugging(log_level="INFO")
