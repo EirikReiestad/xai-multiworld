@@ -28,7 +28,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="multi-tag-1v1", log_interval=100)
+    # .wandb(project="multi-tag-1v1", log_interval=100)
 )
 
 dqn = DQN(config)

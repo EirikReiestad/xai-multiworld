@@ -5,7 +5,7 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.mdqn import MDQN
 from rllib.core.network.network import NetworkType
 
-agents = 2
+agents = 5
 
 env = TagEnv(
     width=7,
@@ -40,7 +40,7 @@ mconfig = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="tag-1v1", log_interval=100)
+    # .wandb(project="tag-1v1", log_interval=100)
 )
 
 dqn = MDQN(agents, mconfig, config)
