@@ -1,13 +1,19 @@
-from typing import List, Tuple
+from typing import List
 
 import numpy as np
 from numpy.typing import NDArray as ndarray
 
-from multiworld.core.constants import COLORS, Color
+from multiworld.core.constants import Color
 from multiworld.core.position import Position
 from multiworld.multigrid.core.agent import Agent, AgentState
 from multiworld.multigrid.core.constants import Direction, State, WorldObjectType
 from multiworld.multigrid.core.world_object import Wall, WorldObject
+from multiworld.multigrid.utils.ohe import (
+    OHE_GRID_OBJECT_DIM,
+    OHE_GRID_OBJECT_DIM_MINIMAL,
+    ohe_grid_object,
+)
+from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 
 WALL_ENCODING = Wall().encode()
 UNSEEN_ENCODING = WorldObject(WorldObjectType.unseen, Color.from_index(0)).encode()
@@ -76,9 +82,10 @@ def gen_obs_grid_encoding(
     agent_state: ndarray[np.int_],
     agent_view_size: int | None,
     see_through_walls: bool,
+    preprocessing: PreprocessingEnum,
 ) -> ndarray[np.int_]:
     num_agents = len(agent_state)
-    obs_grid = gen_obs_grid(grid_state, agent_state, agent_view_size)
+    obs_grid = gen_obs_grid(grid_state, agent_state, agent_view_size, preprocessing)
     if agent_view_size is None:
         return obs_grid
     # Generate and apply visability mask
@@ -97,6 +104,7 @@ def gen_obs_grid(
     grid_state: ndarray[np.int_],
     agent_state: ndarray[np.int_],
     agent_view_size: int | None,
+    preprocessing: PreprocessingEnum,
 ) -> ndarray[np.int_]:
     num_agents = len(agent_state)
 
@@ -120,6 +128,25 @@ def gen_obs_grid(
     else:
         grid_encoding = grid_state[..., GRID_ENCODING_IDX]
 
+    ohe_minimal = preprocessing == PreprocessingEnum.ohe_minimal
+    ohe = preprocessing == PreprocessingEnum.ohe
+    ohe_grid_encoding_dim = None
+
+    if ohe:
+        ohe_grid_encoding_dim = OHE_GRID_OBJECT_DIM
+    elif ohe_minimal:
+        ohe_grid_encoding_dim = OHE_GRID_OBJECT_DIM_MINIMAL
+
+    if ohe_grid_encoding_dim is not None:
+        ohe_grid_encoding = np.empty(
+            (*grid_state.shape[:-1], ohe_grid_encoding_dim), dtype=np.int_
+        )
+        for y in range(grid_encoding.shape[1]):
+            for x in range(grid_encoding.shape[0]):
+                ohe_grid_obj = ohe_grid_object(grid_encoding[x, y], ohe_minimal)
+                ohe_grid_encoding[x, y] = ohe_grid_obj
+        grid_encoding = ohe_grid_encoding
+
     if agent_view_size is None:
         width = grid_state.shape[0]
         height = grid_state.shape[1]
@@ -133,11 +160,21 @@ def gen_obs_grid(
     top_left = get_view_exts(agent_dir, agent_pos, agent_view_size)
     topX, topY = top_left[:, 0], top_left[:, 1]
 
-    # Population observation grid
     num_left_rotations = (agent_dir + 1) % 4
-    obs_grid = np.empty(
-        (num_agents, obs_height, obs_width, ENCODE_DIM), dtype=np.int_
-    )  # Note that we use height - width instead of width - height because of the way numpy is indexed
+    if ohe:
+        obs_grid = np.empty(
+            (num_agents, obs_height, obs_width, OHE_GRID_OBJECT_DIM), dtype=np.int_
+        )
+    elif ohe_minimal:
+        obs_grid = np.empty(
+            (num_agents, obs_height, obs_width, OHE_GRID_OBJECT_DIM_MINIMAL),
+            dtype=np.int_,
+        )
+    else:
+        obs_grid = np.empty(
+            (num_agents, obs_height, obs_width, ENCODE_DIM), dtype=np.int_
+        )
+
     for agent in range(num_agents):
         for j in range(obs_height):
             for i in range(obs_width):
@@ -158,9 +195,23 @@ def gen_obs_grid(
                 if 0 <= x < grid_state.shape[0] and 0 <= y < grid_state.shape[1]:
                     obs_grid[agent, j_rot, i_rot] = grid_encoding[x, y]
                 else:
-                    obs_grid[agent, j_rot, i_rot] = WALL_ENCODING
+                    if ohe or ohe_minimal:
+                        obs_grid[agent, j_rot, i_rot] = ohe_grid_object(
+                            np.array(WALL_ENCODING), ohe_minimal
+                        )
+                    else:
+                        obs_grid[agent, j_rot, i_rot] = WALL_ENCODING
 
     # Make it so the agent sees what it is carrying
+    if ohe_grid_encoding_dim is not None:
+        ohe_agent_carrying = np.zeros(
+            (num_agents, ohe_grid_encoding_dim),
+            dtype=np.int_,
+        )
+        for agent in range(num_agents):
+            carrying = ohe_grid_object(agent_carrying[agent], ohe_minimal)
+            ohe_agent_carrying[agent] = carrying
+        agent_carrying = ohe_agent_carrying
     obs_grid[:, obs_height - 1, obs_width // 2] = agent_carrying
     return obs_grid
 
