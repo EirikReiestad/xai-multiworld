@@ -22,7 +22,7 @@ class GoToGoalEnv(MultiGridEnv):
         for _ in range(n):
             placeable_positions = self._world.get_empty_positions()
             goal_pos = self._rand_elem(placeable_positions)
-            goal_pos = Position(self._width // 2, self._height // 2)
+            # goal_pos = Position(self._width // 2, self._height // 2)
             self.goal = Goal()
             self._world.set(goal_pos, self.goal)
 
@@ -41,7 +41,6 @@ class GoToGoalEnv(MultiGridEnv):
         Dict[AgentID, bool],
         Dict[AgentID, Dict[str, Any]],
     ]:
-        print(actions)
         observations, rewards, terminations, truncations, info = super().step(actions)
         for agent in self.agents:
             obj = self._world.get(agent.state.pos)

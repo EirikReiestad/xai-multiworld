@@ -19,12 +19,12 @@ DIR_TO_VEC = [
 class WorldObjectType(str, IndexedEnum):
     unseen = "unseen"
     empty = "empty"
-    circle = "circle"
-    wall = "wall"
-    floor = "floor"
-    box = "box"
     goal = "goal"
     agent = "agent"
+    wall = "wall"
+    floor = "floor"
+    circle = "circle"
+    box = "box"
     container = "container"
 
 
