@@ -4,12 +4,12 @@ from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 
 env = FlockEnv(
-    width=1000,
-    height=1000,
+    width=200,
+    height=200,
     max_steps=400,
-    agents=1,
+    agents=2,
     observations=10,
-    predators=10,
+    predators=1,
     predator_steps=100,
     object_size=8,
     agent_view_size=65,

@@ -39,6 +39,6 @@ poetry install
 
 poetry run wandb login
 
-poetry run python -O scripts/explain "$@"
+poetry run python -O scripts/explain.py "$@"
 
 uname -a

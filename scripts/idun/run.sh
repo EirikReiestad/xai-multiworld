@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TEMP=$(getopt -o hecp: --long help,example,concept-score,pipeline -- "$@")
+TEMP=$(getopt -o hecp: --long help,example,pipeline,concept-score -- "$@")
 eval set -- "$TEMP"
 
 help_flag=false
@@ -18,13 +18,13 @@ while true; do
         example_flag=true
         shift
         ;;
-    -c | --concept-score)
-        concept_score_flag=true
+    -p | --pipeline)
+        pipeline_score_flag=true
         shift
         break
         ;;
-    -p | --pipeline)
-        pipeline_score_flag=true
+    -c | --concept-score)
+        concept_score_flag=true
         shift
         break
         ;;
@@ -45,12 +45,12 @@ if [ "$example_flag" = true ]; then
 fi
 
 if [ "$pipeline_score_flag" = true ]; then
-    sbatch scripts/idun/pipeline.sh "--download-models go-to-goalv2 0 10000 1000 --generate-concepts --concept-score --tcav-score"
+    sbatch scripts/idun/pipeline.sh --download-models go-to-goalv2 0 10000 1000 --generate-concepts --concept-score --tcav-score
     exit 0
 fi
 
 if [ "$concept_score_flag" = true ]; then
-    sbatch scripts/idun/xailib.sh "--concept-score"
+    sbatch scripts/idun/xailib.sh --concept-score
     exit 0
 fi
 

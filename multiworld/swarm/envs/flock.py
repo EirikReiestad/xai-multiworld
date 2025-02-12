@@ -58,8 +58,6 @@ class FlockEnv(SwarmEnv):
         observations, step_rewards, terminations, truncations, infos = super().step(
             actions
         )
-        print(observations)
-        raise
 
         rewards: Dict[AgentID, SupportsFloat] = {
             agent.index: 0 for agent in self.agents
