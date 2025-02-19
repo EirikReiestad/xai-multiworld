@@ -51,9 +51,9 @@ def run(concepts: List[str], dqn: DQN):
     probes = {}
     concept_scores = []
     layer_idx = 2
-    for concept in concepts:
+    for i, concept in enumerate(concepts):
         probe = get_probe(concept, layer_idx)
-        probes[concept] = probe
+        probes[i] = probe
 
     observations = observations_from_file(
         os.path.join("assets/observations", "observations" + ".json")
@@ -185,7 +185,7 @@ def get_probe(concept: str, layer_idx: int):
     model = ModelLoader.load_latest_model_from_path("artifacts", dqn.model)
     models = {"latest": model}
     positive_observation, test_observation = load_and_split_observation(concept, 0.8)
-    negative_observation, _ = load_and_split_observation("random_negative", 0.8)
+    negative_observation, _ = load_and_split_observation("negative_" + concept, 0.8)
 
     test_observation_zipped = zip_observation_data(test_observation)
 
@@ -250,7 +250,7 @@ if __name__ == "__main__":
     # concepts = concept_checks.keys()
     concepts = ["random"]
     concepts = [
-        "random",
+        # "random",
         # "agent_in_front",
         # "agent_in_view",
         # "agent_to_left",
@@ -259,6 +259,7 @@ if __name__ == "__main__":
         "goal_in_view",
         "goal_to_left",
         "goal_to_right",
+        "wall_in_view",
     ]
 
     run(concepts, dqn)

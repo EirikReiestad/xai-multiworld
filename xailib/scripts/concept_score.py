@@ -21,7 +21,7 @@ def run(concept: str):
 
     model_artifacts = ModelLoader.load_models_from_path("artifacts", dqn.model)
     positive_observation, test_observation = load_and_split_observation(concept, 0.8)
-    negative_observation, _ = load_and_split_observation("random_negative", 0.8)
+    negative_observation, _ = load_and_split_observation("negative_" + concept, 0.8)
 
     test_observation_zipped = zip_observation_data(test_observation)
 

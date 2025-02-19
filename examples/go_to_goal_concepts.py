@@ -7,10 +7,10 @@ from rllib.core.network.network import NetworkType
 
 env = GoToGoalEnv(
     goals=1,
-    static=False,
+    static=True,
     width=10,
     height=10,
-    max_steps=100,
+    max_steps=20,
     preprocessing=PreprocessingEnum.ohe_minimal,
     agents=1,
     agent_view_size=7,
@@ -35,23 +35,17 @@ concepts = [
 ]
 
 env_wrapped = MultiGridConceptObsWrapper(
-    env, observations=10, concepts=concepts, method="random"
+    env, observations=50, concepts=concepts, method="policy"
 )
 
 config = (
     DQNConfig(
-        batch_size=64,
-        replay_buffer_size=10000,
-        gamma=0.99,
-        learning_rate=3e-4,
-        eps_start=0.9,
-        eps_end=0.05,
-        eps_decay=100000,
-        target_update=1000,
+        eps_start=0.0,
+        eps_end=0.00,
     )
     .network(network_type=NetworkType.MULTI_INPUT)
     .environment(env=env_wrapped)
-    .training()
+    .model("model_150:v0")
     .debugging(log_level="INFO")
     .rendering()
 )

@@ -83,7 +83,8 @@ class MultiGridEnv(MultiWorldEnv):
     def update_from_numpy(self, observation: NDArray):
         grid: NDArray[np.int_] = observation[0]
         decode = partial(decode_observation, preprocessing=self._preprocessing)
-        grid = decode(grid)
+        obs = decode({"observation": grid})
+        grid = obs["observation"]
         direction = observation[1]
         assert grid.ndim == 3, "Input grid must be 3-dimensional."
         height, width, dim = grid.shape

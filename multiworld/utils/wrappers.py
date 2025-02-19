@@ -21,6 +21,8 @@ from multiworld.multigrid.base import MultiGridEnv
 from multiworld.multigrid.core.constants import Direction, State, WorldObjectType
 from multiworld.multigrid.core.world_object import WorldObject
 from multiworld.multigrid.utils.decoder import decode_observation
+from multiworld.multigrid.utils.ohe import decode_ohe
+from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 from multiworld.swarm.base import SwarmEnv
 from multiworld.utils.advanced_typing import Action
 from multiworld.utils.serialization import (
@@ -162,7 +164,10 @@ class ConceptObsWrapper(gym.Wrapper):
 
         self._concepts: Dict[str, List[ObsType]] = defaultdict(list)
         self._concept_checks = concept_checks(concepts)
-        self._concepts_filled = {key: False for key in self._concept_checks.keys()}
+        keys = list(self._concept_checks.keys()) + [
+            "negative_" + key for key in self._concept_checks.keys()
+        ]
+        self._concepts_filled = {key: False for key in keys}
 
         assert len(self._concept_checks) != 0, f"No concepts to check, {concepts}"
 
@@ -172,7 +177,7 @@ class ConceptObsWrapper(gym.Wrapper):
         self._step_count = 0
         self._concepts_added = 0
         self._previous_concepts_added = 0
-        self._timeout = 10
+        self._timeout = 20
 
     def step(
         self, actions: Dict[AgentID, Action | int]
@@ -186,10 +191,10 @@ class ConceptObsWrapper(gym.Wrapper):
         if self._method == "random":
             super().reset()
 
-        if self._step_count % (self._num_observations // 10) == 0:
+        if self._step_count % (self._num_observations / 10) == 0:
             logging.info(f"Step {self._step_count}")
             logging.info(
-                f"Number of concepts filled: {self._concepts_added} / {self._num_observations * len(self._concept_checks)}"
+                f"Number of concepts filled: {self._concepts_added} / {self._num_observations * len(self._concept_checks) * 2}"
             )
         if self._step_count % self._num_observations == 0:
             if (
@@ -199,7 +204,10 @@ class ConceptObsWrapper(gym.Wrapper):
                 self._timeout -= 1
                 if self._timeout == 0:
                     info_str = "\n"
-                    for key in self._concept_checks.keys():
+                    keys = list(self._concept_checks.keys()) + [
+                        "negative_" + key for key in self._concept_checks.keys()
+                    ]
+                    for key in keys:
                         info_str += f"{key} - {len(self._concepts.get(key) or [])}\n"
                     raise TimeoutError("Can not generate all concepts." + info_str)
             self._previous_concepts_added = self._concepts_added
@@ -207,16 +215,32 @@ class ConceptObsWrapper(gym.Wrapper):
         observations, rewards, terminations, truncations, info = super().step(actions)
 
         for concept, check_fn in self._concept_checks.items():
+            negative_concept = "negative_" + concept
             if all(self._concepts_filled.values()):
                 self._write_concepts()
                 sys.exit()
 
-            if self._concepts_filled[concept]:
+            if (
+                self._concepts_filled[concept]
+                and self._concepts_filled[negative_concept]
+            ):
                 continue
 
             for agent_id, obs in observations.items():
                 decoded_obs = self._decoder(obs.copy())
                 if not check_fn(decoded_obs):
+                    if self._concepts_filled[negative_concept]:
+                        continue
+                    rand_float = np.random.uniform()
+                    if rand_float < 0.2:
+                        self._concepts[negative_concept].append(obs)
+                        self._concepts_added += 1
+                    if len(self._concepts[negative_concept]) >= self._num_observations:
+                        self._concepts_filled[negative_concept] = True
+                        break
+                    continue
+
+                if self._concepts_filled[concept]:
                     continue
 
                 self._concepts_added += 1

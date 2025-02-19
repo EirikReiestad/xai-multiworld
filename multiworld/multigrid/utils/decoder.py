@@ -7,7 +7,9 @@ from multiworld.multigrid.utils.ohe import decode_ohe
 from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 
 
-def decode_observation(obs: Dict, preprocessing: PreprocessingEnum) -> Dict:
+def decode_observation(
+    obs: Dict[str, np.ndarray], preprocessing: PreprocessingEnum
+) -> Dict:
     observation_grid = obs["observation"]
     decoded_obs = np.zeros((*observation_grid.shape[:2], 3))
 
