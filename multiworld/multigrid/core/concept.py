@@ -146,7 +146,7 @@ concept_checks: Dict[str, Callable] = {
     "goal_to_left": _goal_to_left_concept,
     "goal_in_front": _goal_in_front_concept,
     "agent_in_view": _agent_in_view_concept,
-    # "wall_in_view": _wall_in_view_concept,
+    "wall_in_view": _wall_in_view_concept,
     "agent_to_right": _agent_to_right_concept,
     "agent_to_left": _agent_to_left_concept,
     "agent_in_front": _agent_in_front_concept,

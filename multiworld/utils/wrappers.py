@@ -1,12 +1,13 @@
 from __future__ import annotations
 
-from abc import abstractmethod
 import json
 import logging
 import os
 import sys
+from abc import abstractmethod
 from collections import defaultdict
 from dataclasses import dataclass
+from functools import partial
 from typing import Any, Callable, Dict, List, Literal, SupportsFloat, Tuple
 
 import gymnasium as gym
@@ -19,6 +20,7 @@ from multiworld.core.constants import Color
 from multiworld.multigrid.base import MultiGridEnv
 from multiworld.multigrid.core.constants import Direction, State, WorldObjectType
 from multiworld.multigrid.core.world_object import WorldObject
+from multiworld.multigrid.utils.decoder import decode_observation
 from multiworld.swarm.base import SwarmEnv
 from multiworld.utils.advanced_typing import Action
 from multiworld.utils.serialization import (
@@ -94,11 +96,13 @@ class ObservationCollectorWrapper(gym.Wrapper):
         self,
         env: MultiGridEnv | SwarmEnv,
         observations: int = 1000,
+        sample_rate: float = 1.0,
         directory: str = os.path.join("assets", "observations"),
         filename: str = "observations",
     ) -> None:
         super().__init__(env)
         self.env = env
+        self._sample_rate = sample_rate
         self._filepath = os.path.join(directory, filename + ".json")
         self._observations = observations
 
@@ -109,13 +113,15 @@ class ObservationCollectorWrapper(gym.Wrapper):
         actions: Dict[AgentID, int],
     ):
         observations, rewards, terminations, truncations, infos = super().step(actions)
-        self._rollouts.append(
-            Observations(
-                observations, actions, rewards, terminations, truncations, infos
-            )
-        )
 
-        if len(self._rollouts) % (self._observations // 10) == 0:
+        if np.random.rand() <= self._sample_rate:
+            self._rollouts.append(
+                Observations(
+                    observations, actions, rewards, terminations, truncations, infos
+                )
+            )
+
+        if len(self._rollouts) % (self._observations / 100) == 0:
             logging.info(
                 f"Collcted {len(self._rollouts)} / {self._observations} observations"
             )
@@ -141,7 +147,7 @@ class ConceptObsWrapper(gym.Wrapper):
 
     def __init__(
         self,
-        env: MultiGridEnv | SwarmEnv,
+        env: MultiGridEnv,  #  | SwarmEnv,
         concept_checks: Callable,
         observations: int = 1000,
         concepts: List[str] | None = None,
@@ -159,6 +165,8 @@ class ConceptObsWrapper(gym.Wrapper):
         self._concepts_filled = {key: False for key in self._concept_checks.keys()}
 
         assert len(self._concept_checks) != 0, f"No concepts to check, {concepts}"
+
+        self._decoder = partial(decode_observation, preprocessing=env._preprocessing)
 
         self._method = method
         self._step_count = 0
@@ -207,7 +215,8 @@ class ConceptObsWrapper(gym.Wrapper):
                 continue
 
             for agent_id, obs in observations.items():
-                if not check_fn(obs):
+                decoded_obs = self._decoder(obs.copy())
+                if not check_fn(decoded_obs):
                     continue
 
                 self._concepts_added += 1

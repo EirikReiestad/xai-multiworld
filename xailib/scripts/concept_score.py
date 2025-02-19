@@ -1,4 +1,5 @@
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
+from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.network.network import NetworkType
@@ -56,7 +57,11 @@ if __name__ == "__main__":
     learning_rate = artifact.metadata.get("learning_rate")
 
     env = GoToGoalEnv(
-        width=width, height=height, agents=agents, render_mode="rgb_array"
+        width=width,
+        height=height,
+        agents=agents,
+        preprocessing=PreprocessingEnum.ohe_minimal,
+        render_mode="rgb_array",
     )
 
     config = (
@@ -85,14 +90,15 @@ if __name__ == "__main__":
     concepts = ["random"]
     concepts = [
         "random",
-        "agent_in_front",
-        "agent_in_view",
-        "agent_to_left",
-        "agent_to_right",
         "goal_in_front",
         "goal_in_view",
         "goal_to_left",
         "goal_to_right",
+        "wall_in_view",
+        # "agent_in_front",
+        # "agent_in_view",
+        # "agent_to_left",
+        # "agent_to_right",
     ]
 
     for concept in concepts:

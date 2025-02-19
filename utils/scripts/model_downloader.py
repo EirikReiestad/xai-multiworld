@@ -2,6 +2,7 @@ import argparse
 import logging
 
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
+from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.network.network import NetworkType
@@ -47,19 +48,20 @@ def main():
 
 
 def download(project_folder: str, model_name: str, models: list[str]):
-    env = GoToGoalEnv(render_mode="rgb_array")
+    env = GoToGoalEnv(
+        goals=1,
+        width=5,
+        height=5,
+        max_steps=100,
+        preprocessing=PreprocessingEnum.ohe_minimal,
+        agents=1,
+        agent_view_size=7,
+        success_termination_mode="all",
+        render_mode="rgb_array",
+    )
 
     dqn_config = (
-        DQNConfig(
-            batch_size=64,
-            replay_buffer_size=10000,
-            gamma=0.99,
-            learning_rate=1e-4,
-            eps_start=0.9,
-            eps_end=0.05,
-            eps_decay=100000,
-            target_update=5000,
-        )
+        DQNConfig()
         .network(network_type=NetworkType.MULTI_INPUT)
         .environment(env=env)
         .training()

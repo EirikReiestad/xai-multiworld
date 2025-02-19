@@ -1,5 +1,5 @@
-from typing import Dict
 from collections import defaultdict
+from typing import Dict, List
 
 import numpy as np
 from sklearn.linear_model import LogisticRegression
@@ -11,6 +11,17 @@ def binary_concept_score(activations: np.ndarray, probe: LogisticRegression) -> 
     labels = np.ones(activations.shape[0])
     score = 2 * max(probe.score(activations, labels) - 0.5, 0)
     return score
+
+
+def individual_binary_concept_score(
+    activations: Dict, probe: LogisticRegression
+) -> List[float]:
+    scores = []
+    preprocessed_activations = preprocess_activations(activations)
+    for activation in preprocessed_activations:
+        score = binary_concept_score(np.array([activation]), probe)
+        scores.append(score)
+    return scores
 
 
 def binary_concept_scores(

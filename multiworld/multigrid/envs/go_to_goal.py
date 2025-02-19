@@ -11,8 +11,9 @@ from multiworld.utils.typing import AgentID, ObsType
 
 
 class GoToGoalEnv(MultiGridEnv):
-    def __init__(self, goals: int = 1, *args, **kwargs):
+    def __init__(self, goals: int = 1, static=False, *args, **kwargs):
         self._goals = goals
+        self._static = static
         super().__init__(*args, **kwargs)
 
     def _gen_world(self, width: int, height: int):
@@ -22,7 +23,8 @@ class GoToGoalEnv(MultiGridEnv):
         for _ in range(n):
             placeable_positions = self._world.get_empty_positions()
             goal_pos = self._rand_elem(placeable_positions)
-            # goal_pos = Position(self._width // 2, self._height // 2)
+            if self._static:
+                goal_pos = Position(self._width // 2, self._height // 2)
             self.goal = Goal()
             self._world.set(goal_pos, self.goal)
 
@@ -47,6 +49,5 @@ class GoToGoalEnv(MultiGridEnv):
             if obj is None:
                 continue
             if np.array_equal(obj, self.goal):
-                self.add_reward(agent, rewards, 10)
                 agent.pos = Position(-1, -1)
         return observations, rewards, terminations, truncations, info

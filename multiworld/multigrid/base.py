@@ -1,4 +1,5 @@
 import math
+from functools import partial
 from typing import Dict, List, Literal, Optional, SupportsFloat, Tuple
 
 import numpy as np
@@ -11,6 +12,7 @@ from multiworld.multigrid.core.agent import Agent, AgentState
 from multiworld.multigrid.core.constants import TILE_PIXELS, WorldObjectType
 from multiworld.multigrid.core.grid import Grid
 from multiworld.multigrid.core.world_object import Container, WorldObject
+from multiworld.multigrid.utils.decoder import decode_observation
 from multiworld.multigrid.utils.observation import gen_obs_grid_encoding
 from multiworld.multigrid.utils.ohe import ohe_direction
 from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
@@ -80,6 +82,8 @@ class MultiGridEnv(MultiWorldEnv):
 
     def update_from_numpy(self, observation: NDArray):
         grid: NDArray[np.int_] = observation[0]
+        decode = partial(decode_observation, preprocessing=self._preprocessing)
+        grid = decode(grid)
         direction = observation[1]
         assert grid.ndim == 3, "Input grid must be 3-dimensional."
         height, width, dim = grid.shape
