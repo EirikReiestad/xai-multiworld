@@ -1,33 +1,30 @@
-from rllib.algorithms.dqn.dqn_config import DQNConfig
+from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
+from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
+from multiworld.utils.wrappers import ObservationCollectorWrapper
 from rllib.algorithms.dqn.dqn import DQN
-from multigrid.envs.go_to_goal import GoToGoalEnv
-from multigrid.wrappers import ObservationCollectorWrapper
+from rllib.algorithms.dqn.dqn_config import DQNConfig
+from rllib.core.network.network import NetworkType
 
 env = GoToGoalEnv(
     width=10,
     height=10,
-    max_steps=300,
-    agents=2,
+    max_steps=20,
+    agents=1,
+    preprocessing=PreprocessingEnum.ohe_minimal,
     success_termination_mode="all",
-    render_mode="human",
+    render_mode="rgb_array",
 )
-concepts = ["wall_in_view"]
-concepts = None
-env_wrapped = ObservationCollectorWrapper(env, observations=10)
+
+env_wrapped = ObservationCollectorWrapper(env, observations=10000, sample_rate=1)
 
 config = (
     DQNConfig(
-        batch_size=32,
-        replay_buffer_size=10000,
-        gamma=0.99,
-        learning_rate=1e-4,
-        eps_start=0.9,
-        eps_end=0.05,
-        eps_decay=100000,
-        target_update=1000,
+        eps_start=0.0,
+        eps_end=0.00,
     )
     .environment(env=env_wrapped)
-    .training()
+    .network(network_type=NetworkType.MULTI_INPUT)
+    .model("model_150:v0")
     .debugging(log_level="INFO")
     .rendering()
 )

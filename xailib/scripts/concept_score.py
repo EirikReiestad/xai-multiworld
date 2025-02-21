@@ -1,4 +1,5 @@
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
+from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.network.network import NetworkType
@@ -11,7 +12,7 @@ from utils.core.plotting import plot_3d
 from xailib.common.activations import (
     compute_activations_from_models,
 )
-from xailib.common.binary_concept_score import binary_concept_scores
+from xailib.common.concept_score import concept_scores
 from xailib.common.probes import get_probes
 
 
@@ -20,7 +21,7 @@ def run(concept: str):
 
     model_artifacts = ModelLoader.load_models_from_path("artifacts", dqn.model)
     positive_observation, test_observation = load_and_split_observation(concept, 0.8)
-    negative_observation, _ = load_and_split_observation("random_negative", 0.8)
+    negative_observation, _ = load_and_split_observation("negative_" + concept, 0.8)
 
     test_observation_zipped = zip_observation_data(test_observation)
 
@@ -28,7 +29,7 @@ def run(concept: str):
         model_artifacts, test_observation_zipped, ignore
     )
 
-    probes = get_probes(
+    probes, positive_activations, negative_activations = get_probes(
         model_artifacts, positive_observation, negative_observation, ignore
     )
 
@@ -56,7 +57,11 @@ if __name__ == "__main__":
     learning_rate = artifact.metadata.get("learning_rate")
 
     env = GoToGoalEnv(
-        width=width, height=height, agents=agents, render_mode="rgb_array"
+        width=width,
+        height=height,
+        agents=agents,
+        preprocessing=PreprocessingEnum.ohe_minimal,
+        render_mode="rgb_array",
     )
 
     config = (
@@ -85,14 +90,15 @@ if __name__ == "__main__":
     concepts = ["random"]
     concepts = [
         "random",
-        "agent_in_front",
-        "agent_in_view",
-        "agent_to_left",
-        "agent_to_right",
         "goal_in_front",
         "goal_in_view",
         "goal_to_left",
         "goal_to_right",
+        "wall_in_view",
+        # "agent_in_front",
+        # "agent_in_view",
+        # "agent_to_left",
+        # "agent_to_right",
     ]
 
     for concept in concepts:

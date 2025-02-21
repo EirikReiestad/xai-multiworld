@@ -5,6 +5,7 @@ import os
 import numpy as np
 
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
+from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 from utils.common.observation import (
     Observation,
     observation_data_to_numpy,
@@ -51,6 +52,7 @@ def render(filename: str):
         agents=1,
         width=width,
         height=height,
+        preprocessing=PreprocessingEnum.ohe_minimal,
         render_mode="human",
     )
     env.reset()

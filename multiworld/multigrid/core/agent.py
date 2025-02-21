@@ -1,5 +1,3 @@
-from typing import Literal
-
 import numpy as np
 from gymnasium import spaces
 from numpy.typing import NDArray as ndarray

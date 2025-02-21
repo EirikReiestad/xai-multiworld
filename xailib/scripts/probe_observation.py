@@ -34,7 +34,9 @@ def run(concept: str):
         models, test_observation_zipped, ignore
     )
 
-    probes = get_probes(models, positive_observation, negative_observation, ignore)
+    probes, positive_activations, negative_activations = get_probes(
+        models, positive_observation, negative_observation, ignore
+    )
 
     layer_idx = 4
     probe = list(probes["latest"].values())[layer_idx]

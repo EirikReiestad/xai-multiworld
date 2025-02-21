@@ -9,7 +9,7 @@ class ActivationTracker:
     def __init__(self, model: nn.Module, ignore: List[str] = []):
         self._model = model
         self._activations = {}
-
+        self._hook_handles = []
         self._register_hooks(ignore)
         self._key = 0
 
@@ -18,6 +18,7 @@ class ActivationTracker:
         self._key = 0
         outputs = self._model(*inputs)
         activations_cloned = {key: value for key, value in self._activations.items()}
+        # self._remove_hooks()
         return activations_cloned, inputs, outputs
 
     def _register_hooks(self, ignore: List[str]):
@@ -36,9 +37,16 @@ class ActivationTracker:
                         continue
                     if not isinstance(sub_layer, nn.ReLU):
                         continue
-                    sub_layer.register_forward_hook(self._module_hook)
-                    hook_count += 1
+                    if not any(handle == sub_layer for handle in self._hook_handles):
+                        handle = sub_layer.register_forward_hook(self._module_hook)
+                        self._hook_handles.append(handle)
+                        hook_count += 1
         assert hook_count > 0, "No hooks registered"
+
+    def _remove_hooks(self):
+        for handle in self._hook_handles:
+            handle.remove()
+        self._hook_handles.clear()
 
     def _module_hook(self, module: nn.Module, input, output):
         self._activations[str(self._key) + "-" + str(module)] = {
