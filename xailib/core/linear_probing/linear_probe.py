@@ -1,9 +1,8 @@
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 import numpy as np
 import torch
 import torch.nn as nn
-
 from sklearn.linear_model import LogisticRegression
 
 from utils.common.observation import (
@@ -31,7 +30,7 @@ class LinearProbe:
 
         np.random.seed(None)
 
-    def train(self) -> Dict[str, LogisticRegression]:
+    def train(self) -> Tuple[Dict[str, LogisticRegression], Dict, Dict]:
         positive_observations = zip_observation_data(self._positive_observations)
         negative_observations = zip_observation_data(self._negative_observations)
 
@@ -58,7 +57,7 @@ class LinearProbe:
             )
             regressors[name] = regressor
 
-        return regressors
+        return regressors, positive_activations, negative_activations
 
     @staticmethod
     def compute_regressor(

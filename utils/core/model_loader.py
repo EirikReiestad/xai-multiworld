@@ -32,9 +32,7 @@ class ModelLoader:
     @staticmethod
     def load_model_from_path(path: str, network: nn.Module) -> nn.Module:
         model_artifact = ModelLoader.load_model_artifact_from_path(path)
-        model = ModelLoader.load_model_from_artifact(
-            model_artifact, copy.deepcopy(network)
-        )
+        model = ModelLoader.load_model_from_artifact(model_artifact, network)
         return model
 
     @staticmethod

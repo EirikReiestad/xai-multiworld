@@ -57,3 +57,12 @@ def ohe_grid_object(obj: np.ndarray, minimal: bool) -> np.ndarray:
     ohe_color = ohe_int(color, N_COLORS)
     ohe_state = ohe_int(state, N_STATES)
     return np.concatenate((ohe_type, ohe_color, ohe_state))
+
+
+def decode_ohe(obj: np.ndarray, minimal: bool) -> np.ndarray:
+    type_ = np.argmax(obj[:N_TYPES])
+    if minimal:
+        return np.array([type_])
+    color = np.argmax(obj[N_TYPES : N_TYPES + N_COLORS])
+    state = np.argmax(obj[N_TYPES + N_COLORS :])
+    return np.array([type_, color, state])

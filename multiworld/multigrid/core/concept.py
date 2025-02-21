@@ -140,13 +140,12 @@ def _agent_in_front_concept(view: Dict[str, NDArray[np.int_]]) -> bool:
 
 concept_checks: Dict[str, Callable] = {
     "random": _random_observation_concept,
-    "random_negative": _random_observation_concept,
     "goal_in_view": _goal_in_view_concept,
     "goal_to_right": _goal_to_right_concept,
     "goal_to_left": _goal_to_left_concept,
     "goal_in_front": _goal_in_front_concept,
     "agent_in_view": _agent_in_view_concept,
-    # "wall_in_view": _wall_in_view_concept,
+    "wall_in_view": _wall_in_view_concept,
     "agent_to_right": _agent_to_right_concept,
     "agent_to_left": _agent_to_left_concept,
     "agent_in_front": _agent_in_front_concept,

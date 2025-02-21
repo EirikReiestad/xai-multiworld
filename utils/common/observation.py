@@ -31,10 +31,40 @@ def observation_from_file(path: str) -> Observation:
     return observation_from_dict(json_data)
 
 
+def observations_from_file(path: str) -> Observation:
+    assert path.endswith(".json")
+    json_data = json.load(open(path))
+    return observations_from_dict(json_data)
+
+
 def observation_to_file(observations: Observation, path: str):
     assert path.endswith(".json")
     with open(path, "w") as f:
         json.dump(observations, f, indent=4, cls=NumpyEncoder)
+
+
+def observations_from_dict(data: List[Dict]) -> Observation:
+    observations = []
+    labels = []
+
+    for d in data:
+        obs = d["observations"].values()
+        label = d["actions"].values()
+        observations.extend(obs)
+        labels.extend(label)
+
+    num_observations = len(observations)
+
+    obs = Observation(num_observations)
+
+    ids = [i for i in range(num_observations)]
+
+    obs[..., Observation.ID] = ids
+    obs[..., Observation.LABEL] = labels
+    obs[..., Observation.DATA] = np.array(observations, dtype=object).reshape(
+        num_observations, 1
+    )
+    return obs
 
 
 def observation_from_dict(data: List[Dict]) -> Observation:
