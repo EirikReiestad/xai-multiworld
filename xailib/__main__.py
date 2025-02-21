@@ -41,6 +41,12 @@ def main():
         action="store_true",
         help="Run the probe statistic script",
     )
+    parser.add_argument(
+        "-pr",
+        "--probe-robustness",
+        action="store_true",
+        help="Run the probe robustness script",
+    )
     parser.add_argument("--shap", action="store_true", help="Run the shap script")
 
     args, unknown = parser.parse_known_args()
@@ -60,6 +66,7 @@ def main():
         "xailib/scripts/completeness_score.py",
     ]
     probe_statistic_subprocess_args = ["python", "xailib/scripts/probe_statistics.py"]
+    probe_robustness_subprocess_args = ["python", "xailib/scripts/probe_robustness.py"]
     shap_subprocess_args = ["python", "xailib/scripts/shap_score.py"]
 
     if args.concept_score:
@@ -74,6 +81,8 @@ def main():
         completeness_score_subprocess_args += ["--completeness-score"]
     if args.probe_statistic:
         probe_statistic_subprocess_args += ["--probe-statistic"]
+    if probe_robustness_subprocess_args:
+        probe_robustness_subprocess_args += ["--probe-robustness"]
     if args.shap:
         shap_subprocess_args += ["--shap"]
 
@@ -84,6 +93,7 @@ def main():
         concept_backprop_subprocess_args,
         completeness_score_subprocess_args,
         probe_statistic_subprocess_args,
+        probe_robustness_subprocess_args,
         shap_subprocess_args,
     ]:
         if len(subprocess_args) > 2:

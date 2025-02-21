@@ -1,3 +1,9 @@
+import logging
+from typing import Dict, List
+
+from sklearn.metrics.pairwise import cosine_similarity
+from tabulate import tabulate
+
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 from rllib.algorithms.dqn.dqn import DQN
@@ -5,44 +11,70 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.network.network import NetworkType
 from utils.common.observation import (
     load_and_split_observation,
-    zip_observation_data,
 )
 from utils.core.model_loader import ModelLoader
-from utils.core.plotting import plot_3d
-from xailib.common.activations import (
-    compute_activations_from_models,
-)
-from xailib.common.concept_score import binary_concept_scores
 from xailib.common.probes import get_probes
 
 
-def run(concept: str):
+def run(concepts: List[str], layer_idx: int = 2):
+    splits = [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.05, 0.02]
+
+    concept_similarities = {}
+    for concept in concepts:
+        similarities = get_probe_similarity(concept, layer_idx, splits)
+        concept_similarities[concept] = similarities
+
+    log_similarity(concept_similarities)
+
+    return concept_similarities
+
+
+def log_similarity(similarities: Dict):
+    y_axis_values = sorted(next(iter(similarities.values())).keys(), reverse=True)
+
+    table_data = []
+    for y in y_axis_values:
+        row = [y] + [similarities[key][y][0][0] for key in similarities.keys()]
+        table_data.append(row)
+
+    headers = ["dataset size"] + concepts
+    logging.info("\n" + tabulate(table_data, headers=headers))
+
+
+def get_probe_similarity(
+    concept: str, layer_idx: int, splits: List[float]
+) -> Dict[float, float]:
     ignore = ["_fc0"]
 
-    model_artifacts = ModelLoader.load_models_from_path("artifacts", dqn.model)
-    positive_observation, test_observation = load_and_split_observation(concept, 0.8)
-    negative_observation, _ = load_and_split_observation("negative_" + concept, 0.8)
+    base = get_probe(concept, layer_idx, 1.0)
 
-    test_observation_zipped = zip_observation_data(test_observation)
+    probe_splits = {}
+    for split in splits:
+        probe = get_probe(concept, layer_idx, split)
+        probe_splits[split] = probe
 
-    test_activations, test_input, test_output = compute_activations_from_models(
-        model_artifacts, test_observation_zipped, ignore
-    )
+    similarities = {
+        key: cosine_similarity(base.coef_, probe.coef_)
+        for key, probe in probe_splits.items()
+    }
+    return similarities
+
+
+def get_probe(concept: str, layer_idx: int, split: float = 0.8):
+    ignore = []
+
+    model = ModelLoader.load_latest_model_from_path("artifacts", dqn.model)
+    models = {"latest": model}
+    positive_observation, test_observation = load_and_split_observation(concept, split)
+    negative_observation, _ = load_and_split_observation("negative_" + concept, split)
 
     probes, positive_activations, negative_activations = get_probes(
-        model_artifacts, positive_observation, negative_observation, ignore
+        models, positive_observation, negative_observation, ignore
     )
 
-    concept_scores = binary_concept_scores(test_activations, probes)
+    probe = list(probes["latest"].values())[layer_idx]
 
-    plot_3d(
-        concept_scores,
-        label=concept,
-        filename=concept,
-        min=0,
-        max=1,
-        show=True,
-    )
+    return probe
 
 
 if __name__ == "__main__":
@@ -101,5 +133,4 @@ if __name__ == "__main__":
         # "agent_to_right",
     ]
 
-    for concept in concepts:
-        run(concept)
+    run(concepts)
