@@ -1,18 +1,24 @@
+import ast
+import json
 import logging
+import math
 import os
-from typing import Dict, List
+from collections import defaultdict
+from itertools import count
+from typing import Dict, List, Literal
 
 import numpy as np
 import torch
-import torch.nn as nn
 from sklearn.linear_model import LogisticRegression
-from torch.utils.data import DataLoader, TensorDataset, random_split
+from tabulate import tabulate
+from torch.utils.data import TensorDataset
 
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.network.network import NetworkType
+from utils.common.collections import get_combinations
 from utils.common.observation import (
     Observation,
     load_and_split_observation,
@@ -23,159 +29,171 @@ from utils.core.model_loader import ModelLoader
 from xailib.common.activations import (
     compute_activations_from_models,
 )
-from xailib.common.binary_concept_score import individual_binary_concept_score
+from xailib.common.concept_score import (
+    individual_binary_concept_score,
+    individual_soft_concept_score,
+)
 from xailib.common.probes import get_probes
+from xailib.common.train_model import train_model
+from xailib.core.network.feed_forward import FeedForwardNetwork
 
 logging.basicConfig(level=logging.INFO)
 
 
-class SimpleNetwork(nn.Module):
-    def __init__(self, input_size: int, hidden_size: int, output_size: int) -> None:
-        super(SimpleNetwork, self).__init__()
-        self.fc1 = nn.Linear(input_size, hidden_size)
-        self.relu1 = nn.ReLU()
-        self.fc2 = nn.Linear(hidden_size, hidden_size)
-        self.relu2 = nn.ReLU()
-        self.fc3 = nn.Linear(hidden_size, output_size)
-
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
-        out = self.fc1(x)
-        out = self.relu1(out)
-        out = self.fc2(out)
-        out = self.relu2(out)
-        out = self.fc3(out)
-        return out
-
-
-def run(concepts: List[str], dqn: DQN):
+def run(concepts: List[str], dqn: DQN, layer_idx: int = 2):
+    ignore = ["_fc0"]
     probes = {}
-    concept_scores = []
-    layer_idx = 2
-    for i, concept in enumerate(concepts):
+    for concept in concepts:
         probe = get_probe(concept, layer_idx)
-        probes[i] = probe
+        probes[concept] = probe
 
     observations = observations_from_file(
         os.path.join("assets/observations", "observations" + ".json")
     )
 
-    concept_scores = np.array(
-        get_concept_score(observations, probes, layer_idx), dtype=np.float32
-    )
-    labels = np.array(observations[..., Observation.LABEL], dtype=np.float32)
-
-    model = SimpleNetwork(len(concepts), 500, int(dqn.action_space.n))
-    train(model, concept_scores, labels)
-
-
-def train(
-    model: nn.Module,
-    X: np.ndarray,
-    y: np.ndarray,
-    val_split: float = 0.2,
-    test_split: float = 0.1,
-):
-    epochs = 10
-    batch_size = 64
-    learning_rate = 0.001
-
-    optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate, amsgrad=True)
-    criterion = torch.nn.CrossEntropyLoss()
-
-    # Create dataset and split into training, validation, and test sets
-    dataset = TensorDataset(torch.from_numpy(X), torch.tensor(y, dtype=torch.long))
-    test_size = int(len(dataset) * test_split)
-    val_size = int(len(dataset) * val_split)
-    train_size = len(dataset) - val_size - test_size
-    train_dataset, val_dataset, test_dataset = random_split(
-        dataset, [train_size, val_size, test_size]
-    )
-
-    train_loader = DataLoader(train_dataset, batch_size=batch_size)
-    val_loader = DataLoader(val_dataset, batch_size=batch_size)
-    test_loader = DataLoader(test_dataset, batch_size=batch_size)
-
-    logging.info(f"Training model with {len(train_dataset)} samples")
-    logging.info(f"Validating model with {len(val_dataset)} samples")
-    logging.info(f"Testing model with {len(test_dataset)} samples")
-
-    model.train()
-    for epoch in range(epochs):
-        running_loss = 0.0
-
-        for inputs, labels in train_loader:
-            optimizer.zero_grad()
-            outputs = model(inputs)
-            loss = criterion(outputs, labels)
-            loss.backward()
-            optimizer.step()
-
-            running_loss += loss.item()
-
-        model.eval()
-        val_loss = 0.0
-        correct = 0
-        total = 0
-        with torch.no_grad():
-            for inputs, labels in val_loader:
-                outputs = model(inputs)
-                loss = criterion(outputs, labels)
-                val_loss += loss.item()
-
-                _, predicted = torch.max(outputs.data, 1)
-                total += labels.size(0)
-                correct += (predicted == labels).sum().item()
-
-        val_loss /= len(val_loader)
-        val_accuracy = 100 * correct / total
-
-        logging.info(
-            f"Epoch [{epoch+1}/{epochs}], Loss: {running_loss/len(train_loader):.4f}, "
-            f"Validation Loss: {val_loss:.4f}, Validation Accuracy: {val_accuracy:.2f}%"
-        )
-
-        model.train()
-
-    model.eval()
-    test_loss = 0.0
-    correct = 0
-    total = 0
-    with torch.no_grad():
-        for inputs, labels in test_loader:
-            outputs = model(inputs)
-            loss = criterion(outputs, labels)
-            test_loss += loss.item()
-
-            _, predicted = torch.max(outputs.data, 1)
-            total += labels.size(0)
-            correct += (predicted == labels).sum().item()
-
-    test_loss /= len(test_loader)
-    test_accuracy = 100 * correct / total
-
-    logging.info(f"Test Loss: {test_loss:.4f}, Test Accuracy: {test_accuracy:.2f}%")
-
-
-def get_concept_score(
-    observation: Observation, probes: Dict[str, LogisticRegression], layer_idx: int
-):
-    ignore = []
-    observation_zipped = zip_observation_data(observation)
-
     model = ModelLoader.load_latest_model_from_path("artifacts", dqn.model)
     models = {"latest": model}
+    action_space = int(dqn.action_space.n)
 
+    observation_zipped = zip_observation_data(observations)
     activations, input, output = compute_activations_from_models(
         models, observation_zipped, ignore
     )
+
+    random_probe = {"random": get_probe("random", layer_idx)}
+    random_loss, random_accuracy = compute_accuracy(
+        1, action_space, activations, observations, random_probe, layer_idx
+    )
+    logging.info(f"Random concept - loss: {random_loss} accuracy: {random_accuracy}")
+
+    results = {tuple(["random"]): (random_loss, random_accuracy)}
+    for comb in get_combinations(concepts):
+        logging.info(f"\n\n===== Computing accuracy for {comb} =====")
+        sub_probes = {key: value for key, value in probes.items() if key in comb}
+        sub_loss, sub_accuracy = compute_accuracy(
+            len(comb), action_space, activations, observations, sub_probes, layer_idx
+        )
+        results[tuple(sorted(comb))] = (sub_loss, sub_accuracy)
+
+    path = os.path.join(
+        "assets", "results", f"concept_combination_accuracies_{layer_idx}.json"
+    )
+
+    write_results(results, path)
+
+    calculate_shapley_values(path)
+
+
+def calculate_shapley_values(path: str):
+    results = read_results(path)
+
+    table = sorted(
+        [(comb, loss, accuracy) for comb, (loss, accuracy) in results.items()],
+        key=lambda x: x[2],
+        reverse=True,
+    )
+    logging.info("\n" + tabulate(table, headers=["Combination", "Loss", "Accuracy"]))
+
+    shapley_values = defaultdict(float)
+    N = len(concepts)
+    for concept in concepts:
+        other_concepts = concepts.copy()
+        other_concepts.remove(concept)
+        for comb in get_combinations(other_concepts):
+            comb_u_concept = tuple(sorted(comb + [concept]))
+            comb = tuple(comb)
+            coalition_size = len(comb)
+            factorial_term = (
+                math.factorial(coalition_size)
+                * math.factorial(N - coalition_size - 1)
+                / math.factorial(N)
+            )
+
+            accuracy = results[comb_u_concept][1]
+            comb_accuracy = results[comb][1]
+
+            marginal_contribution = accuracy - comb_accuracy
+            shapley_values[concept] += factorial_term * marginal_contribution
+    return shapley_values
+
+
+def read_results(path: str) -> Dict:
+    with open(path, "r") as f:
+        results = json.load(f)
+        results = {ast.literal_eval(key): value for key, value in results.items()}
+    return results
+
+
+def write_results(results: Dict, path: str):
+    with open(path, "w") as f:
+        results = {str(key): value for key, value in results.items()}
+        json.dump(results, f)
+
+
+def compute_accuracy(
+    observation_shape: int,
+    action_shape: int,
+    activations: Dict[str, Dict],
+    observations: Observation,
+    probes: Dict[str, LogisticRegression],
+    layer_idx: int,
+):
+    hidden_units = 500
+
+    epochs = 3
+    batch_size = 64
+    learning_rate = 0.001
+    val_split = 0.2
+    test_split = 0.1
+
+    concept_scores = np.array(
+        get_concept_score(
+            activations, probes, layer_idx, concept_score_method="binary"
+        ),
+        dtype=np.float32,
+    )
+    labels = np.array(observations[..., Observation.LABEL], dtype=np.float32)
+
+    model = FeedForwardNetwork(observation_shape, hidden_units, action_shape)
+    dataset = TensorDataset(
+        torch.from_numpy(concept_scores), torch.tensor(labels, dtype=torch.long)
+    )
+
+    loss, accuracy = train_model(
+        model=model,
+        learning_rate=learning_rate,
+        epochs=epochs,
+        batch_size=batch_size,
+        dataset=dataset,
+        test_split=test_split,
+        val_split=val_split,
+    )
+
+    return loss, accuracy
+
+
+def get_concept_score(
+    activations: Dict[str, Dict],
+    probes: Dict[str, LogisticRegression],
+    layer_idx: int,
+    concept_score_method: Literal["binary", "soft"] = "binary",
+):
     layer_activations = list(activations["latest"].values())[layer_idx]
 
     concept_scores = []
     for concept, probe in probes.items():
-        concept_score = individual_binary_concept_score(layer_activations, probe)
+        if concept_score_method == "binary":
+            concept_score = individual_binary_concept_score(layer_activations, probe)
+        elif concept_score_method == "soft":
+            concept_score = individual_soft_concept_score(layer_activations, probe)
+        else:
+            raise ValueError(
+                f"Concept score method {concept_score_method} not recognized."
+            )
         concept_scores.append(concept_score)
 
     concept_scores = list(zip(*concept_scores))
+
     return concept_scores
 
 
@@ -193,7 +211,9 @@ def get_probe(concept: str, layer_idx: int):
         models, test_observation_zipped, ignore
     )
 
-    probes = get_probes(models, positive_observation, negative_observation, ignore)
+    probes, positive_activations, negative_activations = get_probes(
+        models, positive_observation, negative_observation, ignore
+    )
 
     layer_activations = list(test_activations["latest"].values())[layer_idx]
     probe = list(probes["latest"].values())[layer_idx]
@@ -218,24 +238,12 @@ if __name__ == "__main__":
     env = GoToGoalEnv(
         width=10,
         height=10,
-        max_steps=10,
         agents=1,
         preprocessing=PreprocessingEnum.ohe_minimal,
-        success_termination_mode="all",
-        render_mode="human",
     )
 
     config = (
-        DQNConfig(
-            batch_size=128,
-            replay_buffer_size=10000,
-            gamma=0.99,
-            learning_rate=3e-4,
-            eps_start=0.9,
-            eps_end=0.05,
-            eps_decay=50000,
-            target_update=1000,
-        )
+        DQNConfig()
         .network(
             network_type=NetworkType.MULTI_INPUT,
             conv_layers=conv_layers,
@@ -262,4 +270,22 @@ if __name__ == "__main__":
         "wall_in_view",
     ]
 
-    run(concepts, dqn)
+    layers = 0
+    for i in count():
+        try:
+            run(concepts, dqn, layer_idx=i)
+        except Exception as e:
+            logging.warning(e)
+            break
+        layers = i
+
+    for i in range(layers):
+        path = os.path.join(
+            "assets", "results", f"concept_combination_accuracies_{i}.json"
+        )
+        values = calculate_shapley_values(path)
+
+        values = dict(sorted(values.items(), key=lambda item: item[1], reverse=True))
+
+        table = [(key, value) for key, value in values.items()]
+        logging.info(tabulate(table, headers=["Key", "Value"]))

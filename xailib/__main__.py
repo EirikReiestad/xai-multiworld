@@ -33,7 +33,13 @@ def main():
         "-csm",
         "--completeness-score",
         action="store_true",
-        help="Run the completeness score metric script",
+        help="Run the completeness score statistic script",
+    )
+    parser.add_argument(
+        "-ps",
+        "--probe-statistic",
+        action="store_true",
+        help="Run the probe statistic script",
     )
     parser.add_argument("--shap", action="store_true", help="Run the shap script")
 
@@ -53,6 +59,7 @@ def main():
         "python",
         "xailib/scripts/completeness_score.py",
     ]
+    probe_statistic_subprocess_args = ["python", "xailib/scripts/probe_statistics.py"]
     shap_subprocess_args = ["python", "xailib/scripts/shap_score.py"]
 
     if args.concept_score:
@@ -65,6 +72,8 @@ def main():
         concept_backprop_subprocess_args += ["--concept-backprop"]
     if args.completeness_score:
         completeness_score_subprocess_args += ["--completeness-score"]
+    if args.probe_statistic:
+        probe_statistic_subprocess_args += ["--probe-statistic"]
     if args.shap:
         shap_subprocess_args += ["--shap"]
 
@@ -74,6 +83,7 @@ def main():
         probe_observation_subprocess_args,
         concept_backprop_subprocess_args,
         completeness_score_subprocess_args,
+        probe_statistic_subprocess_args,
         shap_subprocess_args,
     ]:
         if len(subprocess_args) > 2:

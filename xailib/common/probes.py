@@ -1,4 +1,4 @@
-from typing import Dict, List
+from typing import Dict, List, Tuple
 
 import torch.nn as nn
 from sklearn.linear_model import LogisticRegression
@@ -12,8 +12,10 @@ def get_probes(
     positive_observation: Observation,
     negative_observation: Observation,
     ignore: List["str"] = [],
-) -> Dict[str, Dict[str, LogisticRegression]]:
+) -> Tuple[Dict[str, Dict[str, LogisticRegression]], Dict, Dict]:
     regressors = {}
+    positive_activations = {}
+    negative_activations = {}
 
     positive_observation[..., Observation.LABEL] = 1
     negative_observation[..., Observation.LABEL] = 0
@@ -25,7 +27,11 @@ def get_probes(
             negative_observation,
             ignore,
         )
-        model_regressors = linear_probe.train()
+        model_regressors, positive_activations, negative_activations = (
+            linear_probe.train()
+        )
         regressors[model_name] = model_regressors
+        positive_activations[model_name] = positive_activations
+        negative_activations[model_name] = negative_activations
 
-    return regressors
+    return regressors, positive_activations, negative_activations
