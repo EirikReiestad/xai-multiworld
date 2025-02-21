@@ -16,6 +16,7 @@ from gymnasium import spaces
 from gymnasium.core import ObservationWrapper
 from numpy.typing import NDArray as ndarray
 
+from multiworld.base import MultiWorldEnv
 from multiworld.core.constants import Color
 from multiworld.multigrid.base import MultiGridEnv
 from multiworld.multigrid.core.constants import Direction, State, WorldObjectType
@@ -96,7 +97,7 @@ class Observations:
 class ObservationCollectorWrapper(gym.Wrapper):
     def __init__(
         self,
-        env: MultiGridEnv | SwarmEnv,
+        env: MultiWorldEnv,
         observations: int = 1000,
         sample_rate: float = 1.0,
         directory: str = os.path.join("assets", "observations"),

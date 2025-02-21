@@ -9,6 +9,9 @@ logging.basicConfig(level=logging.INFO)
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument(
+        "--pipeline", action="store_true", help="Run the pipeline script"
+    )
+    parser.add_argument(
         "-cs",
         "--concept-score",
         action="store_true",
@@ -51,6 +54,7 @@ def main():
 
     args, unknown = parser.parse_known_args()
 
+    pipeline_subprocess_args = ["python", "xailib/scripts/pipeline.py"]
     concept_score_subprocess_args = ["python", "xailib/scripts/concept_score.py"]
     tcav_score_subprocess_args = ["python", "xailib/scripts/tcav.py"]
     concept_backprop_subprocess_args = [
@@ -69,6 +73,8 @@ def main():
     probe_robustness_subprocess_args = ["python", "xailib/scripts/probe_robustness.py"]
     shap_subprocess_args = ["python", "xailib/scripts/shap_score.py"]
 
+    if args.pipeline:
+        pipeline_subprocess_args += ["--pipeline"]
     if args.concept_score:
         concept_score_subprocess_args += ["--concept-score"]
     if args.tcav_score:
@@ -81,12 +87,13 @@ def main():
         completeness_score_subprocess_args += ["--completeness-score"]
     if args.probe_statistic:
         probe_statistic_subprocess_args += ["--probe-statistic"]
-    if probe_robustness_subprocess_args:
+    if args.probe_robustness:
         probe_robustness_subprocess_args += ["--probe-robustness"]
     if args.shap:
         shap_subprocess_args += ["--shap"]
 
     for subprocess_args in [
+        pipeline_subprocess_args,
         concept_score_subprocess_args,
         tcav_score_subprocess_args,
         probe_observation_subprocess_args,

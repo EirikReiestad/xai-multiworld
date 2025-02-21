@@ -11,8 +11,8 @@ class ModelDownloader(WandB):
     def __init__(
         self,
         project_folder: str,
-        model_name: str,
         models: list[str],
+        model_name: str | None = None,
         model: nn.Module | None = None,
         model_folder: str = "artifacts",
         folder_suffix: str = "",

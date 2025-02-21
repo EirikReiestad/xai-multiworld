@@ -1,0 +1,33 @@
+{
+    "wandb": {
+        "project_folder": "test",
+        "models": {
+            "low": 0,
+            "high": 40,
+            "step": 10
+        }
+    },
+    "model": {
+        "type": "dqn"
+    },
+    "collect_rollouts": {
+        "observations": 10,
+        "sample_rate": 1.0
+    },
+    "generate_concepts": {
+        "method": "policy",
+        "observations": 50,
+        "concepts": [
+            "random",
+            "random_negative",
+            "goal_in_view",
+            "goal_to_right",
+            "goal_to_left",
+            "goal_in_front",
+            "wall_in_view"
+        ]
+    },
+    "path": {
+        "artifacts": "artifacts"
+    }
+}

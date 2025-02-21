@@ -14,7 +14,7 @@ env = GoToGoalEnv(
     agents=1,
     agent_view_size=7,
     success_termination_mode="all",
-    render_mode="human",
+    render_mode="rgb_array",
 )
 
 # env = ObservationCollectorWrapper(env, observations=10)
@@ -29,19 +29,19 @@ config = (
         replay_buffer_size=10000,
         gamma=0.99,
         learning_rate=3e-4,
-        eps_start=0.0,
-        eps_end=0.00,
+        eps_start=0.9,
+        eps_end=0.05,
         eps_decay=2000,
         update_method="soft",
         target_update=100,
     )
     .network(network_type=NetworkType.MULTI_INPUT)
     .environment(env=env)
-    .model(model="model_150:v0")
+    # .model(model="model_150:v0")
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project="test", log_interval=10)
+    .wandb(project="test", log_interval=10)
 )
 
 dqn = DQN(config)

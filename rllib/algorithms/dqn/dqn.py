@@ -109,13 +109,16 @@ class DQN(Algorithm):
                 "agents": len(self._env.agents),
                 "width": self._env._width,
                 "height": self._env._height,
+                "preprocessing": self._env._preprocessing,
+                "env_type": self._env.env_name,
+                "network_type": self._config._network_type,
                 "eps_threshold": self._eps_threshold,
                 "learning_rate": learning_rate,
                 "conv_layers": self._config.conv_layers,
                 "hidden_units": self._config.hidden_units,
             }
-        except AttributeError:
-            pass
+        except AttributeError as e:
+            logging.warning(f"Could not get metadata for episode: {e}")
 
         self.log_model(
             self._policy_net,
