@@ -2,7 +2,7 @@ import logging
 from typing import Dict
 
 import numpy as np
-from scipy.spatial.distance import pdist, squareform
+from scipy.spatial.distance import pdist
 from torch._dynamo.utils import tabulate
 
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
