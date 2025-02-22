@@ -3,8 +3,8 @@
         "project_folder": "test",
         "models": {
             "low": 0,
-            "high": 40,
-            "step": 10
+            "high": 100,
+            "step": 20
         }
     },
     "model": {
@@ -15,19 +15,23 @@
         "sample_rate": 1.0
     },
     "generate_concepts": {
-        "method": "policy",
-        "observations": 50,
-        "concepts": [
-            "random",
-            "random_negative",
-            "goal_in_view",
-            "goal_to_right",
-            "goal_to_left",
-            "goal_in_front",
-            "wall_in_view"
+        "method": "random",
+        "observations": 10
+    },
+    "concepts": [
+        "random",
+        "goal_in_view"
+    ],
+    "layer": {
+        "ignore": [
+            "_fc0"
         ]
     },
     "path": {
-        "artifacts": "artifacts"
-    }
+        "artifacts": "artifacts",
+        "concepts": "assets/concepts",
+        "observations": "assets/observations",
+        "results": "assets/results"
+    },
+    "force_update": false
 }

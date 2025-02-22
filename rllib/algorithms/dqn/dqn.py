@@ -118,7 +118,8 @@ class DQN(Algorithm):
                 "hidden_units": self._config.hidden_units,
             }
         except AttributeError as e:
-            logging.warning(f"Could not get metadata for episode: {e}")
+            pass
+            # logging.warning(f"Could not get metadata for episode: {e}")
 
         self.log_model(
             self._policy_net,
