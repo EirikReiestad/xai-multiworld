@@ -11,6 +11,7 @@
         "type": "dqn"
     },
     "collect_rollouts": {
+        "method": "policy",
         "observations": 10,
         "sample_rate": 1.0
     },
@@ -20,12 +21,17 @@
     },
     "concepts": [
         "random",
-        "goal_in_view"
+        "goal_in_front",
+        "goal_in_view",
+        "goal_to_left",
+        "goal_to_right",
+        "wall_in_view"
     ],
-    "layer": {
-        "ignore": [
+    "analyze": {
+        "ignore_layers": [
             "_fc0"
-        ]
+        ],
+        "layer_idx": 4
     },
     "path": {
         "artifacts": "artifacts",

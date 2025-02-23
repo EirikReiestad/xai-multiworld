@@ -27,11 +27,11 @@ def get_probes(
             negative_observation,
             ignore,
         )
-        model_regressors, positive_activations, negative_activations = (
+        model_regressors, positive_activation, negative_activation = (
             linear_probe.train()
         )
         regressors[model_name] = model_regressors
-        positive_activations[model_name] = positive_activations
-        negative_activations[model_name] = negative_activations
+        positive_activations[model_name] = positive_activation
+        negative_activations[model_name] = negative_activation
 
     return regressors, positive_activations, negative_activations

@@ -22,9 +22,6 @@ from multiworld.multigrid.base import MultiGridEnv
 from multiworld.multigrid.core.constants import Direction, State, WorldObjectType
 from multiworld.multigrid.core.world_object import WorldObject
 from multiworld.multigrid.utils.decoder import decode_observation
-from multiworld.multigrid.utils.ohe import decode_ohe
-from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
-from multiworld.swarm.base import SwarmEnv
 from multiworld.utils.advanced_typing import Action
 from multiworld.utils.serialization import (
     deserialize_observation,
@@ -156,11 +153,13 @@ class ConceptObsWrapper(gym.Wrapper):
         concepts: List[str] | None = None,
         method: Literal["random", "policy"] = "policy",
         save_dir: str = "assets/concepts",
+        result_save_dir: str = "assets/results",
     ):
         super().__init__(env)
 
         self._num_observations = observations
         self._save_dir = save_dir
+        self._result_save_dir = result_save_dir
         os.makedirs(self._save_dir, exist_ok=True)
 
         self._concepts: Dict[str, List[ObsType]] = defaultdict(list)
@@ -178,6 +177,7 @@ class ConceptObsWrapper(gym.Wrapper):
         self._step_count = 0
         self._concepts_added = 0
         self._previous_concepts_added = 0
+        self._sample_efficiency = {key: 0 for key in self._concept_checks.keys()}
         self._timeout = 20
 
     def step(
@@ -192,7 +192,7 @@ class ConceptObsWrapper(gym.Wrapper):
         if self._method == "random":
             super().reset()
 
-        if self._step_count % (self._num_observations / 10) == 0:
+        if self._step_count % (self._num_observations / 100) == 0:
             logging.info(f"Step {self._step_count}")
             logging.info(
                 f"Number of concepts filled: {self._concepts_added} / {self._num_observations * len(self._concept_checks) * 2}"
@@ -229,6 +229,9 @@ class ConceptObsWrapper(gym.Wrapper):
 
             for agent_id, obs in observations.items():
                 decoded_obs = self._decoder(obs.copy())
+                if not self._concepts_filled[concept]:
+                    self._sample_efficiency[concept] += 1
+
                 if not check_fn(decoded_obs):
                     if self._concepts_filled[negative_concept]:
                         continue
@@ -263,6 +266,19 @@ class ConceptObsWrapper(gym.Wrapper):
 
             with open(path, "w") as f:
                 json.dump(observations, f, indent=4, cls=self.encoder)
+
+        path = os.path.join(self._result_save_dir, "sample_efficiency.json")
+        results = {}
+        for concept in self._sample_efficiency:
+            normalized = self._num_observations / self._sample_efficiency[concept]
+            results[concept] = {
+                "num_observations": self._num_observations,
+                "num_samples": self._sample_efficiency[concept],
+                "normalized": normalized,
+            }
+
+        with open(path, "w") as f:
+            json.dump(results, f, indent=4)
 
     @property
     @abstractmethod
