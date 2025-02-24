@@ -12,12 +12,12 @@
     },
     "collect_rollouts": {
         "method": "policy",
-        "observations": 10,
+        "observations": 1000,
         "sample_rate": 1.0
     },
     "generate_concepts": {
         "method": "random",
-        "observations": 10
+        "observations": 100
     },
     "concepts": [
         "random",
@@ -31,7 +31,21 @@
         "ignore_layers": [
             "_fc0"
         ],
-        "layer_idx": 4
+        "layer_idx": 4,
+        "splits": [
+            0.9,
+            0.8,
+            0.7,
+            0.6,
+            0.5,
+            0.4,
+            0.3,
+            0.2,
+            0.1,
+            0.05,
+            0.01
+        ],
+        "robustness_epochs": 5
     },
     "path": {
         "artifacts": "artifacts",

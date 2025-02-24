@@ -4,7 +4,6 @@ import json
 import logging
 import os
 import sys
-from abc import abstractmethod
 from collections import defaultdict
 from dataclasses import dataclass
 from functools import partial
@@ -192,11 +191,6 @@ class ConceptObsWrapper(gym.Wrapper):
         if self._method == "random":
             super().reset()
 
-        if self._step_count % (self._num_observations / 100) == 0:
-            logging.info(f"Step {self._step_count}")
-            logging.info(
-                f"Number of concepts filled: {self._concepts_added} / {self._num_observations * len(self._concept_checks) * 2}"
-            )
         if self._step_count % self._num_observations == 0:
             if (
                 self._previous_concepts_added == self._concepts_added
@@ -211,6 +205,11 @@ class ConceptObsWrapper(gym.Wrapper):
                     for key in keys:
                         info_str += f"{key} - {len(self._concepts.get(key) or [])}\n"
                     raise TimeoutError("Can not generate all concepts." + info_str)
+            else:
+                logging.info(f"Step {self._step_count}")
+                logging.info(
+                    f"Number of concepts filled: {self._concepts_added} / {self._num_observations * len(self._concept_checks) * 2}"
+                )
             self._previous_concepts_added = self._concepts_added
 
         observations, rewards, terminations, truncations, info = super().step(actions)
@@ -279,11 +278,6 @@ class ConceptObsWrapper(gym.Wrapper):
 
         with open(path, "w") as f:
             json.dump(results, f, indent=4)
-
-    @property
-    @abstractmethod
-    def encoder(self) -> json.JSONEncoder:
-        raise NotImplementedError
 
 
 class FullyObsWrapper(ObservationWrapper):

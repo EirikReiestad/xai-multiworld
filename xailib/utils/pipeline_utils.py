@@ -27,6 +27,7 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.network.network import NetworkType
 from utils.common.collections import get_combinations
 from utils.common.model_artifact import ModelArtifact
+from utils.common.numpy_collections import convert_numpy_to_float
 from utils.common.observation import (
     Observation,
     load_and_split_observation,
@@ -50,16 +51,33 @@ from xailib.core.network.feed_forward import FeedForwardNetwork
 def calculate_probe_robustness(config: Dict, model: nn.Module):
     layer_idx = config["analyze"]["layer_idx"]
     concepts = config["concepts"]
-    splits = [0.9, 0.8, 0.7, 0.6, 0.5, 0.4, 0.3, 0.2, 0.1, 0.05, 0.02]
+    splits = config["analyze"]["splits"]
+    epochs = config["analyze"]["robustness_epochs"]
 
+    concept_similarities = defaultdict(lambda: defaultdict(float))
+    for _ in range(epochs):
+        concept_probe_robustness = probe_robustness(concepts, layer_idx, model, splits)
+        for concept in concepts:
+            for key, value in concept_probe_robustness[concept].items():
+                concept_similarities[concept][key] += value
+
+    for concept in concepts:
+        for key in concept_similarities[concept].keys():
+            concept_similarities[concept][key] /= epochs
+
+    path = os.path.join(config["path"]["results"], "probe_robustness.json")
+    concept_similarities = convert_numpy_to_float(concept_similarities)
+    write_results(concept_similarities, path)
+    log_similarity(concept_similarities, concepts)
+
+    return concept_similarities
+
+
+def probe_robustness(concepts, layer_idx, model, splits) -> Dict:
     concept_similarities = {}
     for concept in concepts:
         similarities = get_probe_similarity(concept, layer_idx, model, splits)
         concept_similarities[concept] = similarities
-
-    path = os.path.join(config["path"]["results"], "probe_robustness.json")
-    write_results(concept_similarities, path)
-    log_similarity(concept_similarities, concepts)
 
     return concept_similarities
 
@@ -80,10 +98,14 @@ def get_probe_similarity(
     concept: str, layer_idx: int, model: nn.Module, splits: List[float]
 ) -> Dict[float, float]:
     base = get_probe(concept, layer_idx, model, 1.0)
+    if base is None:
+        return {}
 
     probe_splits = {}
     for split in splits:
         probe = get_probe(concept, layer_idx, model, split)
+        if probe is None:
+            continue
         probe_splits[split] = probe
 
     similarities = {
@@ -100,6 +122,10 @@ def get_probe(concept: str, layer_idx: int, model: nn.Module, split: float = 0.8
     models = {"latest": model}
     positive_observation, test_observation = load_and_split_observation(concept, split)
     negative_observation, _ = load_and_split_observation("negative_" + concept, split)
+
+    if len(positive_observation) == 0:
+        logging.warning(f"Positive observation for {concept} is empty.")
+        return None
 
     probes, positive_activations, negative_activations = get_probes(
         models, positive_observation, negative_observation, ignore
@@ -121,6 +147,7 @@ def calculate_statistics(
         stats[concept] = stat
 
     path = os.path.join(config["path"]["results"], "probe_statistics.json")
+    stats = convert_numpy_to_float(stats)
     write_results(stats, path)
     log_stats(stats)
 
@@ -145,27 +172,18 @@ def calculate_statistic(
     q75, q25 = np.percentile(points, [75, 25])
     iq_range = q75 - q25
 
-    """
-    scaler = StandardScaler()
-    points = scaler.fit_transform(points)
-    kde = KernelDensity(kernel="gaussian")
-    kde.fit(points)
-    log_density = kde.score_samples(points)
-    density = np.exp(log_density)
-    """
-
     pairwise_distances = pdist(points, "euclidean")
     mean_distance = np.mean(pairwise_distances)
     density = 1 / mean_distance if mean_distance != 0 else float("inf")
 
     stats = {
-        "mean": float(mean),
-        "variance": float(variance),
-        "std_dev": float(std_dev),
-        "median": float(median),
-        "range": float(range_val),
-        "iq_range": float(iq_range),
-        "density": float(density),
+        # "mean": float(mean),
+        # "variance": float(variance),
+        # "std_dev": float(std_dev),
+        # "median": float(median),
+        # "range": float(range_val),
+        # "iq_range": float(iq_range),
+        "density": density,
     }
     return stats
 
@@ -192,6 +210,7 @@ def get_completeness_score(
     artifacts: ModelArtifact,
     environment: MultiWorldEnv,
     observations: Observation,
+    verbose: bool = False,
 ):
     layer_idx = config["analyze"]["layer_idx"]
     ignore = config["analyze"]["ignore_layers"]
@@ -219,17 +238,22 @@ def get_completeness_score(
         observations,
         random_probe,
         layer_idx,
+        verbose=verbose,
     )
-    logging.info(f"Random concept - loss: {random_loss} accuracy: {random_accuracy}")
+    if verbose:
+        logging.info(
+            f"Random concept - loss: {random_loss} accuracy: {random_accuracy}"
+        )
 
-    concepts = config["concepts"]
+    concepts = config["concepts"].copy()
 
     if "random" in concepts:
         concepts.remove("random")
 
     results = {tuple(["random"]): (random_loss, random_accuracy)}
     for comb in get_combinations(concepts):
-        logging.info(f"\n\n===== Computing accuracy for {comb} =====")
+        if verbose:
+            logging.info(f"\n\n===== Computing accuracy for {comb} =====")
         sub_probes = {key: value for key, value in probes.items() if key in comb}
         sub_loss, sub_accuracy = compute_accuracy(
             len(comb),
@@ -238,6 +262,7 @@ def get_completeness_score(
             observations,
             sub_probes,
             layer_idx,
+            verbose=verbose,
         )
         results[tuple(sorted(comb))] = (sub_loss, sub_accuracy)
 
@@ -303,6 +328,7 @@ def compute_accuracy(
     observations: Observation,
     probes: Dict[str, LogisticRegression],
     layer_idx: int,
+    verbose: bool = False,
 ):
     hidden_units = 500
 
@@ -333,6 +359,7 @@ def compute_accuracy(
         dataset=dataset,
         test_split=test_split,
         val_split=val_split,
+        verbose=verbose,
     )
 
     return loss, accuracy
@@ -370,7 +397,9 @@ def get_models(config: Dict, env: MultiWorldEnv, artifact: ModelArtifact):
     return models
 
 
-def get_latest_model(config: Dict, env: MultiWorldEnv, artifact: ModelArtifact):
+def get_latest_model(
+    config: Dict, env: MultiWorldEnv, artifact: ModelArtifact
+) -> nn.Module:
     model = create_model(config, artifact, env, eval=True)
 
     model = ModelLoader.load_latest_model_from_path("artifacts", model.model)
@@ -576,8 +605,6 @@ def create_environment(artifact: ModelArtifact):
 
     preprocessing = PreprocessingEnum(preprocessing)
 
-    logging.info(f"Creating environment {environment_type}.")
-
     if environment_type:
         return GoToGoalEnv(
             width=width,
@@ -585,6 +612,7 @@ def create_environment(artifact: ModelArtifact):
             agents=agents,
             preprocessing=preprocessing,
             static=True,
+            render_mode="rgb_array",
         )
     else:
         raise ValueError(

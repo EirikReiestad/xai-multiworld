@@ -1,5 +1,5 @@
 #!/bin/sh
-#SBATCH --account="ie-idi"
+#SBATCH --account="share-ie-idi"
 #SBATCH --partition=CPUQ
 #SBATCH --time=0-100:00:00
 #SBATCH --nodes=1

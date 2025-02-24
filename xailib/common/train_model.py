@@ -15,6 +15,7 @@ def train_model(
     dataset: TensorDataset,
     test_split: float,
     val_split: float,
+    verbose: bool = False,
 ) -> Tuple[float, float]:
     optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate, amsgrad=True)
     criterion = torch.nn.CrossEntropyLoss()
@@ -26,9 +27,10 @@ def train_model(
         dataset, [train_size, val_size, test_size]
     )
 
-    logging.info(f"Training model with {len(train_dataset)} samples")
-    logging.info(f"Validating model with {len(val_dataset)} samples")
-    logging.info(f"Testing model with {len(test_dataset)} samples")
+    if verbose:
+        logging.info(f"Training model with {len(train_dataset)} samples")
+        logging.info(f"Validating model with {len(val_dataset)} samples")
+        logging.info(f"Testing model with {len(test_dataset)} samples")
 
     train_loader = DataLoader(train_dataset, batch_size=batch_size)
     val_loader = DataLoader(val_dataset, batch_size=batch_size)
@@ -64,10 +66,11 @@ def train_model(
         val_loss /= len(val_loader)
         val_accuracy = 100 * correct / total
 
-        logging.info(
-            f"Epoch [{epoch+1}/{epochs}], Loss: {running_loss/len(train_loader):.4f}, "
-            f"Validation Loss: {val_loss:.4f}, Validation Accuracy: {val_accuracy:.2f}%"
-        )
+        if verbose:
+            logging.info(
+                f"Epoch [{epoch+1}/{epochs}], Loss: {running_loss/len(train_loader):.4f}, "
+                f"Validation Loss: {val_loss:.4f}, Validation Accuracy: {val_accuracy:.2f}%"
+            )
 
         model.train()
 
@@ -88,7 +91,8 @@ def train_model(
     test_loss /= len(test_loader)
     test_accuracy = 100 * correct / total
 
-    logging.info(f"Test Loss: {test_loss:.4f}, Test Accuracy: {test_accuracy:.2f}%")
+    if verbose:
+        logging.info(f"Test Loss: {test_loss:.4f}, Test Accuracy: {test_accuracy:.2f}%")
 
     del model
     gc.collect()
