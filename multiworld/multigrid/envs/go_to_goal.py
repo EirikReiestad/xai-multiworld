@@ -16,6 +16,10 @@ class GoToGoalEnv(MultiGridEnv):
         self._static = static
         super().__init__(*args, **kwargs)
 
+    @property
+    def env_name(self) -> str:
+        return "go-to-goal"
+
     def _gen_world(self, width: int, height: int):
         self._world = Grid(width, height)
 

@@ -84,11 +84,25 @@ def observation_from_dict(data: List[Dict]) -> Observation:
 
 
 def split_observation(
-    observation: Observation, ratio: float
+    observation: Observation, ratio: float, random: bool = True
 ) -> Tuple[Observation, Observation]:
+    if random is False:
+        num_observations = observation.shape[0]
+        split_index = int(num_observations * ratio)
+        return observation[:split_index], observation[split_index:]
+
     num_observations = observation.shape[0]
+    indices = np.arange(num_observations)
+    np.random.shuffle(indices)
+
     split_index = int(num_observations * ratio)
-    return observation[:split_index], observation[split_index:]
+    train_indices = indices[:split_index]
+    test_indices = indices[split_index:]
+
+    train_observation = observation[train_indices]
+    test_observation = observation[test_indices]
+
+    return train_observation, test_observation
 
 
 def observation_data_to_torch(observation: Observation) -> List:

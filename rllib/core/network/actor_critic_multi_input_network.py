@@ -2,11 +2,14 @@ import numpy as np
 import torch
 import torch.nn as nn
 
-from rllib.core.torch.module import TorchModule
-from rllib.utils.network.network import get_output_size
-from rllib.utils.spaces import ObservationSpace, ActionSpace
 from rllib.core.network.processor import ConvProcessor, FCProcessor
-from rllib.utils.network.network import observation_space_check, action_space_check
+from rllib.core.torch.module import TorchModule
+from rllib.utils.network.network import (
+    action_space_check,
+    get_output_size,
+    observation_space_check,
+)
+from rllib.utils.spaces import ActionSpace, ObservationSpace
 
 
 class ActorCriticMultiInputNetwork(TorchModule):
@@ -25,12 +28,12 @@ class ActorCriticMultiInputNetwork(TorchModule):
         self._conv0 = None
         if len(conv_layers) != 0:
             self._conv0 = ConvProcessor(state_dim.box, conv_layers)
-            rolled_state_dim = np.roll(state_dim.box, shift=1)  # Channels first
+            rolled_state_dim = np.roll(state_dim.box, shift=1)
             conv_output_size = get_output_size(self._conv0, rolled_state_dim)
 
         self._fc0 = FCProcessor(int(state_dim.discrete), hidden_units)
 
-        rolled_state_dim = np.roll(state_dim.box, shift=1)  # Channels first
+        rolled_state_dim = np.roll(state_dim.box, shift=1)
         fc_output_size = get_output_size(self._fc0, np.array([state_dim.discrete]))
 
         fc1_input_size = conv_output_size + fc_output_size
