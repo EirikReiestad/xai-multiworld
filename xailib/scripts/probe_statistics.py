@@ -19,7 +19,7 @@ from xailib.common.probes import get_probes
 
 def run(concept: str):
     ignore = ["_fc0"]
-    layer_idx = 2
+    layer_idx = 4
 
     model = ModelLoader.load_latest_model_from_path("artifacts", dqn.model)
     models = {"latest": model}
