@@ -1,1 +1,130 @@
-{"('random',)": [1.0831480026245117, 45.0], "('goal_in_front',)": [1.1050549149513245, 29.0], "('goal_in_view',)": [1.10312819480896, 33.0], "('goal_to_left',)": [1.092397928237915, 39.0], "('goal_to_right',)": [1.1019523739814758, 37.0], "('wall_in_view',)": [1.0874600410461426, 39.0], "('goal_in_front', 'goal_in_view')": [1.1053953766822815, 35.0], "('goal_in_front', 'goal_to_left')": [1.1107186675071716, 31.0], "('goal_in_front', 'goal_to_right')": [1.1185331344604492, 26.0], "('goal_in_front', 'wall_in_view')": [1.1305351257324219, 27.0], "('goal_in_view', 'goal_to_left')": [1.1079885363578796, 31.0], "('goal_in_view', 'goal_to_right')": [1.118671715259552, 30.0], "('goal_in_view', 'wall_in_view')": [1.1038074493408203, 40.0], "('goal_to_left', 'goal_to_right')": [1.1130409240722656, 34.0], "('goal_to_left', 'wall_in_view')": [1.1004104614257812, 29.0], "('goal_to_right', 'wall_in_view')": [1.094085931777954, 41.0], "('goal_in_front', 'goal_in_view', 'goal_to_left')": [1.0864152312278748, 43.0], "('goal_in_front', 'goal_in_view', 'goal_to_right')": [1.108718991279602, 34.0], "('goal_in_front', 'goal_in_view', 'wall_in_view')": [1.1020675897598267, 40.0], "('goal_in_front', 'goal_to_left', 'goal_to_right')": [1.0844271183013916, 36.0], "('goal_in_front', 'goal_to_left', 'wall_in_view')": [1.0998717546463013, 39.0], "('goal_in_front', 'goal_to_right', 'wall_in_view')": [1.098732054233551, 37.0], "('goal_in_view', 'goal_to_left', 'goal_to_right')": [1.0952866077423096, 44.0], "('goal_in_view', 'goal_to_left', 'wall_in_view')": [1.1074020862579346, 36.0], "('goal_in_view', 'goal_to_right', 'wall_in_view')": [1.0876460075378418, 41.0], "('goal_to_left', 'goal_to_right', 'wall_in_view')": [1.101813554763794, 37.0], "('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right')": [1.1027649641036987, 33.0], "('goal_in_front', 'goal_in_view', 'goal_to_left', 'wall_in_view')": [1.0996875166893005, 42.0], "('goal_in_front', 'goal_in_view', 'goal_to_right', 'wall_in_view')": [1.0929973721504211, 37.0], "('goal_in_front', 'goal_to_left', 'goal_to_right', 'wall_in_view')": [1.081558346748352, 40.0], "('goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')": [1.113697111606598, 35.0], "('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')": [1.0738629698753357, 47.0]}
+{
+    "('random',)": [
+        1.0831480026245117,
+        45.0
+    ],
+    "('goal_in_front',)": [
+        1.1050549149513245,
+        29.0
+    ],
+    "('goal_in_view',)": [
+        1.10312819480896,
+        33.0
+    ],
+    "('goal_to_left',)": [
+        1.092397928237915,
+        39.0
+    ],
+    "('goal_to_right',)": [
+        1.1019523739814758,
+        37.0
+    ],
+    "('wall_in_view',)": [
+        1.0874600410461426,
+        39.0
+    ],
+    "('goal_in_front', 'goal_in_view')": [
+        1.1053953766822815,
+        35.0
+    ],
+    "('goal_in_front', 'goal_to_left')": [
+        1.1107186675071716,
+        31.0
+    ],
+    "('goal_in_front', 'goal_to_right')": [
+        1.1185331344604492,
+        26.0
+    ],
+    "('goal_in_front', 'wall_in_view')": [
+        1.1305351257324219,
+        27.0
+    ],
+    "('goal_in_view', 'goal_to_left')": [
+        1.1079885363578796,
+        31.0
+    ],
+    "('goal_in_view', 'goal_to_right')": [
+        1.118671715259552,
+        30.0
+    ],
+    "('goal_in_view', 'wall_in_view')": [
+        1.1038074493408203,
+        40.0
+    ],
+    "('goal_to_left', 'goal_to_right')": [
+        1.1130409240722656,
+        34.0
+    ],
+    "('goal_to_left', 'wall_in_view')": [
+        1.1004104614257812,
+        29.0
+    ],
+    "('goal_to_right', 'wall_in_view')": [
+        1.094085931777954,
+        41.0
+    ],
+    "('goal_in_front', 'goal_in_view', 'goal_to_left')": [
+        1.0864152312278748,
+        43.0
+    ],
+    "('goal_in_front', 'goal_in_view', 'goal_to_right')": [
+        1.108718991279602,
+        34.0
+    ],
+    "('goal_in_front', 'goal_in_view', 'wall_in_view')": [
+        1.1020675897598267,
+        40.0
+    ],
+    "('goal_in_front', 'goal_to_left', 'goal_to_right')": [
+        1.0844271183013916,
+        36.0
+    ],
+    "('goal_in_front', 'goal_to_left', 'wall_in_view')": [
+        1.0998717546463013,
+        39.0
+    ],
+    "('goal_in_front', 'goal_to_right', 'wall_in_view')": [
+        1.098732054233551,
+        37.0
+    ],
+    "('goal_in_view', 'goal_to_left', 'goal_to_right')": [
+        1.0952866077423096,
+        44.0
+    ],
+    "('goal_in_view', 'goal_to_left', 'wall_in_view')": [
+        1.1074020862579346,
+        36.0
+    ],
+    "('goal_in_view', 'goal_to_right', 'wall_in_view')": [
+        1.0876460075378418,
+        41.0
+    ],
+    "('goal_to_left', 'goal_to_right', 'wall_in_view')": [
+        1.101813554763794,
+        37.0
+    ],
+    "('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right')": [
+        1.1027649641036987,
+        33.0
+    ],
+    "('goal_in_front', 'goal_in_view', 'goal_to_left', 'wall_in_view')": [
+        1.0996875166893005,
+        42.0
+    ],
+    "('goal_in_front', 'goal_in_view', 'goal_to_right', 'wall_in_view')": [
+        1.0929973721504211,
+        37.0
+    ],
+    "('goal_in_front', 'goal_to_left', 'goal_to_right', 'wall_in_view')": [
+        1.081558346748352,
+        40.0
+    ],
+    "('goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')": [
+        1.113697111606598,
+        35.0
+    ],
+    "('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')": [
+        1.0738629698753357,
+        47.0
+    ]
+}

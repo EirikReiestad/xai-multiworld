@@ -45,7 +45,7 @@
             0.05,
             0.01
         ],
-        "robustness_epochs": 5
+        "robustness_epochs": 1
     },
     "path": {
         "artifacts": "artifacts",
@@ -53,5 +53,5 @@
         "observations": "assets/observations",
         "results": "assets/results"
     },
-    "force_update": false
+    "force_update": true
 }
