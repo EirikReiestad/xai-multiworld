@@ -1,18 +1,16 @@
-from typing import Dict, Tuple
+from typing import Dict, List, Tuple
 
 from utils.common.observation import Observation, load_and_split_observation
 
 
 def get_observations(
-    config: Dict,
+    concepts: List[str],
 ) -> Tuple[
     Dict[str, Observation],
     Dict[str, Observation],
     Dict[str, Observation],
     Dict[str, Observation],
 ]:
-    concepts = config["concepts"]
-
     positive_observations = {}
     negative_observations = {}
     test_positive_observations = {}

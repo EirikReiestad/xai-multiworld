@@ -64,7 +64,6 @@ def main():
     completeness_score = get_completeness_score(
         config, probes, artifact, environment, observations
     )
-    return
 
     test_positive_activations, test_input, test_output = get_concept_activations(
         config, test_positive_observations, models

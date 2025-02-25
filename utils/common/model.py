@@ -1,7 +1,7 @@
+import logging
 import os
 import re
-from typing import Literal
-
+from typing import Dict, Literal
 import torch.nn as nn
 
 from multiworld.base import MultiWorldEnv
@@ -12,15 +12,16 @@ from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.network.network import NetworkType
 from utils.common.model_artifact import ModelArtifact
+from utils.core.model_downloader import ModelDownloader
 from utils.core.model_loader import ModelLoader
 
 
 def get_models(
     artifact: ModelArtifact,
     model_type: Literal["dqn"],
-    artifact_path: str,
     env: MultiWorldEnv,
     eval: bool,
+    artifact_path: str = "artifacts",
 ):
     model = create_model(artifact, model_type, artifact_path, env, eval)
 
@@ -85,3 +86,37 @@ def create_model(
         return dqn
 
     raise ValueError(f"Sorry but model type of {model_type} is not supported.")
+
+
+def download_models(config: Dict):
+    models = [
+        f"model_{i}:latest"
+        for i in range(
+            config["wandb"]["models"]["low"],
+            config["wandb"]["models"]["high"],
+            config["wandb"]["models"]["step"],
+        )
+    ]
+    model_folder = os.path.join(config["path"]["artifacts"])
+
+    if config["force_update"] is False:
+        try:
+            artifacts = [
+                model_name.split(":")[0] for model_name in os.listdir(model_folder)
+            ]
+            model_names = [model_name.split(":")[0] for model_name in models]
+
+            if sorted(artifacts) == sorted(model_names):
+                logging.info(
+                    "Artifacts already exists, so we do not need to download them:)"
+                )
+                return
+        except FileNotFoundError:
+            pass
+
+    model_downloader = ModelDownloader(
+        project_folder=config["wandb"]["project_folder"],
+        models=models,
+        model_folder=model_folder,
+    )
+    model_downloader.download()

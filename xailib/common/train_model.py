@@ -11,8 +11,6 @@ from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from torch.utils.data import DataLoader, TensorDataset, random_split
 
-from xailib.utils.misc import write_results
-
 
 def train_model(
     model: nn.Module,

@@ -2,7 +2,7 @@ from utils.common.environment import create_environment
 from utils.common.model import get_models
 from utils.core.model_loader import ModelLoader
 from xailib.utils.activations import get_concept_activations
-from xailib.utils.metrics import get_concept_scores
+from xailib.utils.metrics import get_tcav_scores
 from xailib.utils.observation import get_observations
 from xailib.utils.probes import get_probes_and_activations
 
@@ -46,8 +46,8 @@ def main():
         positive_observations=positive_observations,
         negative_observations=negative_observations,
     )
-    concept_scores = get_concept_scores(
-        concepts, test_positive_activations, probes, show=True
+    tcav_scores = get_tcav_scores(
+        concepts, test_positive_activations, test_output, probes, show=True
     )
 
 

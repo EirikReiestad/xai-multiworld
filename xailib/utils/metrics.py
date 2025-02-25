@@ -24,6 +24,7 @@ from utils.common.observation import (
     Observation,
     zip_observation_data,
 )
+from utils.common.write import write_results
 from utils.core.plotting import plot_3d
 from xailib.common.activations import compute_activations_from_models
 from xailib.common.concept_score import (
@@ -36,18 +37,19 @@ from xailib.common.tcav_score import tcav_scores
 from xailib.common.train_model import train_decision_tree, train_model
 from xailib.core.network.feed_forward import FeedForwardNetwork
 from xailib.utils.logging import log_similarity, log_stats
-from xailib.utils.misc import read_results, write_results
 
 
 def get_tcav_scores(
-    config: Dict,
+    concepts: List[str],
     test_activations: Dict[str, Dict[str, Dict[str, np.ndarray]]],
     test_output: Dict[str, Dict[str, Dict[str, np.ndarray]]],
     probes: Dict[str, Dict[str, Dict[str, LinearRegression]]],
+    results_path: str = os.path.join("assets", "results"),
+    show: bool = False,
 ) -> Dict[str, Dict[str, float]]:
     concept_tcav_scores = {}
 
-    for concept in config["concepts"]:
+    for concept in concepts:
         scores = tcav_scores(
             test_activations[concept], test_output[concept], probes[concept]
         )
@@ -59,23 +61,25 @@ def get_tcav_scores(
             filename="tcav_" + concept,
             min=0,
             max=1,
-            show=False,
+            show=show,
         )
     write_results(
         concept_tcav_scores,
-        os.path.join(config["path"]["results"], "tcav_scores.json"),
+        os.path.join(results_path, "tcav_scores.json"),
     )
     return concept_tcav_scores
 
 
 def get_concept_scores(
-    config: Dict,
+    concepts: List[str],
     test_activations: Dict[str, Dict[str, Dict[str, np.ndarray]]],
     probes: Dict[str, Dict[str, Dict[str, LinearRegression]]],
+    results_path: str = os.path.join("assets", "results"),
+    show: bool = False,
 ) -> Dict[str, Dict[str, float]]:
     concept_scores = {}
 
-    for concept in config["concepts"]:
+    for concept in concepts:
         concept_score = binary_concept_scores(
             test_activations[concept], probes[concept]
         )
@@ -87,11 +91,9 @@ def get_concept_scores(
             filename=f"concept_score_{concept}",
             min=0,
             max=1,
-            show=False,
+            show=show,
         )
-    write_results(
-        concept_scores, os.path.join(config["path"]["results"], "concept_scores.json")
-    )
+    write_results(concept_scores, os.path.join(results_path, "concept_scores.json"))
     return concept_scores
 
 
@@ -230,12 +232,14 @@ def calculate_shapley_values(path: str, concepts: List[str]):
     return shapley_values
 
 
-def calculate_probe_robustness(config: Dict, model: nn.Module):
-    layer_idx = config["analyze"]["layer_idx"]
-    concepts = config["concepts"]
-    splits = config["analyze"]["splits"]
-    epochs = config["analyze"]["robustness_epochs"]
-
+def calculate_probe_robustness(
+    concepts: List[str],
+    model: nn.Module,
+    splits: List[float],
+    layer_idx: int,
+    epochs: int,
+    results_path: str = os.path.join("assets", "results"),
+):
     concept_similarities = defaultdict(lambda: defaultdict(float))
     for _ in range(epochs):
         concept_probe_robustness = probe_robustness(concepts, layer_idx, model, splits)
@@ -247,7 +251,7 @@ def calculate_probe_robustness(config: Dict, model: nn.Module):
         for key in concept_similarities[concept].keys():
             concept_similarities[concept][key] /= epochs
 
-    path = os.path.join(config["path"]["results"], "probe_robustness.json")
+    path = os.path.join(results_path, "probe_robustness.json")
     concept_similarities = convert_numpy_to_float(concept_similarities)
     write_results(concept_similarities, path)
     log_similarity(concept_similarities, concepts)
@@ -288,26 +292,27 @@ def get_probe_similarity(
 
 
 def calculate_statistics(
-    config: Dict, activations: Dict[str, Dict[str, Dict[str, np.ndarray]]]
+    concepts: List[str],
+    activations: Dict[str, Dict[str, Dict[str, np.ndarray]]],
+    layer_idx: int,
+    results_path: str = os.path.join("assets", "results"),
 ):
-    concepts = config["concepts"]
     stats = {}
     for concept in concepts:
         latest_activations = {"latest": list(activations[concept].values())[-1]}
-        stat = calculate_statistic(config, latest_activations)
+        stat = calculate_statistic(latest_activations, layer_idx)
         stats[concept] = stat
 
-    path = os.path.join(config["path"]["results"], "probe_statistics.json")
+    path = os.path.join(results_path, "probe_statistics.json")
     stats = convert_numpy_to_float(stats)
     write_results(stats, path)
     log_stats(stats)
 
 
 def calculate_statistic(
-    config: Dict,
     activations: Dict[str, Dict[str, np.ndarray]],
+    layer_idx: int,
 ):
-    layer_idx = config["analyze"]["layer_idx"]
     layer_activations = list(activations["latest"].values())[layer_idx]["output"]
     points = layer_activations.detach().numpy()
 
