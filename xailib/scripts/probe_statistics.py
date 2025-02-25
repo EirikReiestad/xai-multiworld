@@ -23,8 +23,8 @@ def run(concept: str):
 
     model = ModelLoader.load_latest_model_from_path("artifacts", dqn.model)
     models = {"latest": model}
-    positive_observation, test_observation = load_and_split_observation(concept, 0.8)
-    negative_observation, _ = load_and_split_observation("negative_" + concept, 0.8)
+    positive_observation, test_observation = load_and_split_observation(concept, 1.0)
+    negative_observation, _ = load_and_split_observation("negative_" + concept, 1.0)
 
     probes, positive_activations, negative_activations = get_probes(
         models, positive_observation, negative_observation, ignore

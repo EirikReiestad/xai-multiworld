@@ -4,20 +4,22 @@ import logging
 from utils.core.model_loader import ModelLoader
 from xailib.core.pipeline.collect_rollouts import collect_rollouts
 from xailib.core.pipeline.generate_concepts import generate_concepts
-from xailib.utils.pipeline_utils import (
-    calculate_probe_robustness,
-    calculate_statistics,
+from xailib.utils.misc import (
     create_environment,
     download_models,
     get_activations,
-    get_completeness_score,
     get_concept_activations,
-    get_concept_scores,
     get_latest_model,
     get_models,
     get_observations,
     get_probes_and_activations,
+)
+from xailib.utils.metrics import (
+    get_completeness_score,
+    get_concept_scores,
     get_tcav_scores,
+    calculate_probe_robustness,
+    calculate_statistics,
 )
 
 logger = logging.getLogger(__name__)
@@ -58,6 +60,11 @@ def main():
     probes, positive_activations, negative_activations = get_probes_and_activations(
         config, models, positive_observations, negative_observations
     )
+    logging.info("Calculating completeness score...")
+    completeness_score = get_completeness_score(
+        config, probes, artifact, environment, observations
+    )
+    return
 
     test_positive_activations, test_input, test_output = get_concept_activations(
         config, test_positive_observations, models
@@ -71,10 +78,6 @@ def main():
     logging.info("Calculating TCAV scores...")
     tcav_scores = get_tcav_scores(
         config, test_positive_activations, test_output, probes
-    )
-    logging.info("Calculating completeness score...")
-    completeness_score = get_completeness_score(
-        config, probes, artifact, environment, observations
     )
     logging.info("Calculating probe robustness...")
     calculate_probe_robustness(config, latest_model)

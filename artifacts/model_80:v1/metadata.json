@@ -1,1 +1,0 @@
-{"width": 10, "agents": 1, "height": 10, "env_type": "go-to-goal", "conv_layers": [32, 64, 64], "hidden_units": [128, 128], "network_type": "MULTI_INPUT", "eps_threshold": 0.22834793787205349, "learning_rate": 0.0003, "preprocessing": "ohe_minimal"}

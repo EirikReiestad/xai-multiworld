@@ -4,7 +4,7 @@
         "models": {
             "low": 0,
             "high": 100,
-            "step": 20
+            "step": 30
         }
     },
     "model": {
@@ -12,7 +12,7 @@
     },
     "collect_rollouts": {
         "method": "policy",
-        "observations": 1000,
+        "observations": 10000,
         "sample_rate": 1.0
     },
     "generate_concepts": {
@@ -53,5 +53,5 @@
         "observations": "assets/observations",
         "results": "assets/results"
     },
-    "force_update": true
+    "force_update": false
 }
