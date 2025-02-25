@@ -19,6 +19,9 @@
         "method": "random",
         "observations": 100
     },
+    "completeness_score": {
+        "method": "network"
+    },
     "concepts": [
         "random",
         "goal_in_front",

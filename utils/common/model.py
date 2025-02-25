@@ -2,6 +2,7 @@ import logging
 import os
 import re
 from typing import Dict, Literal
+
 import torch.nn as nn
 
 from multiworld.base import MultiWorldEnv
@@ -88,21 +89,20 @@ def create_model(
     raise ValueError(f"Sorry but model type of {model_type} is not supported.")
 
 
-def download_models(config: Dict):
-    models = [
-        f"model_{i}:latest"
-        for i in range(
-            config["wandb"]["models"]["low"],
-            config["wandb"]["models"]["high"],
-            config["wandb"]["models"]["step"],
-        )
-    ]
-    model_folder = os.path.join(config["path"]["artifacts"])
+def download_models(
+    low: int,
+    high: int,
+    step: int,
+    wandb_project_folder: str,
+    artifact_path: str = os.path.join("artifacts"),
+    force_update: bool = False,
+):
+    models = [f"model_{i}:latest" for i in range(low, high, step)]
 
-    if config["force_update"] is False:
+    if force_update is False:
         try:
             artifacts = [
-                model_name.split(":")[0] for model_name in os.listdir(model_folder)
+                model_name.split(":")[0] for model_name in os.listdir(artifact_path)
             ]
             model_names = [model_name.split(":")[0] for model_name in models]
 
@@ -115,8 +115,8 @@ def download_models(config: Dict):
             pass
 
     model_downloader = ModelDownloader(
-        project_folder=config["wandb"]["project_folder"],
+        project_folder=wandb_project_folder,
         models=models,
-        model_folder=model_folder,
+        model_folder=artifact_path,
     )
     model_downloader.download()

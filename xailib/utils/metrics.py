@@ -24,6 +24,7 @@ from utils.common.observation import (
     Observation,
     zip_observation_data,
 )
+from utils.common.read import read_results
 from utils.common.write import write_results
 from utils.core.plotting import plot_3d
 from xailib.common.activations import compute_activations_from_models

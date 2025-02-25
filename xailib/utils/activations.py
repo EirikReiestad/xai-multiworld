@@ -8,16 +8,15 @@ from xailib.common.activations import compute_activations_from_models
 
 
 def get_activations(
-    config: Dict, models: Dict[str, nn.Module], observations: Observation
+    models: Dict[str, nn.Module], observations: Observation, ignore_layers: List = []
 ) -> Tuple[
     Dict[str, Dict[str, np.ndarray]],
     Dict[str, Dict[str, np.ndarray]],
     Dict[str, Dict[str, np.ndarray]],
 ]:
-    ignore = config["analyze"]["ignore_layers"]
     observation_zipped = zip_observation_data(observations)
     activations, input, output = compute_activations_from_models(
-        models, observation_zipped, ignore
+        models, observation_zipped, ignore_layers
     )
     return activations, input, output
 
