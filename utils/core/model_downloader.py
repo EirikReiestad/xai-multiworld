@@ -11,8 +11,8 @@ class ModelDownloader(WandB):
     def __init__(
         self,
         project_folder: str,
-        model_name: str,
         models: list[str],
+        model_name: str | None = None,
         model: nn.Module | None = None,
         model_folder: str = "artifacts",
         folder_suffix: str = "",
@@ -68,4 +68,5 @@ class ModelDownloader(WandB):
             return
 
         # Test if model is loaded correctly
-        model_artifacts = ModelLoader.load_model_from_path(artifact_dir, self._model)
+        artifact = ModelLoader.load_model_artifact_from_path(artifact_dir)
+        model = ModelLoader.load_model_from_artifact(artifact, self._model)

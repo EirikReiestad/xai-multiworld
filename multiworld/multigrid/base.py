@@ -1,5 +1,6 @@
 import math
-from typing import Dict, List, Literal, SupportsFloat, Tuple
+from functools import partial
+from typing import Dict, List, Literal, Optional, SupportsFloat, Tuple
 
 import numpy as np
 from numpy.typing import NDArray
@@ -11,8 +12,10 @@ from multiworld.multigrid.core.agent import Agent, AgentState
 from multiworld.multigrid.core.constants import TILE_PIXELS, WorldObjectType
 from multiworld.multigrid.core.grid import Grid
 from multiworld.multigrid.core.world_object import Container, WorldObject
+from multiworld.multigrid.utils.decoder import decode_observation
 from multiworld.multigrid.utils.observation import gen_obs_grid_encoding
 from multiworld.multigrid.utils.ohe import ohe_direction
+from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 from multiworld.utils.typing import AgentID, ObsType
 from utils.common.callbacks import RenderingCallback, empty_rendering_callback
 
@@ -29,13 +32,14 @@ class MultiGridEnv(MultiWorldEnv):
         see_through_walls: bool = False,
         joint_reward: bool = False,
         team_reward: bool = False,
+        preprocessing: PreprocessingEnum = PreprocessingEnum.none,
         tile_size=TILE_PIXELS,
         screen_size: Tuple[int, int] | None = None,
         render_mode: Literal["human", "rgb_array"] = "human",
         rendering_callback: RenderingCallback = empty_rendering_callback,
-        caption: str = "MultiGrid",
         success_termination_mode: Literal["all", "any"] = "all",
         failure_termination_mode: Literal["all", "any"] = "any",
+        caption: str = "MultiGrid",
     ):
         if screen_size is None:
             screen_size = (width * tile_size, height * tile_size)
@@ -57,6 +61,7 @@ class MultiGridEnv(MultiWorldEnv):
             success_termination_mode,
             failure_termination_mode,
         )
+        self._preprocessing = preprocessing
         self._highlight = highlight
         self._tile_size = tile_size
         self._render_size = None
@@ -69,12 +74,17 @@ class MultiGridEnv(MultiWorldEnv):
         self._agent_states = AgentState(agents)
         self._agents: List[Agent] = []
         for i in range(self._num_agents):
-            agent = Agent(i, agent_view_size or self._width, see_through_walls)
+            agent = Agent(
+                i, agent_view_size or self._width, see_through_walls, preprocessing
+            )
             self._agents.append(agent)
         self._world = Grid(width, height)
 
     def update_from_numpy(self, observation: NDArray):
         grid: NDArray[np.int_] = observation[0]
+        decode = partial(decode_observation, preprocessing=self._preprocessing)
+        obs = decode({"observation": grid})
+        grid = obs["observation"]
         direction = observation[1]
         assert grid.ndim == 3, "Input grid must be 3-dimensional."
         height, width, dim = grid.shape
@@ -235,6 +245,7 @@ class MultiGridEnv(MultiWorldEnv):
             self._agent_states,
             self._agent_view_size,
             self._agent_see_through_walls,
+            self._preprocessing,
         )
         observations = {}
         for i in range(self._num_agents):
@@ -248,7 +259,7 @@ class MultiGridEnv(MultiWorldEnv):
 
     def _get_full_render(self, highlight: bool, tile_size: int) -> np.ndarray:
         obs_shape = (
-            Agent(-1).observation_space["observation"].shape[:-1]
+            self.agents[0].observation_space["observation"].shape[:-1]
         )  # NOTE: Ups, look up for memory leaks by creating unecessary objects;)
         vis_mask = np.zeros((self._num_agents, *obs_shape), dtype=bool)
         for key, obs in self._gen_obs().items():

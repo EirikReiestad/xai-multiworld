@@ -12,16 +12,16 @@ from gymnasium import spaces
 from multiworld.core.position import Position
 from multiworld.multigrid.core.grid import Grid
 from multiworld.swarm.core.world import World
-from multiworld.utils.random import RandomMixin
-from multiworld.utils.typing import (
-    AgentID,
-    ObsType,
-)
 from multiworld.utils.advanced_typing import (
     Action,
     Agent,
     AgentState,
     WorldObject,
+)
+from multiworld.utils.random import RandomMixin
+from multiworld.utils.typing import (
+    AgentID,
+    ObsType,
 )
 from utils.common.callbacks import RenderingCallback, empty_rendering_callback
 
@@ -162,6 +162,11 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
             return img
         else:
             raise ValueError("Invalid render mode", self.render_mode)
+
+    @property
+    @abstractmethod
+    def env_name(self) -> str:
+        raise NotImplementedError
 
     @property
     @abstractmethod

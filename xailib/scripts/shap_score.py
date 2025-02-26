@@ -3,10 +3,9 @@ import os
 
 import numpy as np
 import shap
-from torch import norm
 
-from multigrid.envs.go_to_goal import GoToGoalEnv
-from multigrid.utils.wrappers import Observations
+from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
+from multiworld.utils.wrappers import Observations
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.utils.torch.processing import observations_seperate_to_torch

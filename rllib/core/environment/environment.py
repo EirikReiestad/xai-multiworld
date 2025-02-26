@@ -20,6 +20,7 @@ class Environment(ABC):
         env: MultiGridEnv | SwarmEnv,
     ):
         self._env = env
+        self._env_type: str
 
     @property
     def observation_space(self) -> ObservationSpace:

@@ -25,8 +25,8 @@ config = (
         replay_buffer_size=10000,
         gamma=0.99,
         learning_rate=3e-4,
-        eps_start=0.2,
-        eps_end=0.05,
+        eps_start=0.0,
+        eps_end=0.00,
         eps_decay=10000,
         target_update=1000,
     )
@@ -39,6 +39,7 @@ config = (
 
 mconfig = (
     AlgorithmConfig("DQN")
+    .model("model_800:v0")
     .environment(env=env)
     .training()
     .debugging(log_level="INFO")

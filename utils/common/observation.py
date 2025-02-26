@@ -1,5 +1,4 @@
 import json
-import logging
 import os
 from typing import Dict, List, Tuple
 
@@ -7,6 +6,7 @@ import numpy as np
 import torch
 
 from multiworld.utils.typing import ObsType
+from utils.common.numpy_collections import NumpyEncoder
 
 
 class Observation(np.ndarray):
@@ -31,6 +31,42 @@ def observation_from_file(path: str) -> Observation:
     return observation_from_dict(json_data)
 
 
+def observations_from_file(path: str) -> Observation:
+    assert path.endswith(".json")
+    json_data = json.load(open(path))
+    return observations_from_dict(json_data)
+
+
+def observation_to_file(observations: Observation, path: str):
+    assert path.endswith(".json")
+    with open(path, "w") as f:
+        json.dump(observations, f, indent=4, cls=NumpyEncoder)
+
+
+def observations_from_dict(data: List[Dict]) -> Observation:
+    observations = []
+    labels = []
+
+    for d in data:
+        obs = d["observations"].values()
+        label = d["actions"].values()
+        observations.extend(obs)
+        labels.extend(label)
+
+    num_observations = len(observations)
+
+    obs = Observation(num_observations)
+
+    ids = [i for i in range(num_observations)]
+
+    obs[..., Observation.ID] = ids
+    obs[..., Observation.LABEL] = labels
+    obs[..., Observation.DATA] = np.array(observations, dtype=object).reshape(
+        num_observations, 1
+    )
+    return obs
+
+
 def observation_from_dict(data: List[Dict]) -> Observation:
     num_observations = len(data)
 
@@ -48,16 +84,33 @@ def observation_from_dict(data: List[Dict]) -> Observation:
 
 
 def split_observation(
-    observation: Observation, ratio: float
+    observation: Observation, ratio: float, random: bool = True
 ) -> Tuple[Observation, Observation]:
+    if random is False:
+        num_observations = observation.shape[0]
+        split_index = int(num_observations * ratio)
+        return observation[:split_index], observation[split_index:]
+
     num_observations = observation.shape[0]
+    indices = np.arange(num_observations)
+    np.random.shuffle(indices)
+
     split_index = int(num_observations * ratio)
-    return observation[:split_index], observation[split_index:]
+    train_indices = indices[:split_index]
+    test_indices = indices[split_index:]
+
+    train_observation = observation[train_indices]
+    test_observation = observation[test_indices]
+
+    return train_observation, test_observation
 
 
 def observation_data_to_torch(observation: Observation) -> List:
     data = [
-        [torch.tensor(v) for v in obs[0].values()]
+        [
+            torch.tensor(v, dtype=torch.float32, requires_grad=True)
+            for v in obs[0].values()
+        ]
         for obs in observation[..., Observation.DATA]
     ]
     return data
@@ -75,7 +128,7 @@ def zipped_torch_observation_data(observation: List) -> List:
     """
     If the observation is a 2D array, this function will return a list of tuples.
     """
-    return [torch.tensor(np.array(tup)) for tup in zip(*observation)]
+    return [torch.stack(tup) for tup in zip(*observation)]
 
 
 def set_require_grad(observation: List):

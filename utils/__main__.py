@@ -1,6 +1,5 @@
 import argparse
 import logging
-from re import sub
 import subprocess
 
 logger = logging.getLogger(__name__)
@@ -37,6 +36,13 @@ def main():
         metavar=("filename"),
         help="Render the observations stored in json files under assets/concepts with argument [filename]",
     )
+    parser.add_argument(
+        "-pr",
+        "--print-results",
+        nargs="*",
+        metavar=("filename"),
+        help="Print the results",
+    )
 
     args, unknown = parser.parse_known_args()
 
@@ -46,6 +52,7 @@ def main():
         "python",
         "utils/scripts/render_observation.py",
     ]
+    print_results_subprocess_args = ["python", "utils/scripts/print_results.py"]
 
     if args.download_models is not None:
         logging.info(f"Arguments for --download-models: {args.download_models}")
@@ -64,13 +71,18 @@ def main():
         render_observation_subprocess_args += [
             "--render-observation"
         ] + args.render_observation
+    if print_results_subprocess_args:
+        logging.info(f"Arguments for --print-results: {args.print_results}")
+        print_results_subprocess_args += ["--print-results"] + args.print_results
 
-    if len(model_downloader_subprocess_args) > 2:
-        subprocess.run(model_downloader_subprocess_args)
-    if len(generate_concepts_subprocess_args) > 2:
-        subprocess.run(generate_concepts_subprocess_args)
-    if len(render_observation_subprocess_args) > 2:
-        subprocess.run(render_observation_subprocess_args)
+    for subprocess_args in [
+        model_downloader_subprocess_args,
+        generate_concepts_subprocess_args,
+        render_observation_subprocess_args,
+        print_results_subprocess_args,
+    ]:
+        if len(subprocess_args) > 2:
+            subprocess.run(subprocess_args)
 
 
 if __name__ == "__main__":

@@ -1,18 +1,15 @@
-import logging
 from typing import Dict, List, Tuple
 
 import numpy as np
 import torch
 import torch.nn as nn
 
-from utils.common.model_artifact import ModelArtifact
-
 
 class ActivationTracker:
     def __init__(self, model: nn.Module, ignore: List[str] = []):
         self._model = model
         self._activations = {}
-
+        self._hook_handles = []
         self._register_hooks(ignore)
         self._key = 0
 
@@ -21,6 +18,7 @@ class ActivationTracker:
         self._key = 0
         outputs = self._model(*inputs)
         activations_cloned = {key: value for key, value in self._activations.items()}
+        # self._remove_hooks()
         return activations_cloned, inputs, outputs
 
     def _register_hooks(self, ignore: List[str]):
@@ -39,9 +37,16 @@ class ActivationTracker:
                         continue
                     if not isinstance(sub_layer, nn.ReLU):
                         continue
-                    sub_layer.register_forward_hook(self._module_hook)
-                    hook_count += 1
+                    if not any(handle == sub_layer for handle in self._hook_handles):
+                        handle = sub_layer.register_forward_hook(self._module_hook)
+                        self._hook_handles.append(handle)
+                        hook_count += 1
         assert hook_count > 0, "No hooks registered"
+
+    def _remove_hooks(self):
+        for handle in self._hook_handles:
+            handle.remove()
+        self._hook_handles.clear()
 
     def _module_hook(self, module: nn.Module, input, output):
         self._activations[str(self._key) + "-" + str(module)] = {
@@ -57,15 +62,15 @@ def preprocess_activations(activations: dict) -> np.ndarray:
     return reshaped_activations
 
 
-def compute_activations_from_artifacts(
-    artifacts: Dict[str, ModelArtifact], input: List, ignore: List[str] = []
+def compute_activations_from_models(
+    artifacts: Dict[str, nn.Module], input: List, ignore: List[str] = []
 ) -> Tuple[Dict[str, Dict], Dict[str, List], Dict[str, torch.Tensor]]:
     activations = {}
     inputs = {}
     outputs = {}
-    for key, value in artifacts.items():
+    for key, model in artifacts.items():
         _activations, _input, _output = ActivationTracker(
-            value.model, ignore
+            model, ignore
         ).compute_activations(input)
 
         activations[key] = _activations

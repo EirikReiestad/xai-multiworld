@@ -1,10 +1,8 @@
 from dataclasses import dataclass
-from typing import Any, Mapping, Dict
-import torch.nn as nn
+from typing import Any, Dict, Mapping
 
 
 @dataclass
 class ModelArtifact:
     model_weights: Mapping[str, Any]
     metadata: Dict[str, Any]
-    model: nn.Module

@@ -1,8 +1,7 @@
-import numpy as np
 import json
-import torch
+
+import numpy as np
 from numpy.typing import NDArray
-from typing import Any
 
 
 class HashableArray:
@@ -40,3 +39,14 @@ def normalize_ndarrays(arr: NDArray, a: float = 0, b: float = 1) -> NDArray:
     states = (arr - global_min) / (global_max - global_min) * (b - a) + a
 
     return states
+
+
+def convert_numpy_to_float(d):
+    for key, value in d.items():
+        if isinstance(value, np.ndarray):
+            d[key] = value.tolist()
+        elif isinstance(value, np.generic):
+            d[key] = value.item()
+        elif isinstance(value, dict):
+            d[key] = convert_numpy_to_float(value)
+    return d

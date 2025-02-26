@@ -8,6 +8,11 @@ from multiworld.multigrid.core.action import Action
 from multiworld.multigrid.core.constants import Direction, WorldObjectType
 from multiworld.multigrid.core.world_object import WorldObject
 from multiworld.multigrid.utils.misc import front_pos
+from multiworld.multigrid.utils.ohe import (
+    OHE_GRID_OBJECT_DIM,
+    OHE_GRID_OBJECT_DIM_MINIMAL,
+)
+from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 from multiworld.utils.misc import PropertyAlias
 from multiworld.utils.rendering import (
     fill_coords,
@@ -17,7 +22,13 @@ from multiworld.utils.rendering import (
 
 
 class Agent:
-    def __init__(self, index: int, view_size: int = 7, see_through_walls: bool = False):
+    def __init__(
+        self,
+        index: int,
+        view_size: int = 7,
+        see_through_walls: bool = False,
+        preprocessing: PreprocessingEnum = PreprocessingEnum.none,
+    ):
         self.index = index
         # assert view_size % 2 == 1, "View size must be odd for agent observation."
         assert view_size > 0, "View size must be greater than 1 for agent observation."
@@ -25,12 +36,18 @@ class Agent:
         self.see_through_walls = see_through_walls
         self.state = AgentState()
 
+        dim = AgentState.encode_dim
+        if preprocessing == PreprocessingEnum.ohe:
+            dim = OHE_GRID_OBJECT_DIM
+        if preprocessing == PreprocessingEnum.ohe_minimal:
+            dim = OHE_GRID_OBJECT_DIM_MINIMAL
+
         self.observation_space = spaces.Dict(
             {
                 "observation": spaces.Box(
                     low=0,
                     high=255,
-                    shape=(view_size, view_size, AgentState.encode_dim),
+                    shape=(view_size, view_size, dim),
                     dtype=np.int_,
                 ),
                 "direction": spaces.Discrete(len(Direction)),
