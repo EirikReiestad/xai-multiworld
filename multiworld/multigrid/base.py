@@ -259,7 +259,7 @@ class MultiGridEnv(MultiWorldEnv):
 
     def _get_full_render(self, highlight: bool, tile_size: int) -> np.ndarray:
         obs_shape = (
-            Agent(-1).observation_space["observation"].shape[:-1]
+            self.agents[0].observation_space["observation"].shape[:-1]
         )  # NOTE: Ups, look up for memory leaks by creating unecessary objects;)
         vis_mask = np.zeros((self._num_agents, *obs_shape), dtype=bool)
         for key, obs in self._gen_obs().items():
