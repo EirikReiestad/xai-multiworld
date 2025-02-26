@@ -1,9 +1,8 @@
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
-wandb: Tracking run with wandb version 0.19.6
-wandb: Run data is saved locally in ./wandb/run-20250211_091119-vm7gtmyf
-wandb: Run `wandb offline` to turn off syncing.
-wandb: Syncing run major-thunder-1
-wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/multi-tag-1v4
-wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/multi-tag-1v4/runs/vm7gtmyf
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal.py", line 1, in <module>
+    from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
+  File "/cluster/work/eirre/xai-multiworld/multiworld/multigrid/envs/go_to_goal.py", line 34
+    >>>>>>> 3be065569b7fee8c6fe5bfdb13e3c18886a4b203
+            ^
+SyntaxError: invalid decimal literal

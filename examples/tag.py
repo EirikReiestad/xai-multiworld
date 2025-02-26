@@ -40,11 +40,7 @@ mconfig = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-<<<<<<< HEAD
-    .wandb(project="multi-tag-1v4", log_interval=100)
-=======
-    # .wandb(project="tag-1v1", log_interval=100)
->>>>>>> 3be065569b7fee8c6fe5bfdb13e3c18886a4b203
+    .wandb(project="multi-tag-1", log_interval=100)
 )
 
 dqn = MDQN(agents, mconfig, config)
