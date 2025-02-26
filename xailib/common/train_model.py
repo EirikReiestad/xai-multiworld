@@ -1,9 +1,14 @@
-import logging
 import gc
-from typing import Tuple
+import logging
+import os
+from typing import List, Tuple
 
+import numpy as np
 import torch
 import torch.nn as nn
+from matplotlib import pyplot as plt
+from sklearn.metrics import accuracy_score
+from sklearn.tree import DecisionTreeClassifier, plot_tree
 from torch.utils.data import DataLoader, TensorDataset, random_split
 
 
@@ -98,3 +103,65 @@ def train_model(
     gc.collect()
 
     return test_loss, test_accuracy
+
+
+def train_decision_tree(
+    model: DecisionTreeClassifier,
+    dataset: TensorDataset,
+    test_split: float,
+    feature_names: List[str],
+    verbose: bool = False,
+):
+    test_size = int(len(dataset) * test_split)
+    train_size = len(dataset) - test_size
+    train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
+
+    if verbose:
+        logging.info(f"Training model with {len(train_dataset)} samples")
+        logging.info(f"Testing model with {len(test_dataset)} samples")
+
+    X_train = train_dataset[:][0].numpy()
+    y_train = train_dataset[:][1].numpy()
+
+    X_test = test_dataset[:][0].numpy()
+    y_test = test_dataset[:][1].numpy()
+
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    accuracy = accuracy_score(y_test, y_pred)
+    logging.info(f"Test set accuracy: {accuracy:.4f}")
+
+    plt.figure(figsize=(20, 10))
+    plot_tree(
+        model,
+        filled=True,
+        feature_names=feature_names,  # class_names=data.target_names
+    )
+    plt.show()
+    plt.savefig(os.path.join("assets", "figures", "decision_tree.png"))
+
+    feature_importances = model.feature_importances_
+    feature_split_counts = np.zeros(len(feature_names))
+
+    def count_feature_splits(node):
+        if node == -1:
+            return
+        feature = model.tree_.feature[node]
+        if feature != -2:
+            feature_split_counts[feature] += 1
+            count_feature_splits(model.tree_.children_left[node])
+            count_feature_splits(model.tree_.children_right[node])
+
+    count_feature_splits(0)
+
+    results = {}
+    for name, importance, count in zip(
+        feature_names, feature_importances, feature_split_counts
+    ):
+        results[name] = (importance, count)
+
+    path = os.path.join("assets", "results", "concept_score_decicion_tree.json")
+    write_results(results, path)
+
+    logging.info(f"\nTree Depth: {model.get_depth()}")
+    logging.info(f"Number of Leaves: {model.get_n_leaves()}")

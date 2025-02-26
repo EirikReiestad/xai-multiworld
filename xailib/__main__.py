@@ -56,7 +56,7 @@ def main():
 
     pipeline_subprocess_args = ["python", "xailib/scripts/pipeline.py"]
     concept_score_subprocess_args = ["python", "xailib/scripts/concept_score.py"]
-    tcav_score_subprocess_args = ["python", "xailib/scripts/tcav.py"]
+    tcav_score_subprocess_args = ["python", "xailib/scripts/tcav_score.py"]
     concept_backprop_subprocess_args = [
         "python",
         "xailib/scripts/concept_backpropagation.py",
