@@ -492,7 +492,8 @@ class SingleAgentWrapper(gym.Wrapper):
         :meta private:
         """
         result = super().reset(*args, **kwargs)
-        return tuple(item[0] for item in result)
+        return_value = tuple([list(result[0].values())[0], result[1]])
+        return return_value
 
     def step(self, action):
         """

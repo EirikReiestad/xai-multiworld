@@ -27,6 +27,11 @@ wandb = "^0.19.5"
 stable-baselines3 = "^2.5.0"
 dm-tree = "^0.1.9"
 tabulate = "^0.9.0"
+tensorboard = "^2.19.0"
+moviepy = "^2.1.2"
+pettingzoo = "^1.24.3"
+supersuit = "^3.9.3"
+pymunk = "^6.11.1"
 
 [tool.pyright]
 venvPath = "."

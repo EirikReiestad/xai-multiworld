@@ -1,5 +1,6 @@
 from typing import Any, Dict, Mapping, SupportsFloat
 
+import numpy as np
 import torch.nn as nn
 
 from multiworld.utils.typing import AgentID, ObsType
@@ -11,12 +12,20 @@ from rllib.utils.dqn.preprocessing import preprocess_next_observations
 
 
 class MDQN(Algorithm):
-    def __init__(self, agents: int, config: AlgorithmConfig, dqn_config: DQNConfig):
+    def __init__(
+        self,
+        agents: int,
+        config: AlgorithmConfig,
+        dqn_config: DQNConfig,
+        multi_training: bool = False,
+    ):
         assert (
             dqn_config._wandb_project is None
         ), "Ups, we will only run one wandb project at a time:) So please deactivate wandb for the DQN Config and add it to the AlgorithmConfig, thank you!"
         super().__init__(config)
+        self._multi_training = multi_training
         self._config = config
+        self._dqn_config = dqn_config
         self._dqns = {key: DQN(dqn_config) for key in range(agents)}
 
     def train_step(
@@ -53,7 +62,26 @@ class MDQN(Algorithm):
 
     def log_episode(self):
         super().log_episode()
-        for key in self._dqns.keys():
+        if self._multi_training:
+            for key in self._dqns.keys():
+                metadata = {
+                    "agents": len(self._env.agents),
+                    "width": self._env._width,
+                    "height": self._env._height,
+                    "eps_threshold": self._dqns[key]._eps_threshold,
+                    "learning_rate": self._dqns[key]._config.learning_rate,
+                    "conv_layers": self._config.conv_layers,
+                    "hidden_units": self._config.hidden_units,
+                }
+                self.log_model(
+                    self._dqns[key].model,
+                    f"model_{key}_{self._episodes_done}",
+                    self._episodes_done,
+                    metadata,
+                )
+                self.add_log(f"eps_threshold_{key}", self._dqns[key]._eps_threshold)
+        else:
+            key = list(self._dqns.keys())[0]
             metadata = {
                 "agents": len(self._env.agents),
                 "width": self._env._width,
@@ -92,14 +120,32 @@ class MDQN(Algorithm):
     def _optimize_model(self):
         losses = {}
 
-        for key in self._dqns.keys():
+        if self._multi_training:
+            for key in self._dqns.keys():
+                loss = self._dqns[key]._optimize_model()
+                if loss is not None:
+                    losses[key] = loss
+        else:
+            key = list(self._dqns.keys())[0]
             loss = self._dqns[key]._optimize_model()
             if loss is not None:
                 losses[key] = loss
 
     def _hard_update_target(self):
-        for key in self._dqns.keys():
+        if self._multi_training:
+            for key in self._dqns.keys():
+                self._dqns[key]._hard_update_target()
+        else:
+            key = list(self._dqns.keys())[0]
             self._dqns[key]._hard_update_target()
+            model = self._dqns[key].model
+
+            for other_key in self._dqns.keys():
+                if key == other_key:
+                    continue
+                if np.random.rand() > 0.2:  # Only updating some of the models maybe
+                    continue
+                self._dqns[other_key]._hard_update_target(model)
 
     def _soft_update_target(self):
         for key in self._dqns.keys():
