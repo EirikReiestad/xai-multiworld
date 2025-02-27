@@ -71,7 +71,7 @@ def main():
         render_observation_subprocess_args += [
             "--render-observation"
         ] + args.render_observation
-    if print_results_subprocess_args:
+    if args.print_results is not None:
         logging.info(f"Arguments for --print-results: {args.print_results}")
         print_results_subprocess_args += ["--print-results"] + args.print_results
 

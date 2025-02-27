@@ -3,19 +3,21 @@ from rllib.algorithms.ppo.ppo import PPO
 from rllib.algorithms.ppo.ppo_config import PPOConfig
 from rllib.core.network.network import NetworkType
 
+agents = 1
 env = GoToGoalEnv(
-    width=5,
-    height=5,
+    width=10,
+    height=10,
+    static=True,
     max_steps=100,
-    agents=1,
+    agents=agents,
     agent_view_size=None,
     success_termination_mode="all",
-    render_mode="rgb_array",
+    render_mode="human",
 )
 config = (
     PPOConfig(
-        batch_size=200,
-        mini_batch_size=10,
+        batch_size=100,
+        mini_batch_size=32,
         epochs=5,
         gamma=0.99,
         lambda_=0.95,
@@ -30,7 +32,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project="go-to-goal-ppo", log_interval=20)
+    # .wandb(project=f"go-to-goal-ppo-{agents}", log_interval=20)
 )
 
 ppo = PPO(config)
