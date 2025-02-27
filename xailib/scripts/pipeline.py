@@ -43,7 +43,15 @@ def main():
     environment = create_environment(artifact)
     logging.info("Collecting rollouts...")
     observations = collect_rollouts(
-        environment, artifact, config["path"]["observations"], config["force_update"]
+        env=environment,
+        artifact=artifact,
+        n=config["collect_rollouts"]["observations"],
+        method=config["collect_rollouts"]["method"],
+        observation_path=config["path"]["observations"],
+        force_update=config["force_update"],
+        model_type=config["model"]["type"],
+        sample_rate=config["collect_rollouts"]["sample_rate"],
+        artifact_path=config["path"]["artifacts"],
     )
     logging.info("Generating concepts...")
     generate_concepts(

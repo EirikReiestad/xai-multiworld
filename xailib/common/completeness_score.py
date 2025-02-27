@@ -121,8 +121,10 @@ def get_completeness_score_network(
             f"Random concept - loss: {random_loss} accuracy: {random_accuracy}"
         )
 
+    """
     if "random" in concepts:
         concepts.remove("random")
+    """
 
     results = {tuple(["random"]): (random_loss, random_accuracy)}
     for comb in get_combinations(concepts):

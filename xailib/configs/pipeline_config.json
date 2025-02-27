@@ -1,10 +1,10 @@
 {
     "wandb": {
-        "project_folder": "test",
+        "project_folder": "go-to-goal-1",
         "models": {
             "low": 0,
-            "high": 100,
-            "step": 30
+            "high": 1000,
+            "step": 200
         }
     },
     "model": {
@@ -13,11 +13,11 @@
     "collect_rollouts": {
         "method": "policy",
         "observations": 10000,
-        "sample_rate": 1.0
+        "sample_rate": 0.2
     },
     "generate_concepts": {
-        "method": "random",
-        "observations": 100
+        "method": "policy",
+        "observations": 200
     },
     "completeness_score": {
         "method": "network"
@@ -48,7 +48,7 @@
             0.05,
             0.01
         ],
-        "robustness_epochs": 1
+        "robustness_epochs": 10
     },
     "path": {
         "artifacts": "artifacts",
@@ -56,5 +56,5 @@
         "observations": "assets/observations",
         "results": "assets/results"
     },
-    "force_update": false
+    "force_update": true
 }
