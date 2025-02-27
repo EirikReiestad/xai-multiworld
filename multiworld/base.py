@@ -30,6 +30,7 @@ class MultiWorldEnv(gym.Env, RandomMixin, ABC):
     metadata = {
         "render_modes": ["human", "rgb_array"],
         "render_fps": 20,
+        "name": "multiworld",
     }
 
     def __init__(
