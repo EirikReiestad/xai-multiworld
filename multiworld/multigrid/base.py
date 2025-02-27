@@ -61,6 +61,7 @@ class MultiGridEnv(MultiWorldEnv):
             success_termination_mode,
             failure_termination_mode,
         )
+        self.metadata["name"] = "multigrid"
         self._preprocessing = preprocessing
         self._highlight = highlight
         self._tile_size = tile_size

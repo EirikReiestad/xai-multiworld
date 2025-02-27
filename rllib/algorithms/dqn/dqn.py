@@ -280,14 +280,16 @@ class DQN(Algorithm):
             state_action_values, expected_state_action_values.unsqueeze(1)
         ).mean()
 
-    def _hard_update_target(self):
+    def _hard_update_target(self, network: nn.Module | None = None):
+        network = network or self._policy_net
         if self._steps_done % self._config.target_update != 0:
             return
-        self._target_net.load_state_dict(self._policy_net.state_dict())
+        self._target_net.load_state_dict(network.state_dict())
 
-    def _soft_update_target(self):
+    def _soft_update_target(self, network: nn.Module | None = None):
+        network = network or self._policy_net
         target_net_state_dict = self._target_net.state_dict()
-        policy_net_state_dict = self._policy_net.state_dict()
+        policy_net_state_dict = network.state_dict()
         for key in policy_net_state_dict:
             target_net_state_dict[key] = policy_net_state_dict[
                 key
