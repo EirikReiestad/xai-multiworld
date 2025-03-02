@@ -1,3 +1,4 @@
+import logging
 import os
 
 from utils.common.collect_rollouts import collect_rollouts
@@ -41,20 +42,25 @@ def main():
     observations = collect_rollouts(
         env=environment,
         artifact=artifact,
-        n=1000,
+        n=10000,
         method="policy",
+        force_update=False,
     )
+    logging.info("Getting probes and activations...")
     probes, positive_activations, negative_activations = get_probes_and_activations(
         concepts, ignore_layers, models, positive_observations, negative_observations
     )
+    logging.info("Calculating completeness score...")
+    model = list(models.values())[-1]
     completeness_score = get_completeness_score(
-        probes,
-        concepts,
-        artifact,
-        environment,
-        observations,
-        layer_idx,
+        probes=probes,
+        concepts=concepts,
+        model=model,
+        observations=observations,
+        method="decisiontree",
+        layer_idx=layer_idx,
         ignore_layers=ignore_layers,
+        verbose=False,
     )
 
 

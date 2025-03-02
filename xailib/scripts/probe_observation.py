@@ -28,7 +28,7 @@ def run(concept: str):
     positive_observation, test_observation = load_and_split_observation(concept, 0.8)
     negative_observation, _ = load_and_split_observation("random_negative", 0.8)
 
-    test_observation_zipped = zip_observation_data(test_observation)
+    test_observation_zipped, _ = zip_observation_data(test_observation)
 
     test_activations, test_input, test_output = compute_activations_from_models(
         models, test_observation_zipped, ignore
@@ -47,7 +47,7 @@ def run(concept: str):
     observations = observation_from_file(
         os.path.join("assets", "concepts", "random.json")
     )
-    observations_zipped = zip_observation_data(observations)
+    observations_zipped, _ = zip_observation_data(observations)
     observation_activations, obs_input, obs_output = compute_activations_from_models(
         models, observations_zipped, ignore
     )

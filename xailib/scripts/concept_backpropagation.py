@@ -56,7 +56,7 @@ probes, positive_activations, negative_activations = get_probes(
     model_artifacts, positive_observation, negative_observation
 )
 
-test_observation_zipped = zip_observation_data(test_observation)
+test_observation_zipped, _ = zip_observation_data(test_observation)
 set_require_grad(test_observation_zipped)
 
 test_activations, test_input, test_output = compute_activations_from_artifacts(

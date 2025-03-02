@@ -14,7 +14,7 @@ def get_activations(
     Dict[str, Dict[str, np.ndarray]],
     Dict[str, Dict[str, np.ndarray]],
 ]:
-    observation_zipped = zip_observation_data(observations)
+    observation_zipped, _ = zip_observation_data(observations)
     activations, input, output = compute_activations_from_models(
         models, observation_zipped, ignore_layers
     )
@@ -36,7 +36,7 @@ def get_concept_activations(
     outputs = {}
 
     for concept in concepts:
-        observation_zipped = zip_observation_data(observation[concept])
+        observation_zipped, _ = zip_observation_data(observation[concept])
         activation, input, output = compute_activations_from_models(
             models, observation_zipped, ignore_layers
         )

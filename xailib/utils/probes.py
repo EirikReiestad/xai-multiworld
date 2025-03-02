@@ -1,7 +1,7 @@
 from typing import Dict, List, Tuple
 
 import numpy as np
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LogisticRegression
 from torch import nn
 
 from utils.common.observation import Observation
@@ -15,7 +15,7 @@ def get_probes_and_activations(
     positive_observations: Dict[str, Observation],
     negative_observations: Dict[str, Observation],
 ) -> Tuple[
-    Dict[str, Dict[str, Dict[str, LinearRegression]]],
+    Dict[str, Dict[str, Dict[str, LogisticRegression]]],
     Dict[str, np.ndarray],
     Dict[str, np.ndarray],
 ]:

@@ -19,7 +19,8 @@ def generate_concepts(
     model_type: Literal["dqn"],
     force_update: bool = False,
     artifact_path: str = os.path.join("artifacts"),
-    observation_path: str = os.path.join("assets", "observations"),
+    concept_path: str = os.path.join("assets", "concepts"),
+    result_dir: str = os.path.join("assets", "results"),
 ):
     all_concepts = []
     for concept in concepts:
@@ -28,7 +29,7 @@ def generate_concepts(
 
     if force_update is False:
         try:
-            existing_concepts = os.listdir(observation_path)
+            existing_concepts = os.listdir(concept_path)
             existing_concepts = (
                 [existing_concepts]
                 if isinstance(existing_concepts, str)
@@ -49,7 +50,16 @@ def generate_concepts(
 
     thread = threading.Thread(
         target=generate_concepts_thread,
-        args=(concepts, env, observations, artifact, method, model_type, artifact_path),
+        args=(
+            concepts,
+            env,
+            observations,
+            artifact,
+            method,
+            model_type,
+            artifact_path,
+            result_dir,
+        ),
     )
     thread.start()
     thread.join()
@@ -63,6 +73,7 @@ def generate_concepts_thread(
     method: Literal["random", "policy"],
     model_type: Literal["dqn"],
     artifact_path: str = os.path.join("artifacts"),
+    results_dir: str = os.path.join("assets", "results"),
 ):
     if not isinstance(env, MultiGridEnv):
         raise ValueError("Only MultiGridEnv is supported for concept generation.")
@@ -74,6 +85,7 @@ def generate_concepts_thread(
         observations=observations,
         concepts=concepts,
         method=method,
+        results_dir=results_dir,
     )
 
     model = create_model(artifact, model_type, artifact_path, env_wrapped, eval)

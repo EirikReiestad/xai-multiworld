@@ -45,7 +45,7 @@ if [ "$example_flag" = true ]; then
 fi
 
 if [ "$pipeline_score_flag" = true ]; then
-    sbatch scripts/idun/pipeline.sh "--download-models go-to-goalv2 0 10000 1000 --generate-concepts --concept-score --tcav-score"
+    sbatch scripts/idun/pipeline.sh
     exit 0
 fi
 
