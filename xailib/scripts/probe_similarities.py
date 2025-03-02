@@ -3,7 +3,7 @@ import logging
 from utils.common.environment import create_environment
 from utils.common.model import get_models
 from utils.core.model_loader import ModelLoader
-from xailib.utils.metrics import calculate_statistics
+from xailib.utils.metrics import calculate_probe_similarities, calculate_statistics
 from xailib.utils.observation import get_observations
 from xailib.utils.probes import get_probes_and_activations
 
@@ -47,7 +47,7 @@ def main():
         ignore_layers=ignore_layers,
     )
     logging.info("Calculating statistics...")
-    calculate_statistics(concepts, positive_activations, probes, layer_idx)
+    calculate_probe_similarities(probes, layer_idx)
 
 
 if __name__ == "__main__":

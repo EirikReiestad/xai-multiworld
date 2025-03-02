@@ -11,15 +11,15 @@ def main():
     concepts = [
         "random",
         "goal_in_front",
-        # "goal_in_view",
-        # "goal_to_left",
-        # "goal_to_right",
-        # "wall_in_view",
+        "goal_in_view",
+        "goal_to_left",
+        "goal_to_right",
+        "wall_in_view",
     ]
     ignore_layers = ["_fc0"]
     layer_idx = 4
     splits = [0.9, 0.5, 0.1]
-    epochs = 1
+    epochs = 10
 
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
     environment = create_environment(artifact)
@@ -33,6 +33,7 @@ def main():
         splits=splits,
         layer_idx=layer_idx,
         epochs=epochs,
+        ignore_layers=ignore_layers,
     )
 
 

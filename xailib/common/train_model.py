@@ -1,6 +1,7 @@
 import gc
 import logging
 import os
+from collections import defaultdict
 from typing import List, Tuple
 
 import numpy as np
@@ -10,6 +11,11 @@ from matplotlib import pyplot as plt
 from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from torch.utils.data import DataLoader, TensorDataset, random_split
+
+from utils.common.write import write_results
+from xailib.utils.logging import (
+    log_decision_tree_feature_importance,
+)
 
 
 def train_model(
@@ -110,58 +116,90 @@ def train_decision_tree(
     dataset: TensorDataset,
     test_split: float,
     feature_names: List[str],
+    epochs: int = 20,
+    result_path: str = os.path.join("assets", "results"),
+    figure_path: str = os.path.join("assets", "figures"),
+    show: bool = False,
     verbose: bool = False,
 ):
-    test_size = int(len(dataset) * test_split)
-    train_size = len(dataset) - test_size
-    train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
+    results = []
+    for _ in range(epochs):
+        test_size = int(len(dataset) * test_split)
+        train_size = len(dataset) - test_size
+        train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
 
-    if verbose:
-        logging.info(f"Training model with {len(train_dataset)} samples")
-        logging.info(f"Testing model with {len(test_dataset)} samples")
+        if verbose:
+            logging.info(f"Training model with {len(train_dataset)} samples")
+            logging.info(f"Testing model with {len(test_dataset)} samples")
 
-    X_train = train_dataset[:][0].numpy()
-    y_train = train_dataset[:][1].numpy()
+        X_train = train_dataset[:][0].numpy()
+        y_train = train_dataset[:][1].numpy()
 
-    X_test = test_dataset[:][0].numpy()
-    y_test = test_dataset[:][1].numpy()
+        X_test = test_dataset[:][0].numpy()
+        y_test = test_dataset[:][1].numpy()
 
-    model.fit(X_train, y_train)
-    y_pred = model.predict(X_test)
-    accuracy = accuracy_score(y_test, y_pred)
-    logging.info(f"Test set accuracy: {accuracy:.4f}")
+        model.fit(X_train, y_train)
+        y_pred = model.predict(X_test)
+        accuracy = accuracy_score(y_test, y_pred)
+        if verbose:
+            logging.info(f"Test set accuracy: {accuracy:.4f}")
 
-    plt.figure(figsize=(20, 10))
-    plot_tree(
-        model,
-        filled=True,
-        feature_names=feature_names,  # class_names=data.target_names
-    )
-    plt.show()
-    plt.savefig(os.path.join("assets", "figures", "decision_tree.png"))
+        plt.figure(figsize=(20, 10))
+        feature_names += ["random"]
+        plot_tree(
+            model,
+            filled=True,
+            feature_names=feature_names,  # class_names=data.target_names
+        )
+        if show:
+            plt.show()
+        plt.savefig(os.path.join(figure_path, "decision_tree.png"))
 
-    feature_importances = model.feature_importances_
-    feature_split_counts = np.zeros(len(feature_names))
+        feature_importances = model.feature_importances_
+        feature_split_counts = np.zeros(len(feature_names))
 
-    def count_feature_splits(node):
-        if node == -1:
-            return
-        feature = model.tree_.feature[node]
-        if feature != -2:
-            feature_split_counts[feature] += 1
-            count_feature_splits(model.tree_.children_left[node])
-            count_feature_splits(model.tree_.children_right[node])
+        def count_feature_splits(node):
+            if node == -1:
+                return
+            feature = model.tree_.feature[node]
+            if feature != -2:
+                feature_split_counts[feature] += 1
+                count_feature_splits(model.tree_.children_left[node])
+                count_feature_splits(model.tree_.children_right[node])
 
-    count_feature_splits(0)
+        count_feature_splits(0)
 
-    results = {}
-    for name, importance, count in zip(
-        feature_names, feature_importances, feature_split_counts
-    ):
-        results[name] = (importance, count)
+        result = {}
+        for name, importance, count in zip(
+            feature_names, feature_importances, feature_split_counts
+        ):
+            result[name] = [float(importance), float(count)]
+        results.append(result)
 
-    path = os.path.join("assets", "results", "concept_score_decicion_tree.json")
-    write_results(results, path)
+    average_results = defaultdict(list[float])
+    for key in results[0].keys():
+        average_results[key] = [0, 0]
+
+    for result in results:
+        for key, value in result.items():
+            importance, splits = value[0], value[1]
+            average_results[key][0] += importance
+            average_results[key][1] += splits
+    for key in average_results.keys():
+        average_results[key][0] /= epochs
+        average_results[key][1] /= epochs
+
+    path = os.path.join(result_path, "concept_score_decicion_tree.json")
+    write_results(average_results, path)
+    log_decision_tree_feature_importance(average_results)
 
     logging.info(f"\nTree Depth: {model.get_depth()}")
     logging.info(f"Number of Leaves: {model.get_n_leaves()}")
+
+    path = os.path.join(result_path, "concept_score_decicion_tree_info.json")
+    result = {
+        "tree_depth": int(model.get_depth()),
+        "n_leaves": int(model.get_n_leaves()),
+    }
+
+    write_results(result, path)

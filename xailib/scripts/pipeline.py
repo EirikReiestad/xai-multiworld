@@ -1,5 +1,7 @@
 import json
 import logging
+import os
+import time
 
 from utils.common.collect_rollouts import collect_rollouts
 from utils.common.environment import create_environment
@@ -10,6 +12,7 @@ from xailib.common.generate_concepts import generate_concepts
 from xailib.utils.activations import get_activations, get_concept_activations
 from xailib.utils.metrics import (
     calculate_probe_robustness,
+    calculate_probe_similarities,
     calculate_statistics,
     get_concept_scores,
     get_tcav_scores,
@@ -24,6 +27,12 @@ logging.basicConfig(level=logging.INFO)
 def main():
     with open("xailib/configs/pipeline_config.json", "r") as f:
         config = json.load(f)
+
+    current_time = time.strftime("%Y%m%d-%H%M%S")
+
+    result_path = os.path.join("pipeline", f"{current_time}", "results")
+    figure_path = os.path.join("pipeline", f"{current_time}", "figures")
+    os.makedirs(result_path, exist_ok=True)
 
     logging.info("Downloading models...")
     download_models(
@@ -63,7 +72,8 @@ def main():
         model_type=config["model"]["type"],
         force_update=config["force_update"],
         artifact_path=config["path"]["artifacts"],
-        observation_path=config["path"]["observations"],
+        concept_path=config["path"]["concepts"],
+        result_dir=result_path,
     )
 
     logging.info("Loading observations...")
@@ -102,16 +112,24 @@ def main():
     completeness_score = get_completeness_score(
         probes=probes,
         concepts=config["concepts"],
-        artifact=artifact,
-        environment=environment,
+        model=latest_model,
         observations=observations,
         layer_idx=config["analyze"]["layer_idx"],
         ignore_layers=config["analyze"]["ignore_layers"],
-        model_type=config["model"]["type"],
-        method=config["completeness_score"]["method"],
-        artifact_path=config["path"]["artifacts"],
-        eval=True,
+        method="network",
         verbose=False,
+        result_path=result_path,
+    )
+    completeness_score = get_completeness_score(
+        probes=probes,
+        concepts=config["concepts"],
+        model=latest_model,
+        observations=observations,
+        layer_idx=config["analyze"]["layer_idx"],
+        ignore_layers=config["analyze"]["ignore_layers"],
+        method="decisiontree",
+        verbose=False,
+        result_path=result_path,
     )
 
     test_positive_activations, test_input, test_output = get_concept_activations(
@@ -126,7 +144,7 @@ def main():
     )
     logging.info("Calculating concept scores...")
     concept_scores = get_concept_scores(
-        config["concepts"], test_positive_activations, probes, config["path"]["results"]
+        config["concepts"], test_positive_activations, probes, result_path, figure_path
     )
     logging.info("Calculating TCAV scores...")
     tcav_scores = get_tcav_scores(
@@ -134,7 +152,8 @@ def main():
         test_positive_activations,
         test_output,
         probes,
-        config["path"]["results"],
+        result_path,
+        figure_path,
     )
     logging.info("Calculating probe robustness...")
     calculate_probe_robustness(
@@ -143,15 +162,17 @@ def main():
         splits=config["analyze"]["splits"],
         layer_idx=config["analyze"]["layer_idx"],
         epochs=config["analyze"]["robustness_epochs"],
-        results_path=config["path"]["results"],
+        results_path=result_path,
     )
     logging.info("Calculating statistics...")
     calculate_statistics(
         concepts=config["concepts"],
         activations=positive_activations,
+        probes=probes,
         layer_idx=config["analyze"]["layer_idx"],
-        results_path=config["path"]["results"],
+        results_path=result_path,
     )
+    calculate_probe_similarities(probes, config["analyze"]["layer_idx"], result_path)
 
 
 if __name__ == "__main__":

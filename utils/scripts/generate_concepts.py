@@ -1,12 +1,14 @@
 import argparse
 import logging
+from typing import Literal
 
 from multiworld.multigrid.base import MultiGridEnv
-from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from multiworld.multigrid.utils.wrappers import MultiGridConceptObsWrapper
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.network.network import NetworkType
+from utils.common.environment import create_environment
+from utils.core.model_loader import ModelLoader
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -24,26 +26,38 @@ def main():
     args = parser.parse_args()
 
     observations = 100
+    method = "policy"
     if args.generate_concepts is not None and len(args.generate_concepts) > 0:
         observations = int(args.generate_concepts[0])
+        method = (
+            str(args.generate_concepts[1])
+            if len(args.generate_concepts) > 1
+            else "policy"
+        )
+        if method not in ["random", "policy"]:
+            raise ValueError("Method must be either 'random' or 'policy'")
 
-    env = GoToGoalEnv(
-        width=10,
-        height=10,
-        max_steps=200,
-        agents=2,
-        success_termination_mode="all",
-        render_mode="human",
+    artifact = ModelLoader.load_latest_model_artifacts_from_path()
+    environment = create_environment(artifact)
+
+    generate_concepts(observations, environment, method)
+
+
+def generate_concepts(
+    observations: int, env: MultiGridEnv, method: Literal["random", "policy"] = "policy"
+):
+    concepts = [
+        "random",
+        "goal_in_front",
+        "goal_in_view",
+        "goal_to_left",
+        "goal_to_right",
+        "wall_in_view",
+    ]
+
+    logging.info(
+        f"Generating {observations} concepts for {concepts} with {method} method"
     )
-
-    generate_concepts(observations, env)
-
-
-def generate_concepts(observations: int, env: MultiGridEnv):
-    concepts = ["random"]
-    concepts = None
-
-    logging.info(f"Generating {observations} concepts for {concepts}")
 
     env_wrapped = MultiGridConceptObsWrapper(
         env, observations=observations, concepts=concepts, method="random"
@@ -51,18 +65,14 @@ def generate_concepts(observations: int, env: MultiGridEnv):
 
     config = (
         DQNConfig(
-            batch_size=64,
-            replay_buffer_size=10000,
-            gamma=0.99,
             learning_rate=3e-4,
-            eps_start=0.9,
-            eps_end=0.05,
-            eps_decay=100000,
+            eps_start=1.0 if method == "random" else 0.05,
+            eps_end=1.0 if method == "random" else 0.05,
+            update_method="soft",
             target_update=1000,
         )
         .network(network_type=NetworkType.MULTI_INPUT)
         .environment(env=env_wrapped)
-        .training()
         .debugging(log_level="INFO")
         .rendering()
     )

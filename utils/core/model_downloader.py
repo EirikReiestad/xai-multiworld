@@ -62,7 +62,9 @@ class ModelDownloader(WandB):
             self._run_id, model_artifact, version_number
         )
         if artifact_dir is None or metadata is None:
-            raise Exception(f"Model not found, {traceback.format_exc}")
+            raise Exception(
+                f"Model {artifact_dir} not found or metadata {metadata} not found, {traceback.format_exc}"
+            )
 
         if self._model is None:
             return

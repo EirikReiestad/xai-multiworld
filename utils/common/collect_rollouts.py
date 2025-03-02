@@ -25,11 +25,11 @@ def collect_rollouts(
         try:
             observation = os.listdir(observation_path)
             if "observations.json" in set(observation):
-                logging.info(
-                    "Observations already exists, so we do not need to create them:)"
-                )
                 observations = observations_from_file(
                     os.path.join(observation_path, "observations.json")
+                )
+                logging.info(
+                    f"Observations already exists, so we do not need to create them:) Observation size: {len(observations)}"
                 )
                 return observations
         except FileNotFoundError:

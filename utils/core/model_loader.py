@@ -46,7 +46,9 @@ class ModelLoader:
         return ModelLoader.load_model_from_path(latest_model_dir_path, network)
 
     @staticmethod
-    def load_latest_model_artifacts_from_path(path: str) -> ModelArtifact:
+    def load_latest_model_artifacts_from_path(
+        path: str = "artifacts/",
+    ) -> ModelArtifact:
         model_dirs = os.listdir(path)
         sorted_model_dirs = sorted(
             model_dirs, key=lambda x: int(re.search(r"\d+", x).group())

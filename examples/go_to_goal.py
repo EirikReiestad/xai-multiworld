@@ -4,12 +4,13 @@ from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.network.network import NetworkType
 
-agents = 50
+agents = 1
+size = 15
 env = GoToGoalEnv(
     goals=1,
     static=True,
-    width=20,
-    height=20,
+    width=size,
+    height=size,
     max_steps=100,
     preprocessing=PreprocessingEnum.ohe_minimal,
     agents=agents,
@@ -32,7 +33,7 @@ config = (
     )
     .network(network_type=NetworkType.MULTI_INPUT)
     .environment(env=env)
-    .model("model_1350:v0")
+    .model("model_150:v0")
     # .training()
     .debugging(log_level="INFO")
     .rendering()
