@@ -40,6 +40,7 @@ def main():
         high=config["wandb"]["models"]["high"],
         step=config["wandb"]["models"]["step"],
         wandb_project_folder=config["wandb"]["project_folder"],
+        model_name=config["wandb"]["models"]["name"],
         artifact_path=config["path"]["artifacts"],
         force_update=config["force_update"],
     )

@@ -61,6 +61,12 @@ class MDQN(Algorithm):
         self._hard_update_target()
 
     def log_episode(self):
+        self.log_model(
+            self._policy_net,
+            f"model_{self._episodes_done}",
+            self._episodes_done,
+            metadata,
+        )
         super().log_episode()
         if self._multi_training:
             for key in self._dqns.keys():
@@ -68,6 +74,8 @@ class MDQN(Algorithm):
                     "agents": len(self._env.agents),
                     "width": self._env._width,
                     "height": self._env._height,
+                    "preprocessing": self._env._preprocessing,
+                    "network_type": self._config._network_type,
                     "eps_threshold": self._dqns[key]._eps_threshold,
                     "learning_rate": self._dqns[key]._config.learning_rate,
                     "conv_layers": self._config.conv_layers,
@@ -86,6 +94,8 @@ class MDQN(Algorithm):
                 "agents": len(self._env.agents),
                 "width": self._env._width,
                 "height": self._env._height,
+                "preprocessing": self._env._preprocessing,
+                "network_type": self._config._network_type,
                 "eps_threshold": self._dqns[key]._eps_threshold,
                 "learning_rate": self._dqns[key]._config.learning_rate,
                 "conv_layers": self._config.conv_layers,
