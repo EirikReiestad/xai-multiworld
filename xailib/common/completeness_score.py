@@ -1,5 +1,6 @@
 import logging
 import os
+import time
 from typing import Dict, List, Literal
 
 import numpy as np
@@ -7,11 +8,7 @@ import torch
 import torch.nn as nn
 from sklearn.linear_model import LogisticRegression
 
-from multiworld.base import MultiWorldEnv
-from rllib.algorithms.algorithm import Algorithm
 from utils.common.collections import get_combinations
-from utils.common.model import create_model
-from utils.common.model_artifact import ModelArtifact
 from utils.common.observation import (
     Observation,
     load_and_split_observation,
@@ -128,9 +125,12 @@ def get_completeness_score_network(
     labels = torch.argmax(output["latest"], dim=1).detach().numpy()
     action_space = len(output["latest"][0])
 
+    # TODO: WHY IS THIS NOT THE SAME AS THE OTHER LABELS IDK
+    """
     print(labels)
     print("")
     print(_)
+    """
 
     unique_elements, counts = np.unique(labels, return_counts=True)
     for element, count in zip(unique_elements, counts):
@@ -201,6 +201,7 @@ def get_completeness_score_network(
             activations, input, output = compute_activations_from_models(
                 models, observation_zipped, ignore_layers
             )
+            time.sleep(1)
             labels = torch.argmax(output["latest"], dim=1).detach().numpy()
             sub_loss, sub_accuracy = compute_accuracy(
                 observation_shape=len(comb),

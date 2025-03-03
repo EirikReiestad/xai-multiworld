@@ -15,12 +15,14 @@ def collect_rollouts(
     artifact: ModelArtifact,
     n: int,
     method: Literal["policy", "random"],
-    observation_path: str = "assets/observations",
+    observation_path: str = os.path.join("assets", "observations"),
     force_update: bool = False,
     model_type: Literal["dqn"] = "dqn",
     sample_rate: float = 1.0,
     artifact_path: str = os.path.join("artifacts"),
 ) -> Observation:
+    if not os.path.exists(observation_path):
+        os.mkdir(observation_path)
     if force_update is False:
         try:
             observation = os.listdir(observation_path)

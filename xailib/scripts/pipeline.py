@@ -108,7 +108,7 @@ def main():
         positive_observations,
         negative_observations,
     )
-    logging.info("Calculating completeness score...")
+    logging.info("Calculating network completeness score...")
     completeness_score = get_completeness_score(
         probes=probes,
         concepts=config["concepts"],
@@ -120,6 +120,7 @@ def main():
         verbose=False,
         result_path=result_path,
     )
+    logging.info("Calculating decisiontree completeness score...")
     completeness_score = get_completeness_score(
         probes=probes,
         concepts=config["concepts"],

@@ -40,6 +40,7 @@ class LinearProbe:
         negative_activations, negative_input, negative_output = (
             self._activation_tracker.compute_activations(negative_observations)
         )
+        self._activation_tracker.clean()
 
         regressors = {}
 
