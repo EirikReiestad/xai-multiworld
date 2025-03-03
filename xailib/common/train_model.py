@@ -2,6 +2,7 @@ import gc
 import logging
 import os
 from collections import defaultdict
+import time
 from typing import List, Tuple
 
 import numpy as np
@@ -12,6 +13,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from torch.utils.data import DataLoader, TensorDataset, random_split
 
+from utils.common.code import get_memory_usage
 from utils.common.write import write_results
 from xailib.utils.logging import (
     log_decision_tree_feature_importance,
@@ -105,7 +107,7 @@ def train_model(
     if verbose:
         logging.info(f"Test Loss: {test_loss:.4f}, Test Accuracy: {test_accuracy:.2f}%")
 
-    del model
+    del model, train_loader, val_loader, test_loader
     gc.collect()
 
     return test_loss, test_accuracy

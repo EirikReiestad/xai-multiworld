@@ -1,6 +1,8 @@
+import gc
 import logging
 import math
 import os
+import time
 from collections import defaultdict
 from typing import Dict, List, Literal
 
@@ -18,6 +20,7 @@ from tabulate import tabulate
 from torch.utils.data import TensorDataset
 
 from multiworld.base import MultiWorldEnv
+from utils.common.code import get_memory_usage
 from utils.common.collections import get_combinations
 from utils.common.model_artifact import ModelArtifact
 from utils.common.numpy_collections import convert_numpy_to_float
@@ -167,7 +170,6 @@ def compute_accuracy(
     dataset = TensorDataset(
         torch.from_numpy(concept_scores), torch.tensor(labels, dtype=torch.long)
     )
-
     loss, accuracy = train_model(
         model=model,
         learning_rate=learning_rate,
@@ -178,6 +180,9 @@ def compute_accuracy(
         val_split=val_split,
         verbose=verbose,
     )
+
+    del model, dataset
+    gc.collect()
 
     return loss, accuracy
 

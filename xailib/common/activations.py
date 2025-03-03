@@ -1,3 +1,5 @@
+import copy
+import gc
 from typing import Dict, List, Tuple
 
 import numpy as np
@@ -7,7 +9,7 @@ import torch.nn as nn
 
 class ActivationTracker:
     def __init__(self, model: nn.Module, ignore: List[str] = []):
-        self._model = model
+        self._model = copy.deepcopy(model)
         self._activations = {}
         self._hook_handles = []
         self._register_hooks(ignore)
@@ -18,8 +20,10 @@ class ActivationTracker:
         self._key = 0
         outputs = self._model(*inputs)
         activations_cloned = {key: value for key, value in self._activations.items()}
-        # self._remove_hooks()
         return activations_cloned, inputs, outputs
+
+    def clean(self):
+        self._remove_hooks()
 
     def _register_hooks(self, ignore: List[str]):
         hook_count = 0
@@ -69,9 +73,9 @@ def compute_activations_from_models(
     inputs = {}
     outputs = {}
     for key, model in artifacts.items():
-        _activations, _input, _output = ActivationTracker(
-            model, ignore
-        ).compute_activations(input)
+        activation_tracker = ActivationTracker(model, ignore)
+        _activations, _input, _output = activation_tracker.compute_activations(input)
+        activation_tracker.clean()
 
         activations[key] = _activations
         inputs[key] = _input
