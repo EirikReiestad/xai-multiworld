@@ -23,6 +23,7 @@ def main():
     layer_idx = 4
     model_type = "dqn"
     artifact_path = os.path.join("artifacts")
+    epochs = 10
 
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
     environment = create_environment(artifact)
@@ -59,6 +60,7 @@ def main():
         observations=observations,
         method="decisiontree",
         layer_idx=layer_idx,
+        epochs=epochs,
         ignore_layers=ignore_layers,
         verbose=False,
     )

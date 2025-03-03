@@ -13,15 +13,17 @@
     },
     "collect_rollouts": {
         "method": "policy",
-        "observations": 1000,
-        "sample_rate": 0.2
+        "observations": 10000,
+        "sample_rate": 0.1
     },
     "generate_concepts": {
         "method": "policy",
-        "observations": 50
+        "observations": 1000
     },
     "completeness_score": {
-        "method": "all"
+        "network_epcohs": 10,
+        "decisiontree_epochs": 10,
+        "method": "network"
     },
     "concepts": [
         "random",
@@ -45,11 +47,9 @@
             0.4,
             0.3,
             0.2,
-            0.1,
-            0.05,
-            0.01
+            0.1
         ],
-        "robustness_epochs": 10
+        "robustness_epochs": 20
     },
     "path": {
         "artifacts": "artifacts",
