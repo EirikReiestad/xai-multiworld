@@ -21,6 +21,8 @@
         "observations": 1000
     },
     "completeness_score": {
+        "network_epcohs": 10,
+        "decisiontree_epochs": 10,
         "method": "network"
     },
     "concepts": [
@@ -45,7 +47,7 @@
             0.4,
             0.3,
             0.2,
-            0.1,
+            0.1
         ],
         "robustness_epochs": 20
     },
