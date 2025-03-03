@@ -105,7 +105,7 @@ def split_observation(
     return train_observation, test_observation
 
 
-def observation_data_to_torch(observation: Observation) -> List:
+def observation_data_to_torch(observation: Observation) -> Tuple[List, List]:
     data = [
         [
             torch.tensor(v, dtype=torch.float32, requires_grad=True)
@@ -113,7 +113,8 @@ def observation_data_to_torch(observation: Observation) -> List:
         ]
         for obs in observation[..., Observation.DATA]
     ]
-    return data
+    labels = observation[..., Observation.LABEL]
+    return data, labels
 
 
 def observation_data_to_numpy(observation: Observation) -> List:
@@ -145,10 +146,10 @@ def set_require_grad(observation: List):
     assert all([obs.requires_grad for obs in observation])
 
 
-def zip_observation_data(observation: Observation) -> List:
+def zip_observation_data(observation: Observation) -> Tuple[List, List]:
     assert isinstance(observation, Observation)
-    data = observation_data_to_torch(observation)
-    return zipped_torch_observation_data(data)
+    data, labels = observation_data_to_torch(observation)
+    return zipped_torch_observation_data(data), labels
 
 
 def load_and_split_observation(

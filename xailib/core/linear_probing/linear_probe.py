@@ -31,8 +31,8 @@ class LinearProbe:
         np.random.seed(None)
 
     def train(self) -> Tuple[Dict[str, LogisticRegression], Dict, Dict]:
-        positive_observations = zip_observation_data(self._positive_observations)
-        negative_observations = zip_observation_data(self._negative_observations)
+        positive_observations, _ = zip_observation_data(self._positive_observations)
+        negative_observations, _ = zip_observation_data(self._negative_observations)
 
         positive_activations, positive_input, positive_output = (
             self._activation_tracker.compute_activations(positive_observations)

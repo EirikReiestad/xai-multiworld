@@ -19,6 +19,7 @@ class MultiGridConceptObsWrapper(ConceptObsWrapper):
         concepts: List[str] | None = None,
         method: Literal["random", "policy"] = "policy",
         save_dir: str = "assets/concepts",
+        results_dir: str = "assets/results",
     ):
         super().__init__(
             env=env,

@@ -66,7 +66,6 @@ def create_model(
 
     eps_start = 0.0 if eval else 1
     eps_end = 0.00 if eval else 1
-
     if model_type == "dqn":
         dqn_config = (
             DQNConfig(

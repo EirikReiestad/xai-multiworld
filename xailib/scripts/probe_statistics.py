@@ -1,3 +1,5 @@
+import logging
+
 from utils.common.environment import create_environment
 from utils.common.model import get_models
 from utils.core.model_loader import ModelLoader
@@ -14,10 +16,10 @@ def main():
     concepts = [
         "random",
         "goal_in_front",
-        # "goal_in_view",
-        # "goal_to_left",
-        # "goal_to_right",
-        # "wall_in_view",
+        "goal_in_view",
+        "goal_to_left",
+        "goal_to_right",
+        "wall_in_view",
     ]
     ignore_layers = ["_fc0"]
 
@@ -36,14 +38,16 @@ def main():
         test_positive_observations,
         test_negative_observations,
     ) = get_observations(concepts)
+    logging.info("Getting probes and activations...")
     probes, positive_activations, negative_activations = get_probes_and_activations(
         concepts=concepts,
-        ignore_layers=ignore_layers,
         models=models,
         positive_observations=positive_observations,
         negative_observations=negative_observations,
+        ignore_layers=ignore_layers,
     )
-    calculate_statistics(concepts, positive_activations, layer_idx)
+    logging.info("Calculating statistics...")
+    calculate_statistics(concepts, positive_activations, probes, layer_idx)
 
 
 if __name__ == "__main__":

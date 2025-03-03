@@ -204,7 +204,9 @@ class ConceptObsWrapper(gym.Wrapper):
                     ]
                     for key in keys:
                         info_str += f"{key} - {len(self._concepts.get(key) or [])}\n"
-                    raise TimeoutError("Can not generate all concepts." + info_str)
+                    self._write_concepts()
+                    logging.warning("Can not generate all concepts." + info_str)
+                    sys.exit()
             else:
                 logging.info(f"Step {self._step_count}")
                 logging.info(

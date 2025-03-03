@@ -40,9 +40,13 @@ def get_probes(
     return regressors, positive_activations, negative_activations
 
 
-def get_probe(concept: str, layer_idx: int, model: nn.Module, split: float = 0.8):
-    ignore = []
-
+def get_probe(
+    concept: str,
+    layer_idx: int,
+    model: nn.Module,
+    split: float = 0.8,
+    ignore_layers: List[str] = [],
+):
     model = ModelLoader.load_latest_model_from_path("artifacts", model)
     models = {"latest": model}
     positive_observation, test_observation = load_and_split_observation(concept, split)
@@ -53,7 +57,7 @@ def get_probe(concept: str, layer_idx: int, model: nn.Module, split: float = 0.8
         return None
 
     probes, positive_activations, negative_activations = get_probes(
-        models, positive_observation, negative_observation, ignore
+        models, positive_observation, negative_observation, ignore_layers
     )
 
     probe = list(probes["latest"].values())[layer_idx]

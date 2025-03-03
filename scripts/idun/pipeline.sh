@@ -16,11 +16,6 @@ else
     sh scripts/idun/clean.sh
 fi
 
-if [ -z "$0" ]; then
-    echo "Error: run with additional options."
-    exit 1
-fi
-
 WORKDIR=${SLURM_SUBMIT_DIR}
 cd "${WORKDIR}" || exit 1
 echo "Running from this directory: $(pwd)"
@@ -39,6 +34,6 @@ poetry install
 
 poetry run wandb login
 
-poetry run python -O scripts/explain.py "$@"
+poetry run python -O xailib --pipeline
 
 uname -a

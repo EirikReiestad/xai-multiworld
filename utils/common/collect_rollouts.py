@@ -13,18 +13,23 @@ from utils.common.observation import Observation, observations_from_file
 def collect_rollouts(
     env: MultiWorldEnv,
     artifact: ModelArtifact,
+    n: int,
+    method: Literal["policy", "random"],
     observation_path: str = "assets/observations",
     force_update: bool = False,
+    model_type: Literal["dqn"] = "dqn",
+    sample_rate: float = 1.0,
+    artifact_path: str = os.path.join("artifacts"),
 ) -> Observation:
     if force_update is False:
         try:
             observation = os.listdir(observation_path)
             if "observations.json" in set(observation):
-                logging.info(
-                    "Observations already exists, so we do not need to create them:)"
-                )
                 observations = observations_from_file(
                     os.path.join(observation_path, "observations.json")
+                )
+                logging.info(
+                    f"Observations already exists, so we do not need to create them:) Observation size: {len(observations)}"
                 )
                 return observations
         except FileNotFoundError:
@@ -32,7 +37,19 @@ def collect_rollouts(
 
     env._max_steps = int(env._width * 1.5)
 
-    thread = threading.Thread(target=collect_rollouts_thread, args=(env, artifact))
+    eval = method == "policy"
+    thread = threading.Thread(
+        target=collect_rollouts_thread,
+        args=(
+            env,
+            artifact,
+            model_type,
+            n,
+            sample_rate,
+            eval,
+            artifact_path,
+        ),
+    )
     thread.start()
     thread.join()
 
