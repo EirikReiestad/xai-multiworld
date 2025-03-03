@@ -1,0 +1,97 @@
+wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Tracking run with wandb version 0.19.6
+wandb: Run data is saved locally in ./wandb/run-20250303_130306-grrfgnow
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run young-deluge-1
+wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/multi-go-to-goal-15-20
+wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/multi-go-to-goal-15-20/runs/grrfgnow
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/xailib/scripts/pipeline.py", line 181, in <module>
+    main()
+  File "/cluster/work/eirre/xai-multiworld/xailib/scripts/pipeline.py", line 29, in main
+    config = json.load(f)
+             ^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/json/__init__.py", line 293, in load
+    return loads(fp.read(),
+           ^^^^^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/json/decoder.py", line 355, in raw_decode
+    raise JSONDecodeError("Expecting value", s, err.value) from None
+json.decoder.JSONDecodeError: Expecting value: line 49 column 9 (char 961)
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+WARNING:root:No non final next states, consider increasing batch size.
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/examples/multi_go_to_goal.py", line 55, in <module>
+    dqn.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 38, in learn
+    self.log_episode()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/dqn/mdqn.py", line 65, in log_episode
+    self._policy_net,
+    ^^^^^^^^^^^^^^^^
+AttributeError: 'MDQN' object has no attribute '_policy_net'

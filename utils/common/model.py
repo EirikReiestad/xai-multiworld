@@ -92,11 +92,12 @@ def download_models(
     low: int,
     high: int,
     step: int,
+    model_name: str,
     wandb_project_folder: str,
     artifact_path: str = os.path.join("artifacts"),
     force_update: bool = False,
 ):
-    models = [f"model_{i}:latest" for i in range(low, high, step)]
+    models = [f"{model_name}_{i}:latest" for i in range(low, high, step)]
 
     if force_update is False:
         try:
