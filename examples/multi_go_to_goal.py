@@ -5,7 +5,7 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.mdqn import MDQN
 from rllib.core.network.network import NetworkType
 
-agents = 20
+agents = 15
 size = 20
 
 env = GoToGoalEnv(
@@ -29,7 +29,7 @@ config = (
         learning_rate=3e-4,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=20000,
+        eps_decay=5000,
         update_method="soft",
         target_update=200,
     )
@@ -46,10 +46,10 @@ mconfig = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project=f"multi-go-to-goal-{agents}-{size}", log_interval=100)
+    .wandb(project=f"multi-go-to-goal-{agents}-{size}", log_interval=20)
 )
 
-dqn = MDQN(agents, mconfig, config)
+dqn = MDQN(agents, mconfig, config, multi_training=True)
 
 while True:
     dqn.learn()

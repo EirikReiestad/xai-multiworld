@@ -1,8 +1,8 @@
 Cleaning up
 Running from this directory: /cluster/work/eirre/xai-multiworld
 Name of job: multi-agent-rl
-ID of job: 21206809
-The jo was run on these nodes: idun-04-31
+ID of job: 21207298
+The jo was run on these nodes: idun-03-02
 
 Currently Loaded Modules:
   1) GCCcore/13.2.0                       7) Tcl/8.6.13-GCCcore-13.2.0    (H)
@@ -60,10 +60,3 @@ Requirement already satisfied: cryptography>=2.0 in /cluster/home/eirre/.local/l
 Requirement already satisfied: more-itertools in /cluster/home/eirre/.local/lib/python3.11/site-packages (from jaraco.classes->keyring<25.0.0,>=24.0.0->poetry) (10.5.0)
 Requirement already satisfied: cffi>=1.12 in /cluster/home/eirre/.local/lib/python3.11/site-packages (from cryptography>=2.0->SecretStorage>=3.2->keyring<25.0.0,>=24.0.0->poetry) (1.17.1)
 Requirement already satisfied: pycparser in /cluster/home/eirre/.local/lib/python3.11/site-packages (from cffi>=1.12->cryptography>=2.0->SecretStorage>=3.2->keyring<25.0.0,>=24.0.0->poetry) (2.22)
-Installing dependencies from lock file
-
-No dependencies to install or update
-
-Installing the current project: xai-multiworld (0.1.0)
-Linux idun-04-32 5.14.0-427.13.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Wed May 1 19:11:28 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
-Linux idun-04-31 5.14.0-427.13.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Wed May 1 19:11:28 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux

@@ -4,6 +4,7 @@
 #SBATCH --time=0-100:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
+#SBATCH --cpus-per-task=16
 #SBATCH --mem=128G
 #SBATCH --job-name="multi-agent-rl"
 #SBATCH --output=srun.out
