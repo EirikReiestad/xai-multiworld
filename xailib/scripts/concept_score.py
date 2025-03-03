@@ -14,10 +14,10 @@ def main():
     concepts = [
         "random",
         "goal_in_front",
-        # "goal_in_view",
-        # "goal_to_left",
-        # "goal_to_right",
-        # "wall_in_view",
+        "goal_in_view",
+        "goal_to_left",
+        "goal_to_right",
+        "wall_in_view",
     ]
     ignore_layers = ["_fc0"]
 
