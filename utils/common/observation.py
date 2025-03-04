@@ -159,33 +159,29 @@ def load_and_split_observation(
     return split_observation(observation, split_ratio)
 
 
+def randomize_observations(observation: Observation) -> Observation:
+    np.random.shuffle(observation)
+
+
 def normalize_observations(
-    obs: List[ObsType], a: float = 0, b: float = 1
-) -> List[ObsType]:
-    global_image_min = np.min(np.array([o["image"] for o in obs]))
-    global_image_max = np.max(np.array([o["image"] for o in obs]))
+    observation: Observation, a: float = 0, b: float = 1
+) -> Observation:
+    data = observation[..., Observation.DATA].copy()
+    data = [obs[0] for obs in data]
+    global_image_min = np.min(np.array([obs["observation"] for obs in data]))
+    global_image_max = np.max(np.array([obs["observation"] for obs in data]))
 
-    global_dir_min = np.min(np.array([o["direction"] for o in obs]))
-    global_dir_max = np.max(np.array([o["direction"] for o in obs]))
+    global_dir_min = np.min(np.array([obs["direction"] for obs in data]))
+    global_dir_max = np.max(np.array([obs["direction"] for obs in data]))
 
-    for o in obs:
-        o["image"] = (o["image"] - global_image_min) / (
+    for obs in data:
+        obs["observation"] = (obs["observation"] - global_image_min) / (
             global_image_max - global_image_min
         ) * (b - a) + a
-        o["direction"] = (
-            o["direction"]
+        obs["direction"] = (
+            obs["direction"]
             - global_dir_min / (global_dir_max - global_dir_min) * (b - a)
             + a
         )
-
-    return obs
-
-
-def normalize_observation(obs: ObsType, a: float = 0, b: float = 1) -> ObsType:
-    image = obs["image"]
-    global_min = np.min(image)
-    global_max = np.max(image)
-
-    image = (obs - global_min) / (global_max - global_min) * (b - a) + a
-
-    return image
+    observation[..., Observation.DATA] = [[obs] for obs in data]
+    return observation

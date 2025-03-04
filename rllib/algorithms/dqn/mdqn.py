@@ -61,12 +61,6 @@ class MDQN(Algorithm):
         self._hard_update_target()
 
     def log_episode(self):
-        self.log_model(
-            self._policy_net,
-            f"model_{self._episodes_done}",
-            self._episodes_done,
-            metadata,
-        )
         super().log_episode()
         if self._multi_training:
             for key in self._dqns.keys():
