@@ -6,21 +6,26 @@ import numpy as np
 import torch
 
 from multiworld.utils.typing import ObsType
+from rllib.utils.dqn.preprocessing import preprocess_next_observations
 from utils.common.numpy_collections import NumpyEncoder
 
 
 class Observation(np.ndarray):
     ID = 0
     LABEL = 1
-    DATA = slice(2, None)
+    TERMINATION = 2
+    TRUNCATION = 3
+    OBSERVATION = slice(4, None)
 
-    dim = 2 + 1
+    dim = 4 + 1
 
     def __new__(cls, *dims: int):
         obj = np.empty(dims + (cls.dim,), dtype=object).view(cls)
         obj[..., cls.ID] = None
         obj[..., cls.LABEL] = None
-        obj[..., cls.DATA] = None
+        obj[..., cls.TERMINATION] = None
+        obj[..., cls.TRUNCATION] = None
+        obj[..., cls.OBSERVATION] = None
 
         return obj
 
@@ -46,12 +51,18 @@ def observation_to_file(observations: Observation, path: str):
 def observations_from_dict(data: List[Dict]) -> Observation:
     observations = []
     labels = []
+    terminations = []
+    truncations = []
 
     for d in data:
         obs = d["observations"].values()
         label = d["actions"].values()
+        terms = d["terminations"].values()
+        truncs = d["truncations"].values()
         observations.extend(obs)
         labels.extend(label)
+        terminations.extend(terms)
+        truncations.extend(truncs)
 
     num_observations = len(observations)
 
@@ -61,7 +72,9 @@ def observations_from_dict(data: List[Dict]) -> Observation:
 
     obs[..., Observation.ID] = ids
     obs[..., Observation.LABEL] = labels
-    obs[..., Observation.DATA] = np.array(observations, dtype=object).reshape(
+    obs[..., Observation.TERMINATION] = terminations
+    obs[..., Observation.TRUNCATION] = truncations
+    obs[..., Observation.OBSERVATION] = np.array(observations, dtype=object).reshape(
         num_observations, 1
     )
     return obs
@@ -77,7 +90,9 @@ def observation_from_dict(data: List[Dict]) -> Observation:
 
     obs[..., Observation.ID] = ids
     obs[..., Observation.LABEL] = labels
-    obs[..., Observation.DATA] = np.array(data, dtype=object).reshape(
+    obs[..., Observation.TERMINATION] = False
+    obs[..., Observation.TRUNCATION] = False
+    obs[..., Observation.OBSERVATION] = np.array(data, dtype=object).reshape(
         num_observations, 1
     )
     return obs
@@ -111,7 +126,7 @@ def observation_data_to_torch(observation: Observation) -> Tuple[List, List]:
             torch.tensor(v, dtype=torch.float32, requires_grad=True)
             for v in obs[0].values()
         ]
-        for obs in observation[..., Observation.DATA]
+        for obs in observation[..., Observation.OBSERVATION]
     ]
     labels = observation[..., Observation.LABEL]
     return data, labels
@@ -120,7 +135,7 @@ def observation_data_to_torch(observation: Observation) -> Tuple[List, List]:
 def observation_data_to_numpy(observation: Observation) -> List:
     data = [
         [np.array(v) for v in obs[0].values()]
-        for obs in observation[..., Observation.DATA]
+        for obs in observation[..., Observation.OBSERVATION]
     ]
     return data
 
@@ -166,7 +181,7 @@ def randomize_observations(observation: Observation) -> Observation:
 def normalize_observations(
     observation: Observation, a: float = 0, b: float = 1
 ) -> Observation:
-    data = observation[..., Observation.DATA].copy()
+    data = observation[..., Observation.OBSERVATION].copy()
     data = [obs[0] for obs in data]
     global_image_min = np.min(np.array([obs["observation"] for obs in data]))
     global_image_max = np.max(np.array([obs["observation"] for obs in data]))
@@ -183,5 +198,12 @@ def normalize_observations(
             - global_dir_min / (global_dir_max - global_dir_min) * (b - a)
             + a
         )
-    observation[..., Observation.DATA] = [[obs] for obs in data]
+    observation[..., Observation.OBSERVATION] = [[obs] for obs in data]
     return observation
+
+
+def filter_observations(obs: Observation) -> Observation:
+    mask = (obs[..., Observation.TERMINATION] == False) & (
+        obs[..., Observation.TRUNCATION] == False
+    )
+    return obs[mask]

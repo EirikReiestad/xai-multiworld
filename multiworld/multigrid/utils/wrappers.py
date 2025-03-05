@@ -28,6 +28,7 @@ class MultiGridConceptObsWrapper(ConceptObsWrapper):
             method=method,
             save_dir=save_dir,
             concept_checks=get_concept_checks,
+            result_save_dir=results_dir,
         )
 
     @property

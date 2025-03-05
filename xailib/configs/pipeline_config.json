@@ -1,11 +1,11 @@
 {
     "wandb": {
-        "project_folder": "go-to-goal-15-20",
+        "project_folder": "multi-go-to-goal-15-20",
         "models": {
-            "name": "model",
+            "name": "model_0",
             "low": 0,
-            "high": 1000,
-            "step": 200
+            "high": 140,
+            "step": 20
         }
     },
     "model": {
@@ -31,7 +31,11 @@
         "goal_in_view",
         "goal_to_left",
         "goal_to_right",
-        "wall_in_view"
+        "wall_in_view",
+        "agent_in_view",
+        "agent_to_right",
+        "agent_to_left",
+        "agent_in_front"
     ],
     "analyze": {
         "ignore_layers": [
@@ -57,5 +61,5 @@
         "observations": "assets/observations",
         "results": "assets/results"
     },
-    "force_update": true
+    "force_update": false
 }
