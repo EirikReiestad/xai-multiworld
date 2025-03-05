@@ -120,7 +120,7 @@ class ObservationCollectorWrapper(gym.Wrapper):
                 )
             )
 
-        if len(self._rollouts) % (self._observations / 100) == 0:
+        if len(self._rollouts) % (self._observations / 10) == 0:
             logging.info(
                 f"Collcted {len(self._rollouts)} / {self._observations} observations"
             )

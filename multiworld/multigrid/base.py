@@ -110,7 +110,7 @@ class MultiGridEnv(MultiWorldEnv):
                     agent.state.dir = self._rand_int(0, 4)
                     agent.pos = pos
                     self._agents.append(agent)
-                    grid[pos.y, pos.x] = WorldObjectType.empty
+                    grid[pos.y, pos.x] = WorldObjectType.empty.to_index()
                     continue
 
         self._world = Grid.from_numpy(grid)
@@ -259,9 +259,10 @@ class MultiGridEnv(MultiWorldEnv):
         return observations
 
     def _get_full_render(self, highlight: bool, tile_size: int) -> np.ndarray:
-        obs_shape = (
-            self.agents[0].observation_space["observation"].shape[:-1]
-        )  # NOTE: Ups, look up for memory leaks by creating unecessary objects;)
+        if len(self._agents) > 0:
+            obs_shape = self._agents[0].observation_space["observation"].shape[:-1]
+        else:
+            obs_shape = (self._agent_view_size, self._agent_view_size)
         vis_mask = np.zeros((self._num_agents, *obs_shape), dtype=bool)
         for key, obs in self._gen_obs().items():
             vis_mask[key] = (

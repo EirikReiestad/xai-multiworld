@@ -6,6 +6,7 @@ import time
 from utils.common.collect_rollouts import collect_rollouts
 from utils.common.environment import create_environment
 from utils.common.model import download_models, get_latest_model, get_models
+from utils.common.observation import filter_observations
 from utils.core.model_loader import ModelLoader
 from xailib.common.completeness_score import get_completeness_score
 from xailib.common.generate_concepts import generate_concepts
@@ -39,8 +40,8 @@ def main():
         low=config["wandb"]["models"]["low"],
         high=config["wandb"]["models"]["high"],
         step=config["wandb"]["models"]["step"],
-        wandb_project_folder=config["wandb"]["project_folder"],
         model_name=config["wandb"]["models"]["name"],
+        wandb_project_folder=config["wandb"]["project_folder"],
         artifact_path=config["path"]["artifacts"],
         force_update=config["force_update"],
     )
@@ -63,6 +64,7 @@ def main():
         sample_rate=config["collect_rollouts"]["sample_rate"],
         artifact_path=config["path"]["artifacts"],
     )
+    observations = filter_observations(observations)
     logging.info("Generating concepts...")
     generate_concepts(
         concepts=config["concepts"],
@@ -116,7 +118,7 @@ def main():
         model=latest_model,
         observations=observations,
         layer_idx=config["analyze"]["layer_idx"],
-        epochs=config["completeness_score"]["epochs"],
+        epochs=config["completeness_score"]["network_epochs"],
         ignore_layers=config["analyze"]["ignore_layers"],
         method="network",
         verbose=False,
@@ -129,7 +131,7 @@ def main():
         model=latest_model,
         observations=observations,
         layer_idx=config["analyze"]["layer_idx"],
-        epochs=config["completeness_score"]["epochs"],
+        epochs=config["completeness_score"]["decisiontree_epochs"],
         ignore_layers=config["analyze"]["ignore_layers"],
         method="decisiontree",
         verbose=False,

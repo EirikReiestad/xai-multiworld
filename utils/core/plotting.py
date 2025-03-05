@@ -1,4 +1,5 @@
 import os
+import re
 from typing import Any, Dict, List, Tuple
 
 import matplotlib as mpl
@@ -129,6 +130,12 @@ def plot_3d(
     min: float | None = None,
     max: float | None = None,
 ):
+    X = {
+        key: X[key]
+        for key in sorted(
+            X.keys(), key=lambda x: [int(i) for i in re.findall(r"\d+", x)]
+        )
+    }
     os.makedirs(folder_path, exist_ok=True)
     save_path = f"{folder_path}/{filename}.png"
 

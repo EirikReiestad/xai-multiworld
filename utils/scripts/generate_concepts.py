@@ -53,6 +53,10 @@ def generate_concepts(
         "goal_to_left",
         "goal_to_right",
         "wall_in_view",
+        "agent_in_view",
+        "agent_to_right",
+        "agent_to_left",
+        "agent_in_front",
     ]
 
     logging.info(

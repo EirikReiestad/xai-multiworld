@@ -6,21 +6,26 @@ import numpy as np
 import torch
 
 from multiworld.utils.typing import ObsType
+from rllib.utils.dqn.preprocessing import preprocess_next_observations
 from utils.common.numpy_collections import NumpyEncoder
 
 
 class Observation(np.ndarray):
     ID = 0
     LABEL = 1
-    DATA = slice(2, None)
+    TERMINATION = 2
+    TRUNCATION = 3
+    OBSERVATION = slice(4, None)
 
-    dim = 2 + 1
+    dim = 4 + 1
 
     def __new__(cls, *dims: int):
         obj = np.empty(dims + (cls.dim,), dtype=object).view(cls)
         obj[..., cls.ID] = None
         obj[..., cls.LABEL] = None
-        obj[..., cls.DATA] = None
+        obj[..., cls.TERMINATION] = None
+        obj[..., cls.TRUNCATION] = None
+        obj[..., cls.OBSERVATION] = None
 
         return obj
 
@@ -46,12 +51,18 @@ def observation_to_file(observations: Observation, path: str):
 def observations_from_dict(data: List[Dict]) -> Observation:
     observations = []
     labels = []
+    terminations = []
+    truncations = []
 
     for d in data:
         obs = d["observations"].values()
         label = d["actions"].values()
+        terms = d["terminations"].values()
+        truncs = d["truncations"].values()
         observations.extend(obs)
         labels.extend(label)
+        terminations.extend(terms)
+        truncations.extend(truncs)
 
     num_observations = len(observations)
 
@@ -61,7 +72,9 @@ def observations_from_dict(data: List[Dict]) -> Observation:
 
     obs[..., Observation.ID] = ids
     obs[..., Observation.LABEL] = labels
-    obs[..., Observation.DATA] = np.array(observations, dtype=object).reshape(
+    obs[..., Observation.TERMINATION] = terminations
+    obs[..., Observation.TRUNCATION] = truncations
+    obs[..., Observation.OBSERVATION] = np.array(observations, dtype=object).reshape(
         num_observations, 1
     )
     return obs
@@ -77,7 +90,9 @@ def observation_from_dict(data: List[Dict]) -> Observation:
 
     obs[..., Observation.ID] = ids
     obs[..., Observation.LABEL] = labels
-    obs[..., Observation.DATA] = np.array(data, dtype=object).reshape(
+    obs[..., Observation.TERMINATION] = False
+    obs[..., Observation.TRUNCATION] = False
+    obs[..., Observation.OBSERVATION] = np.array(data, dtype=object).reshape(
         num_observations, 1
     )
     return obs
@@ -111,7 +126,7 @@ def observation_data_to_torch(observation: Observation) -> Tuple[List, List]:
             torch.tensor(v, dtype=torch.float32, requires_grad=True)
             for v in obs[0].values()
         ]
-        for obs in observation[..., Observation.DATA]
+        for obs in observation[..., Observation.OBSERVATION]
     ]
     labels = observation[..., Observation.LABEL]
     return data, labels
@@ -120,7 +135,7 @@ def observation_data_to_torch(observation: Observation) -> Tuple[List, List]:
 def observation_data_to_numpy(observation: Observation) -> List:
     data = [
         [np.array(v) for v in obs[0].values()]
-        for obs in observation[..., Observation.DATA]
+        for obs in observation[..., Observation.OBSERVATION]
     ]
     return data
 
@@ -159,33 +174,36 @@ def load_and_split_observation(
     return split_observation(observation, split_ratio)
 
 
+def randomize_observations(observation: Observation) -> Observation:
+    np.random.shuffle(observation)
+
+
 def normalize_observations(
-    obs: List[ObsType], a: float = 0, b: float = 1
-) -> List[ObsType]:
-    global_image_min = np.min(np.array([o["image"] for o in obs]))
-    global_image_max = np.max(np.array([o["image"] for o in obs]))
+    observation: Observation, a: float = 0, b: float = 1
+) -> Observation:
+    data = observation[..., Observation.OBSERVATION].copy()
+    data = [obs[0] for obs in data]
+    global_image_min = np.min(np.array([obs["observation"] for obs in data]))
+    global_image_max = np.max(np.array([obs["observation"] for obs in data]))
 
-    global_dir_min = np.min(np.array([o["direction"] for o in obs]))
-    global_dir_max = np.max(np.array([o["direction"] for o in obs]))
+    global_dir_min = np.min(np.array([obs["direction"] for obs in data]))
+    global_dir_max = np.max(np.array([obs["direction"] for obs in data]))
 
-    for o in obs:
-        o["image"] = (o["image"] - global_image_min) / (
+    for obs in data:
+        obs["observation"] = (obs["observation"] - global_image_min) / (
             global_image_max - global_image_min
         ) * (b - a) + a
-        o["direction"] = (
-            o["direction"]
+        obs["direction"] = (
+            obs["direction"]
             - global_dir_min / (global_dir_max - global_dir_min) * (b - a)
             + a
         )
+    observation[..., Observation.OBSERVATION] = [[obs] for obs in data]
+    return observation
 
-    return obs
 
-
-def normalize_observation(obs: ObsType, a: float = 0, b: float = 1) -> ObsType:
-    image = obs["image"]
-    global_min = np.min(image)
-    global_max = np.max(image)
-
-    image = (obs - global_min) / (global_max - global_min) * (b - a) + a
-
-    return image
+def filter_observations(obs: Observation) -> Observation:
+    mask = (obs[..., Observation.TERMINATION] == False) & (
+        obs[..., Observation.TRUNCATION] == False
+    )
+    return obs[mask]

@@ -8,6 +8,7 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.network.network import NetworkType
 from utils.common.observation import (
     Observation,
+    filter_observations,
     load_and_split_observation,
     observation_from_file,
     observation_to_file,

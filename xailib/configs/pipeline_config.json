@@ -13,16 +13,16 @@
     },
     "collect_rollouts": {
         "method": "policy",
-        "observations": 10000,
-        "sample_rate": 0.1
+        "observations": 1000,
+        "sample_rate": 1.0
     },
     "generate_concepts": {
         "method": "policy",
-        "observations": 1000
+        "observations": 50
     },
     "completeness_score": {
-        "network_epcohs": 10,
-        "decisiontree_epochs": 10,
+        "network_epochs": 1,
+        "decisiontree_epochs": 1,
         "method": "network"
     },
     "concepts": [
@@ -31,7 +31,11 @@
         "goal_in_view",
         "goal_to_left",
         "goal_to_right",
-        "wall_in_view"
+        "wall_in_view",
+        "agent_in_view",
+        "agent_to_right",
+        "agent_to_left",
+        "agent_in_front"
     ],
     "analyze": {
         "ignore_layers": [
