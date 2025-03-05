@@ -11,8 +11,8 @@ def main():
     parser.add_argument(
         "-dms",
         "--download-models",
-        nargs=4,
-        metavar=("project_folder", "low", "high", "step"),
+        nargs=5,
+        metavar=("project_folder", "model_name", "low", "high", "step"),
         help="Download models with optional arguments: [project_folder] [low] [high] [step]",
     )
     parser.add_argument(

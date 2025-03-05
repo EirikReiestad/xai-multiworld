@@ -97,7 +97,7 @@ def download_models(
     artifact_path: str = os.path.join("artifacts"),
     force_update: bool = False,
 ):
-    models = [f"{model_name}_{i}:latest" for i in range(low, high, step)]
+    models = [f"{model_name}_{i}:v0" for i in range(low, high, step)]
 
     if force_update is False:
         try:

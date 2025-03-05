@@ -17,8 +17,8 @@ def main():
     parser.add_argument(
         "-dms",
         "--download-models",
-        nargs=4,
-        metavar=("project_folder", "low", "high", "step"),
+        nargs=5,
+        metavar=("project_folder", "model_name", "low", "high", "step"),
         help="Download models with arguments: [project_folder] [low] [high] [step]",
     )
     parser.add_argument(
@@ -34,9 +34,9 @@ def main():
     version = "latest"
 
     if args.download_models:
-        project_folder, low, high, step = args.download_models
+        project_folder, model_name, low, high, step = args.download_models
         low, high, step = int(low), int(high), int(step)
-        models = [f"model_{i}:{version}" for i in range(low, high, step)]
+        models = [f"{model_name}_{i}:{version}" for i in range(low, high, step)]
     elif args.download_model:
         project_folder, model_name = args.download_model
         models = [str(model_name)]

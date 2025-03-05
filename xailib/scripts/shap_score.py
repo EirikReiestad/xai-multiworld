@@ -7,7 +7,11 @@ from rllib.utils.torch.processing import observations_seperate_to_torch
 from utils.common.collect_rollouts import collect_rollouts
 from utils.common.environment import create_environment
 from utils.common.model import get_models
-from utils.common.observation import Observation, normalize_observations
+from utils.common.observation import (
+    Observation,
+    filter_observations,
+    normalize_observations,
+)
 from utils.core.model_loader import ModelLoader
 
 
@@ -17,7 +21,7 @@ def main():
     artifact_path = os.path.join("artifacts")
 
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
-    environment = create_environment(artifact, width=10, height=10, agents=10)
+    environment = create_environment(artifact, agents=10)
     models = get_models(
         artifact=artifact,
         model_type=model_type,
@@ -30,14 +34,15 @@ def main():
     observations = collect_rollouts(
         env=environment,
         artifact=artifact,
-        n=1000,
+        n=100,
         method="policy",
-        force_update=False,
+        force_update=True,
     )
+    observations = filter_observations(observations)
 
     np.random.shuffle(observations)
     normalized_observations = normalize_observations(observations)
-    data = normalized_observations[..., Observation.DATA][0:100]
+    data = normalized_observations[..., Observation.OBSERVATION][0:100]
     obs = observations_seperate_to_torch([d[0] for d in data])
     explainer = shap.GradientExplainer(model, obs)
     shap_values = explainer.shap_values(obs)

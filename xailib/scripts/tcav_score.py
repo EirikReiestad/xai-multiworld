@@ -1,6 +1,7 @@
 from utils.common.environment import create_environment
 from utils.common.model import get_models
 from utils.core.model_loader import ModelLoader
+from xailib.common.generate_concepts import generate_concepts
 from xailib.utils.activations import get_concept_activations
 from xailib.utils.metrics import get_tcav_scores
 from xailib.utils.observation import get_observations
@@ -14,10 +15,14 @@ def main():
     concepts = [
         "random",
         "goal_in_front",
-        # "goal_in_view",
-        # "goal_to_left",
-        # "goal_to_right",
-        # "wall_in_view",
+        "goal_in_view",
+        "goal_to_left",
+        "goal_to_right",
+        "wall_in_view",
+        "agent_in_view",
+        "agent_to_right",
+        "agent_to_left",
+        "agent_in_front",
     ]
     ignore_layers = ["_fc0"]
 
@@ -29,6 +34,14 @@ def main():
         env=environment,
         eval=eval,
         artifact_path=artifact_path,
+    )
+    generate_concepts(
+        concepts=concepts,
+        env=environment,
+        observations=100,
+        artifact=artifact,
+        method="policy",
+        force_update=False,
     )
     (
         positive_observations,

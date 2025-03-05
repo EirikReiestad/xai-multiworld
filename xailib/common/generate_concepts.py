@@ -16,7 +16,7 @@ def generate_concepts(
     observations: int,
     artifact: ModelArtifact,
     method: Literal["random", "policy"],
-    model_type: Literal["dqn"],
+    model_type: Literal["dqn"] = "dqn",
     force_update: bool = False,
     artifact_path: str = os.path.join("artifacts"),
     concept_path: str = os.path.join("assets", "concepts"),

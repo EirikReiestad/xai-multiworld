@@ -1,0 +1,122 @@
+{
+    "random": {
+        "random": 1.0,
+        "goal_in_front": 0.2199515228,
+        "goal_in_view": 0.1223313139,
+        "goal_to_left": -0.1634755892,
+        "goal_to_right": 0.1023165468,
+        "wall_in_view": -0.1895660193,
+        "agent_in_view": -0.3279553969,
+        "agent_to_right": 0.2037502784,
+        "agent_to_left": -0.2760983271,
+        "agent_in_front": -0.2636205661
+    },
+    "goal_in_front": {
+        "random": 0.2199515228,
+        "goal_in_front": 1.0,
+        "goal_in_view": 0.7160604358,
+        "goal_to_left": 0.3039493036,
+        "goal_to_right": 0.0970735931,
+        "wall_in_view": -0.5404391356,
+        "agent_in_view": 0.2031734782,
+        "agent_to_right": -0.1171573268,
+        "agent_to_left": -0.1127576999,
+        "agent_in_front": 0.3423535702
+    },
+    "goal_in_view": {
+        "random": 0.1223313139,
+        "goal_in_front": 0.7160604358,
+        "goal_in_view": 1.0,
+        "goal_to_left": 0.6557501777,
+        "goal_to_right": 0.5939738211,
+        "wall_in_view": -0.8755829303,
+        "agent_in_view": 0.2132894585,
+        "agent_to_right": 0.1039205514,
+        "agent_to_left": 0.13551442,
+        "agent_in_front": 0.1834959363
+    },
+    "goal_to_left": {
+        "random": -0.1634755892,
+        "goal_in_front": 0.3039493036,
+        "goal_in_view": 0.6557501777,
+        "goal_to_left": 1.0,
+        "goal_to_right": 0.1286324982,
+        "wall_in_view": -0.607157544,
+        "agent_in_view": 0.3239764888,
+        "agent_to_right": 0.0960755151,
+        "agent_to_left": 0.470987203,
+        "agent_in_front": 0.2311399009
+    },
+    "goal_to_right": {
+        "random": 0.1023165468,
+        "goal_in_front": 0.0970735931,
+        "goal_in_view": 0.5939738211,
+        "goal_to_left": 0.1286324982,
+        "goal_to_right": 1.0,
+        "wall_in_view": -0.5699843915,
+        "agent_in_view": 0.0132008773,
+        "agent_to_right": 0.3096334763,
+        "agent_to_left": -0.0608285314,
+        "agent_in_front": -0.0399403527
+    },
+    "wall_in_view": {
+        "random": -0.1895660193,
+        "goal_in_front": -0.5404391356,
+        "goal_in_view": -0.8755829303,
+        "goal_to_left": -0.607157544,
+        "goal_to_right": -0.5699843915,
+        "wall_in_view": 1.0,
+        "agent_in_view": -0.0427178219,
+        "agent_to_right": -0.0976595177,
+        "agent_to_left": -0.0253110132,
+        "agent_in_front": -0.0159654467
+    },
+    "agent_in_view": {
+        "random": -0.3279553969,
+        "goal_in_front": 0.2031734782,
+        "goal_in_view": 0.2132894585,
+        "goal_to_left": 0.3239764888,
+        "goal_to_right": 0.0132008773,
+        "wall_in_view": -0.0427178219,
+        "agent_in_view": 1.0,
+        "agent_to_right": 0.3315909846,
+        "agent_to_left": 0.6013485612,
+        "agent_in_front": 0.817261207
+    },
+    "agent_to_right": {
+        "random": 0.2037502784,
+        "goal_in_front": -0.1171573268,
+        "goal_in_view": 0.1039205514,
+        "goal_to_left": 0.0960755151,
+        "goal_to_right": 0.3096334763,
+        "wall_in_view": -0.0976595177,
+        "agent_in_view": 0.3315909846,
+        "agent_to_right": 1.0,
+        "agent_to_left": 0.3223413628,
+        "agent_in_front": -0.0513091205
+    },
+    "agent_to_left": {
+        "random": -0.2760983271,
+        "goal_in_front": -0.1127576999,
+        "goal_in_view": 0.13551442,
+        "goal_to_left": 0.470987203,
+        "goal_to_right": -0.0608285314,
+        "wall_in_view": -0.0253110132,
+        "agent_in_view": 0.6013485612,
+        "agent_to_right": 0.3223413628,
+        "agent_to_left": 1.0,
+        "agent_in_front": 0.2712734819
+    },
+    "agent_in_front": {
+        "random": -0.2636205661,
+        "goal_in_front": 0.3423535702,
+        "goal_in_view": 0.1834959363,
+        "goal_to_left": 0.2311399009,
+        "goal_to_right": -0.0399403527,
+        "wall_in_view": -0.0159654467,
+        "agent_in_view": 0.817261207,
+        "agent_to_right": -0.0513091205,
+        "agent_to_left": 0.2712734819,
+        "agent_in_front": 1.0
+    }
+}

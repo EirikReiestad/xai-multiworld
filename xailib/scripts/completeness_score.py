@@ -4,6 +4,7 @@ import os
 from utils.common.collect_rollouts import collect_rollouts
 from utils.common.environment import create_environment
 from utils.common.model import get_models
+from utils.common.observation import filter_observations
 from utils.core.model_loader import ModelLoader
 from xailib.common.completeness_score import get_completeness_score
 from xailib.utils.observation import get_observations
@@ -26,7 +27,7 @@ def main():
     epochs = 10
 
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
-    environment = create_environment(artifact)
+    environment = create_environment(artifact, agents=1)
     models = get_models(
         artifact=artifact,
         model_type=model_type,
@@ -47,6 +48,7 @@ def main():
         method="policy",
         force_update=False,
     )
+    observations = filter_observations(observations)
     logging.info("Getting probes and activations...")
     probes, positive_activations, negative_activations = get_probes_and_activations(
         concepts, ignore_layers, models, positive_observations, negative_observations

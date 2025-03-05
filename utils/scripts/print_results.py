@@ -6,11 +6,13 @@ from typing import Dict
 
 import pandas as pd
 
+from utils.core.plotting import plot_3d
+
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
-def main():
+def main(path: str = os.path.join("assets", "results")):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-pr",
@@ -27,13 +29,12 @@ def main():
 
     if filename is not None:
         filename = filename + ".json" if not filename.endswith(".json") else filename
-        path = os.path.join("assets", "results", filename)
+        path = os.path.join(path, filename)
 
         with open(path, "r") as f:
             data = json.load(f)
         tabulate_data(data, filename)
     else:
-        path = os.path.join("assets", "results")
         for filename in os.listdir(path):
             if not filename.endswith(".json"):
                 continue
@@ -45,15 +46,33 @@ def main():
 def tabulate_data(data: Dict, filename: str):
     if filename == "concept_scores.json":
         df = tabulate_generic(data)
+        for concept, value in data.items():
+            plot_3d(
+                value,
+                label=concept,
+                min=0,
+                max=1,
+                show=True,
+            )
+    elif filename == "tcav_scores.json":
+        df = tabulate_generic(data)
+        for concept, value in data.items():
+            plot_3d(
+                value,
+                label=concept,
+                min=0,
+                max=1,
+                show=True,
+            )
+    elif filename == "cos_sim_matrix.json":
+        df = pd.DataFrame(data)
     elif filename.startswith("concept_combination_accuracies"):
         df = tabulate_combination_accuracy(data)
         df = df.sort_values(by="Count", ascending=False)
     elif filename == "probe_robustness.json":
         df = tabulate_robustness(data)
     elif filename == "probe_statistics.json":
-        df = tabulate_statistics(data)
-    elif filename == "tcav_scores.json":
-        df = tabulate_generic(data)
+        df = pd.DataFrame(data)
     elif filename == "sample_efficiency.json":
         df = pd.DataFrame(data).transpose()
     else:
@@ -68,15 +87,6 @@ def tabulate_generic(data: Dict):
             {"Condition": condition, "Model": model, **values}
             for condition, models in data.items()
             for model, values in models.items()
-        ]
-    )
-
-
-def tabulate_statistics(data: Dict):
-    return pd.DataFrame(
-        [
-            {"Condition": condition, "Density": values["density"]}
-            for condition, values in data.items()
         ]
     )
 
@@ -97,4 +107,5 @@ def tabulate_combination_accuracy(data: Dict):
 
 
 if __name__ == "__main__":
-    main()
+    path = os.path.join("archive", "20250304-151233-multi", "results")
+    main(path)
