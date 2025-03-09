@@ -105,12 +105,17 @@ class CAVTrainingStats:
             logger.warning("pandas not available. Install pandas to use this feature.")
             return self.stats
 
-    def save_stats(self, filename: str = "cav_training_stats.csv"):
+    def save_stats(
+        self,
+        filepath: str = os.path.join("assets", "results"),
+        filename: str = "cav_training_stats.csv",
+    ):
         """Save stats to CSV file"""
         try:
             df = self.to_dataframe()
             if hasattr(df, "to_csv"):
-                df.to_csv(filename, index=False)
+                filename = os.path.join(filepath, filename)
+                df.to_csv(filepath, index=False)
                 logger.info(f"Training stats saved to {filename}")
             else:
                 logger.warning("Could not save stats. pandas is required.")
@@ -137,6 +142,7 @@ def calculate_cavs(
     save_stats: bool = True,
     stats_filename: str = "cav_training_stats.csv",
     observation_path: str = "assets/observations",
+    save_observations: bool = True,
 ):
     """
     Train Concept Activation Vectors (CAVs)
@@ -305,38 +311,39 @@ def calculate_cavs(
     if save_stats:
         stats.save_stats(stats_filename)
 
-    observation = collect_rollouts(
-        env,
-        artifact,
-        10000,
-        method=method,
-        observation_path=os.path.join("assets", "tmp"),
-        force_update=True,
-    )
-    observation_data = observation[..., Observation.OBSERVATION]
+    if save_observations:
+        observation = collect_rollouts(
+            env,
+            artifact,
+            10000,
+            method=method,
+            observation_path=os.path.join("assets", "tmp"),
+            force_update=True,
+        )
+        observation_data = observation[..., Observation.OBSERVATION]
 
-    activations, input, output = get_activations(
-        {"latest": model}, observation, ignore_layers=ignore_layers
-    )
-    latest_activations = activations["latest"]
-    last_layer_values = list(latest_activations.values())[-1]["output"]
+        activations, input, output = get_activations(
+            {"latest": model}, observation, ignore_layers=ignore_layers
+        )
+        latest_activations = activations["latest"]
+        last_layer_values = list(latest_activations.values())[-1]["output"]
 
-    if isinstance(last_layer_values, np.ndarray):
-        data = torch.tensor(last_layer_values, dtype=torch.float32)
-    else:
-        data = (
-            last_layer_values.detach().clone()
-        )  # Detach to avoid backprop through model
+        if isinstance(last_layer_values, np.ndarray):
+            data = torch.tensor(last_layer_values, dtype=torch.float32)
+        else:
+            data = (
+                last_layer_values.detach().clone()
+            )  # Detach to avoid backprop through model
 
-    similarity_matrix = torch.matmul(data, cavs.T)  # [batch_size, M]
+        similarity_matrix = torch.matmul(data, cavs.T)  # [batch_size, M]
 
-    for m in range(M):
-        _, indices = torch.topk(similarity_matrix[:, m], 100)
-        m_observation = [obs[0] for obs in observation_data[indices]]
-        filename = f"{m}_cav_observations.json"
-        path = os.path.join(observation_path, filename)
-        with open(path, "w") as f:
-            json.dump(m_observation, f, indent=4, cls=NumpyEncoder)
+        for m in range(M):
+            _, indices = torch.topk(similarity_matrix[:, m], 100)
+            m_observation = [obs[0] for obs in observation_data[indices]]
+            filename = f"{m}_cav_observations.json"
+            path = os.path.join(observation_path, filename)
+            with open(path, "w") as f:
+                json.dump(m_observation, f, indent=4, cls=NumpyEncoder)
 
     return cavs, stats
 

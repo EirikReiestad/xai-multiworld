@@ -120,9 +120,7 @@ def compute_accuracy_decision_tree(
     test_split = 0.2
 
     concept_scores = np.array(
-        get_concept_score(
-            activations, probes, layer_idx, concept_score_method="binary"
-        ),
+        get_concept_score(activations, probes, layer_idx, concept_score_method="soft"),
         dtype=np.float32,
     )
     dataset = TensorDataset(
