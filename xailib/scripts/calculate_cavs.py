@@ -1,12 +1,15 @@
 import logging
 import os
 
+from sklearn.linear_model import LogisticRegression
+
 from utils.common.collect_rollouts import collect_rollouts
 from utils.common.environment import create_environment
 from utils.common.model import get_models
 from utils.common.numpy_collections import NumpyEncoder
 from utils.common.write import write_results
 from utils.core.model_loader import ModelLoader
+from xailib.common.completeness_score import get_completeness_score
 from xailib.core.calculate_cavs.calculate_cavs import calculate_cavs
 from xailib.utils.metrics import calculate_cav_similarity, calculate_probe_similarities
 from xailib.utils.observation import get_observations
@@ -19,6 +22,7 @@ def main():
     eval = True
     ignore_layers = ["_fc0"]
     result_path = os.path.join("assets", "results")
+    method = "random"
 
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
     environment = create_environment(artifact, static=False)
@@ -31,7 +35,7 @@ def main():
     )
     model = list(models.values())[-1]
 
-    M = 100
+    M = 10
     lambda_1 = 0.1
     lambda_2 = 0.1
     batch_size = 128
@@ -48,7 +52,7 @@ def main():
         model=model,
         env=environment,
         artifact=artifact,
-        method="policy",
+        method=method,
         M=M,
         K=K,
         lambda_1=lambda_1,
@@ -57,6 +61,7 @@ def main():
         lr=lr,
         epochs=epochs,
         ignore_layers=ignore_layers,
+        save_observations=False,
     )
 
     cavs = cavs.detach().cpu().numpy()
@@ -68,8 +73,38 @@ def main():
     )
 
     cavs = {f"{i}": cav for i, cav in enumerate(cavs)}
-    calculate_cav_similarity(cavs, result_path, "cav_similarity.json")
+    # calculate_cav_similarity(cavs, result_path, "cav_similarity.json")
 
+    probes = {}
+    for i, cav in cavs.items():
+        mock_probe = LogisticRegression()
+        mock_probe.coef_ = cav
+        mock_probe.intercept_ = 0
+        mock_probe.classes_ = [0, 1]
+        probes[str(i)] = {"latest": {"layer": mock_probe}}
+
+    concepts = [str(i) for i in range(len(cavs))]
+
+    observation = collect_rollouts(
+        environment,
+        artifact,
+        10000,
+        method=method,
+        observation_path=os.path.join("assets", "tmp"),
+        force_update=True,
+    )
+    completeness_score = get_completeness_score(
+        probes=probes,
+        concepts=concepts,
+        model=model,
+        observations=observation,
+        method="decisiontree",
+        layer_idx=-1,
+        epochs=epochs,
+        ignore_layers=ignore_layers,
+        verbose=False,
+    )
+    return
     # CALCULATE THE DEFINED CAVS
 
     artifact_path = "artifacts"

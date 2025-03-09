@@ -125,6 +125,7 @@ def train_decision_tree(
     verbose: bool = False,
 ):
     results = []
+    total_accuracy = 0
     for _ in range(epochs):
         test_size = int(len(dataset) * test_split)
         train_size = len(dataset) - test_size
@@ -143,6 +144,7 @@ def train_decision_tree(
         model.fit(X_train, y_train)
         y_pred = model.predict(X_test)
         accuracy = accuracy_score(y_test, y_pred)
+        total_accuracy += accuracy
         if verbose:
             logging.info(f"Test set accuracy: {accuracy:.4f}")
 
@@ -191,17 +193,21 @@ def train_decision_tree(
         average_results[key][0] /= epochs
         average_results[key][1] /= epochs
 
+    average_accuracy = total_accuracy / epochs
+
     path = os.path.join(result_path, "concept_score_decicion_tree.json")
     write_results(average_results, path)
     log_decision_tree_feature_importance(average_results)
 
     logging.info(f"\nTree Depth: {model.get_depth()}")
     logging.info(f"Number of Leaves: {model.get_n_leaves()}")
+    logging.info(f"Average Test Set Accuracy: {average_accuracy:.4f}")
 
     path = os.path.join(result_path, "concept_score_decicion_tree_info.json")
     result = {
         "tree_depth": int(model.get_depth()),
         "n_leaves": int(model.get_n_leaves()),
+        "accuracy": average_accuracy,
     }
 
     write_results(result, path)

@@ -83,6 +83,7 @@ def get_completeness_score_decision_tree(
         models, observation_zipped, ignore_layers
     )
     labels = torch.argmax(output["latest"], dim=1).detach().numpy()
+    # np.random.shuffle( labels)  # This is just for sanity check, where it should score lower
     action_space = len(output["latest"][0])
 
     observation_zipped, _ = zip_observation_data(observations)
