@@ -412,19 +412,25 @@ def calculate_probe_similarities(
     ],  # Concept -> Model -> Layer -> Probe
     layer_idx: int,
     result_path: str = os.path.join("assets", "results"),
+    filename: str = "cos_sim_matrix.json",
 ):
     cavs = {}
     for key, value in probes.items():
         probe = list(list(value.values())[-1].values())[layer_idx]
         cavs[key] = probe.coef_.flatten()
+    calculate_cav_similarity(cavs, result_path, filename=filename)
 
+
+def calculate_cav_similarity(
+    cavs: Dict[str, np.ndarray], result_path: str, filename: str = "cos_sim_matrix.json"
+):
     coefs = np.array(list(cavs.values()))
 
     cos_sim_matrix = cosine_similarity(coefs)
     cos_sim_matrix_df = pd.DataFrame(
         cos_sim_matrix, index=cavs.keys(), columns=cavs.keys()
     )
-    output_file = os.path.join(result_path, "cos_sim_matrix.json")
+    output_file = os.path.join(result_path, filename)
     cos_sim_matrix_df.to_json(output_file, orient="index")
 
     logging.info(f"\n{cos_sim_matrix_df}")
