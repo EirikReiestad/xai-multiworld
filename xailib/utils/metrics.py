@@ -112,6 +112,7 @@ def compute_accuracy_decision_tree(
     labels: List[int],
     probes: Dict[str, LogisticRegression],
     layer_idx: int,
+    concept_score_method: Literal["binary", "soft"],
     epochs: int,
     result_path: str,
     figure_path: str,
@@ -121,7 +122,7 @@ def compute_accuracy_decision_tree(
 
     concept_scores = np.array(
         get_concept_score(
-            activations, probes, layer_idx, concept_score_method="binary"
+            activations, probes, layer_idx, concept_score_method=concept_score_method
         ),
         dtype=np.float32,
     )
@@ -148,12 +149,13 @@ def compute_accuracy(
     activations: Dict[str, Dict],
     labels: List[int],
     probes: Dict[str, LogisticRegression],
+    concept_score_method: Literal["binary", "soft"],
     layer_idx: int,
     verbose: bool = False,
 ):
     hidden_units = 500
 
-    epochs = 5
+    epochs = 100
     batch_size = 128
     learning_rate = 0.001
     val_split = 0.2
@@ -161,7 +163,7 @@ def compute_accuracy(
 
     concept_scores = np.array(
         get_concept_score(
-            activations, probes, layer_idx, concept_score_method="binary"
+            activations, probes, layer_idx, concept_score_method=concept_score_method
         ),
         dtype=np.float32,
     )
@@ -333,6 +335,7 @@ def calculate_statistics(
     probes: Dict[str, Dict[str, Dict[str, LogisticRegression]]],
     layer_idx: int,
     results_path: str = os.path.join("assets", "results"),
+    filename: str = "probe_statistics.json",
 ):
     stats = {}
     for concept in concepts:
@@ -344,7 +347,7 @@ def calculate_statistics(
         )
         stats[concept] = stat
 
-    path = os.path.join(results_path, "probe_statistics.json")
+    path = os.path.join(results_path, filename)
     stats = convert_numpy_to_float(stats)
     write_results(stats, path)
     log_stats(stats)
@@ -375,7 +378,10 @@ def calculate_statistic(
     iq_range = q75 - q25
 
     try:
-        pairwise_distances = pdist(points, "mahalanobis")
+        cov_matrix = np.cov(points, rowvar=False)
+        reg_term = 1e-5 * np.eye(cov_matrix.shape[0])
+        inv_cov_matrix = np.linalg.inv(cov_matrix + reg_term)
+        pairwise_distances = pdist(points, "mahalanobis", VI=inv_cov_matrix)
     except ValueError as e:
         logging.warning(e)
         logging.info("Running pdist with euclidean distance")
@@ -412,19 +418,25 @@ def calculate_probe_similarities(
     ],  # Concept -> Model -> Layer -> Probe
     layer_idx: int,
     result_path: str = os.path.join("assets", "results"),
+    filename: str = "cos_sim_matrix.json",
 ):
     cavs = {}
     for key, value in probes.items():
         probe = list(list(value.values())[-1].values())[layer_idx]
         cavs[key] = probe.coef_.flatten()
+    calculate_cav_similarity(cavs, result_path, filename=filename)
 
+
+def calculate_cav_similarity(
+    cavs: Dict[str, np.ndarray], result_path: str, filename: str = "cos_sim_matrix.json"
+):
     coefs = np.array(list(cavs.values()))
 
     cos_sim_matrix = cosine_similarity(coefs)
     cos_sim_matrix_df = pd.DataFrame(
         cos_sim_matrix, index=cavs.keys(), columns=cavs.keys()
     )
-    output_file = os.path.join(result_path, "cos_sim_matrix.json")
+    output_file = os.path.join(result_path, filename)
     cos_sim_matrix_df.to_json(output_file, orient="index")
 
     logging.info(f"\n{cos_sim_matrix_df}")

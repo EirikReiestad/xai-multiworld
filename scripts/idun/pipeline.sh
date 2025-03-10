@@ -5,7 +5,7 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --mem=128G
-#SBATCH --job-name="multi-agent-rl"
+#SBATCH --job-name="pipeline"
 #SBATCH --output=srun.out
 #SBATCH --error=srun.err
 

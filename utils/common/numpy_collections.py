@@ -32,7 +32,7 @@ def remove_nan(arr: NDArray) -> NDArray:
     return np.array(nan_arr)
 
 
-def normalize_ndarrays(arr: NDArray, a: float = 0, b: float = 1) -> NDArray:
+def normalize_np(arr: NDArray, a: float = 0, b: float = 1) -> NDArray:
     global_min = np.min(arr)
     global_max = np.max(arr)
 

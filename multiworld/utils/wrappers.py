@@ -98,6 +98,7 @@ class ObservationCollectorWrapper(gym.Wrapper):
         sample_rate: float = 1.0,
         directory: str = os.path.join("assets", "observations"),
         filename: str = "observations",
+        verbose: bool = False,
     ) -> None:
         super().__init__(env)
         self.env = env
@@ -106,6 +107,7 @@ class ObservationCollectorWrapper(gym.Wrapper):
         self._observations = observations
 
         self._rollouts: List[Observations] = []
+        self._verbose = verbose
 
     def step(
         self,
@@ -120,13 +122,14 @@ class ObservationCollectorWrapper(gym.Wrapper):
                 )
             )
 
-        if len(self._rollouts) % (self._observations / 10) == 0:
+        if len(self._rollouts) % (self._observations / 10) == 0 and self._verbose:
             logging.info(
                 f"Collcted {len(self._rollouts)} / {self._observations} observations"
             )
 
         if len(self._rollouts) == self._observations:
-            logging.info(f"Saving rollouts to file {self._filepath}...")
+            if self._verbose:
+                logging.info(f"Saving rollouts to file {self._filepath}...")
             self._save_rollouts()
             sys.exit()
 

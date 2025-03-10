@@ -33,21 +33,25 @@ def get_completeness_score(
     epochs: int = 10,
     ignore_layers: List = [],
     method: Literal["decisiontree", "network"] = "network",
+    concept_score_method: Literal["soft", "binary"] = "binary",
     verbose: bool = False,
     result_path: str = os.path.join("assets", "results"),
     figure_path: str = os.path.join("assets", "figures"),
+    filename_shapley: str = "shapley_values.json",
 ):
     if method == "network":
         return get_completeness_score_network(
-            model,
-            probes,
-            observations,
-            layer_idx,
-            concepts.copy(),
+            model=model,
+            probes=probes,
+            observations=observations,
+            layer_idx=layer_idx,
+            concepts=concepts.copy(),
+            concept_score_method=concept_score_method,
             epochs=epochs,
             ignore_layers=ignore_layers,
             verbose=verbose,
             result_path=result_path,
+            filename_shapley=filename_shapley,
         )
     elif method == "decisiontree":
         return get_completeness_score_decision_tree(
@@ -56,6 +60,7 @@ def get_completeness_score(
             observations=observations,
             layer_idx=layer_idx,
             concepts=concepts,
+            concept_score_method=concept_score_method,
             epochs=epochs,
             ignore_layers=ignore_layers,
             verbose=verbose,
@@ -70,6 +75,7 @@ def get_completeness_score_decision_tree(
     observations: Observation,
     layer_idx: int,
     concepts: List[str],
+    concept_score_method: Literal["soft", "binary"],
     epochs: int = 10,
     ignore_layers: List[str] = [],
     result_path: str = os.path.join("assets", "results"),
@@ -83,6 +89,7 @@ def get_completeness_score_decision_tree(
         models, observation_zipped, ignore_layers
     )
     labels = torch.argmax(output["latest"], dim=1).detach().numpy()
+    # np.random.shuffle( labels)  # This is just for sanity check, where it should score lower
     action_space = len(output["latest"][0])
 
     observation_zipped, _ = zip_observation_data(observations)
@@ -101,6 +108,7 @@ def get_completeness_score_decision_tree(
         labels=labels,
         probes=concept_probes,
         layer_idx=layer_idx,
+        concept_score_method=concept_score_method,
         epochs=epochs,
         result_path=result_path,
         figure_path=figure_path,
@@ -114,10 +122,12 @@ def get_completeness_score_network(
     observations: Observation,
     layer_idx: int,
     concepts: List[str],
+    concept_score_method: Literal["soft", "binary"],
     epochs: int = 10,
     ignore_layers: List[str] = [],
     verbose: bool = False,
     result_path: str = os.path.join("assets", "results"),
+    filename_shapley: str = "shapley_values.json",
 ):
     models = {"latest": model}
 
@@ -144,50 +154,55 @@ def get_completeness_score_network(
         for key, value in probes.items()
     }
 
-    random_probe = {"random": concept_probes["random"]}
+    results = {}
+    if "random" in concepts:
+        random_probe = {"random": concept_probes["random"]}
 
-    random_loss, random_accuracy = compute_accuracy(
-        observation_shape=1,
-        action_shape=action_space,
-        activations=activations,
-        labels=labels,
-        probes=random_probe,
-        layer_idx=layer_idx,
-        verbose=verbose,
-    )
-    if verbose:
-        logging.info(
-            f"Random concept - loss: {random_loss} accuracy: {random_accuracy}"
-        )
-
-    random_probes = {}
-    positive_observation, test_observation = load_and_split_observation("random", 1.0)
-    negative_observation, _ = load_and_split_observation("negative_random", 1.0)
-    obs_len = len(positive_observation)
-    num_concepts = len(probes)
-    ratio = obs_len // (num_concepts - 1)
-    for i in range(num_concepts - 2):
-        pos_obs = positive_observation[i * ratio : (i + 1) * ratio]
-        neg_obs = negative_observation[i * ratio : (i + 1) * ratio]
-        probe, positive_activations, negative_activations = get_probes(
-            models, pos_obs, neg_obs, ignore_layers
-        )
-        random_probes[f"random{i}"] = list(probe["latest"].values())[layer_idx]
-
-    results = {tuple(["random"]): (random_loss, random_accuracy)}
-
-    for i in range(len(random_probes)):
-        probes = list(random_probes.values())[:i]
-        loss, accuracy = compute_accuracy(
+        random_loss, random_accuracy = compute_accuracy(
             observation_shape=1,
             action_shape=action_space,
             activations=activations,
             labels=labels,
             probes=random_probe,
+            concept_score_method=concept_score_method,
             layer_idx=layer_idx,
             verbose=verbose,
         )
-        results[tuple(random_probes.keys())[: i + 1]] = (loss, accuracy)
+        if verbose:
+            logging.info(
+                f"Random concept - loss: {random_loss} accuracy: {random_accuracy}"
+            )
+        random_probes = {}
+        positive_observation, test_observation = load_and_split_observation(
+            "random", 1.0
+        )
+        negative_observation, _ = load_and_split_observation("negative_random", 1.0)
+        obs_len = len(positive_observation)
+        num_concepts = len(probes)
+        ratio = obs_len // (num_concepts - 1)
+        for i in range(num_concepts - 2):
+            pos_obs = positive_observation[i * ratio : (i + 1) * ratio]
+            neg_obs = negative_observation[i * ratio : (i + 1) * ratio]
+            probe, positive_activations, negative_activations = get_probes(
+                models, pos_obs, neg_obs, ignore_layers
+            )
+            random_probes[f"random{i}"] = list(probe["latest"].values())[layer_idx]
+
+        results = {tuple(["random"]): (random_loss, random_accuracy)}
+
+        for i in range(len(random_probes)):
+            probes = list(random_probes.values())[:i]
+            loss, accuracy = compute_accuracy(
+                observation_shape=1,
+                action_shape=action_space,
+                activations=activations,
+                labels=labels,
+                probes=random_probe,
+                concept_score_method=concept_score_method,
+                layer_idx=layer_idx,
+                verbose=verbose,
+            )
+            results[tuple(random_probes.keys())[: i + 1]] = (loss, accuracy)
 
     if "random" in concepts:
         concepts.remove("random")
@@ -204,7 +219,6 @@ def get_completeness_score_network(
             activations, input, output = compute_activations_from_models(
                 models, observation_zipped, ignore_layers
             )
-            time.sleep(1)
             labels = torch.argmax(output["latest"], dim=1).detach().numpy()
             sub_loss, sub_accuracy = compute_accuracy(
                 observation_shape=len(comb),
@@ -212,6 +226,7 @@ def get_completeness_score_network(
                 activations=activations,
                 labels=labels,
                 probes=sub_probes,
+                concept_score_method=concept_score_method,
                 layer_idx=layer_idx,
                 verbose=verbose,
             )
@@ -225,4 +240,4 @@ def get_completeness_score_network(
 
     write_results(results, path)
     shapley_values = calculate_shapley_values(path, concepts)
-    write_results(shapley_values, os.path.join(result_path, "shapley_values.json"))
+    write_results(shapley_values, os.path.join(result_path, filename_shapley))

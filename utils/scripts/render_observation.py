@@ -34,7 +34,7 @@ def main():
         logger.info("No valid arguments provided.")
         return
 
-    path = os.path.join("assets", "concepts", filename)
+    path = os.path.join("assets", "observations", filename)
 
     if not path.endswith(".json"):
         path += ".json"

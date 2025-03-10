@@ -49,6 +49,7 @@ def collect_rollouts(
             n,
             sample_rate,
             eval,
+            observation_path,
             artifact_path,
         ),
     )
@@ -68,12 +69,14 @@ def collect_rollouts_thread(
     observations: int,
     sample_rate: float,
     eval: bool,
+    directory: str,
     artifact_path: str = "artifacts/",
 ):
     env_wrapped = ObservationCollectorWrapper(
         env,
         observations,
         sample_rate,
+        directory=directory,
     )
 
     model = create_model(artifact, model_type, artifact_path, env_wrapped, eval)

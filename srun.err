@@ -1,45 +1,387 @@
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-INFO:root:Downloading models...
+2025-03-10 14:23:41 | INFO | Downloading models...
 wandb:   1 of 1 files downloaded.  
-INFO:root:model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_0:v1
-INFO:root:Metadata: {'width': 20, 'agents': 15, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.8915423586867928, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-INFO:root:Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_0:v1/metadata.json
+2025-03-10 14:23:43 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_0:v0
+2025-03-10 14:23:43 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.8666710232794748, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
+2025-03-10 14:23:43 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_0:v0/metadata.json
 wandb:   1 of 1 files downloaded.  
-INFO:root:model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_100:v0
-INFO:root:Metadata: {'width': 20, 'agents': 15, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.36036106623076675, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-INFO:root:Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_100:v0/metadata.json
+2025-03-10 14:23:44 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_300:v0
+2025-03-10 14:23:44 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05104251529858452, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
+2025-03-10 14:23:44 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_300:v0/metadata.json
 wandb:   1 of 1 files downloaded.  
-INFO:root:model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_200:v0
-INFO:root:Metadata: {'width': 20, 'agents': 15, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.16648777705100634, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-INFO:root:Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_200:v0/metadata.json
+2025-03-10 14:23:45 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_600:v0
+2025-03-10 14:23:45 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05000067192512115, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
+2025-03-10 14:23:45 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_600:v0/metadata.json
 wandb:   1 of 1 files downloaded.  
-INFO:root:model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_300:v0
-INFO:root:Metadata: {'width': 20, 'agents': 15, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.093594733400152, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-INFO:root:Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_300:v0/metadata.json
+2025-03-10 14:23:46 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_900:v0
+2025-03-10 14:23:46 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05000000042271669, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
+2025-03-10 14:23:46 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_900:v0/metadata.json
 wandb:   1 of 1 files downloaded.  
-INFO:root:model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_400:v0
-INFO:root:Metadata: {'width': 20, 'agents': 15, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.06613331436747998, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-INFO:root:Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_400:v0/metadata.json
-wandb:   1 of 1 files downloaded.  
-INFO:root:model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_500:v0
-INFO:root:Metadata: {'width': 20, 'agents': 15, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05594788889767028, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-INFO:root:Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_500:v0/metadata.json
-wandb:   1 of 1 files downloaded.  
-INFO:root:model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_600:v0
-INFO:root:Metadata: {'width': 20, 'agents': 15, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05220160436077393, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-INFO:root:Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_600:v0/metadata.json
-wandb:   1 of 1 files downloaded.  
-INFO:root:model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_700:v0
-INFO:root:Metadata: {'width': 20, 'agents': 15, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05081085693141959, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-INFO:root:Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_700:v0/metadata.json
-wandb:   1 of 1 files downloaded.  
-INFO:root:model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_800:v0
-INFO:root:Metadata: {'width': 20, 'agents': 15, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05030084393095404, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-INFO:root:Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_800:v0/metadata.json
-wandb:   1 of 1 files downloaded.  
-INFO:root:model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_900:v0
-INFO:root:Metadata: {'width': 20, 'agents': 15, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05011216731365146, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-INFO:root:Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_900:v0/metadata.json
-INFO:root:Creating environment...
-INFO:root:Collecting rollouts...
-INFO:root:Collcted 0 / 10000 observations
+2025-03-10 14:23:48 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_1200:v0
+2025-03-10 14:23:48 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05000000000032178, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
+2025-03-10 14:23:48 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_1200:v0/metadata.json
+2025-03-10 14:23:48 | INFO | Creating environment...
+2025-03-10 14:24:02 | INFO | MultiInputNetwork(
+  (_conv0): ConvProcessor(
+    (conv_layers): Sequential(
+      (0): Conv2d(5, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (1): ReLU()
+      (2): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (3): ReLU()
+      (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+      (5): ReLU()
+    )
+  )
+  (_fc0): FCProcessor(
+    (fc_layers): Sequential(
+      (0): Linear(in_features=4, out_features=128, bias=True)
+      (1): ReLU()
+      (2): Linear(in_features=128, out_features=128, bias=True)
+      (3): ReLU()
+      (4): Linear(in_features=128, out_features=3, bias=True)
+    )
+  )
+  (_fc_final): FCProcessor(
+    (fc_layers): Sequential(
+      (0): Linear(in_features=3139, out_features=128, bias=True)
+      (1): ReLU()
+      (2): Linear(in_features=128, out_features=128, bias=True)
+      (3): ReLU()
+      (4): Linear(in_features=128, out_features=3, bias=True)
+    )
+  )
+)
+2025-03-10 14:24:02 | INFO | Collecting rollouts...
+2025-03-10 14:27:13 | INFO | Generating concepts...
+2025-03-10 14:27:13 | INFO | Step 0
+2025-03-10 14:27:13 | INFO | Number of concepts filled: 0 / 6000
+2025-03-10 14:27:19 | INFO | Step 500
+2025-03-10 14:27:19 | INFO | Number of concepts filled: 955 / 6000
+2025-03-10 14:27:25 | INFO | Step 1000
+2025-03-10 14:27:25 | INFO | Number of concepts filled: 1864 / 6000
+2025-03-10 14:27:30 | INFO | Step 1500
+2025-03-10 14:27:30 | INFO | Number of concepts filled: 2554 / 6000
+2025-03-10 14:27:36 | INFO | Step 2000
+2025-03-10 14:27:36 | INFO | Number of concepts filled: 3225 / 6000
+2025-03-10 14:27:41 | INFO | Step 2500
+2025-03-10 14:27:41 | INFO | Number of concepts filled: 3913 / 6000
+2025-03-10 14:27:47 | INFO | Step 3000
+2025-03-10 14:27:47 | INFO | Number of concepts filled: 4334 / 6000
+2025-03-10 14:27:52 | INFO | Step 3500
+2025-03-10 14:27:52 | INFO | Number of concepts filled: 4550 / 6000
+2025-03-10 14:27:58 | INFO | Step 4000
+2025-03-10 14:27:58 | INFO | Number of concepts filled: 4769 / 6000
+2025-03-10 14:28:03 | INFO | Step 4500
+2025-03-10 14:28:03 | INFO | Number of concepts filled: 4937 / 6000
+2025-03-10 14:28:09 | INFO | Step 5000
+2025-03-10 14:28:09 | INFO | Number of concepts filled: 5085 / 6000
+2025-03-10 14:28:14 | INFO | Step 5500
+2025-03-10 14:28:14 | INFO | Number of concepts filled: 5148 / 6000
+2025-03-10 14:28:19 | INFO | Step 6000
+2025-03-10 14:28:19 | INFO | Number of concepts filled: 5207 / 6000
+2025-03-10 14:28:24 | INFO | Step 6500
+2025-03-10 14:28:24 | INFO | Number of concepts filled: 5268 / 6000
+2025-03-10 14:28:29 | INFO | Step 7000
+2025-03-10 14:28:29 | INFO | Number of concepts filled: 5336 / 6000
+2025-03-10 14:28:35 | INFO | Step 7500
+2025-03-10 14:28:35 | INFO | Number of concepts filled: 5394 / 6000
+2025-03-10 14:28:40 | INFO | Step 8000
+2025-03-10 14:28:40 | INFO | Number of concepts filled: 5463 / 6000
+2025-03-10 14:28:45 | INFO | Step 8500
+2025-03-10 14:28:45 | INFO | Number of concepts filled: 5523 / 6000
+2025-03-10 14:28:50 | INFO | Step 9000
+2025-03-10 14:28:50 | INFO | Number of concepts filled: 5586 / 6000
+2025-03-10 14:28:55 | INFO | Step 9500
+2025-03-10 14:28:55 | INFO | Number of concepts filled: 5628 / 6000
+2025-03-10 14:29:01 | INFO | Step 10000
+2025-03-10 14:29:01 | INFO | Number of concepts filled: 5650 / 6000
+2025-03-10 14:29:05 | INFO | Step 10500
+2025-03-10 14:29:05 | INFO | Number of concepts filled: 5655 / 6000
+2025-03-10 14:29:10 | INFO | Step 11000
+2025-03-10 14:29:10 | INFO | Number of concepts filled: 5657 / 6000
+2025-03-10 14:29:15 | INFO | Step 11500
+2025-03-10 14:29:15 | INFO | Number of concepts filled: 5662 / 6000
+2025-03-10 14:29:20 | INFO | Step 12000
+2025-03-10 14:29:20 | INFO | Number of concepts filled: 5666 / 6000
+2025-03-10 14:29:25 | INFO | Step 12500
+2025-03-10 14:29:25 | INFO | Number of concepts filled: 5669 / 6000
+2025-03-10 14:29:30 | INFO | Step 13000
+2025-03-10 14:29:30 | INFO | Number of concepts filled: 5676 / 6000
+2025-03-10 14:29:35 | INFO | Step 13500
+2025-03-10 14:29:35 | INFO | Number of concepts filled: 5679 / 6000
+2025-03-10 14:29:40 | INFO | Step 14000
+2025-03-10 14:29:40 | INFO | Number of concepts filled: 5692 / 6000
+2025-03-10 14:29:45 | INFO | Step 14500
+2025-03-10 14:29:45 | INFO | Number of concepts filled: 5701 / 6000
+2025-03-10 14:29:50 | INFO | Step 15000
+2025-03-10 14:29:50 | INFO | Number of concepts filled: 5707 / 6000
+2025-03-10 14:29:55 | INFO | Step 15500
+2025-03-10 14:29:55 | INFO | Number of concepts filled: 5714 / 6000
+2025-03-10 14:30:00 | INFO | Step 16000
+2025-03-10 14:30:00 | INFO | Number of concepts filled: 5721 / 6000
+2025-03-10 14:30:05 | INFO | Step 16500
+2025-03-10 14:30:05 | INFO | Number of concepts filled: 5723 / 6000
+2025-03-10 14:30:09 | INFO | Step 17000
+2025-03-10 14:30:09 | INFO | Number of concepts filled: 5729 / 6000
+2025-03-10 14:30:15 | INFO | Step 17500
+2025-03-10 14:30:15 | INFO | Number of concepts filled: 5736 / 6000
+2025-03-10 14:30:19 | INFO | Step 18000
+2025-03-10 14:30:19 | INFO | Number of concepts filled: 5743 / 6000
+2025-03-10 14:30:24 | INFO | Step 18500
+2025-03-10 14:30:24 | INFO | Number of concepts filled: 5750 / 6000
+2025-03-10 14:30:29 | INFO | Step 19000
+2025-03-10 14:30:29 | INFO | Number of concepts filled: 5758 / 6000
+2025-03-10 14:30:34 | INFO | Step 19500
+2025-03-10 14:30:34 | INFO | Number of concepts filled: 5767 / 6000
+2025-03-10 14:30:39 | INFO | Step 20000
+2025-03-10 14:30:39 | INFO | Number of concepts filled: 5772 / 6000
+2025-03-10 14:30:44 | INFO | Step 20500
+2025-03-10 14:30:44 | INFO | Number of concepts filled: 5780 / 6000
+2025-03-10 14:30:49 | INFO | Step 21000
+2025-03-10 14:30:49 | INFO | Number of concepts filled: 5791 / 6000
+2025-03-10 14:30:54 | INFO | Step 21500
+2025-03-10 14:30:54 | INFO | Number of concepts filled: 5796 / 6000
+2025-03-10 14:30:59 | INFO | Step 22000
+2025-03-10 14:30:59 | INFO | Number of concepts filled: 5804 / 6000
+2025-03-10 14:31:04 | INFO | Step 22500
+2025-03-10 14:31:04 | INFO | Number of concepts filled: 5808 / 6000
+2025-03-10 14:31:09 | INFO | Step 23000
+2025-03-10 14:31:09 | INFO | Number of concepts filled: 5814 / 6000
+2025-03-10 14:31:14 | INFO | Step 23500
+2025-03-10 14:31:14 | INFO | Number of concepts filled: 5821 / 6000
+2025-03-10 14:31:19 | INFO | Step 24000
+2025-03-10 14:31:19 | INFO | Number of concepts filled: 5828 / 6000
+2025-03-10 14:31:23 | INFO | Step 24500
+2025-03-10 14:31:23 | INFO | Number of concepts filled: 5831 / 6000
+2025-03-10 14:31:29 | INFO | Step 25000
+2025-03-10 14:31:29 | INFO | Number of concepts filled: 5842 / 6000
+2025-03-10 14:31:33 | INFO | Step 25500
+2025-03-10 14:31:33 | INFO | Number of concepts filled: 5850 / 6000
+2025-03-10 14:31:38 | INFO | Step 26000
+2025-03-10 14:31:38 | INFO | Number of concepts filled: 5855 / 6000
+2025-03-10 14:31:43 | INFO | Step 26500
+2025-03-10 14:31:43 | INFO | Number of concepts filled: 5865 / 6000
+2025-03-10 14:31:48 | INFO | Step 27000
+2025-03-10 14:31:48 | INFO | Number of concepts filled: 5874 / 6000
+2025-03-10 14:31:53 | INFO | Step 27500
+2025-03-10 14:31:53 | INFO | Number of concepts filled: 5880 / 6000
+2025-03-10 14:31:58 | INFO | Step 28000
+2025-03-10 14:31:58 | INFO | Number of concepts filled: 5884 / 6000
+2025-03-10 14:32:03 | INFO | Step 28500
+2025-03-10 14:32:03 | INFO | Number of concepts filled: 5892 / 6000
+2025-03-10 14:32:08 | INFO | Step 29000
+2025-03-10 14:32:08 | INFO | Number of concepts filled: 5897 / 6000
+2025-03-10 14:32:13 | INFO | Step 29500
+2025-03-10 14:32:13 | INFO | Number of concepts filled: 5906 / 6000
+2025-03-10 14:32:18 | INFO | Step 30000
+2025-03-10 14:32:18 | INFO | Number of concepts filled: 5912 / 6000
+2025-03-10 14:32:23 | INFO | Step 30500
+2025-03-10 14:32:23 | INFO | Number of concepts filled: 5916 / 6000
+2025-03-10 14:32:28 | INFO | Step 31000
+2025-03-10 14:32:28 | INFO | Number of concepts filled: 5922 / 6000
+2025-03-10 14:32:33 | INFO | Step 31500
+2025-03-10 14:32:33 | INFO | Number of concepts filled: 5926 / 6000
+2025-03-10 14:32:38 | INFO | Step 32000
+2025-03-10 14:32:38 | INFO | Number of concepts filled: 5929 / 6000
+2025-03-10 14:32:43 | INFO | Step 32500
+2025-03-10 14:32:43 | INFO | Number of concepts filled: 5935 / 6000
+2025-03-10 14:32:48 | INFO | Step 33000
+2025-03-10 14:32:48 | INFO | Number of concepts filled: 5948 / 6000
+2025-03-10 14:32:52 | INFO | Step 33500
+2025-03-10 14:32:52 | INFO | Number of concepts filled: 5954 / 6000
+2025-03-10 14:32:57 | INFO | Step 34000
+2025-03-10 14:32:57 | INFO | Number of concepts filled: 5956 / 6000
+2025-03-10 14:33:02 | INFO | Step 34500
+2025-03-10 14:33:02 | INFO | Number of concepts filled: 5967 / 6000
+2025-03-10 14:33:07 | INFO | Step 35000
+2025-03-10 14:33:07 | INFO | Number of concepts filled: 5973 / 6000
+2025-03-10 14:33:12 | INFO | Step 35500
+2025-03-10 14:33:12 | INFO | Number of concepts filled: 5978 / 6000
+2025-03-10 14:33:17 | INFO | Step 36000
+2025-03-10 14:33:17 | INFO | Number of concepts filled: 5984 / 6000
+2025-03-10 14:33:22 | INFO | Step 36500
+2025-03-10 14:33:22 | INFO | Number of concepts filled: 5992 / 6000
+2025-03-10 14:33:26 | INFO | Writing concept observations to disk...
+2025-03-10 14:33:28 | INFO | Loading concept observations...
+2025-03-10 14:33:28 | INFO | Getting probes and activations for concepts...
+2025-03-10 14:33:40 | INFO | Calculating network completeness score for concepts...
+2025-03-10 14:33:41 | INFO | Element 0 occurs 563 times.
+2025-03-10 14:33:41 | INFO | Element 1 occurs 1728 times.
+2025-03-10 14:33:41 | INFO | Element 2 occurs 602 times.
+2025-03-10 14:34:15 | INFO | Could not converge, consider increasing the number of epochs
+2025-03-10 14:36:40 | INFO | 
+Combination                                                                             Loss    Accuracy
+----------------------------------------------------------------------------------  --------  ----------
+('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')  0.641529     70.5882
+('goal_to_right', 'wall_in_view')                                                   0.73411      69.8962
+('goal_in_front', 'goal_in_view', 'goal_to_right', 'wall_in_view')                  0.679206     69.2042
+('goal_in_front', 'goal_in_view', 'goal_to_left')                                   0.822578     68.8581
+('goal_in_front', 'goal_in_view', 'goal_to_left', 'wall_in_view')                   0.68155      68.8581
+('goal_in_front', 'goal_in_view', 'wall_in_view')                                   0.722461     67.474
+('goal_in_front', 'goal_to_left', 'goal_to_right', 'wall_in_view')                  0.715152     67.474
+('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right')                  0.853967     67.128
+('goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')                   0.71406      67.128
+('goal_to_left',)                                                                   0.916847     66.782
+('wall_in_view',)                                                                   0.808088     66.782
+('goal_in_front', 'goal_to_left')                                                   0.863687     66.782
+('goal_in_view', 'goal_to_left')                                                    0.855687     66.782
+('goal_to_left', 'wall_in_view')                                                    0.72034      66.782
+('random0',)                                                                        0.848609     66.09
+('random0', 'random1')                                                              0.773641     66.09
+('goal_in_front', 'goal_to_left', 'goal_to_right')                                  0.814594     66.09
+('goal_in_view', 'goal_to_right')                                                   0.945846     65.7439
+('goal_in_view', 'goal_to_left', 'goal_to_right')                                   0.849574     65.3979
+('goal_in_view', 'goal_to_right', 'wall_in_view')                                   0.78024      65.3979
+('random0', 'random1', 'random2')                                                   0.764416     65.0519
+('goal_to_left', 'goal_to_right', 'wall_in_view')                                   0.697527     65.0519
+('goal_to_right',)                                                                  0.855145     64.7059
+('goal_in_front', 'wall_in_view')                                                   0.818004     64.0138
+('goal_to_left', 'goal_to_right')                                                   0.887884     64.0138
+('goal_in_front',)                                                                  0.914489     63.6678
+('goal_in_view', 'wall_in_view')                                                    0.768277     63.3218
+('goal_in_view', 'goal_to_left', 'wall_in_view')                                    0.751715     63.3218
+('goal_in_front', 'goal_to_right')                                                  0.848596     62.9758
+('goal_in_front', 'goal_in_view', 'goal_to_right')                                  0.94874      62.6298
+('random',)                                                                         0.817367     62.2837
+('goal_in_front', 'goal_to_left', 'wall_in_view')                                   0.764707     61.9377
+('random0', 'random1', 'random2', 'random3')                                        0.791993     61.5917
+('goal_in_front', 'goal_in_view')                                                   0.876917     61.2457
+('goal_in_view',)                                                                   0.948205     59.5156
+('goal_in_front', 'goal_to_right', 'wall_in_view')                                  0.884326     58.8235
+2025-03-10 14:36:40 | INFO | 
+Combination                                                                             Loss    Accuracy
+----------------------------------------------------------------------------------  --------  ----------
+('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')  0.641529     70.5882
+('goal_in_front', 'goal_in_view', 'goal_to_right', 'wall_in_view')                  0.679206     69.2042
+('goal_in_front', 'goal_in_view', 'goal_to_left', 'wall_in_view')                   0.68155      68.8581
+('goal_to_left', 'goal_to_right', 'wall_in_view')                                   0.697527     65.0519
+('goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')                   0.71406      67.128
+('goal_in_front', 'goal_to_left', 'goal_to_right', 'wall_in_view')                  0.715152     67.474
+('goal_to_left', 'wall_in_view')                                                    0.72034      66.782
+('goal_in_front', 'goal_in_view', 'wall_in_view')                                   0.722461     67.474
+('goal_to_right', 'wall_in_view')                                                   0.73411      69.8962
+('goal_in_view', 'goal_to_left', 'wall_in_view')                                    0.751715     63.3218
+('random0', 'random1', 'random2')                                                   0.764416     65.0519
+('goal_in_front', 'goal_to_left', 'wall_in_view')                                   0.764707     61.9377
+('goal_in_view', 'wall_in_view')                                                    0.768277     63.3218
+('random0', 'random1')                                                              0.773641     66.09
+('goal_in_view', 'goal_to_right', 'wall_in_view')                                   0.78024      65.3979
+('random0', 'random1', 'random2', 'random3')                                        0.791993     61.5917
+('wall_in_view',)                                                                   0.808088     66.782
+('goal_in_front', 'goal_to_left', 'goal_to_right')                                  0.814594     66.09
+('random',)                                                                         0.817367     62.2837
+('goal_in_front', 'wall_in_view')                                                   0.818004     64.0138
+('goal_in_front', 'goal_in_view', 'goal_to_left')                                   0.822578     68.8581
+('goal_in_front', 'goal_to_right')                                                  0.848596     62.9758
+('random0',)                                                                        0.848609     66.09
+('goal_in_view', 'goal_to_left', 'goal_to_right')                                   0.849574     65.3979
+('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right')                  0.853967     67.128
+('goal_to_right',)                                                                  0.855145     64.7059
+('goal_in_view', 'goal_to_left')                                                    0.855687     66.782
+('goal_in_front', 'goal_to_left')                                                   0.863687     66.782
+('goal_in_front', 'goal_in_view')                                                   0.876917     61.2457
+('goal_in_front', 'goal_to_right', 'wall_in_view')                                  0.884326     58.8235
+('goal_to_left', 'goal_to_right')                                                   0.887884     64.0138
+('goal_in_front',)                                                                  0.914489     63.6678
+('goal_to_left',)                                                                   0.916847     66.782
+('goal_in_view', 'goal_to_right')                                                   0.945846     65.7439
+('goal_in_view',)                                                                   0.948205     59.5156
+('goal_in_front', 'goal_in_view', 'goal_to_right')                                  0.94874      62.6298
+2025-03-10 14:36:40 | INFO | 
+Concept          Shapley value
+-------------  ---------------
+goal_to_left          1.68973
+wall_in_view          1.45905
+goal_in_view          1.35525
+goal_to_right         0.922722
+goal_in_front         0.870819
+2025-03-10 14:36:40 | INFO | Calculating decisiontree completeness score for concepts...
+2025-03-10 14:36:54 | INFO | 
+Concept          Feature importance    Splits
+-------------  --------------------  --------
+random                     0.431397       1
+wall_in_view               0.408014       2
+goal_to_left               0.118078       2
+goal_to_right              0.039632       3.7
+goal_in_view               0.001737       1.9
+goal_in_front              0.001142       2
+2025-03-10 14:36:54 | INFO | 
+Tree Depth: 5
+2025-03-10 14:36:54 | INFO | Number of Leaves: 14
+2025-03-10 14:36:54 | INFO | Average Test Set Accuracy: 0.7346
+2025-03-10 14:36:57 | INFO | Calculating concept scores for concepts...
+2025-03-10 14:36:59 | INFO | Calculating TCAV scores for concepts...
+2025-03-10 14:37:08 | INFO | Calculating probe robustness for concepts...
+2025-03-10 14:41:53 | INFO | 
+  dataset size       random    goal_in_front    goal_in_view    goal_to_left    goal_to_right    wall_in_view
+--------------  -----------  ---------------  --------------  --------------  ---------------  --------------
+           0.9  1.06151e-06         0.999688        0.999706        0.998723         0.999387        0.999712
+           0.8  1.00072e-06         0.999005        0.999692        0.998328         0.998057        0.998824
+           0.7  8.97528e-07         0.996747        0.999128        0.996209         0.996582        0.997507
+           0.6  7.85704e-07         0.996717        0.998222        0.993651         0.992436        0.993139
+           0.5  8.28502e-07         0.992404        0.997463        0.992287         0.986032        0.990461
+           0.4  6.85075e-07         0.98497         0.995471        0.985845         0.984629        0.980734
+           0.3  6.00372e-07         0.982601        0.991329        0.983814         0.975275        0.974773
+           0.2  5.55821e-07         0.972699        0.987231        0.971571         0.971745        0.958094
+           0.1  1.93063e-07         0.950217        0.972516        0.967617         0.940059        0.913378
+2025-03-10 14:41:53 | INFO | Calculating statistics for concepts...
+2025-03-10 14:41:53 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:41:54 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:41:54 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:41:55 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:41:55 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:41:56 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:41:57 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:41:57 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:41:58 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:41:58 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:41:59 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:41:59 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:42:00 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:42:01 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:42:01 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:42:02 | INFO | Layer 4-ReLU() of ['0-ReLU()', '1-ReLU()', '2-ReLU()', '3-ReLU()', '4-ReLU()']
+2025-03-10 14:42:02 | INFO | 
+Metric         random    goal_in_front    goal_in_view    goal_to_left    goal_to_right    wall_in_view
+--------  -----------  ---------------  --------------  --------------  ---------------  --------------
+mean       0.0600264        0.0785914       0.0733846       0.0732           0.0719843       0.057277
+variance   0.0056268        0.00977746      0.00827238      0.00821319       0.00793391      0.00511394
+std_dev    0.075012         0.0988811       0.0909526       0.0906267        0.0890725       0.0715118
+median     0.00925718       0.00715424      0.0181194       0.0148082        0.021791        0.00824408
+range      0.499334         0.433938        0.499334        0.514226         0.499334        0.28876
+iq_range   0.120583         0.159115        0.144094        0.145556         0.138851        0.115636
+density    0.0987827        0.174532        0.0876286       0.103497         0.10316         0.109489
+accuracy  -1                0              -1              -1                0               1
+distance   1.89435         10.1838         11.5826         10.9944          10.4939         12.7274
+2025-03-10 14:42:02 | INFO | 
+                 random  goal_in_front  ...  goal_to_right  wall_in_view
+random         1.000000      -0.088252  ...       0.262743      0.071946
+goal_in_front -0.088252       1.000000  ...       0.533233     -0.504429
+goal_in_view   0.215513       0.732229  ...       0.841783     -0.641792
+goal_to_left   0.175526       0.624989  ...       0.387815     -0.448525
+goal_to_right  0.262743       0.533233  ...       1.000000     -0.565065
+wall_in_view   0.071946      -0.504429  ...      -0.565065      1.000000
+
+[6 rows x 6 columns]
+2025-03-10 14:42:02 | INFO | Calculating CAVs...
+2025-03-10 14:42:02 | INFO | Starting CAV training with 5 concepts, lambda_1=0.1, lambda_2=0.1
+2025-03-10 14:42:02 | INFO | Feature dimension: 128
+CAV Training:   0%|          | 0/1000 [00:00<?, ?it/s]2025-03-10 14:42:04 | INFO | Step 0000 | Epoch 10 | Objective: 0.1547 | Coherence: 2.4820 | Separation: 0.9348 | Grad Norm: 1.5667 | Time: 1.6s
+CAV Training:   0%|          | 1/1000 [00:01<22:19,  1.34s/it]CAV Training:   0%|          | 2/1000 [00:02<18:17,  1.10s/it]CAV Training:   0%|          | 3/1000 [00:03<17:00,  1.02s/it]CAV Training:   0%|          | 4/1000 [00:04<16:23,  1.01it/s]2025-03-10 14:42:08 | INFO | Step 0004 | Epoch 10 | Objective: 0.9155 | Coherence: 9.2224 | Separation: 0.0674 | Grad Norm: 1.3882 | Time: 5.3s
+2025-03-10 14:42:08 | INFO | Converged at step 4 with objective value 0.9155
+CAV Training:   0%|          | 4/1000 [00:05<21:04,  1.27s/it]
+2025-03-10 14:42:08 | INFO | Training stats saved to cav_training_stats.json
+2025-03-10 14:43:18 | INFO | 
+          0         1         2         3         4
+0  1.000000  0.004203  0.003709  0.000332  0.001771
+1  0.004203  1.000000  0.003285  0.002689  0.001020
+2  0.003709  0.003285  1.000000  0.003243  0.000655
+3  0.000332  0.002689  0.003243  1.000000  0.006462
+4  0.001771  0.001020  0.000655  0.006462  1.000000
+Traceback (most recent call last):
+  File "/cluster/work/eirre/xai-multiworld/xailib/scripts/pipeline.py", line 307, in <module>
+    main()
+  File "/cluster/work/eirre/xai-multiworld/xailib/scripts/pipeline.py", line 230, in main
+    random_cav = np.random.randn(1, cavs["0"].shape[1])
+                                    ~~~~~~~~~~~~~~~^^^
+IndexError: tuple index out of range

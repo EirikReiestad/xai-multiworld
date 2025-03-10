@@ -1,29 +1,38 @@
 {
     "wandb": {
-        "project_folder": "go-to-goal-15-20",
+        "project_folder": "go-to-goal-1",
         "models": {
             "name": "model",
             "low": 0,
-            "high": 1000,
-            "step": 100
+            "high": 1500,
+            "step": 300
         }
     },
     "model": {
-        "type": "dqn"
+        "type": "dqn",
+        "method": "random"
     },
     "collect_rollouts": {
-        "method": "policy",
-        "observations": 1000,
-        "sample_rate": 1.0
+        "observations": 3000,
+        "sample_rate": 0.1
     },
     "generate_concepts": {
-        "method": "policy",
-        "observations": 50
+        "observations": 500
+    },
+    "calculate_cavs": {
+        "M": 5,
+        "lambda_1": 0.1,
+        "lambda_2": 0.1,
+        "batch_size": 128,
+        "lr": 1e-3,
+        "epochs": 10,
+        "convergence_threshold": 0.9
     },
     "completeness_score": {
         "network_epochs": 1,
-        "decisiontree_epochs": 1,
-        "method": "network"
+        "decisiontree_epochs": 10,
+        "method": "network",
+        "concept_score_method": "binary"
     },
     "concepts": [
         "random",
@@ -31,17 +40,13 @@
         "goal_in_view",
         "goal_to_left",
         "goal_to_right",
-        "wall_in_view",
-        "agent_in_view",
-        "agent_to_right",
-        "agent_to_left",
-        "agent_in_front"
+        "wall_in_view"
     ],
     "analyze": {
         "ignore_layers": [
             "_fc0"
         ],
-        "layer_idx": 4,
+        "layer_idx": -1,
         "splits": [
             0.9,
             0.8,
@@ -53,7 +58,7 @@
             0.2,
             0.1
         ],
-        "robustness_epochs": 20
+        "robustness_epochs": 5
     },
     "path": {
         "artifacts": "artifacts",
