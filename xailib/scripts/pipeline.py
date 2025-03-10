@@ -40,6 +40,9 @@ def main():
     figure_path = os.path.join("pipeline", f"{current_time}", "figures")
     os.makedirs(result_path, exist_ok=True)
 
+    with open(os.path.join(result_path, "config.json"), "w") as f:
+        json.dump(config, f, indent=4)
+
     logging.info("Downloading models...")
     download_models(
         low=config["wandb"]["models"]["low"],
