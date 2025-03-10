@@ -2,9 +2,11 @@ import argparse
 import json
 import logging
 import os
-from typing import Dict
+from typing import Dict, Tuple
 
 import pandas as pd
+from joblib.pool import np
+from pandas.io.formats.style import Styler
 
 from utils.core.plotting import plot_3d
 
@@ -29,18 +31,30 @@ def main(path: str = os.path.join("assets", "results")):
 
     if filename is not None:
         filename = filename + ".json" if not filename.endswith(".json") else filename
-        path = os.path.join(path, filename)
+        filepath = os.path.join(path, filename)
 
-        with open(path, "r") as f:
+        with open(filepath, "r") as f:
             data = json.load(f)
-        tabulate_data(data, filename)
+        df, latex = tabulate_data(data, filename)
+        if df is None:
+            return
+        latex_filename = filename.replace(".json", ".tex")
+        latex_filepath = os.path.join(path, latex_filename)
+        with open(latex_filepath, "w") as f:
+            f.write(latex)
     else:
         for filename in os.listdir(path):
             if not filename.endswith(".json"):
                 continue
             with open(os.path.join(path, filename), "r") as f:
                 data = json.load(f)
-                tabulate_data(data, filename)
+                df, latex = tabulate_data(data, filename)
+                if df is None:
+                    break
+                latex_filename = filename.replace(".json", ".tex")
+                latex_filepath = os.path.join(path, latex_filename)
+                with open(latex_filepath, "w") as f:
+                    f.write(latex)
 
 
 def tabulate_data(data: Dict, filename: str):
@@ -52,7 +66,7 @@ def tabulate_data(data: Dict, filename: str):
                 label=concept,
                 min=0,
                 max=1,
-                show=True,
+                show=False,
             )
     elif filename == "tcav_scores.json":
         df = tabulate_generic(data)
@@ -62,37 +76,67 @@ def tabulate_data(data: Dict, filename: str):
                 label=concept,
                 min=0,
                 max=1,
-                show=True,
+                show=False,
             )
-    elif filename == "cos_sim_matrix.json":
-        df = pd.DataFrame(data)
-    elif filename.startswith("concept_combination_accuracies"):
-        df = tabulate_combination_accuracy(data)
-        df = df.sort_values(by="Count", ascending=False)
-    elif filename == "probe_robustness.json":
-        df = tabulate_robustness(data)
-    elif filename == "probe_statistics.json":
-        df = pd.DataFrame(data)
-    elif filename == "sample_efficiency.json":
-        df = pd.DataFrame(data).transpose()
-    else:
-        logging.warning(f"Value {filename} not supported")
-        return
-    print("\n\n" + filename)
-    print(df)
+
+    files = {
+        "cav_similarity.json": tabulate_similarity_matrix,
+        "concept_combination_accuracies.json": tabulate_concept_combination_accuracies,
+        "probe_robustness.json": tabulate_robustness,
+        "probe_statistics.json": tabulate_probe_statistics,
+        "cav_statistics.json": tabulate_probe_statistics,
+        "sample_efficiency.json": tabulate_sample_efficiency,
+    }
+
+    df, latex = files[filename](data)
+
+    logging.info("\n\n" + filename)
+    logging.info(f"\n{df}")
+
+    return df, latex
 
 
-def tabulate_generic(data: Dict):
-    return pd.DataFrame(
-        [
-            {"Condition": condition, "Model": model, **values}
-            for condition, models in data.items()
-            for model, values in models.items()
-        ]
+def tabulate_probe_statistics(data: Dict) -> Tuple[pd.DataFrame, str]:
+    df = pd.DataFrame(data)
+    df.columns = df.columns.str.replace("_", r"\_")
+    df.index = df.index.str.replace("_", r"\_")
+    styled_df = df.style
+    styled_df.apply(
+        lambda s: highlight_max(s, props="color:{f_green}; bfseries:;"),
+        axis=1,
     )
+    styled_df.apply(
+        lambda s: highlight_min(s, props="color:{f_darkred}; bfseries:;"),
+        axis=1,
+    )
+    latex = styled_df.to_latex()
+    latex = format_table(latex)
+    return df, latex
 
 
-def tabulate_robustness(data: Dict):
+def tabulate_similarity_matrix(data: Dict) -> Tuple[pd.DataFrame, str]:
+    df = pd.DataFrame(data)
+    styled_df = df.style
+    styled_df.apply(
+        lambda s: highlight_between_threshold(
+            s, props="color:{f_green}; bfseries:;", min=0.7, max=1.0
+        ),
+        axis=1,
+    )
+    latex = styled_df.to_latex()
+    latex = format_table(latex)
+    return df, latex
+
+
+def tabulate_sample_efficiency(data: Dict) -> Tuple[pd.DataFrame, str]:
+    pass
+
+
+def tabulate_concept_combination_accuracies(data: Dict) -> Tuple[pd.DataFrame, str]:
+    pass
+
+
+def tabulate_robustness(data: Dict) -> Tuple[pd.DataFrame, str]:
     df = pd.DataFrame(
         [
             {"Condition": condition, "Key": key, "Value": value[0][0]}
@@ -105,6 +149,35 @@ def tabulate_robustness(data: Dict):
 
 def tabulate_combination_accuracy(data: Dict):
     return pd.DataFrame.from_dict(data, orient="index", columns=["Value", "Count"])
+
+
+def format_table(table: str) -> str:
+    df_lines = table.splitlines()
+    df_lines.insert(1, r"\toprule")
+    df_lines.insert(3, r"\midrule")
+    df_lines.insert(-1, r"\bottomrule")
+    new_table = "\n".join(df_lines)
+    return new_table
+
+
+def highlight_max(s, props: str):
+    return np.where(s == np.nanmax(s.values), props, "")
+
+
+def highlight_min(s, props: str):
+    return np.where(s == np.nanmin(s.values), props, "")
+
+
+def highlight_threshold(s, props: str, min: float = -np.inf, max: float = np.inf):
+    mask = (s >= min) & (s <= max)
+    return [props if v else "" for v in mask]
+
+
+def highlight_between_threshold(
+    s, props: str, min: float = -np.inf, max: float = np.inf
+):
+    mask = (s > min) & (s < max)
+    return [props if v else "" for v in mask]
 
 
 if __name__ == "__main__":
