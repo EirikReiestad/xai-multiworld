@@ -35,6 +35,7 @@ def main():
         return
 
     path = os.path.join("assets", "observations", filename)
+    path = os.path.join("pipeline", "20250310-160946", "results", filename)
 
     if not path.endswith(".json"):
         path += ".json"

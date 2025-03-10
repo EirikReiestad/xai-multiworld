@@ -76,7 +76,8 @@ def tabulate_data(data: Dict, filename: str):
     elif filename == "sample_efficiency.json":
         df = pd.DataFrame(data).transpose()
     else:
-        raise ValueError(f"Value {filename} not supported")
+        logging.warning(f"Value {filename} not supported")
+        return
     print("\n\n" + filename)
     print(df)
 
@@ -107,5 +108,5 @@ def tabulate_combination_accuracy(data: Dict):
 
 
 if __name__ == "__main__":
-    path = os.path.join("archive", "20250304-151233-multi", "results")
+    path = os.path.join("pipeline", "20250310-160946", "results")
     main(path)
