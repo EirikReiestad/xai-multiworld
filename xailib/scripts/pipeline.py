@@ -40,6 +40,9 @@ def main():
     figure_path = os.path.join("pipeline", f"{current_time}", "figures")
     os.makedirs(result_path, exist_ok=True)
 
+    with open(os.path.join(result_path, "config.json"), "w") as f:
+        json.dump(config, f, indent=4)
+
     logging.info("Downloading models...")
     download_models(
         low=config["wandb"]["models"]["low"],
@@ -215,8 +218,16 @@ def main():
     )
 
     cavs = cavs.detach().cpu().numpy()
+    random_cav = np.random.randn(1, cavs[0].shape[0])
     cavs = {f"{i}": cav for i, cav in enumerate(cavs)}
-    calculate_cav_similarity(cavs, result_path, "cav_similarity.json")
+    mock_probes = {}
+
+    mock_probe = LogisticRegression()
+    mock_probe.coef_ = random_cav
+    mock_probe.intercept_ = 0
+    mock_probe.classes_ = [0, 1]
+    mock_probes["random"] = {"latest": {"layer": mock_probe}}
+
     mock_probes = {}
     for i, cav in cavs.items():
         mock_probe = LogisticRegression()
@@ -225,14 +236,9 @@ def main():
         mock_probe.classes_ = [0, 1]
         mock_probes[str(i)] = {"latest": {"layer": mock_probe}}
 
-    cav_names = [str(i) for i in range(len(cavs))]
+    cav_names = list(mock_probes.keys())
 
-    random_cav = np.random.randn(1, cavs["0"].shape[1])
-    mock_probe = LogisticRegression()
-    mock_probe.coef_ = random_cav
-    mock_probe.intercept_ = 0
-    mock_probe.classes_ = [0, 1]
-    mock_probes["random"] = {"latest": {"layer": mock_probe}}
+    calculate_cav_similarity(cavs, result_path, "cav_similarity.json")
 
     logging.info("Calculating network completeness score for cavs...")
     if (

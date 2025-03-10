@@ -151,16 +151,14 @@ def compute_accuracy(
     probes: Dict[str, LogisticRegression],
     concept_score_method: Literal["binary", "soft"],
     layer_idx: int,
+    hidden_units: int = 500,
+    epochs: int = 500,
+    batch_size: int = 128,
+    learning_rate: float = 0.001,
+    val_split: float = 0.2,
+    test_split: float = 0.1,
     verbose: bool = False,
 ):
-    hidden_units = 500
-
-    epochs = 100
-    batch_size = 128
-    learning_rate = 0.001
-    val_split = 0.2
-    test_split = 0.1
-
     concept_scores = np.array(
         get_concept_score(
             activations, probes, layer_idx, concept_score_method=concept_score_method
@@ -360,9 +358,6 @@ def calculate_statistic(
 ):
     layer_activations = list(activations["latest"].values())[layer_idx]["output"]
     probe = list(probes["latest"].values())[layer_idx]
-    logging.info(
-        f"Layer {list(probes['latest'].keys())[layer_idx]} of {list(probes['latest'].keys())}"
-    )
     points = layer_activations.detach().numpy()
 
     n_samples = points.shape[0]

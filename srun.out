@@ -1,8 +1,8 @@
 Cleaning up
 Running from this directory: /cluster/work/eirre/xai-multiworld
 Name of job: pipeline
-ID of job: 21226305
-The jo was run on these nodes: idun-04-22
+ID of job: 21226909
+The jo was run on these nodes: idun-05-24
 
 Currently Loaded Modules:
   1) GCCcore/13.2.0                       7) Tcl/8.6.13-GCCcore-13.2.0    (H)
@@ -65,4 +65,4 @@ Installing dependencies from lock file
 No dependencies to install or update
 
 Installing the current project: xai-multiworld (0.1.0)
-Linux idun-04-22 5.14.0-427.13.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Wed May 1 19:11:28 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+Linux idun-05-24 5.14.0-427.13.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Wed May 1 19:11:28 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
