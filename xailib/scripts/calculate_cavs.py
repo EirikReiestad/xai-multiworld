@@ -1,19 +1,20 @@
 import logging
 import os
 
+from joblib.pool import np
 from sklearn.linear_model import LogisticRegression
 
 from utils.common.collect_rollouts import collect_rollouts
 from utils.common.environment import create_environment
 from utils.common.model import get_models
-from utils.common.numpy_collections import NumpyEncoder
-from utils.common.write import write_results
 from utils.core.model_loader import ModelLoader
 from xailib.common.completeness_score import get_completeness_score
 from xailib.core.calculate_cavs.calculate_cavs import calculate_cavs
-from xailib.utils.metrics import calculate_cav_similarity, calculate_probe_similarities
-from xailib.utils.observation import get_observations
-from xailib.utils.probes import get_probes_and_activations
+from xailib.utils.metrics import (
+    calculate_cav_similarity,
+    calculate_probe_similarities,
+    calculate_statistics,
+)
 
 
 def main():
@@ -25,7 +26,7 @@ def main():
     method = "random"
 
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
-    environment = create_environment(artifact, static=False)
+    environment = create_environment(artifact, static=True)
     models = get_models(
         artifact=artifact,
         model_type=model_type,
@@ -35,7 +36,7 @@ def main():
     )
     model = list(models.values())[-1]
 
-    M = 10
+    M = 5
     lambda_1 = 0.1
     lambda_2 = 0.1
     batch_size = 128
@@ -45,10 +46,9 @@ def main():
     average_instance_of_each_class = 100
     total_number_of_instances = 1000
     average_class_ratio = average_instance_of_each_class / total_number_of_instances
-
     K = int(batch_size * average_class_ratio / 2)
 
-    cavs, stats = calculate_cavs(
+    cavs, stats, cav_observations, cav_activations = calculate_cavs(
         model=model,
         env=environment,
         artifact=artifact,
@@ -61,97 +61,88 @@ def main():
         lr=lr,
         epochs=epochs,
         ignore_layers=ignore_layers,
-        save_observations=False,
     )
 
     cavs = cavs.detach().cpu().numpy()
-    results = {"cavs": cavs}
-    write_results(
-        results=results,
-        path=os.path.join(result_path, "cavs.json"),
-        custom_cls=NumpyEncoder,
-    )
-
+    random_cav = np.random.randn(1, cavs[0].shape[0])
     cavs = {f"{i}": cav for i, cav in enumerate(cavs)}
-    # calculate_cav_similarity(cavs, result_path, "cav_similarity.json")
+    mock_probes = {}
 
-    probes = {}
+    mock_probe = LogisticRegression()
+    mock_probe.coef_ = random_cav
+    mock_probe.intercept_ = 0
+    mock_probe.classes_ = [0, 1]
+    mock_probes["random"] = {"latest": {"layer": mock_probe}}
+
+    calculate_cav_similarity(cavs, result_path, "cav_similarity.json")
     for i, cav in cavs.items():
         mock_probe = LogisticRegression()
         mock_probe.coef_ = cav
         mock_probe.intercept_ = 0
         mock_probe.classes_ = [0, 1]
-        probes[str(i)] = {"latest": {"layer": mock_probe}}
+        mock_probes[str(i)] = {"latest": {"layer": mock_probe}}
 
-    concepts = [str(i) for i in range(len(cavs))]
+    cav_names = list(mock_probes.keys())
 
-    observation = collect_rollouts(
+    """
+    observations = collect_rollouts(
         environment,
         artifact,
-        10000,
+        1000,
         method=method,
         observation_path=os.path.join("assets", "tmp"),
-        force_update=True,
+        force_update=False,
     )
+
+    if True:
+        logging.info("Calculating network completeness score for cavs...")
+        completeness_score = get_completeness_score(
+            probes=mock_probes,
+            concepts=cav_names.copy(),
+            model=model,
+            observations=observations,
+            layer_idx=-1,
+            epochs=1,
+            ignore_layers=ignore_layers,
+            method="network",
+            concept_score_method="soft",
+            verbose=False,
+            result_path=result_path,
+        )
+    logging.info("Calculating decisiontree completeness score for cavs...")
     completeness_score = get_completeness_score(
-        probes=probes,
-        concepts=concepts,
+        probes=mock_probes,
+        concepts=cav_names.copy(),
         model=model,
-        observations=observation,
-        method="decisiontree",
+        observations=observations,
         layer_idx=-1,
         epochs=epochs,
         ignore_layers=ignore_layers,
+        method="decisiontree",
+        concept_score_method="soft",
         verbose=False,
+        result_path=result_path,
     )
-    return
-    # CALCULATE THE DEFINED CAVS
+    """
 
-    artifact_path = "artifacts"
-    model_type = "dqn"
-    eval = True
-    layer_idx = 4
-    concepts = [
-        "random",
-        "goal_in_front",
-        "goal_in_view",
-        "goal_to_left",
-        "goal_to_right",
-        "wall_in_view",
-    ]
-    ignore_layers = ["_fc0"]
+    cav_names.remove("random")
 
-    artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
-    environment = create_environment(artifact)
-    models = get_models(
-        artifact=artifact,
-        model_type=model_type,
-        env=environment,
-        eval=eval,
-        artifact_path=artifact_path,
+    mock_activations = {}
+    for i, act in cav_activations.items():
+        mock_activations[str(i)] = {"latest": {"layer": {"output": act}}}
+
+    logging.info("Calculating statistics for cavs...")
+    calculate_statistics(
+        concepts=cav_names.copy(),
+        activations=mock_activations,
+        probes=mock_probes,
+        layer_idx=-1,
+        results_path=result_path,
+        filename="cav_statistics.json",
     )
-    (
-        positive_observations,
-        negative_observations,
-        test_positive_observations,
-        test_negative_observations,
-    ) = get_observations(concepts)
-    logging.info("Getting probes and activations...")
-    probes, positive_activations, negative_activations = get_probes_and_activations(
-        concepts=concepts,
-        models=models,
-        positive_observations=positive_observations,
-        negative_observations=negative_observations,
-        ignore_layers=ignore_layers,
+    calculate_probe_similarities(
+        mock_probes, -1, result_path, filename="cav_similarity.json"
     )
-    logging.info("Calculating statistics...")
-    calculate_probe_similarities(probes, layer_idx)
-    defined_cavs = {}
-    for key, value in probes.items():
-        probe = list(list(value.values())[-1].values())[layer_idx]
-        defined_cavs[key] = probe.coef_.flatten()
-    cavs.update(defined_cavs)
-    calculate_cav_similarity(cavs, result_path, filename="cav_similarities.json")
 
 
 if __name__ == "__main__":

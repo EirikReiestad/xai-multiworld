@@ -17,6 +17,7 @@ from utils.common.collect_rollouts import collect_rollouts
 from utils.common.model_artifact import ModelArtifact
 from utils.common.numpy_collections import NumpyEncoder
 from utils.common.observation import Observation
+from utils.common.write import write_results
 from xailib.utils.activations import get_activations
 
 # Set up enhanced logging
@@ -107,15 +108,15 @@ class CAVTrainingStats:
 
     def save_stats(
         self,
-        filepath: str = os.path.join("assets", "results"),
-        filename: str = "cav_training_stats.csv",
+        directory: str = os.path.join("assets", "results"),
+        filename: str = "cav_training_stats.json",
     ):
         """Save stats to CSV file"""
         try:
             df = self.to_dataframe()
             if hasattr(df, "to_csv"):
-                filename = os.path.join(filepath, filename)
-                df.to_csv(filepath, index=False)
+                filepath = os.path.join(directory, filename)
+                df.to_json(filepath, index=False)
                 logger.info(f"Training stats saved to {filename}")
             else:
                 logger.warning("Could not save stats. pandas is required.")
@@ -139,10 +140,11 @@ def calculate_cavs(
     log_frequency: int = 10,
     max_steps: int = 1000,
     convergence_threshold: float = 0.9,
+    num_observations: int = 10000,
     save_stats: bool = True,
-    stats_filename: str = "cav_training_stats.csv",
+    stats_filename: str = "cav_training_stats.json",
     observation_path: str = "assets/observations",
-    save_observations: bool = True,
+    result_path: str = "assets/results",
 ):
     """
     Train Concept Activation Vectors (CAVs)
@@ -309,43 +311,53 @@ def calculate_cavs(
 
     # Save stats if requested
     if save_stats:
-        stats.save_stats(stats_filename)
+        stats.save_stats(filename=stats_filename, directory=result_path)
 
-    if save_observations:
-        observation = collect_rollouts(
-            env,
-            artifact,
-            10000,
-            method=method,
-            observation_path=os.path.join("assets", "tmp"),
-            force_update=True,
-        )
-        observation_data = observation[..., Observation.OBSERVATION]
+    observation = collect_rollouts(
+        env,
+        artifact,
+        num_observations,
+        method=method,
+        observation_path=os.path.join("assets", "tmp"),
+        force_update=True,
+    )
+    observation_data = observation[..., Observation.OBSERVATION]
 
-        activations, input, output = get_activations(
-            {"latest": model}, observation, ignore_layers=ignore_layers
-        )
-        latest_activations = activations["latest"]
-        last_layer_values = list(latest_activations.values())[-1]["output"]
+    activations, input, output = get_activations(
+        {"latest": model}, observation, ignore_layers=ignore_layers
+    )
+    latest_activations = activations["latest"]
+    last_layer_values = list(latest_activations.values())[-1]["output"]
 
-        if isinstance(last_layer_values, np.ndarray):
-            data = torch.tensor(last_layer_values, dtype=torch.float32)
-        else:
-            data = (
-                last_layer_values.detach().clone()
-            )  # Detach to avoid backprop through model
+    if isinstance(last_layer_values, np.ndarray):
+        data = torch.tensor(last_layer_values, dtype=torch.float32)
+    else:
+        data = (
+            last_layer_values.detach().clone()
+        )  # Detach to avoid backprop through model
 
-        similarity_matrix = torch.matmul(data, cavs.T)  # [batch_size, M]
+    similarity_matrix = torch.matmul(data, cavs.T)  # [batch_size, M]
 
-        for m in range(M):
-            _, indices = torch.topk(similarity_matrix[:, m], 100)
-            m_observation = [obs[0] for obs in observation_data[indices]]
-            filename = f"{m}_cav_observations.json"
-            path = os.path.join(observation_path, filename)
-            with open(path, "w") as f:
-                json.dump(m_observation, f, indent=4, cls=NumpyEncoder)
+    observations = {}
+    activation_data = {}
+    for m in range(M):
+        _, indices = torch.topk(similarity_matrix[:, m], min(num_observations, 200))
+        m_observation = [obs[0] for obs in observation_data[indices]]
+        observations[str(m)] = m_observation
+        activation_data[str(m)] = data[indices]
+        filename = f"{m}_cav_observations.json"
+        path = os.path.join(observation_path, filename)
+        with open(path, "w") as f:
+            json.dump(m_observation, f, indent=4, cls=NumpyEncoder)
 
-    return cavs, stats
+    result_cavs = cavs.detach().cpu().numpy()
+    results = {"cavs": result_cavs, "stats": stats.stats}
+    write_results(
+        results=results,
+        path=os.path.join(result_path, "cavs.json"),
+        custom_cls=NumpyEncoder,
+    )
+    return cavs, stats, observations, activation_data
 
 
 def optimize_cavs_with_stats(
