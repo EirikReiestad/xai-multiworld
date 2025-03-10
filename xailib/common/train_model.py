@@ -2,7 +2,6 @@ import gc
 import logging
 import os
 from collections import defaultdict
-import time
 from typing import List, Tuple
 
 import numpy as np
@@ -13,7 +12,6 @@ from sklearn.metrics import accuracy_score
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from torch.utils.data import DataLoader, TensorDataset, random_split
 
-from utils.common.code import get_memory_usage
 from utils.common.write import write_results
 from xailib.utils.logging import (
     log_decision_tree_feature_importance,
@@ -28,6 +26,7 @@ def train_model(
     dataset: TensorDataset,
     test_split: float,
     val_split: float,
+    patience: int = 3,
     verbose: bool = False,
 ) -> Tuple[float, float]:
     optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate, amsgrad=True)
@@ -48,6 +47,10 @@ def train_model(
     train_loader = DataLoader(train_dataset, batch_size=batch_size)
     val_loader = DataLoader(val_dataset, batch_size=batch_size)
     test_loader = DataLoader(test_dataset, batch_size=batch_size)
+
+    best_val_loss = float("inf")
+    epochs_no_improve = 0
+    early_stopped = False
 
     model.train()
     for epoch in range(epochs):
@@ -85,7 +88,21 @@ def train_model(
                 f"Validation Loss: {val_loss:.4f}, Validation Accuracy: {val_accuracy:.2f}%"
             )
 
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            epochs_no_improve = 0
+        else:
+            epochs_no_improve += 1
+            if epochs_no_improve >= patience:
+                if verbose:
+                    logging.info(f"Early stopping at epoch {epoch+1}")
+                early_stopped = True
+                break
+
         model.train()
+
+    if not early_stopped:
+        logging.info("Could not converge, consider increasing the number of epochs")
 
     model.eval()
     test_loss = 0.0
