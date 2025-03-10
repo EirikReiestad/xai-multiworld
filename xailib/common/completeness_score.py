@@ -1,6 +1,5 @@
 import logging
 import os
-import time
 from typing import Dict, List, Literal
 
 import numpy as np
@@ -207,6 +206,14 @@ def get_completeness_score_network(
     if "random" in concepts:
         concepts.remove("random")
 
+    path = os.path.join(result_path, f"concept_combination_accuracies_{layer_idx}.json")
+    write_results(results, path)
+    if len(concepts) > 8:
+        logging.warning(
+            "The number of concepts is greater than 8. This will take a long time to compute, soooo we will not do it:)."
+        )
+        return
+
     for comb in get_combinations(concepts):
         if verbose:
             logging.info(f"\n\n===== Computing accuracy for {comb} =====")
@@ -236,8 +243,5 @@ def get_completeness_score_network(
         avg_sub_accuracy /= epochs
         results[tuple(sorted(comb))] = (avg_sub_loss, avg_sub_accuracy)
 
-    path = os.path.join(result_path, f"concept_combination_accuracies_{layer_idx}.json")
-
-    write_results(results, path)
     shapley_values = calculate_shapley_values(path, concepts)
     write_results(shapley_values, os.path.join(result_path, filename_shapley))
