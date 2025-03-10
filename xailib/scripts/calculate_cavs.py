@@ -84,7 +84,6 @@ def main():
 
     cav_names = list(mock_probes.keys())
 
-    """
     observations = collect_rollouts(
         environment,
         artifact,
@@ -123,7 +122,6 @@ def main():
         verbose=False,
         result_path=result_path,
     )
-    """
 
     cav_names.remove("random")
 
