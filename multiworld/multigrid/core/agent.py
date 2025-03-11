@@ -106,7 +106,7 @@ class AgentState(np.ndarray):
 
         # Set default values
         obj[..., AgentState.TYPE] = WorldObjectType.agent
-        obj[..., AgentState.COLOR].flat = Color.cycle(np.prod(dims))
+        obj[..., AgentState.COLOR].flat = Color(Color.blue)
         obj[..., AgentState.DIR] = -1
         obj[..., AgentState.POS] = (-1, -1)
 

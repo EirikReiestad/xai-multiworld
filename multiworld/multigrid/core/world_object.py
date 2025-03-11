@@ -107,7 +107,10 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
                 f"Key is not available. Available keys (and corresponding values): {WorldObject._TYPE_IDX_TO_CLASS}. KeyError: {e}"
             )
         obj = cls.__new__(cls)
-        obj[...] = arr
+        obj[WorldObject.TYPE] = arr[WorldObject.TYPE]
+        obj[WorldObject.STATE] = arr[WorldObject.STATE]
+        # obj[...] = arr
+        # HERE TO OBJ IS ALWAYS GRAY INSTEAD OF THE CLASS COLOR
         return obj
 
     @functools.cached_property
