@@ -15,7 +15,7 @@ env = GoToGoalEnv(
     render_mode="rgb_array",
 )
 
-env_wrapped = ObservationCollectorWrapper(env, observations=10000, sample_rate=1)
+env_wrapped = ObservationCollectorWrapper(env, observations=1000, sample_rate=1)
 
 config = (
     DQNConfig(
@@ -24,7 +24,7 @@ config = (
     )
     .environment(env=env_wrapped)
     .network(network_type=NetworkType.MULTI_INPUT)
-    .model("model_150:v0")
+    .model("model_1000:v0")
     .debugging(log_level="INFO")
     .rendering()
 )

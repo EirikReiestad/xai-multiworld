@@ -41,7 +41,7 @@ def main():
     lambda_2 = 0.1
     batch_size = 128
     lr = 1e-3
-    epochs = 10
+    epochs = 1
 
     average_instance_of_each_class = 100
     total_number_of_instances = 1000
@@ -60,6 +60,7 @@ def main():
         batch_size=batch_size,
         lr=lr,
         epochs=epochs,
+        num_observations=1000,
         ignore_layers=ignore_layers,
     )
 
@@ -74,6 +75,7 @@ def main():
     mock_probe.classes_ = [0, 1]
     mock_probes["random"] = {"latest": {"layer": mock_probe}}
 
+    logging.info("Calculating cav similarity...")
     calculate_cav_similarity(cavs, result_path, "cav_similarity.json")
     for i, cav in cavs.items():
         mock_probe = LogisticRegression()
@@ -93,7 +95,7 @@ def main():
         force_update=False,
     )
 
-    if True:
+    if False:
         logging.info("Calculating network completeness score for cavs...")
         completeness_score = get_completeness_score(
             probes=mock_probes,

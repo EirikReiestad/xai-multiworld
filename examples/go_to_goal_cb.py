@@ -26,7 +26,6 @@ def rendering_callback(image, observations):
 
     img_pil = Image.fromarray(image)
     img_pil.show()
-    time.sleep(5)
     return image
 
 

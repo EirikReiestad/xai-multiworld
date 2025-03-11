@@ -3,6 +3,7 @@ import logging
 import os
 
 import numpy as np
+from PIL import Image
 
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
@@ -34,17 +35,21 @@ def main():
         logger.info("No valid arguments provided.")
         return
 
-    path = os.path.join("assets", "observations", filename)
     path = os.path.join("pipeline", "20250310-160946", "results", filename)
+    path = os.path.join("assets", "results")
 
-    if not path.endswith(".json"):
-        path += ".json"
+    if not filename.endswith(".json"):
+        filename += ".json"
 
-    render(path)
+    save_directory = os.path.join("assets", "rendered")
+    render(path, filename, save_directory, show=False)
 
 
-def render(filename: str):
-    observation: Observation = observation_from_file(filename)
+def render(directory: str, filename: str, save_directory: str, show: bool = False):
+    path = os.path.join(directory, filename)
+    if not os.path.exists(save_directory):
+        os.makedirs(save_directory)
+    observation: Observation = observation_from_file(path)
     numpy_obs = observation_data_to_numpy(observation)
     grid = numpy_obs[0][0]
     width, height = grid.shape[:2]
@@ -54,18 +59,30 @@ def render(filename: str):
         width=width,
         height=height,
         preprocessing=PreprocessingEnum.ohe_minimal,
-        render_mode="human",
+        render_mode="rgb_array",
     )
     env.reset()
 
     np.random.shuffle(numpy_obs)
 
+    save_filename = filename.replace(".json", ".png")
+
+    count = 0
     for obs in numpy_obs:
         env.update_from_numpy(obs)
         while True:
-            env.render()
+            img = env.render()
+            if img is not None:
+                image = Image.fromarray(img, "RGB")
+                path = os.path.join(save_directory, f"{count}_{save_filename}")
+                image.save(path)
+                if show:
+                    image.show()
+            if not show:
+                break
             if input() == "":
                 break
+        count += 1
 
 
 if __name__ == "__main__":

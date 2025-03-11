@@ -35,7 +35,7 @@ def main(path: str = os.path.join("assets", "results")):
         with open(filepath, "r") as f:
             data = json.load(f)
         df, latex = tabulate_data(data, filename)
-        if df is None:
+        if df is None or latex is None:
             return
         latex_filename = filename.replace(".json", ".tex")
         latex_filepath = os.path.join(path, latex_filename)
@@ -48,7 +48,7 @@ def main(path: str = os.path.join("assets", "results")):
             with open(os.path.join(path, filename), "r") as f:
                 data = json.load(f)
                 df, latex = tabulate_data(data, filename)
-                if df is None:
+                if df is None or latex is None:
                     continue
                 latex_filename = filename.replace(".json", ".tex")
                 latex_filepath = os.path.join(path, latex_filename)

@@ -1,13 +1,15 @@
 import numpy as np
 
-from multiworld.core.constants import COLORS
+from utils.core.constants import COLORS
 from multiworld.multigrid.core.constants import Direction
 from multiworld.swarm.core.constants import WorldObjectType
 from multiworld.swarm.core.world_object import WorldObject
 
 ENCODE_DIM = WorldObject.dim
 N_TYPES = 5
-N_COLORS = len(COLORS)
+N_COLORS = (
+    1  # len(COLORS) If the agents can have multiple colors, this should be changed
+)
 N_STATES = 4
 
 OHE_GRID_OBJECT_DIM = N_TYPES + N_COLORS + N_STATES
