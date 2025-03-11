@@ -3,7 +3,7 @@ from typing import List
 import numpy as np
 from numpy.typing import NDArray as ndarray
 
-from multiworld.core.constants import Color
+from utils.core.constants import Color
 from multiworld.core.position import Position
 from multiworld.multigrid.core.agent import Agent, AgentState
 from multiworld.multigrid.core.constants import Direction, State, WorldObjectType

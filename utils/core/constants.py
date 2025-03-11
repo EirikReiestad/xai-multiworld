@@ -3,12 +3,13 @@ import numpy as np
 from multiworld.utils.enum import IndexedEnum
 
 COLORS = {
+    "Gray": np.array([169, 169, 169]),
+    "LightGray": np.array([217, 217, 217]),
+    "DarkGray": np.array([117, 117, 117]),
     "DarkRed": np.array([238, 125, 95]),
     "DarkRedBorder": np.array([202, 65, 35]),
     "Yellow": np.array([255, 201, 67]),
     "LightYellow": np.array([255, 236, 189]),
-    "LightGray": np.array([217, 217, 217]),
-    "DarkGray": np.array([117, 117, 117]),
     "LightGreen": np.array([213, 243, 214]),
     "Green": np.array([131, 211, 127]),
     "GreenBorder": np.array([88, 153, 84]),
@@ -24,12 +25,13 @@ COLORS = {
 
 
 class Color(str, IndexedEnum):
+    gray = "Gray"
+    light_gray = "LightGray"
+    dark_gray = "DarkGray"
     dark_red = "DarkRed"
     dark_red_border = "DarkRedBorder"
     yellow = "Yellow"
     light_yellow = "LightYellow"
-    light_gray = "LightGray"
-    dark_gray = "DarkGray"
     light_green = "LightGreen"
     green = "Green"
     green_border = "GreenBorder"

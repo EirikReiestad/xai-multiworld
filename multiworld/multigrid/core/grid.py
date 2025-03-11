@@ -1,18 +1,18 @@
-from collections import defaultdict
-from typing import Any, Iterable, List, Optional
+from typing import Any, Iterable, Optional
 
 import numpy as np
 from numpy.typing import NDArray
 
+from multiworld.core.position import Position
 from multiworld.multigrid.core.constants import TILE_PIXELS
 from multiworld.multigrid.core.world_object import WorldObject
-from multiworld.core.position import Position
 from multiworld.utils.rendering import (
     downsample,
     fill_coords,
     highlight_img,
     point_in_rect,
 )
+from utils.core.constants import Color
 
 from .agent import Agent
 
@@ -81,9 +81,10 @@ class Grid:
         if key in cls._tile_cache:
             return cls._tile_cache[key]
 
-        img = np.zeros(
-            shape=(tile_size * subdivs, tile_size * subdivs, 3), dtype=np.uint8
-        )
+        width = tile_size * subdivs
+        height = tile_size * subdivs
+        img = np.zeros((height, width, 3), dtype=np.uint8)
+        img[:, :] = Color(Color.black).rgb()
 
         # Draw the grid lines (top and left edges)
         fill_coords(img, point_in_rect(0, 0.031, 0, 1), (100, 100, 100))

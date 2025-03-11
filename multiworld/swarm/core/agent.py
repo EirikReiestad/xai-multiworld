@@ -5,7 +5,7 @@ import numpy as np
 from gymnasium import spaces
 from numpy.typing import NDArray as ndarray
 
-from multiworld.core.constants import Color
+from utils.core.constants import Color
 from multiworld.core.position import Position
 from multiworld.swarm.core.action import Action
 from multiworld.swarm.core.constants import WorldObjectType

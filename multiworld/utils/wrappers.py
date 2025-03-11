@@ -16,7 +16,7 @@ from gymnasium.core import ObservationWrapper
 from numpy.typing import NDArray as ndarray
 
 from multiworld.base import MultiWorldEnv
-from multiworld.core.constants import Color
+from utils.core.constants import Color
 from multiworld.multigrid.base import MultiGridEnv
 from multiworld.multigrid.core.constants import Direction, State, WorldObjectType
 from multiworld.multigrid.core.world_object import WorldObject

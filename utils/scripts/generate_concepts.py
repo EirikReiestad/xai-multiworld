@@ -48,15 +48,15 @@ def generate_concepts(
 ):
     concepts = [
         "random",
-        "goal_in_front",
-        "goal_in_view",
-        "goal_to_left",
-        "goal_to_right",
-        "wall_in_view",
-        "agent_in_view",
-        "agent_to_right",
-        "agent_to_left",
-        "agent_in_front",
+        # "goal_in_front",
+        # "goal_in_view",
+        # "goal_to_left",
+        # "goal_to_right",
+        # "wall_in_view",
+        # "agent_in_view",
+        # "agent_to_right",
+        # "agent_to_left",
+        # "agent_in_front",
     ]
 
     logging.info(

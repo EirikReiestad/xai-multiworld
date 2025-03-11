@@ -4,7 +4,7 @@ from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.network.network import NetworkType
 
-agents = 30
+agents = 3
 size = 15
 env = GoToGoalEnv(
     goals=1,
@@ -25,15 +25,15 @@ config = (
         replay_buffer_size=10000,
         gamma=0.99,
         learning_rate=3e-4,
-        eps_start=0.0,
-        eps_end=0.00,
+        eps_start=0.9,
+        eps_end=0.05,
         eps_decay=2000,
         update_method="soft",
         target_update=100,
     )
     .network(network_type=NetworkType.MULTI_INPUT)
     .environment(env=env)
-    .model("model_8000:v0")
+    # .model("model_8000:v0")
     # .model("model_150:v0")
     # .training()
     .debugging(log_level="INFO")

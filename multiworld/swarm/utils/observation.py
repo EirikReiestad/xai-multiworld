@@ -3,7 +3,7 @@ from typing import List, Tuple
 import numpy as np
 from numpy.typing import NDArray as ndarray
 
-from multiworld.core.constants import Color
+from utils.core.constants import Color
 from multiworld.core.position import Position
 from multiworld.swarm.core.agent import Agent, AgentState
 from multiworld.swarm.core.constants import WorldObjectType
