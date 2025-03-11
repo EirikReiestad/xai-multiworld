@@ -2,7 +2,6 @@ import numpy as np
 from gymnasium import spaces
 from numpy.typing import NDArray as ndarray
 
-from multiworld.core.constants import Color
 from multiworld.core.position import Position
 from multiworld.multigrid.core.action import Action
 from multiworld.multigrid.core.constants import Direction, WorldObjectType
@@ -19,6 +18,7 @@ from multiworld.utils.rendering import (
     point_in_triangle,
     rotate_fn,
 )
+from utils.core.constants import Color
 
 
 class Agent:
@@ -106,7 +106,7 @@ class AgentState(np.ndarray):
 
         # Set default values
         obj[..., AgentState.TYPE] = WorldObjectType.agent
-        obj[..., AgentState.COLOR].flat = Color.cycle(np.prod(dims))
+        obj[..., AgentState.COLOR].flat = Color(Color.blue)
         obj[..., AgentState.DIR] = -1
         obj[..., AgentState.POS] = (-1, -1)
 

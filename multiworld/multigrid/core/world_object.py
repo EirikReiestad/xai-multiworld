@@ -4,10 +4,10 @@ from typing import TYPE_CHECKING, Optional, Union
 import numpy as np
 from numpy.typing import NDArray
 
-from multiworld.core.constants import Color
-from multiworld.multigrid.core.constants import State, WorldObjectType
 from multiworld.core.position import Position
+from multiworld.multigrid.core.constants import State, WorldObjectType
 from multiworld.utils.rendering import fill_coords, point_in_rect
+from utils.core.constants import Color
 
 if TYPE_CHECKING:
     from multiworld.multigrid.base import MultiGridEnv
@@ -68,7 +68,7 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
     def __new__(
         cls,
         type_name: str | None = None,
-        color: str = Color.from_index(0),
+        color: str = Color.light_blue,
     ) -> "WorldObject":
         type_name = type_name or getattr(cls, "type_name", cls.__name__.lower())
         type_idx = WorldObjectType(type_name).to_index()
@@ -107,7 +107,10 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
                 f"Key is not available. Available keys (and corresponding values): {WorldObject._TYPE_IDX_TO_CLASS}. KeyError: {e}"
             )
         obj = cls.__new__(cls)
-        obj[...] = arr
+        obj[WorldObject.TYPE] = arr[WorldObject.TYPE]
+        obj[WorldObject.STATE] = arr[WorldObject.STATE]
+        # obj[...] = arr
+        # HERE TO OBJ IS ALWAYS GRAY INSTEAD OF THE CLASS COLOR
         return obj
 
     @functools.cached_property
@@ -253,7 +256,7 @@ class Floor(WorldObject):
     Colored floor tile an agent can walk over.
     """
 
-    def __new__(cls, color: str = Color.blue):
+    def __new__(cls, color: str = Color.dark_gray):
         """
         Parameters
         ----------
@@ -289,7 +292,7 @@ class Wall(WorldObject):
     """
 
     @functools.cache  # reuse instances, since object is effectively immutable
-    def __new__(cls, color: str = Color.grey):
+    def __new__(cls, color: str = Color.light_gray):
         """
         Parameters
         ----------
@@ -366,7 +369,9 @@ class Container(WorldObject):
     Container object that may contain one object.
     """
 
-    def __new__(cls, color: str = Color.purple, contains: WorldObject | None = None):
+    def __new__(
+        cls, color: str = Color.light_pink, contains: WorldObject | None = None
+    ):
         """
         Parameters
         ----------

@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING, List, Optional, Tuple, Union
 import numpy as np
 from numpy.typing import NDArray
 
-from multiworld.core.constants import Color
+from utils.core.constants import Color
 from multiworld.core.position import Position
 from multiworld.swarm.core.constants import OBJECT_SIZE, State, WorldObjectType
 from multiworld.utils.rendering import (
@@ -73,7 +73,7 @@ class WorldObject(np.ndarray, metaclass=WorldObjectMeta):
     def __new__(
         cls,
         type_name: str | None = None,
-        color: str = Color.from_index(0),
+        color: str = Color.light_blue,
         object_size: int = OBJECT_SIZE,
     ) -> "WorldObject":
         type_name = type_name or getattr(cls, "type_name", cls.__name__.lower())
@@ -277,7 +277,7 @@ class Goal(WorldObject):
     Goal object an agent may be searching for.
     """
 
-    def __new__(cls, color: str = Color.green):
+    def __new__(cls, color: str = Color.light_green):
         return super().__new__(cls, color=color)
 
     def can_overlap(self) -> bool:
@@ -298,7 +298,7 @@ class Floor(WorldObject):
     Colored floor tile an agent can walk over.
     """
 
-    def __new__(cls, color: str = Color.blue):
+    def __new__(cls, color: str = Color.dark_gray):
         """
         Parameters
         ----------
@@ -334,7 +334,7 @@ class Wall(WorldObject):
     """
 
     @functools.cache  # reuse instances, since object is effectively immutable
-    def __new__(cls, color: str = Color.grey):
+    def __new__(cls, color: str = Color.light_gray):
         """
         Parameters
         ----------
@@ -411,7 +411,7 @@ class Container(WorldObject):
     Container object that may contain one object.
     """
 
-    def __new__(cls, color: str = Color.purple, contains: WorldObject | None = None):
+    def __new__(cls, color: str = Color.pink, contains: WorldObject | None = None):
         """
         Parameters
         ----------

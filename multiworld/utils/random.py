@@ -3,7 +3,7 @@ from typing import Iterable, TypeVar
 import numpy as np
 from numpy._typing import _ArrayLikeFloat_co
 
-from multiworld.core.constants import Color
+from utils.core.constants import Color
 from multiworld.core.position import Position
 
 T = TypeVar("T")
