@@ -10,7 +10,7 @@
     },
     "model": {
         "type": "dqn",
-        "method": "random"
+        "method": "policy"
     },
     "collect_rollouts": {
         "observations": 3000,
@@ -20,7 +20,7 @@
         "observations": 500
     },
     "calculate_cavs": {
-        "M": 5,
+        "M": 10,
         "lambda_1": 0.1,
         "lambda_2": 0.1,
         "batch_size": 128,

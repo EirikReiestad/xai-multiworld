@@ -346,7 +346,7 @@ def calculate_cavs(
         observations[str(m)] = m_observation
         activation_data[str(m)] = data[indices]
         filename = f"{m}_cav_observations.json"
-        path = os.path.join(observation_path, filename)
+        path = os.path.join(result_path, filename)
         with open(path, "w") as f:
             json.dump(m_observation, f, indent=4, cls=NumpyEncoder)
 

@@ -1,27 +1,27 @@
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-2025-03-10 15:39:14 | INFO | Downloading models...
+2025-03-10 16:56:29 | INFO | Downloading models...
 wandb:   1 of 1 files downloaded.  
-2025-03-10 15:39:16 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_0:v0
-2025-03-10 15:39:16 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.8666710232794748, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-2025-03-10 15:39:16 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_0:v0/metadata.json
+2025-03-10 16:56:30 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_0:v0
+2025-03-10 16:56:30 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.8666710232794748, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
+2025-03-10 16:56:30 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_0:v0/metadata.json
 wandb:   1 of 1 files downloaded.  
-2025-03-10 15:39:17 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_300:v0
-2025-03-10 15:39:17 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05104251529858452, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-2025-03-10 15:39:17 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_300:v0/metadata.json
+2025-03-10 16:56:31 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_300:v0
+2025-03-10 16:56:31 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05104251529858452, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
+2025-03-10 16:56:31 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_300:v0/metadata.json
 wandb:   1 of 1 files downloaded.  
-2025-03-10 15:39:18 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_600:v0
-2025-03-10 15:39:18 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05000067192512115, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-2025-03-10 15:39:18 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_600:v0/metadata.json
+2025-03-10 16:56:33 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_600:v0
+2025-03-10 16:56:33 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05000067192512115, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
+2025-03-10 16:56:33 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_600:v0/metadata.json
 wandb:   1 of 1 files downloaded.  
-2025-03-10 15:39:20 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_900:v0
-2025-03-10 15:39:20 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05000000042271669, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-2025-03-10 15:39:20 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_900:v0/metadata.json
+2025-03-10 16:56:34 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_900:v0
+2025-03-10 16:56:34 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05000000042271669, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
+2025-03-10 16:56:34 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_900:v0/metadata.json
 wandb:   1 of 1 files downloaded.  
-2025-03-10 15:39:21 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_1200:v0
-2025-03-10 15:39:21 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05000000000032178, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-2025-03-10 15:39:21 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_1200:v0/metadata.json
-2025-03-10 15:39:21 | INFO | Creating environment...
-2025-03-10 15:39:40 | INFO | MultiInputNetwork(
+2025-03-10 16:56:35 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_1200:v0
+2025-03-10 16:56:35 | INFO | Metadata: {'width': 20, 'agents': 1, 'height': 20, 'env_type': 'go-to-goal', 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05000000000032178, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
+2025-03-10 16:56:35 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_1200:v0/metadata.json
+2025-03-10 16:56:35 | INFO | Creating environment...
+2025-03-10 16:56:54 | INFO | MultiInputNetwork(
   (_conv0): ConvProcessor(
     (conv_layers): Sequential(
       (0): Conv2d(5, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
@@ -51,557 +51,397 @@ wandb:   1 of 1 files downloaded.
     )
   )
 )
-2025-03-10 15:39:40 | INFO | Collecting rollouts...
-2025-03-10 15:44:00 | INFO | Generating concepts...
-2025-03-10 15:44:00 | INFO | Step 0
-2025-03-10 15:44:00 | INFO | Number of concepts filled: 0 / 6000
-2025-03-10 15:44:07 | INFO | Step 500
-2025-03-10 15:44:07 | INFO | Number of concepts filled: 892 / 6000
-2025-03-10 15:44:14 | INFO | Step 1000
-2025-03-10 15:44:14 | INFO | Number of concepts filled: 1846 / 6000
-2025-03-10 15:44:21 | INFO | Step 1500
-2025-03-10 15:44:21 | INFO | Number of concepts filled: 2525 / 6000
-2025-03-10 15:44:28 | INFO | Step 2000
-2025-03-10 15:44:28 | INFO | Number of concepts filled: 3192 / 6000
-2025-03-10 15:44:35 | INFO | Step 2500
-2025-03-10 15:44:35 | INFO | Number of concepts filled: 3889 / 6000
-2025-03-10 15:44:42 | INFO | Step 3000
-2025-03-10 15:44:42 | INFO | Number of concepts filled: 4297 / 6000
-2025-03-10 15:44:49 | INFO | Step 3500
-2025-03-10 15:44:49 | INFO | Number of concepts filled: 4486 / 6000
-2025-03-10 15:44:56 | INFO | Step 4000
-2025-03-10 15:44:56 | INFO | Number of concepts filled: 4711 / 6000
-2025-03-10 15:45:03 | INFO | Step 4500
-2025-03-10 15:45:03 | INFO | Number of concepts filled: 4881 / 6000
-2025-03-10 15:45:10 | INFO | Step 5000
-2025-03-10 15:45:10 | INFO | Number of concepts filled: 5027 / 6000
-2025-03-10 15:45:17 | INFO | Step 5500
-2025-03-10 15:45:17 | INFO | Number of concepts filled: 5147 / 6000
-2025-03-10 15:45:24 | INFO | Step 6000
-2025-03-10 15:45:24 | INFO | Number of concepts filled: 5209 / 6000
-2025-03-10 15:45:30 | INFO | Step 6500
-2025-03-10 15:45:30 | INFO | Number of concepts filled: 5272 / 6000
-2025-03-10 15:45:37 | INFO | Step 7000
-2025-03-10 15:45:37 | INFO | Number of concepts filled: 5333 / 6000
-2025-03-10 15:45:43 | INFO | Step 7500
-2025-03-10 15:45:43 | INFO | Number of concepts filled: 5396 / 6000
-2025-03-10 15:45:50 | INFO | Step 8000
-2025-03-10 15:45:50 | INFO | Number of concepts filled: 5448 / 6000
-2025-03-10 15:45:57 | INFO | Step 8500
-2025-03-10 15:45:57 | INFO | Number of concepts filled: 5500 / 6000
-2025-03-10 15:46:03 | INFO | Step 9000
-2025-03-10 15:46:03 | INFO | Number of concepts filled: 5556 / 6000
-2025-03-10 15:46:10 | INFO | Step 9500
-2025-03-10 15:46:10 | INFO | Number of concepts filled: 5604 / 6000
-2025-03-10 15:46:16 | INFO | Step 10000
-2025-03-10 15:46:16 | INFO | Number of concepts filled: 5619 / 6000
-2025-03-10 15:46:22 | INFO | Step 10500
-2025-03-10 15:46:22 | INFO | Number of concepts filled: 5624 / 6000
-2025-03-10 15:46:29 | INFO | Step 11000
-2025-03-10 15:46:29 | INFO | Number of concepts filled: 5630 / 6000
-2025-03-10 15:46:35 | INFO | Step 11500
-2025-03-10 15:46:35 | INFO | Number of concepts filled: 5638 / 6000
-2025-03-10 15:46:41 | INFO | Step 12000
-2025-03-10 15:46:41 | INFO | Number of concepts filled: 5641 / 6000
-2025-03-10 15:46:48 | INFO | Step 12500
-2025-03-10 15:46:48 | INFO | Number of concepts filled: 5653 / 6000
-2025-03-10 15:46:54 | INFO | Step 13000
-2025-03-10 15:46:54 | INFO | Number of concepts filled: 5659 / 6000
-2025-03-10 15:47:00 | INFO | Step 13500
-2025-03-10 15:47:00 | INFO | Number of concepts filled: 5665 / 6000
-2025-03-10 15:47:06 | INFO | Step 14000
-2025-03-10 15:47:06 | INFO | Number of concepts filled: 5670 / 6000
-2025-03-10 15:47:13 | INFO | Step 14500
-2025-03-10 15:47:13 | INFO | Number of concepts filled: 5677 / 6000
-2025-03-10 15:47:19 | INFO | Step 15000
-2025-03-10 15:47:19 | INFO | Number of concepts filled: 5682 / 6000
-2025-03-10 15:47:25 | INFO | Step 15500
-2025-03-10 15:47:25 | INFO | Number of concepts filled: 5684 / 6000
-2025-03-10 15:47:32 | INFO | Step 16000
-2025-03-10 15:47:32 | INFO | Number of concepts filled: 5687 / 6000
-2025-03-10 15:47:38 | INFO | Step 16500
-2025-03-10 15:47:38 | INFO | Number of concepts filled: 5695 / 6000
-2025-03-10 15:47:44 | INFO | Step 17000
-2025-03-10 15:47:44 | INFO | Number of concepts filled: 5700 / 6000
-2025-03-10 15:47:51 | INFO | Step 17500
-2025-03-10 15:47:51 | INFO | Number of concepts filled: 5703 / 6000
-2025-03-10 15:47:57 | INFO | Step 18000
-2025-03-10 15:47:57 | INFO | Number of concepts filled: 5709 / 6000
-2025-03-10 15:48:03 | INFO | Step 18500
-2025-03-10 15:48:03 | INFO | Number of concepts filled: 5714 / 6000
-2025-03-10 15:48:09 | INFO | Step 19000
-2025-03-10 15:48:09 | INFO | Number of concepts filled: 5726 / 6000
-2025-03-10 15:48:16 | INFO | Step 19500
-2025-03-10 15:48:16 | INFO | Number of concepts filled: 5732 / 6000
-2025-03-10 15:48:22 | INFO | Step 20000
-2025-03-10 15:48:22 | INFO | Number of concepts filled: 5740 / 6000
-2025-03-10 15:48:28 | INFO | Step 20500
-2025-03-10 15:48:28 | INFO | Number of concepts filled: 5750 / 6000
-2025-03-10 15:48:35 | INFO | Step 21000
-2025-03-10 15:48:35 | INFO | Number of concepts filled: 5753 / 6000
-2025-03-10 15:48:41 | INFO | Step 21500
-2025-03-10 15:48:41 | INFO | Number of concepts filled: 5758 / 6000
-2025-03-10 15:48:47 | INFO | Step 22000
-2025-03-10 15:48:47 | INFO | Number of concepts filled: 5766 / 6000
-2025-03-10 15:48:54 | INFO | Step 22500
-2025-03-10 15:48:54 | INFO | Number of concepts filled: 5771 / 6000
-2025-03-10 15:49:00 | INFO | Step 23000
-2025-03-10 15:49:00 | INFO | Number of concepts filled: 5775 / 6000
-2025-03-10 15:49:06 | INFO | Step 23500
-2025-03-10 15:49:06 | INFO | Number of concepts filled: 5785 / 6000
-2025-03-10 15:49:12 | INFO | Step 24000
-2025-03-10 15:49:12 | INFO | Number of concepts filled: 5792 / 6000
-2025-03-10 15:49:19 | INFO | Step 24500
-2025-03-10 15:49:19 | INFO | Number of concepts filled: 5798 / 6000
-2025-03-10 15:49:25 | INFO | Step 25000
-2025-03-10 15:49:25 | INFO | Number of concepts filled: 5804 / 6000
-2025-03-10 15:49:31 | INFO | Step 25500
-2025-03-10 15:49:31 | INFO | Number of concepts filled: 5810 / 6000
-2025-03-10 15:49:37 | INFO | Step 26000
-2025-03-10 15:49:37 | INFO | Number of concepts filled: 5821 / 6000
-2025-03-10 15:49:44 | INFO | Step 26500
-2025-03-10 15:49:44 | INFO | Number of concepts filled: 5824 / 6000
-2025-03-10 15:49:50 | INFO | Step 27000
-2025-03-10 15:49:50 | INFO | Number of concepts filled: 5827 / 6000
-2025-03-10 15:49:56 | INFO | Step 27500
-2025-03-10 15:49:56 | INFO | Number of concepts filled: 5834 / 6000
-2025-03-10 15:50:03 | INFO | Step 28000
-2025-03-10 15:50:03 | INFO | Number of concepts filled: 5837 / 6000
-2025-03-10 15:50:09 | INFO | Step 28500
-2025-03-10 15:50:09 | INFO | Number of concepts filled: 5842 / 6000
-2025-03-10 15:50:21 | INFO | Step 29500
-2025-03-10 15:50:21 | INFO | Number of concepts filled: 5846 / 6000
-2025-03-10 15:50:28 | INFO | Step 30000
-2025-03-10 15:50:28 | INFO | Number of concepts filled: 5851 / 6000
-2025-03-10 15:50:34 | INFO | Step 30500
-2025-03-10 15:50:34 | INFO | Number of concepts filled: 5856 / 6000
-2025-03-10 15:50:40 | INFO | Step 31000
-2025-03-10 15:50:40 | INFO | Number of concepts filled: 5859 / 6000
-2025-03-10 15:50:47 | INFO | Step 31500
-2025-03-10 15:50:47 | INFO | Number of concepts filled: 5864 / 6000
-2025-03-10 15:50:53 | INFO | Step 32000
-2025-03-10 15:50:53 | INFO | Number of concepts filled: 5869 / 6000
-2025-03-10 15:50:59 | INFO | Step 32500
-2025-03-10 15:50:59 | INFO | Number of concepts filled: 5874 / 6000
-2025-03-10 15:51:06 | INFO | Step 33000
-2025-03-10 15:51:06 | INFO | Number of concepts filled: 5880 / 6000
-2025-03-10 15:51:12 | INFO | Step 33500
-2025-03-10 15:51:12 | INFO | Number of concepts filled: 5887 / 6000
-2025-03-10 15:51:18 | INFO | Step 34000
-2025-03-10 15:51:18 | INFO | Number of concepts filled: 5893 / 6000
-2025-03-10 15:51:24 | INFO | Step 34500
-2025-03-10 15:51:24 | INFO | Number of concepts filled: 5898 / 6000
-2025-03-10 15:51:31 | INFO | Step 35000
-2025-03-10 15:51:31 | INFO | Number of concepts filled: 5900 / 6000
-2025-03-10 15:51:37 | INFO | Step 35500
-2025-03-10 15:51:37 | INFO | Number of concepts filled: 5908 / 6000
-2025-03-10 15:51:43 | INFO | Step 36000
-2025-03-10 15:51:43 | INFO | Number of concepts filled: 5914 / 6000
-2025-03-10 15:51:49 | INFO | Step 36500
-2025-03-10 15:51:49 | INFO | Number of concepts filled: 5920 / 6000
-2025-03-10 15:51:56 | INFO | Step 37000
-2025-03-10 15:51:56 | INFO | Number of concepts filled: 5922 / 6000
-2025-03-10 15:52:02 | INFO | Step 37500
-2025-03-10 15:52:02 | INFO | Number of concepts filled: 5933 / 6000
-2025-03-10 15:52:08 | INFO | Step 38000
-2025-03-10 15:52:08 | INFO | Number of concepts filled: 5937 / 6000
-2025-03-10 15:52:15 | INFO | Step 38500
-2025-03-10 15:52:15 | INFO | Number of concepts filled: 5952 / 6000
-2025-03-10 15:52:21 | INFO | Step 39000
-2025-03-10 15:52:21 | INFO | Number of concepts filled: 5955 / 6000
-2025-03-10 15:52:27 | INFO | Step 39500
-2025-03-10 15:52:27 | INFO | Number of concepts filled: 5963 / 6000
-2025-03-10 15:52:34 | INFO | Step 40000
-2025-03-10 15:52:34 | INFO | Number of concepts filled: 5965 / 6000
-2025-03-10 15:52:40 | INFO | Step 40500
-2025-03-10 15:52:40 | INFO | Number of concepts filled: 5970 / 6000
-2025-03-10 15:52:46 | INFO | Step 41000
-2025-03-10 15:52:46 | INFO | Number of concepts filled: 5977 / 6000
-2025-03-10 15:52:52 | INFO | Step 41500
-2025-03-10 15:52:52 | INFO | Number of concepts filled: 5984 / 6000
-2025-03-10 15:52:59 | INFO | Step 42000
-2025-03-10 15:52:59 | INFO | Number of concepts filled: 5994 / 6000
-2025-03-10 15:53:02 | INFO | Writing concept observations to disk...
-2025-03-10 15:53:04 | INFO | Loading concept observations...
-2025-03-10 15:53:04 | INFO | Getting probes and activations for concepts...
-2025-03-10 15:53:20 | INFO | Calculating network completeness score for concepts...
-2025-03-10 15:53:21 | INFO | Element 0 occurs 570 times.
-2025-03-10 15:53:21 | INFO | Element 1 occurs 1734 times.
-2025-03-10 15:53:21 | INFO | Element 2 occurs 608 times.
-2025-03-10 15:58:26 | INFO | 
+2025-03-10 16:56:54 | INFO | Collecting rollouts...
+2025-03-10 17:00:12 | INFO | Generating concepts...
+2025-03-10 17:00:12 | INFO | Step 0
+2025-03-10 17:00:12 | INFO | Number of concepts filled: 0 / 6000
+2025-03-10 17:00:16 | INFO | Step 500
+2025-03-10 17:00:16 | INFO | Number of concepts filled: 965 / 6000
+2025-03-10 17:00:20 | INFO | Step 1000
+2025-03-10 17:00:20 | INFO | Number of concepts filled: 1853 / 6000
+2025-03-10 17:00:23 | INFO | Step 1500
+2025-03-10 17:00:23 | INFO | Number of concepts filled: 2596 / 6000
+2025-03-10 17:00:27 | INFO | Step 2000
+2025-03-10 17:00:27 | INFO | Number of concepts filled: 3275 / 6000
+2025-03-10 17:00:31 | INFO | Step 2500
+2025-03-10 17:00:31 | INFO | Number of concepts filled: 3962 / 6000
+2025-03-10 17:00:35 | INFO | Step 3000
+2025-03-10 17:00:35 | INFO | Number of concepts filled: 4352 / 6000
+2025-03-10 17:00:39 | INFO | Step 3500
+2025-03-10 17:00:39 | INFO | Number of concepts filled: 4553 / 6000
+2025-03-10 17:00:43 | INFO | Step 4000
+2025-03-10 17:00:43 | INFO | Number of concepts filled: 4659 / 6000
+2025-03-10 17:00:47 | INFO | Step 4500
+2025-03-10 17:00:47 | INFO | Number of concepts filled: 4814 / 6000
+2025-03-10 17:00:51 | INFO | Step 5000
+2025-03-10 17:00:51 | INFO | Number of concepts filled: 4915 / 6000
+2025-03-10 17:00:54 | INFO | Step 5500
+2025-03-10 17:00:54 | INFO | Number of concepts filled: 5016 / 6000
+2025-03-10 17:00:58 | INFO | Step 6000
+2025-03-10 17:00:58 | INFO | Number of concepts filled: 5150 / 6000
+2025-03-10 17:01:02 | INFO | Step 6500
+2025-03-10 17:01:02 | INFO | Number of concepts filled: 5257 / 6000
+2025-03-10 17:01:05 | INFO | Step 7000
+2025-03-10 17:01:05 | INFO | Number of concepts filled: 5291 / 6000
+2025-03-10 17:01:09 | INFO | Step 7500
+2025-03-10 17:01:09 | INFO | Number of concepts filled: 5405 / 6000
+2025-03-10 17:01:12 | INFO | Step 8000
+2025-03-10 17:01:12 | INFO | Number of concepts filled: 5444 / 6000
+2025-03-10 17:01:16 | INFO | Step 8500
+2025-03-10 17:01:16 | INFO | Number of concepts filled: 5508 / 6000
+2025-03-10 17:01:20 | INFO | Step 9000
+2025-03-10 17:01:20 | INFO | Number of concepts filled: 5644 / 6000
+2025-03-10 17:01:23 | INFO | Step 9500
+2025-03-10 17:01:23 | INFO | Number of concepts filled: 5672 / 6000
+2025-03-10 17:01:27 | INFO | Step 10000
+2025-03-10 17:01:27 | INFO | Number of concepts filled: 5781 / 6000
+2025-03-10 17:01:30 | INFO | Step 10500
+2025-03-10 17:01:30 | INFO | Number of concepts filled: 5807 / 6000
+2025-03-10 17:01:33 | INFO | Step 11000
+2025-03-10 17:01:33 | INFO | Number of concepts filled: 5827 / 6000
+2025-03-10 17:01:37 | INFO | Step 11500
+2025-03-10 17:01:37 | INFO | Number of concepts filled: 5834 / 6000
+2025-03-10 17:01:40 | INFO | Step 12000
+2025-03-10 17:01:40 | INFO | Number of concepts filled: 5853 / 6000
+2025-03-10 17:01:43 | INFO | Step 12500
+2025-03-10 17:01:43 | INFO | Number of concepts filled: 5863 / 6000
+2025-03-10 17:01:47 | INFO | Step 13000
+2025-03-10 17:01:47 | INFO | Number of concepts filled: 5877 / 6000
+2025-03-10 17:01:50 | INFO | Step 13500
+2025-03-10 17:01:50 | INFO | Number of concepts filled: 5920 / 6000
+2025-03-10 17:01:53 | INFO | Step 14000
+2025-03-10 17:01:53 | INFO | Number of concepts filled: 5958 / 6000
+2025-03-10 17:01:56 | INFO | Step 14500
+2025-03-10 17:01:56 | INFO | Number of concepts filled: 5984 / 6000
+2025-03-10 17:02:00 | INFO | Step 15000
+2025-03-10 17:02:00 | INFO | Number of concepts filled: 5987 / 6000
+2025-03-10 17:02:03 | INFO | Step 15500
+2025-03-10 17:02:03 | INFO | Number of concepts filled: 5990 / 6000
+2025-03-10 17:02:05 | INFO | Writing concept observations to disk...
+2025-03-10 17:02:06 | INFO | Loading concept observations...
+2025-03-10 17:02:07 | INFO | Getting probes and activations for concepts...
+2025-03-10 17:02:19 | INFO | Calculating network completeness score for concepts...
+2025-03-10 17:02:20 | INFO | Element 0 occurs 909 times.
+2025-03-10 17:02:20 | INFO | Element 1 occurs 1466 times.
+2025-03-10 17:02:20 | INFO | Element 2 occurs 478 times.
+2025-03-10 17:05:29 | INFO | 
 Combination                                                                             Loss    Accuracy
 ----------------------------------------------------------------------------------  --------  ----------
-('goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')                   0.728133     74.2268
-('goal_in_view', 'goal_to_right')                                                   0.77555      71.134
-('goal_in_front', 'goal_in_view', 'goal_to_right', 'wall_in_view')                  0.673037     70.1031
-('goal_to_left',)                                                                   0.879972     69.7595
-('goal_in_view', 'goal_to_left', 'goal_to_right')                                   0.815716     69.7595
-('goal_in_view',)                                                                   0.849056     69.4158
-('goal_in_front', 'goal_in_view', 'goal_to_right')                                  0.812886     69.0722
-('goal_to_left', 'wall_in_view')                                                    0.708074     68.7285
-('random0',)                                                                        0.768083     68.3849
-('goal_in_front', 'goal_to_left')                                                   0.893141     68.3849
-('goal_in_view', 'wall_in_view')                                                    0.770312     67.6976
-('goal_in_front', 'goal_in_view', 'goal_to_left')                                   0.851743     67.6976
-('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')  0.72457      67.6976
-('goal_in_front', 'wall_in_view')                                                   0.721437     67.0103
-('goal_to_right', 'wall_in_view')                                                   0.865121     67.0103
-('goal_to_left', 'goal_to_right', 'wall_in_view')                                   0.684113     66.6667
-('goal_in_view', 'goal_to_left')                                                    0.84505      65.9794
-('goal_to_right',)                                                                  0.875521     65.6357
-('goal_in_front', 'goal_to_right')                                                  0.915451     65.6357
-('goal_in_front', 'goal_in_view', 'wall_in_view')                                   0.752878     65.6357
-('goal_in_front', 'goal_to_left', 'goal_to_right', 'wall_in_view')                  0.720004     65.6357
-('random0', 'random1')                                                              0.817249     65.2921
-('goal_to_left', 'goal_to_right')                                                   0.845156     65.2921
-('goal_in_front', 'goal_to_left', 'goal_to_right')                                  0.883276     64.9485
-('random',)                                                                         0.782331     64.6048
-('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right')                  0.876249     64.6048
-('goal_in_front',)                                                                  0.879224     63.9175
-('goal_in_view', 'goal_to_left', 'wall_in_view')                                    0.701835     63.9175
-('goal_in_front', 'goal_in_view')                                                   0.898381     63.5739
-('goal_in_front', 'goal_to_right', 'wall_in_view')                                  0.798186     63.5739
-('goal_in_front', 'goal_in_view', 'goal_to_left', 'wall_in_view')                   0.716014     63.5739
-('goal_in_view', 'goal_to_right', 'wall_in_view')                                   0.756336     63.2302
-('goal_in_front', 'goal_to_left', 'wall_in_view')                                   0.763176     62.8866
-('wall_in_view',)                                                                   0.789267     62.1993
-('random0', 'random1', 'random2')                                                   0.843407     58.4192
-('random0', 'random1', 'random2', 'random3')                                        0.85657      56.701
-2025-03-10 15:58:26 | INFO | 
+('goal_to_left', 'goal_to_right', 'wall_in_view')                                   0.700716     67.3684
+('goal_in_front', 'goal_in_view', 'goal_to_right', 'wall_in_view')                  0.683502     64.2105
+('goal_to_left',)                                                                   0.863591     62.807
+('goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')                   0.714528     62.4561
+('goal_to_left', 'wall_in_view')                                                    0.746992     62.1053
+('goal_in_front', 'goal_to_left', 'wall_in_view')                                   0.736654     61.7544
+('goal_in_view', 'goal_to_left', 'goal_to_right')                                   0.831589     61.7544
+('goal_to_left', 'goal_to_right')                                                   0.819654     60.7018
+('goal_in_front', 'goal_in_view', 'wall_in_view')                                   0.798903     60.7018
+('goal_in_front', 'goal_to_left', 'goal_to_right', 'wall_in_view')                  0.7197       60.7018
+('goal_in_view', 'goal_to_left', 'wall_in_view')                                    0.742923     60.3509
+('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')  0.686574     60
+('goal_in_front', 'goal_to_right', 'wall_in_view')                                  0.831776     59.6491
+('goal_to_right', 'wall_in_view')                                                   0.862649     59.2982
+('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right')                  0.879347     58.9474
+('goal_in_front', 'goal_in_view', 'goal_to_left')                                   0.894469     58.2456
+('goal_in_front', 'goal_in_view', 'goal_to_left', 'wall_in_view')                   0.763036     57.8947
+('goal_in_front', 'goal_in_view', 'goal_to_right')                                  0.913702     57.193
+('wall_in_view',)                                                                   0.918538     56.8421
+('goal_in_view', 'goal_to_right')                                                   0.914659     56.8421
+('goal_in_front', 'goal_to_left', 'goal_to_right')                                  0.850179     56.4912
+('goal_in_view', 'wall_in_view')                                                    0.747714     56.1404
+('goal_in_view', 'goal_to_right', 'wall_in_view')                                   0.750394     56.1404
+('goal_in_front',)                                                                  0.958675     55.4386
+('goal_in_front', 'goal_in_view')                                                   0.908231     55.4386
+('goal_in_front', 'goal_to_left')                                                   0.930388     54.386
+('goal_in_view', 'goal_to_left')                                                    0.911137     54.386
+('random0', 'random1')                                                              1.01361      54.0351
+('random0', 'random1', 'random2', 'random3')                                        1.02954      53.3333
+('random',)                                                                         0.998519     52.6316
+('random0', 'random1', 'random2')                                                   1.00985      51.9298
+('goal_in_view',)                                                                   0.977338     51.9298
+('goal_in_front', 'goal_to_right')                                                  0.964557     51.9298
+('goal_in_front', 'wall_in_view')                                                   0.871174     51.9298
+('random0',)                                                                        0.976373     50.8772
+('goal_to_right',)                                                                  1.02872      49.4737
+2025-03-10 17:05:29 | INFO | 
 Combination                                                                             Loss    Accuracy
 ----------------------------------------------------------------------------------  --------  ----------
-('goal_in_front', 'goal_in_view', 'goal_to_right', 'wall_in_view')                  0.673037     70.1031
-('goal_to_left', 'goal_to_right', 'wall_in_view')                                   0.684113     66.6667
-('goal_in_view', 'goal_to_left', 'wall_in_view')                                    0.701835     63.9175
-('goal_to_left', 'wall_in_view')                                                    0.708074     68.7285
-('goal_in_front', 'goal_in_view', 'goal_to_left', 'wall_in_view')                   0.716014     63.5739
-('goal_in_front', 'goal_to_left', 'goal_to_right', 'wall_in_view')                  0.720004     65.6357
-('goal_in_front', 'wall_in_view')                                                   0.721437     67.0103
-('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')  0.72457      67.6976
-('goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')                   0.728133     74.2268
-('goal_in_front', 'goal_in_view', 'wall_in_view')                                   0.752878     65.6357
-('goal_in_view', 'goal_to_right', 'wall_in_view')                                   0.756336     63.2302
-('goal_in_front', 'goal_to_left', 'wall_in_view')                                   0.763176     62.8866
-('random0',)                                                                        0.768083     68.3849
-('goal_in_view', 'wall_in_view')                                                    0.770312     67.6976
-('goal_in_view', 'goal_to_right')                                                   0.77555      71.134
-('random',)                                                                         0.782331     64.6048
-('wall_in_view',)                                                                   0.789267     62.1993
-('goal_in_front', 'goal_to_right', 'wall_in_view')                                  0.798186     63.5739
-('goal_in_front', 'goal_in_view', 'goal_to_right')                                  0.812886     69.0722
-('goal_in_view', 'goal_to_left', 'goal_to_right')                                   0.815716     69.7595
-('random0', 'random1')                                                              0.817249     65.2921
-('random0', 'random1', 'random2')                                                   0.843407     58.4192
-('goal_in_view', 'goal_to_left')                                                    0.84505      65.9794
-('goal_to_left', 'goal_to_right')                                                   0.845156     65.2921
-('goal_in_view',)                                                                   0.849056     69.4158
-('goal_in_front', 'goal_in_view', 'goal_to_left')                                   0.851743     67.6976
-('random0', 'random1', 'random2', 'random3')                                        0.85657      56.701
-('goal_to_right', 'wall_in_view')                                                   0.865121     67.0103
-('goal_to_right',)                                                                  0.875521     65.6357
-('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right')                  0.876249     64.6048
-('goal_in_front',)                                                                  0.879224     63.9175
-('goal_to_left',)                                                                   0.879972     69.7595
-('goal_in_front', 'goal_to_left', 'goal_to_right')                                  0.883276     64.9485
-('goal_in_front', 'goal_to_left')                                                   0.893141     68.3849
-('goal_in_front', 'goal_in_view')                                                   0.898381     63.5739
-('goal_in_front', 'goal_to_right')                                                  0.915451     65.6357
-2025-03-10 15:58:26 | INFO | 
+('goal_in_front', 'goal_in_view', 'goal_to_right', 'wall_in_view')                  0.683502     64.2105
+('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')  0.686574     60
+('goal_to_left', 'goal_to_right', 'wall_in_view')                                   0.700716     67.3684
+('goal_in_view', 'goal_to_left', 'goal_to_right', 'wall_in_view')                   0.714528     62.4561
+('goal_in_front', 'goal_to_left', 'goal_to_right', 'wall_in_view')                  0.7197       60.7018
+('goal_in_front', 'goal_to_left', 'wall_in_view')                                   0.736654     61.7544
+('goal_in_view', 'goal_to_left', 'wall_in_view')                                    0.742923     60.3509
+('goal_to_left', 'wall_in_view')                                                    0.746992     62.1053
+('goal_in_view', 'wall_in_view')                                                    0.747714     56.1404
+('goal_in_view', 'goal_to_right', 'wall_in_view')                                   0.750394     56.1404
+('goal_in_front', 'goal_in_view', 'goal_to_left', 'wall_in_view')                   0.763036     57.8947
+('goal_in_front', 'goal_in_view', 'wall_in_view')                                   0.798903     60.7018
+('goal_to_left', 'goal_to_right')                                                   0.819654     60.7018
+('goal_in_view', 'goal_to_left', 'goal_to_right')                                   0.831589     61.7544
+('goal_in_front', 'goal_to_right', 'wall_in_view')                                  0.831776     59.6491
+('goal_in_front', 'goal_to_left', 'goal_to_right')                                  0.850179     56.4912
+('goal_to_right', 'wall_in_view')                                                   0.862649     59.2982
+('goal_to_left',)                                                                   0.863591     62.807
+('goal_in_front', 'wall_in_view')                                                   0.871174     51.9298
+('goal_in_front', 'goal_in_view', 'goal_to_left', 'goal_to_right')                  0.879347     58.9474
+('goal_in_front', 'goal_in_view', 'goal_to_left')                                   0.894469     58.2456
+('goal_in_front', 'goal_in_view')                                                   0.908231     55.4386
+('goal_in_view', 'goal_to_left')                                                    0.911137     54.386
+('goal_in_front', 'goal_in_view', 'goal_to_right')                                  0.913702     57.193
+('goal_in_view', 'goal_to_right')                                                   0.914659     56.8421
+('wall_in_view',)                                                                   0.918538     56.8421
+('goal_in_front', 'goal_to_left')                                                   0.930388     54.386
+('goal_in_front',)                                                                  0.958675     55.4386
+('goal_in_front', 'goal_to_right')                                                  0.964557     51.9298
+('random0',)                                                                        0.976373     50.8772
+('goal_in_view',)                                                                   0.977338     51.9298
+('random',)                                                                         0.998519     52.6316
+('random0', 'random1', 'random2')                                                   1.00985      51.9298
+('random0', 'random1')                                                              1.01361      54.0351
+('goal_to_right',)                                                                  1.02872      49.4737
+('random0', 'random1', 'random2', 'random3')                                        1.02954      53.3333
+2025-03-10 17:05:29 | INFO | 
 Concept          Shapley value
 -------------  ---------------
-goal_to_right      1.59794
-goal_in_view       1.38603
-wall_in_view       0.337915
-goal_to_left      -1.66533e-15
-goal_in_front     -1.80985
-2025-03-10 15:58:26 | INFO | Calculating decisiontree completeness score for concepts...
-2025-03-10 15:58:46 | INFO | 
+wall_in_view          2.35673
+goal_to_right         1.57895
+goal_to_left          1.51462
+goal_in_view          0.152047
+goal_in_front        -0.900585
+2025-03-10 17:05:29 | INFO | Calculating decisiontree completeness score for concepts...
+2025-03-10 17:05:43 | INFO | 
 Concept          Feature importance    Splits
 -------------  --------------------  --------
-random                     0.442485       1
-wall_in_view               0.342928       2
-goal_to_right              0.104203       1.4
-goal_to_left               0.070829       1.9
-goal_in_view               0.028745       1.6
-goal_in_front              0.01081        2
-2025-03-10 15:58:46 | INFO | 
-Tree Depth: 4
-2025-03-10 15:58:46 | INFO | Number of Leaves: 10
-2025-03-10 15:58:46 | INFO | Average Test Set Accuracy: 0.7622
-2025-03-10 15:58:49 | INFO | Calculating concept scores for concepts...
-2025-03-10 15:58:52 | INFO | Calculating TCAV scores for concepts...
-2025-03-10 15:59:05 | INFO | Calculating probe robustness for concepts...
-2025-03-10 15:59:11 | WARNING | Positive observation for random is empty.
-2025-03-10 15:59:16 | WARNING | Positive observation for goal_in_front is empty.
-2025-03-10 15:59:21 | WARNING | Positive observation for goal_in_view is empty.
-2025-03-10 15:59:26 | WARNING | Positive observation for goal_to_left is empty.
-2025-03-10 15:59:31 | WARNING | Positive observation for goal_to_right is empty.
-2025-03-10 15:59:36 | WARNING | Positive observation for wall_in_view is empty.
-2025-03-10 15:59:41 | WARNING | Positive observation for random is empty.
-2025-03-10 15:59:47 | WARNING | Positive observation for random is empty.
-2025-03-10 15:59:52 | WARNING | Positive observation for random is empty.
-2025-03-10 15:59:57 | WARNING | Positive observation for random is empty.
-2025-03-10 16:00:02 | WARNING | Positive observation for random is empty.
-2025-03-10 16:00:08 | WARNING | Positive observation for random is empty.
-2025-03-10 16:00:13 | WARNING | Positive observation for random is empty.
-2025-03-10 16:00:18 | WARNING | Positive observation for random is empty.
-2025-03-10 16:00:23 | WARNING | Positive observation for random is empty.
-2025-03-10 16:00:28 | WARNING | Positive observation for random is empty.
-2025-03-10 16:00:33 | WARNING | Positive observation for random is empty.
-2025-03-10 16:00:39 | WARNING | Positive observation for goal_in_front is empty.
-2025-03-10 16:00:44 | WARNING | Positive observation for goal_in_view is empty.
-2025-03-10 16:00:49 | WARNING | Positive observation for goal_to_left is empty.
-2025-03-10 16:00:54 | WARNING | Positive observation for goal_to_right is empty.
-2025-03-10 16:00:59 | WARNING | Positive observation for wall_in_view is empty.
-2025-03-10 16:01:04 | WARNING | Positive observation for random is empty.
-2025-03-10 16:01:10 | WARNING | Positive observation for random is empty.
-2025-03-10 16:01:15 | WARNING | Positive observation for random is empty.
-2025-03-10 16:01:20 | WARNING | Positive observation for random is empty.
-2025-03-10 16:01:25 | WARNING | Positive observation for random is empty.
-2025-03-10 16:01:30 | WARNING | Positive observation for random is empty.
-2025-03-10 16:01:36 | WARNING | Positive observation for random is empty.
-2025-03-10 16:01:41 | WARNING | Positive observation for random is empty.
-2025-03-10 16:01:46 | WARNING | Positive observation for random is empty.
-2025-03-10 16:01:51 | WARNING | Positive observation for random is empty.
-2025-03-10 16:01:57 | WARNING | Positive observation for random is empty.
-2025-03-10 16:02:02 | WARNING | Positive observation for goal_in_front is empty.
-2025-03-10 16:02:07 | WARNING | Positive observation for goal_in_view is empty.
-2025-03-10 16:02:12 | WARNING | Positive observation for goal_to_left is empty.
-2025-03-10 16:02:17 | WARNING | Positive observation for goal_to_right is empty.
-2025-03-10 16:02:22 | WARNING | Positive observation for wall_in_view is empty.
-2025-03-10 16:02:27 | WARNING | Positive observation for random is empty.
-2025-03-10 16:02:33 | WARNING | Positive observation for random is empty.
-2025-03-10 16:02:38 | WARNING | Positive observation for random is empty.
-2025-03-10 16:02:43 | WARNING | Positive observation for random is empty.
-2025-03-10 16:02:48 | WARNING | Positive observation for random is empty.
-2025-03-10 16:02:54 | WARNING | Positive observation for random is empty.
-2025-03-10 16:02:59 | WARNING | Positive observation for random is empty.
-2025-03-10 16:03:04 | WARNING | Positive observation for random is empty.
-2025-03-10 16:03:09 | WARNING | Positive observation for random is empty.
-2025-03-10 16:03:14 | WARNING | Positive observation for random is empty.
-2025-03-10 16:03:20 | WARNING | Positive observation for random is empty.
-2025-03-10 16:03:25 | WARNING | Positive observation for goal_in_front is empty.
-2025-03-10 16:03:30 | WARNING | Positive observation for goal_in_view is empty.
-2025-03-10 16:03:35 | WARNING | Positive observation for goal_to_left is empty.
-2025-03-10 16:03:40 | WARNING | Positive observation for goal_to_right is empty.
-2025-03-10 16:03:45 | WARNING | Positive observation for wall_in_view is empty.
-2025-03-10 16:03:51 | WARNING | Positive observation for random is empty.
-2025-03-10 16:03:56 | WARNING | Positive observation for random is empty.
-2025-03-10 16:04:01 | WARNING | Positive observation for random is empty.
-2025-03-10 16:04:06 | WARNING | Positive observation for random is empty.
-2025-03-10 16:04:12 | WARNING | Positive observation for random is empty.
-2025-03-10 16:04:17 | WARNING | Positive observation for random is empty.
-2025-03-10 16:04:22 | WARNING | Positive observation for random is empty.
-2025-03-10 16:04:27 | WARNING | Positive observation for random is empty.
-2025-03-10 16:04:33 | WARNING | Positive observation for random is empty.
-2025-03-10 16:04:38 | WARNING | Positive observation for random is empty.
-2025-03-10 16:04:43 | WARNING | Positive observation for random is empty.
-2025-03-10 16:04:48 | WARNING | Positive observation for goal_in_front is empty.
-2025-03-10 16:04:53 | WARNING | Positive observation for goal_in_view is empty.
-2025-03-10 16:04:58 | WARNING | Positive observation for goal_to_left is empty.
-2025-03-10 16:05:03 | WARNING | Positive observation for goal_to_right is empty.
-2025-03-10 16:05:08 | WARNING | Positive observation for wall_in_view is empty.
-2025-03-10 16:05:14 | WARNING | Positive observation for random is empty.
-2025-03-10 16:05:19 | WARNING | Positive observation for random is empty.
-2025-03-10 16:05:24 | WARNING | Positive observation for random is empty.
-2025-03-10 16:05:29 | WARNING | Positive observation for random is empty.
-2025-03-10 16:05:35 | WARNING | Positive observation for random is empty.
-2025-03-10 16:05:40 | WARNING | Positive observation for random is empty.
-2025-03-10 16:05:45 | WARNING | Positive observation for random is empty.
-2025-03-10 16:05:50 | WARNING | Positive observation for random is empty.
-2025-03-10 16:05:56 | WARNING | Positive observation for random is empty.
-2025-03-10 16:06:01 | WARNING | Positive observation for random is empty.
-2025-03-10 16:06:01 | INFO | 
-  dataset size        random    goal_in_front    goal_in_view    goal_to_left    goal_to_right    wall_in_view
---------------  ------------  ---------------  --------------  --------------  ---------------  --------------
-          0.9    1.08882e-06         0.999519        0.999784        0.999497         0.997996        0.999392
-          0.8    1.03137e-06         0.998843        0.999195        0.998891         0.996333        0.998426
-          0.7    9.59069e-07         0.997895        0.998856        0.998403         0.995137        0.997047
-          0.6    8.29554e-07         0.995899        0.997816        0.996676         0.98753         0.995749
-          0.5    8.30614e-07         0.990402        0.996443        0.99532          0.984892        0.989035
-          0.4    6.73417e-07         0.988578        0.993687        0.992971         0.976207        0.984624
-          0.3    5.55933e-07         0.977863        0.992688        0.985861         0.967363        0.97143
-          0.2    3.80966e-07         0.971262        0.98758         0.980271         0.9485          0.953535
-          0.1    2.05877e-07         0.959076        0.969968        0.965858         0.915737        0.932703
-          0.05   4.31774e-07         0.927404        0.955195        0.951449         0.895348        0.894665
-          0.01  -2.02476e-08         0.866362        0.862536        0.874473         0.788529        0.773725
-2025-03-10 16:06:01 | INFO | Calculating statistics for concepts...
-2025-03-10 16:06:12 | INFO | 
+goal_to_left               0.371025       1
+wall_in_view               0.348899       1
+goal_to_right              0.122467       2.4
+random                     0.111206       2
+goal_in_front              0.033639       2
+goal_in_view               0.012765       1.6
+2025-03-10 17:05:43 | INFO | 
+Tree Depth: 6
+2025-03-10 17:05:43 | INFO | Number of Leaves: 11
+2025-03-10 17:05:43 | INFO | Average Test Set Accuracy: 0.6581
+2025-03-10 17:05:46 | INFO | Calculating concept scores for concepts...
+2025-03-10 17:05:48 | INFO | Calculating TCAV scores for concepts...
+2025-03-10 17:05:57 | INFO | Calculating probe robustness for concepts...
+2025-03-10 17:06:01 | WARNING | Positive observation for random is empty.
+2025-03-10 17:06:04 | WARNING | Positive observation for goal_in_front is empty.
+2025-03-10 17:06:09 | WARNING | Positive observation for goal_in_view is empty.
+2025-03-10 17:06:13 | WARNING | Positive observation for goal_to_left is empty.
+2025-03-10 17:06:16 | WARNING | Positive observation for goal_to_right is empty.
+2025-03-10 17:06:20 | WARNING | Positive observation for wall_in_view is empty.
+2025-03-10 17:06:24 | WARNING | Positive observation for random is empty.
+2025-03-10 17:06:28 | WARNING | Positive observation for random is empty.
+2025-03-10 17:06:32 | WARNING | Positive observation for random is empty.
+2025-03-10 17:06:36 | WARNING | Positive observation for random is empty.
+2025-03-10 17:06:40 | WARNING | Positive observation for random is empty.
+2025-03-10 17:06:44 | WARNING | Positive observation for random is empty.
+2025-03-10 17:06:48 | WARNING | Positive observation for random is empty.
+2025-03-10 17:06:53 | WARNING | Positive observation for random is empty.
+2025-03-10 17:06:56 | WARNING | Positive observation for random is empty.
+2025-03-10 17:07:01 | WARNING | Positive observation for random is empty.
+2025-03-10 17:07:05 | WARNING | Positive observation for random is empty.
+2025-03-10 17:07:08 | WARNING | Positive observation for goal_in_front is empty.
+2025-03-10 17:07:12 | WARNING | Positive observation for goal_in_view is empty.
+2025-03-10 17:07:16 | WARNING | Positive observation for goal_to_left is empty.
+2025-03-10 17:07:20 | WARNING | Positive observation for goal_to_right is empty.
+2025-03-10 17:07:24 | WARNING | Positive observation for wall_in_view is empty.
+2025-03-10 17:07:28 | WARNING | Positive observation for random is empty.
+2025-03-10 17:07:32 | WARNING | Positive observation for random is empty.
+2025-03-10 17:07:36 | WARNING | Positive observation for random is empty.
+2025-03-10 17:07:40 | WARNING | Positive observation for random is empty.
+2025-03-10 17:07:44 | WARNING | Positive observation for random is empty.
+2025-03-10 17:07:48 | WARNING | Positive observation for random is empty.
+2025-03-10 17:07:52 | WARNING | Positive observation for random is empty.
+2025-03-10 17:07:56 | WARNING | Positive observation for random is empty.
+2025-03-10 17:08:00 | WARNING | Positive observation for random is empty.
+2025-03-10 17:08:04 | WARNING | Positive observation for random is empty.
+2025-03-10 17:08:08 | WARNING | Positive observation for random is empty.
+2025-03-10 17:08:12 | WARNING | Positive observation for goal_in_front is empty.
+2025-03-10 17:08:16 | WARNING | Positive observation for goal_in_view is empty.
+2025-03-10 17:08:20 | WARNING | Positive observation for goal_to_left is empty.
+2025-03-10 17:08:24 | WARNING | Positive observation for goal_to_right is empty.
+2025-03-10 17:08:28 | WARNING | Positive observation for wall_in_view is empty.
+2025-03-10 17:08:32 | WARNING | Positive observation for random is empty.
+2025-03-10 17:08:36 | WARNING | Positive observation for random is empty.
+2025-03-10 17:08:40 | WARNING | Positive observation for random is empty.
+2025-03-10 17:08:44 | WARNING | Positive observation for random is empty.
+2025-03-10 17:08:48 | WARNING | Positive observation for random is empty.
+2025-03-10 17:08:52 | WARNING | Positive observation for random is empty.
+2025-03-10 17:08:56 | WARNING | Positive observation for random is empty.
+2025-03-10 17:09:00 | WARNING | Positive observation for random is empty.
+2025-03-10 17:09:04 | WARNING | Positive observation for random is empty.
+2025-03-10 17:09:08 | WARNING | Positive observation for random is empty.
+2025-03-10 17:09:12 | WARNING | Positive observation for random is empty.
+2025-03-10 17:09:16 | WARNING | Positive observation for goal_in_front is empty.
+2025-03-10 17:09:20 | WARNING | Positive observation for goal_in_view is empty.
+2025-03-10 17:09:24 | WARNING | Positive observation for goal_to_left is empty.
+2025-03-10 17:09:28 | WARNING | Positive observation for goal_to_right is empty.
+2025-03-10 17:09:31 | WARNING | Positive observation for wall_in_view is empty.
+2025-03-10 17:09:36 | WARNING | Positive observation for random is empty.
+2025-03-10 17:09:40 | WARNING | Positive observation for random is empty.
+2025-03-10 17:09:44 | WARNING | Positive observation for random is empty.
+2025-03-10 17:09:48 | WARNING | Positive observation for random is empty.
+2025-03-10 17:09:52 | WARNING | Positive observation for random is empty.
+2025-03-10 17:09:56 | WARNING | Positive observation for random is empty.
+2025-03-10 17:10:00 | WARNING | Positive observation for random is empty.
+2025-03-10 17:10:04 | WARNING | Positive observation for random is empty.
+2025-03-10 17:10:08 | WARNING | Positive observation for random is empty.
+2025-03-10 17:10:12 | WARNING | Positive observation for random is empty.
+2025-03-10 17:10:16 | WARNING | Positive observation for random is empty.
+2025-03-10 17:10:20 | WARNING | Positive observation for goal_in_front is empty.
+2025-03-10 17:10:24 | WARNING | Positive observation for goal_in_view is empty.
+2025-03-10 17:10:28 | WARNING | Positive observation for goal_to_left is empty.
+2025-03-10 17:10:32 | WARNING | Positive observation for goal_to_right is empty.
+2025-03-10 17:10:35 | WARNING | Positive observation for wall_in_view is empty.
+2025-03-10 17:10:39 | WARNING | Positive observation for random is empty.
+2025-03-10 17:10:43 | WARNING | Positive observation for random is empty.
+2025-03-10 17:10:47 | WARNING | Positive observation for random is empty.
+2025-03-10 17:10:51 | WARNING | Positive observation for random is empty.
+2025-03-10 17:10:55 | WARNING | Positive observation for random is empty.
+2025-03-10 17:10:59 | WARNING | Positive observation for random is empty.
+2025-03-10 17:11:03 | WARNING | Positive observation for random is empty.
+2025-03-10 17:11:07 | WARNING | Positive observation for random is empty.
+2025-03-10 17:11:12 | WARNING | Positive observation for random is empty.
+2025-03-10 17:11:15 | WARNING | Positive observation for random is empty.
+2025-03-10 17:11:15 | INFO | 
+  dataset size       random    goal_in_front    goal_in_view    goal_to_left    goal_to_right    wall_in_view
+--------------  -----------  ---------------  --------------  --------------  ---------------  --------------
+          0.9   1.10402e-06         0.999724        0.999812        0.999691         0.999251        0.999577
+          0.8   1.0737e-06          0.99938         0.999419        0.998805         0.998419        0.997877
+          0.7   1.05165e-06         0.998761        0.999191        0.998514         0.997528        0.996094
+          0.6   9.95662e-07         0.996674        0.998509        0.994822         0.995849        0.994684
+          0.5   9.43996e-07         0.994165        0.997713        0.993168         0.987719        0.989167
+          0.4   9.05271e-07         0.990651        0.996487        0.987961         0.990802        0.982605
+          0.3   8.73374e-07         0.985382        0.993623        0.984971         0.965932        0.973454
+          0.2   7.6846e-07          0.980065        0.991855        0.971315         0.967924        0.941614
+          0.1   5.35643e-07         0.960576        0.976175        0.968807         0.939927        0.93121
+          0.05  2.96876e-07         0.94015         0.971106        0.946627         0.926848        0.911721
+          0.01  3.12045e-08         0.903894        0.833557        0.880296         0.803024        0.756466
+2025-03-10 17:11:15 | INFO | Calculating statistics for concepts...
+2025-03-10 17:11:25 | INFO | 
 Metric         random    goal_in_front    goal_in_view    goal_to_left    goal_to_right    wall_in_view
 --------  -----------  ---------------  --------------  --------------  ---------------  --------------
-mean       0.0597008        0.0781962       0.0733824       0.0734737        0.0717054       0.0574275
-variance   0.00557085       0.00975738      0.00832054      0.00831303       0.00788607      0.00512964
-std_dev    0.0746381        0.0987795       0.091217        0.0911758        0.0888035       0.0716215
-median     0.00830245       0.0070252       0.0174177       0.0148709        0.0214116       0.00929952
-range      0.437664         0.433938        0.514226        0.514226         0.499334        0.28967
-iq_range   0.120224         0.15869         0.144527        0.145912         0.138871        0.115806
-density    0.102327         0.174358        0.0875903       0.103761         0.102961        0.108419
-accuracy  -1                0              -1              -1                0               1
-distance   1.94936         10.1766         11.5883         11.1617          10.3859         12.6593
-2025-03-10 16:06:12 | INFO | 
+mean       0.0588309        0.0780033       0.074849        0.0737972        0.0744062       0.0573475
+variance   0.00547492       0.00992466      0.00865778      0.00828019       0.00829342      0.00512299
+std_dev    0.0739927        0.0996226       0.0930472       0.0909956        0.0910682       0.071575
+median     0.00705302       0.00243409      0.0177738       0.0135489        0.0288383       0.0081139
+range      0.438264         0.433938        0.499334        0.437251         0.499334        0.272589
+iq_range   0.118898         0.15869         0.144931        0.141412         0.142302        0.114469
+density    0.107806         0.227141        0.104837        0.125309         0.134839        0.14758
+accuracy  -1                0               0              -1                0               1
+distance   3.10599         10.09           11.5204         11.3141          10.8085         12.7429
+2025-03-10 17:11:25 | INFO | 
                  random  goal_in_front  ...  goal_to_right  wall_in_view
-random         1.000000       0.079068  ...      -0.074784     -0.176941
-goal_in_front  0.079068       1.000000  ...       0.593834     -0.489193
-goal_in_view   0.186116       0.755000  ...       0.785670     -0.630204
-goal_to_left   0.361718       0.614493  ...       0.397840     -0.477346
-goal_to_right -0.074784       0.593834  ...       1.000000     -0.503976
-wall_in_view  -0.176941      -0.489193  ...      -0.503976      1.000000
+random         1.000000      -0.546291  ...      -0.039049      0.203754
+goal_in_front -0.546291       1.000000  ...       0.222156     -0.577804
+goal_in_view  -0.416482       0.693538  ...       0.667633     -0.639027
+goal_to_left  -0.326484       0.431004  ...       0.162217     -0.365756
+goal_to_right -0.039049       0.222156  ...       1.000000     -0.414201
+wall_in_view   0.203754      -0.577804  ...      -0.414201      1.000000
 
 [6 rows x 6 columns]
-2025-03-10 16:06:12 | INFO | Calculating CAVs...
-2025-03-10 16:06:12 | INFO | Starting CAV training with 5 concepts, lambda_1=0.1, lambda_2=0.1
-2025-03-10 16:06:12 | INFO | Feature dimension: 128
-CAV Training:   0%|          | 0/1000 [00:00<?, ?it/s]2025-03-10 16:06:14 | INFO | Step 0000 | Epoch 10 | Objective: 0.0171 | Coherence: 1.0552 | Separation: 0.8837 | Grad Norm: 1.5990 | Time: 1.8s
-CAV Training:   0%|          | 1/1000 [00:01<26:47,  1.61s/it]CAV Training:   0%|          | 2/1000 [00:02<23:23,  1.41s/it]CAV Training:   0%|          | 3/1000 [00:04<22:13,  1.34s/it]CAV Training:   0%|          | 4/1000 [00:05<21:42,  1.31s/it]CAV Training:   0%|          | 5/1000 [00:06<21:23,  1.29s/it]CAV Training:   1%|          | 6/1000 [00:07<21:14,  1.28s/it]2025-03-10 16:06:22 | INFO | Step 0006 | Epoch 10 | Objective: 1.0211 | Coherence: 10.2536 | Separation: 0.0426 | Grad Norm: 1.1728 | Time: 9.7s
-2025-03-10 16:06:22 | INFO | Converged at step 6 with objective value 1.0211
-CAV Training:   1%|          | 6/1000 [00:09<26:10,  1.58s/it]
-2025-03-10 16:06:22 | INFO | Training stats saved to cav_training_stats.json
-2025-03-10 16:07:56 | INFO | 
-          0         1         2         3         4
-0  1.000000  0.005018  0.002539  0.002372  0.006253
-1  0.005018  1.000000  0.001102  0.005335 -0.000579
-2  0.002539  0.001102  1.000000  0.000799  0.000966
-3  0.002372  0.005335  0.000799  1.000000  0.005937
-4  0.006253 -0.000579  0.000966  0.005937  1.000000
-2025-03-10 16:07:56 | INFO | Calculating network completeness score for cavs...
-2025-03-10 16:07:57 | INFO | Element 0 occurs 570 times.
-2025-03-10 16:07:57 | INFO | Element 1 occurs 1734 times.
-2025-03-10 16:07:57 | INFO | Element 2 occurs 608 times.
-2025-03-10 16:22:45 | INFO | Could not converge, consider increasing the number of epochs
-2025-03-10 16:23:28 | INFO | 
-Combination                    Loss    Accuracy
--------------------------  --------  ----------
-('1', '2', '3', '4')       0.325965     90.378
-('0', '1', '2', '3')       0.388602     87.2852
-('0', '2', '3', '4')       0.513523     84.8797
-('0', '1', '3')            0.632685     83.8488
-('1', '2', '3')            0.608544     83.8488
-('0', '2', '3')            0.409714     82.8179
-('0', '1', '2', '3', '4')  0.433502     82.4742
-('0', '1', '3', '4')       0.454899     81.0997
-('0', '1', '4')            0.499244     80.4124
-('2', '3', '4')            0.560481     78.0069
-('0', '2', '4')            0.58546      77.3196
-('0', '1', '2', '4')       0.485566     76.6323
-('2', '4')                 0.592912     75.945
-('4',)                     0.630512     75.2577
-('0', '4')                 0.64806      74.9141
-('0', '1', '2')            0.684991     74.9141
-('1', '3', '4')            0.520112     74.9141
-('1', '2', '4')            0.711931     73.8832
-('3', '4')                 0.668515     73.1959
-('1', '4')                 0.630513     72.8522
-('1', '2')                 0.736002     72.5086
-('1', '3')                 0.713288     71.4777
-('2', '3')                 0.808943     70.1031
-('0', '3', '4')            0.652265     70.1031
-('0', '2')                 0.737032     68.0412
-('3',)                     0.81108      66.323
-('0', '3')                 0.805199     64.2612
-('2',)                     0.727789     61.1684
-('0',)                     0.833636     60.1375
-('1',)                     0.981524     59.4502
-('0', '1')                 0.8821       55.6701
-2025-03-10 16:23:28 | INFO | 
-Combination                    Loss    Accuracy
--------------------------  --------  ----------
-('1', '2', '3', '4')       0.325965     90.378
-('0', '1', '2', '3')       0.388602     87.2852
-('0', '2', '3')            0.409714     82.8179
-('0', '1', '2', '3', '4')  0.433502     82.4742
-('0', '1', '3', '4')       0.454899     81.0997
-('0', '1', '2', '4')       0.485566     76.6323
-('0', '1', '4')            0.499244     80.4124
-('0', '2', '3', '4')       0.513523     84.8797
-('1', '3', '4')            0.520112     74.9141
-('2', '3', '4')            0.560481     78.0069
-('0', '2', '4')            0.58546      77.3196
-('2', '4')                 0.592912     75.945
-('1', '2', '3')            0.608544     83.8488
-('4',)                     0.630512     75.2577
-('1', '4')                 0.630513     72.8522
-('0', '1', '3')            0.632685     83.8488
-('0', '4')                 0.64806      74.9141
-('0', '3', '4')            0.652265     70.1031
-('3', '4')                 0.668515     73.1959
-('0', '1', '2')            0.684991     74.9141
-('1', '2', '4')            0.711931     73.8832
-('1', '3')                 0.713288     71.4777
-('2',)                     0.727789     61.1684
-('1', '2')                 0.736002     72.5086
-('0', '2')                 0.737032     68.0412
-('0', '3')                 0.805199     64.2612
-('2', '3')                 0.808943     70.1031
-('3',)                     0.81108      66.323
-('0',)                     0.833636     60.1375
-('0', '1')                 0.8821       55.6701
-('1',)                     0.981524     59.4502
-2025-03-10 16:23:28 | INFO | 
-  Concept    Shapley value
----------  ---------------
-        3         5.9622
-        2         4.98855
-        4         3.65979
-        1         2.86942
-        0         0.526919
-2025-03-10 16:23:28 | INFO | Calculating decisiontree completeness score for cavs...
-2025-03-10 16:24:14 | INFO | 
+2025-03-10 17:11:25 | INFO | Calculating CAVs...
+2025-03-10 17:11:25 | INFO | Starting CAV training with 10 concepts, lambda_1=0.1, lambda_2=0.1
+2025-03-10 17:11:25 | INFO | Feature dimension: 128
+CAV Training:   0%|          | 0/1000 [00:00<?, ?it/s]2025-03-10 17:11:26 | INFO | Step 0000 | Epoch 10 | Objective: -0.0536 | Coherence: 4.0476 | Separation: 4.5836 | Grad Norm: 2.6021 | Time: 1.5s
+CAV Training:   0%|          | 1/1000 [00:01<21:09,  1.27s/it]CAV Training:   0%|          | 2/1000 [00:02<18:10,  1.09s/it]2025-03-10 17:11:28 | INFO | Step 0002 | Epoch 10 | Objective: 0.9420 | Coherence: 10.5805 | Separation: 1.1607 | Grad Norm: 2.2716 | Time: 3.4s
+2025-03-10 17:11:28 | INFO | Converged at step 2 with objective value 0.9420
+CAV Training:   0%|          | 2/1000 [00:03<26:36,  1.60s/it]
+2025-03-10 17:11:28 | INFO | Training stats saved to cav_training_stats.json
+2025-03-10 17:12:40 | INFO | 
+          0         1         2  ...         7         8         9
+0  1.000000  0.007172  0.012951  ...  0.000423 -0.006763  0.004317
+1  0.007172  1.000000 -0.002803  ...  0.005813 -0.001690  0.032196
+2  0.012951 -0.002803  1.000000  ...  0.000854 -0.002035 -0.001368
+3  0.004960  0.000277  0.019520  ...  0.018957  0.015002  0.000048
+4  0.000947  0.116484 -0.001308  ...  0.000700  0.000333  0.003925
+5  0.013160  0.001364  0.000761  ...  0.007118 -0.003086  0.000381
+6  0.003120 -0.000098 -0.029563  ...  0.013600  0.003034  0.000693
+7  0.000423  0.005813  0.000854  ...  1.000000 -0.001275  0.001806
+8 -0.006763 -0.001690 -0.002035  ... -0.001275  1.000000  0.006213
+9  0.004317  0.032196 -0.001368  ...  0.001806  0.006213  1.000000
+
+[10 rows x 10 columns]
+2025-03-10 17:12:40 | INFO | Calculating network completeness score for cavs...
+2025-03-10 17:12:40 | INFO | Calculating decisiontree completeness score for cavs...
+2025-03-10 17:13:03 | INFO | 
   Concept    Feature importance    Splits
 ---------  --------------------  --------
-        4              0.457504      16
-        3              0.209842      16.8
-        2              0.161089      15.5
-        0              0.106136      14.1
-        1              0.065428      14.3
-2025-03-10 16:24:14 | INFO | 
+        4              0.221595       3
+        1              0.189225       3.4
+        7              0.172963       4
+        5              0.100203       5.2
+        9              0.091793       5.7
+        3              0.08474        5.5
+        2              0.052799       4.9
+        8              0.039752       3.1
+        6              0.030553       4.1
+        0              0.016377       2.8
+2025-03-10 17:13:03 | INFO | 
 Tree Depth: 14
-2025-03-10 16:24:14 | INFO | Number of Leaves: 77
-2025-03-10 16:24:14 | INFO | Average Test Set Accuracy: 0.9861
-2025-03-10 16:24:14 | INFO | Calculating statistics for cavs...
-2025-03-10 16:24:15 | INFO | 
-Metric             0           1           2           3           4
---------  ----------  ----------  ----------  ----------  ----------
-mean      0.0782047   0.0759588   0.0778767   0.0770488   0.0804258
-variance  0.00950312  0.00892939  0.00915001  0.00935933  0.00943714
-std_dev   0.0974839   0.0944954   0.0956557   0.0967436   0.0971449
-median    0.00669926  0.0148709   0.0142053   0.0185186   0.0357803
-range     0.433938    0.436145    0.434502    0.433938    0.514226
-iq_range  0.160237    0.151205    0.156649    0.152685    0.148125
-density   0.146114    0.153077    0.148311    0.145281    0.143215
-accuracy  0           0           0           0           0
-distance  0.358777    0.564865    0.651364    0.479609    0.551815
-2025-03-10 16:24:15 | INFO | 
-          0         1         2         3         4
-0  1.000000  0.005018  0.002539  0.002372  0.006253
-1  0.005018  1.000000  0.001102  0.005335 -0.000579
-2  0.002539  0.001102  1.000000  0.000799  0.000966
-3  0.002372  0.005335  0.000799  1.000000  0.005937
-4  0.006253 -0.000579  0.000966  0.005937  1.000000
-2025-03-10 16:24:15 | INFO | Calculating statistics for concepts and cavs...
-2025-03-10 16:24:27 | INFO | 
-Metric         random    goal_in_front    goal_in_view    goal_to_left    goal_to_right    wall_in_view           0           1           2           3           4
---------  -----------  ---------------  --------------  --------------  ---------------  --------------  ----------  ----------  ----------  ----------  ----------
-mean       0.0597008        0.0781962       0.0733824       0.0734737        0.0717054       0.0574275   0.0782047   0.0759588   0.0778767   0.0770488   0.0804258
-variance   0.00557085       0.00975738      0.00832054      0.00831303       0.00788607      0.00512964  0.00950312  0.00892939  0.00915001  0.00935933  0.00943714
-std_dev    0.0746381        0.0987795       0.091217        0.0911758        0.0888035       0.0716215   0.0974839   0.0944954   0.0956557   0.0967436   0.0971449
-median     0.00830245       0.0070252       0.0174177       0.0148709        0.0214116       0.00929952  0.00669926  0.0148709   0.0142053   0.0185186   0.0357803
-range      0.437664         0.433938        0.514226        0.514226         0.499334        0.28967     0.433938    0.436145    0.434502    0.433938    0.514226
-iq_range   0.120224         0.15869         0.144527        0.145912         0.138871        0.115806    0.160237    0.151205    0.156649    0.152685    0.148125
-density    0.102327         0.174358        0.0875903       0.103761         0.102961        0.108419    0.146114    0.153077    0.148311    0.145281    0.143215
-accuracy  -1                0              -1              -1                0               1           0           0           0           0           0
-distance   1.94936         10.1766         11.5883         11.1617          10.3859         12.6593      0.358777    0.564865    0.651364    0.479609    0.551815
-2025-03-10 16:24:27 | INFO | 
-                      0         1  ...  goal_to_right  wall_in_view
-0              1.000000  0.005018  ...       0.103624     -0.092684
-1              0.005018  1.000000  ...      -0.097492      0.006084
-2              0.002539  0.001102  ...       0.055397     -0.087305
-3              0.002372  0.005335  ...       0.127695     -0.116247
-4              0.006253 -0.000579  ...       0.287682     -0.289144
-random        -0.003645  0.241418  ...      -0.074784     -0.176941
-goal_in_front  0.238755  0.074627  ...       0.593834     -0.489193
-goal_in_view   0.184796  0.143643  ...       0.785670     -0.630204
-goal_to_left   0.158534  0.276990  ...       0.397840     -0.477346
-goal_to_right  0.103624 -0.097492  ...       1.000000     -0.503976
-wall_in_view  -0.092684  0.006084  ...      -0.503976      1.000000
+2025-03-10 17:13:03 | INFO | Number of Leaves: 43
+2025-03-10 17:13:03 | INFO | Average Test Set Accuracy: 0.9914
+2025-03-10 17:13:03 | INFO | Calculating statistics for cavs...
+2025-03-10 17:13:05 | INFO | 
+Metric             0           1           2           3          4           5          6           7           8           9
+--------  ----------  ----------  ----------  ----------  ---------  ----------  ---------  ----------  ----------  ----------
+mean      0.0755929   0.0788686   0.0817061   0.0811682   0.0815847  0.0763542   0.0813678  0.080462    0.0721085   0.0722065
+variance  0.00855824  0.0102445   0.0107624   0.0107464   0.0100264  0.00844495  0.0097298  0.00995148  0.00814836  0.00782476
+std_dev   0.0925108   0.101215    0.103742    0.103665    0.100132   0.0918964   0.0986397  0.0997571   0.0902683   0.0884577
+median    0.0227443   0.00547924  0.00391971  0.00391971  0.0219312  0.0273691   0.0253766  0.0122155   0.0146234   0.0303585
+range     0.437664    0.433938    0.433938    0.433938    0.514226   0.514226    0.499334   0.463777    0.431119    0.514226
+iq_range  0.144316    0.162143    0.165621    0.16656     0.155516   0.144383    0.156989   0.159105    0.140426    0.135511
+density   0.166867    0.258085    0.255581    0.274292    0.188023   0.123725    0.155277   0.181976    0.22436     0.253908
+accuracy  0           0           0           0           0          0           0          0           0           0
+distance  0.888914    0.677851    0.795762    0.466428    0.689893   0.812187    0.610759   0.732713    0.789307    0.812665
+2025-03-10 17:13:05 | INFO | 
+          0         1         2  ...         7         8         9
+0  1.000000  0.007172  0.012951  ...  0.000423 -0.006763  0.004317
+1  0.007172  1.000000 -0.002803  ...  0.005813 -0.001690  0.032196
+2  0.012951 -0.002803  1.000000  ...  0.000854 -0.002035 -0.001368
+3  0.004960  0.000277  0.019520  ...  0.018957  0.015002  0.000048
+4  0.000947  0.116484 -0.001308  ...  0.000700  0.000333  0.003925
+5  0.013160  0.001364  0.000761  ...  0.007118 -0.003086  0.000381
+6  0.003120 -0.000098 -0.029563  ...  0.013600  0.003034  0.000693
+7  0.000423  0.005813  0.000854  ...  1.000000 -0.001275  0.001806
+8 -0.006763 -0.001690 -0.002035  ... -0.001275  1.000000  0.006213
+9  0.004317  0.032196 -0.001368  ...  0.001806  0.006213  1.000000
 
-[11 rows x 11 columns]
+[10 rows x 10 columns]
+2025-03-10 17:13:05 | INFO | Calculating statistics for concepts and cavs...
+2025-03-10 17:13:15 | INFO | 
+Metric         random    goal_in_front    goal_in_view    goal_to_left    goal_to_right    wall_in_view           0           1           2           3          4           5          6           7           8           9
+--------  -----------  ---------------  --------------  --------------  ---------------  --------------  ----------  ----------  ----------  ----------  ---------  ----------  ---------  ----------  ----------  ----------
+mean       0.0588309        0.0780033       0.074849        0.0737972        0.0744062       0.0573475   0.0755929   0.0788686   0.0817061   0.0811682   0.0815847  0.0763542   0.0813678  0.080462    0.0721085   0.0722065
+variance   0.00547492       0.00992466      0.00865778      0.00828019       0.00829342      0.00512299  0.00855824  0.0102445   0.0107624   0.0107464   0.0100264  0.00844495  0.0097298  0.00995148  0.00814836  0.00782476
+std_dev    0.0739927        0.0996226       0.0930472       0.0909956        0.0910682       0.071575    0.0925108   0.101215    0.103742    0.103665    0.100132   0.0918964   0.0986397  0.0997571   0.0902683   0.0884577
+median     0.00705302       0.00243409      0.0177738       0.0135489        0.0288383       0.0081139   0.0227443   0.00547924  0.00391971  0.00391971  0.0219312  0.0273691   0.0253766  0.0122155   0.0146234   0.0303585
+range      0.438264         0.433938        0.499334        0.437251         0.499334        0.272589    0.437664    0.433938    0.433938    0.433938    0.514226   0.514226    0.499334   0.463777    0.431119    0.514226
+iq_range   0.118898         0.15869         0.144931        0.141412         0.142302        0.114469    0.144316    0.162143    0.165621    0.16656     0.155516   0.144383    0.156989   0.159105    0.140426    0.135511
+density    0.107806         0.227141        0.104837        0.125309         0.134839        0.14758     0.166867    0.258085    0.255581    0.274292    0.188023   0.123725    0.155277   0.181976    0.22436     0.253908
+accuracy  -1                0               0              -1                0               1           0           0           0           0           0          0           0          0           0           0
+distance   3.10599         10.09           11.5204         11.3141          10.8085         12.7429      0.888914    0.677851    0.795762    0.466428    0.689893   0.812187    0.610759   0.732713    0.789307    0.812665
+2025-03-10 17:13:15 | INFO | 
+                      0         1  ...  goal_to_right  wall_in_view
+0              1.000000  0.007172  ...       0.104788     -0.065963
+1              0.007172  1.000000  ...       0.133785     -0.132153
+2              0.012951 -0.002803  ...       0.103412     -0.158940
+3              0.004960  0.000277  ...       0.179654     -0.183580
+4              0.000947  0.116484  ...       0.100331     -0.090354
+5              0.013160  0.001364  ...       0.135478     -0.030248
+6              0.003120 -0.000098  ...       0.201153     -0.064851
+7              0.000423  0.005813  ...      -0.041173     -0.090251
+8             -0.006763 -0.001690  ...      -0.116851      0.014202
+9              0.004317  0.032196  ...       0.093499      0.070463
+random        -0.066834  0.021169  ...      -0.039049      0.203754
+goal_in_front -0.008616  0.174238  ...       0.222156     -0.577804
+goal_in_view   0.021427  0.226572  ...       0.667633     -0.639027
+goal_to_left  -0.047188  0.120668  ...       0.162217     -0.365756
+goal_to_right  0.104788  0.133785  ...       1.000000     -0.414201
+wall_in_view  -0.065963 -0.132153  ...      -0.414201      1.000000
+
+[16 rows x 16 columns]
