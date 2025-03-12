@@ -140,6 +140,7 @@ def compute_accuracy_decision_tree(
         epochs=epochs,
         result_path=result_path,
         figure_path=figure_path,
+        filename=filename,
         verbose=verbose,
     )
 

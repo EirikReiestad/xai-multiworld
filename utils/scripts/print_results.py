@@ -89,9 +89,9 @@ def tabulate_data(data: Dict, filename: str):
         "concept_combination_accuracies.json": tabulate_combination_accuracies,
         "probe_robustness.json": tabulate_robustness,
         "sample_efficiency.json": tabulate_sample_efficiency,
-        "concept_score_decision_tree.json": tabulate_concept_score_decision_tree,
+        "decision_tree.json": tabulate_concept_score_decision_tree,
         "shapley_values.json": tabulate_shapley_values,
-        "concept_score_decision_tree_info.json": tabulate_concept_score_decision_tree_info,
+        "info_decision_tree.json": tabulate_concept_score_decision_tree_info,
     }
 
     try:
@@ -197,7 +197,6 @@ def tabulate_training_stats(data: Dict) -> Tuple[pd.DataFrame, str]:
     styled_df.columns = styled_df.columns.str.replace("_", r"\_")
     styled_df.index = styled_df.index.str.replace("_", r"\_")
     latex = styled_df.to_latex(index=False)
-    latex = format_table(latex)
     return df, latex
 
 

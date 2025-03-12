@@ -1,11 +1,11 @@
 {
     "wandb": {
-        "project_folder": "go-to-goal-1",
+        "project_folder": "multi-go-to-goal-random-15-20",
         "models": {
-            "name": "model",
+            "name": "model_0",
             "low": 0,
-            "high": 1500,
-            "step": 500
+            "high": 800,
+            "step": 100
         }
     },
     "model": {
@@ -13,14 +13,14 @@
         "method": "random"
     },
     "collect_rollouts": {
-        "observations": 3000,
-        "sample_rate": 0.1
+        "observations": 1000,
+        "sample_rate": 1
     },
     "generate_concepts": {
         "observations": 200
     },
     "calculate_cavs": {
-        "M": 5,
+        "M": 20,
         "lambda_1": 0.1,
         "lambda_2": 0.1,
         "batch_size": 128,
@@ -30,9 +30,9 @@
     },
     "completeness_score": {
         "network_epochs": 1,
-        "decisiontree_epochs": 1,
+        "decisiontree_epochs": 10,
         "method": "decisiontree",
-        "concept_score_method": "soft"
+        "concept_score_method": "binary"
     },
     "concepts": [
         "random",
@@ -40,7 +40,11 @@
         "goal_in_view",
         "goal_to_left",
         "goal_to_right",
-        "wall_in_view"
+        "wall_in_view",
+        "agent_in_view",
+        "agent_in_front",
+        "agent_to_left",
+        "agent_to_right"
     ],
     "analyze": {
         "ignore_layers": [
@@ -66,5 +70,5 @@
         "observations": "assets/observations",
         "results": "assets/results"
     },
-    "force_update": false
+    "force_update": true
 }
