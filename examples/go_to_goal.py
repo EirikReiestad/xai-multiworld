@@ -13,6 +13,7 @@ env = GoToGoalEnv(
     height=size,
     max_steps=100,
     preprocessing=PreprocessingEnum.ohe_minimal,
+    highlight=True,
     agents=agents,
     agent_view_size=7,
     success_termination_mode="all",

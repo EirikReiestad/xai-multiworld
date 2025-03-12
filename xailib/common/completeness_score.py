@@ -113,6 +113,7 @@ def get_completeness_score_decision_tree(
         epochs=epochs,
         result_path=result_path,
         figure_path=figure_path,
+        filename=filename,
         verbose=verbose,
     )
 
@@ -208,7 +209,7 @@ def get_completeness_score_network(
     if "random" in concepts:
         concepts.remove("random")
 
-    if len(concepts) > 8:
+    if len(concepts) > 10:
         logging.warning(
             "The number of concepts is greater than 8. This will take a long time to compute, soooo we will not do it:)."
         )

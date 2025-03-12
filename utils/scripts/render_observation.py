@@ -76,7 +76,6 @@ def render(directory: str, filename: str, save_directory: str, show: bool = Fals
             img = env.render()
             if img is not None:
                 images.append(img)
-
                 image = Image.fromarray(img, "RGB")
                 path = os.path.join(save_directory, f"{count}_{save_filename}")
                 image.save(path)

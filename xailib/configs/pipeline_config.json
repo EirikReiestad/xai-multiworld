@@ -31,7 +31,7 @@
     "completeness_score": {
         "network_epochs": 1,
         "decisiontree_epochs": 1,
-        "method": "network",
+        "method": "decisiontree",
         "concept_score_method": "soft"
     },
     "concepts": [
