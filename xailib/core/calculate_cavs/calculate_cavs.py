@@ -4,7 +4,7 @@ import os
 import time
 from datetime import datetime
 from itertools import count
-from typing import Any, Dict, Literal, Optional
+from typing import Literal, Optional
 
 import numpy as np
 import torch
@@ -16,7 +16,7 @@ from multiworld.base import MultiWorldEnv
 from utils.common.collect_rollouts import collect_rollouts
 from utils.common.model_artifact import ModelArtifact
 from utils.common.numpy_collections import NumpyEncoder
-from utils.common.observation import Observation
+from utils.common.observation import Observation, filter_observations
 from utils.common.write import write_results
 from xailib.utils.activations import get_activations
 
@@ -141,6 +141,7 @@ def calculate_cavs(
     max_steps: int = 1000,
     convergence_threshold: float = 0.9,
     num_observations: int = 10000,
+    num_sample_observations: int = 200,
     save_stats: bool = True,
     stats_filename: str = "cav_training_stats.json",
     observation_path: str = "assets/observations",
@@ -190,6 +191,7 @@ def calculate_cavs(
         observation_path=os.path.join("assets", "tmp"),
         force_update=True,
     )
+    observation = filter_observations(observation)
 
     activations, input, output = get_activations(
         {"latest": model}, observation, ignore_layers=ignore_layers
@@ -230,6 +232,7 @@ def calculate_cavs(
             observation_path=os.path.join("assets", "tmp"),
             force_update=True,
         )
+        observation = filter_observations(observation)
 
         # Get activations for the new batch
         activations, input, output = get_activations(
@@ -338,17 +341,31 @@ def calculate_cavs(
 
     similarity_matrix = torch.matmul(data, cavs.T)  # [batch_size, M]
 
-    observations = {}
-    activation_data = {}
+    positive_observations = {}
+    positive_activation_data = {}
+    negative_observations = {}
+    negative_activation_data = {}
     for m in range(M):
-        _, indices = torch.topk(similarity_matrix[:, m], min(num_observations, 200))
+        _, indices = torch.topk(
+            similarity_matrix[:, m], min(num_observations, num_sample_observations)
+        )
         m_observation = [obs[0] for obs in observation_data[indices]]
-        observations[str(m)] = m_observation
-        activation_data[str(m)] = data[indices]
-        filename = f"{m}_cav_observations.json"
+        positive_observations[str(m)] = m_observation
+        positive_activation_data[str(m)] = data[indices]
+        filename = f"{m}_cav_positive_observations.json"
         path = os.path.join(result_path, filename)
         with open(path, "w") as f:
             json.dump(m_observation, f, indent=4, cls=NumpyEncoder)
+
+        negative_observation = [obs[0] for obs in observation_data[~indices]][
+            :num_sample_observations
+        ]
+        negative_observations[str(m)] = negative_observation
+        negative_activation_data[str(m)] = data[~indices][:num_sample_observations]
+        filename = f"{m}_cav_negative_observations.json"
+        path = os.path.join(result_path, filename)
+        with open(path, "w") as f:
+            json.dump(negative_observation, f, indent=4, cls=NumpyEncoder)
 
     result_cavs = cavs.detach().cpu().numpy()
     results = {"cavs": result_cavs, "stats": stats.stats}
@@ -357,7 +374,14 @@ def calculate_cavs(
         path=os.path.join(result_path, "cavs.json"),
         custom_cls=NumpyEncoder,
     )
-    return cavs, stats, observations, activation_data
+    return (
+        cavs,
+        stats,
+        positive_observations,
+        negative_observations,
+        positive_activation_data,
+        negative_activation_data,
+    )
 
 
 def optimize_cavs_with_stats(

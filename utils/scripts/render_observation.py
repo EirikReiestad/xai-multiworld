@@ -11,13 +11,14 @@ from utils.common.observation import (
     Observation,
     observation_data_to_numpy,
     observation_from_file,
+    observation_to_file,
 )
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
 
-def main():
+def main(path: str):
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-ro",
@@ -35,14 +36,11 @@ def main():
         logger.info("No valid arguments provided.")
         return
 
-    path = os.path.join("pipeline", "20250310-160946", "results", filename)
-    path = os.path.join("assets", "results")
-
     if not filename.endswith(".json"):
         filename += ".json"
 
     save_directory = os.path.join("assets", "rendered")
-    render(path, filename, save_directory, show=False)
+    render(path, filename, save_directory, show=True)
 
 
 def render(directory: str, filename: str, save_directory: str, show: bool = False):
@@ -53,7 +51,6 @@ def render(directory: str, filename: str, save_directory: str, show: bool = Fals
     numpy_obs = observation_data_to_numpy(observation)
     grid = numpy_obs[0][0]
     width, height = grid.shape[:2]
-
     env = GoToGoalEnv(
         agents=1,
         width=width,
@@ -67,8 +64,12 @@ def render(directory: str, filename: str, save_directory: str, show: bool = Fals
 
     save_filename = filename.replace(".json", ".png")
 
+    save_mask = np.zeros(observation.shape[0], dtype=bool)
+    observation_save_path = os.path.join(
+        "assets", "custom", "multi_gtg_observations.json"
+    )
     count = 0
-    for obs in numpy_obs:
+    for i, obs in enumerate(numpy_obs):
         env.update_from_numpy(obs)
         while True:
             img = env.render()
@@ -80,10 +81,21 @@ def render(directory: str, filename: str, save_directory: str, show: bool = Fals
                     image.show()
             if not show:
                 break
+            if input() == "s":
+                save_mask[i] = True
+                data = [
+                    obs[0]
+                    for obs in observation[..., Observation.OBSERVATION][save_mask]
+                ]
+                observation_to_file(data, observation_save_path)
+                break
             if input() == "":
                 break
         count += 1
 
 
 if __name__ == "__main__":
-    main()
+    path = os.path.join("archive", "multi-gtg-random-15-20", "results")
+    path = os.path.join("assets", "results")
+    path = os.path.join("assets", "concepts")
+    main(path)

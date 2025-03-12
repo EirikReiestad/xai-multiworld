@@ -25,8 +25,8 @@ def main():
     )
     args = parser.parse_args()
 
-    observations = 100
-    method = "policy"
+    observations = 500
+    method = "random"
     if args.generate_concepts is not None and len(args.generate_concepts) > 0:
         observations = int(args.generate_concepts[0])
         method = (
