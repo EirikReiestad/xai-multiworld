@@ -291,7 +291,11 @@ class MultiGridEnv(MultiWorldEnv):
                         # continue
                     # Compute the world coordinates of this cell
                     abs_i, abs_j = top_left - (f_vec * vis_i) + (r_vec * vis_j)
-                    if 0 <= abs_i < self._width and 0 <= abs_j < self._height:
+                    if (
+                        0 <= abs_i < self._width
+                        and 0 <= abs_j < self._height
+                        and highlight
+                    ):
                         highlight_mask[abs_i, abs_j] = True
 
         # Render the whole grid
