@@ -26,7 +26,7 @@ def main():
     method = "random"
 
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
-    environment = create_environment(artifact, static=True, agents=5)
+    environment = create_environment(artifact)
     models = get_models(
         artifact=artifact,
         model_type=model_type,
