@@ -16,6 +16,7 @@ def collect_rollouts(
     n: int,
     method: Literal["policy", "random"],
     observation_path: str = os.path.join("assets", "observations"),
+    filename: str = "observations.json",
     force_update: bool = False,
     model_type: Literal["dqn"] = "dqn",
     sample_rate: float = 1.0,
@@ -26,9 +27,9 @@ def collect_rollouts(
     if force_update is False:
         try:
             observation = os.listdir(observation_path)
-            if "observations.json" in set(observation):
+            if filename in set(observation):
                 observations = observations_from_file(
-                    os.path.join(observation_path, "observations.json")
+                    os.path.join(observation_path, filename)
                 )
                 logging.info(
                     f"Observations already exists, so we do not need to create them:) Observation size: {len(observations)}"
@@ -56,9 +57,7 @@ def collect_rollouts(
     thread.start()
     thread.join()
 
-    observations = observations_from_file(
-        os.path.join(observation_path, "observations.json")
-    )
+    observations = observations_from_file(os.path.join(observation_path, filename))
     return observations
 
 
