@@ -8,7 +8,7 @@ def create_environment(
     width: int | None = None,
     height: int | None = None,
     agents: int | None = None,
-    static: bool = True,
+    static: bool = False,
 ):
     _height = artifact.metadata.get("height") or height
     _width = artifact.metadata.get("width") or width

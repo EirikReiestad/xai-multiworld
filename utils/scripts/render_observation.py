@@ -40,7 +40,7 @@ def main(path: str):
         filename += ".json"
 
     save_directory = os.path.join("assets", "rendered")
-    render(path, filename, save_directory, show=True)
+    render(path, filename, save_directory, show=False)
 
 
 def render(directory: str, filename: str, save_directory: str, show: bool = False):
@@ -69,11 +69,13 @@ def render(directory: str, filename: str, save_directory: str, show: bool = Fals
         "assets", "custom", "multi_gtg_observations.json"
     )
     count = 0
+    images = []
     for i, obs in enumerate(numpy_obs):
         env.update_from_numpy(obs)
         while True:
             img = env.render()
             if img is not None:
+                images.append(img)
                 image = Image.fromarray(img, "RGB")
                 path = os.path.join(save_directory, f"{count}_{save_filename}")
                 image.save(path)
@@ -93,9 +95,16 @@ def render(directory: str, filename: str, save_directory: str, show: bool = Fals
                 break
         count += 1
 
+    if len(images) > 0:
+        images = np.stack(images)
+        image = np.mean(images, axis=0).astype(np.uint8)
+        image = Image.fromarray(image, "RGB")
+        path = os.path.join(save_directory, f"composite_{save_filename}")
+        image.save(path)
+
 
 if __name__ == "__main__":
-    path = os.path.join("archive", "multi-gtg-random-15-20", "results")
     path = os.path.join("assets", "results")
     path = os.path.join("assets", "concepts")
+    path = os.path.join("archive", "multi-gtg-random-15-20", "results")
     main(path)

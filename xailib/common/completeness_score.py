@@ -113,6 +113,7 @@ def get_completeness_score_decision_tree(
         epochs=epochs,
         result_path=result_path,
         figure_path=figure_path,
+        filename=filename,
         verbose=verbose,
     )
 
