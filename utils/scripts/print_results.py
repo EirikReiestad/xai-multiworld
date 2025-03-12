@@ -91,12 +91,13 @@ def tabulate_data(data: Dict, filename: str):
         "sample_efficiency.json": tabulate_sample_efficiency,
         "concept_score_decision_tree.json": tabulate_concept_score_decision_tree,
         "shapley_values.json": tabulate_shapley_values,
+        "concept_score_decision_tree_info.json": tabulate_concept_score_decision_tree_info,
     }
 
     try:
         df, latex = files[filename](data)
-    except KeyError:
-        logging.error(f"File {filename} not found in tabulate_data")
+    except KeyError as e:
+        logging.error(f"File {filename} not found in tabulate_data: {e}")
         return None, None
 
     logging.info("\n\n" + filename)
@@ -108,6 +109,17 @@ def tabulate_data(data: Dict, filename: str):
 def tabulate_generic(data: Dict) -> Tuple[pd.DataFrame, str]:
     df = pd.DataFrame(data)
     latex = df.to_latex()
+    return df, latex
+
+
+def tabulate_concept_score_decision_tree_info(data: Dict) -> Tuple[pd.DataFrame, str]:
+    df = pd.DataFrame([data])
+    df = df.transpose()
+    styled_df = df.copy()
+    styled_df.index = styled_df.index.str.replace("_", r"\_")
+    styled_df = styled_df.style
+    latex = styled_df.to_latex()
+    latex = format_table(latex)
     return df, latex
 
 
@@ -232,7 +244,14 @@ def tabulate_similarity_matrix(data: Dict) -> Tuple[pd.DataFrame, str]:
 
 
 def tabulate_sample_efficiency(data: Dict) -> Tuple[pd.DataFrame, str]:
-    pass
+    df = pd.DataFrame(data, index=None)
+    df = df.transpose()
+    df.sort_values(by="normalized", ascending=False, inplace=True)
+    styled_df = df.copy()
+    styled_df.columns = styled_df.columns.str.replace("_", r"\_")
+    styled_df.index = styled_df.index.str.replace("_", r"\_")
+    latex = styled_df.to_latex(index=False)
+    return df, latex
 
 
 def tabulate_combination_accuracy(data: Dict):
@@ -273,5 +292,5 @@ def highlight_nan_values(s, props: str):
 
 
 if __name__ == "__main__":
-    path = os.path.join("pipeline", "20250310-160946", "results")
+    path = os.path.join("archive", "multi-gtg-random-15-20", "results")
     main(path)

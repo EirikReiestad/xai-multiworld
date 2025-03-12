@@ -1,0 +1,77 @@
+{
+    "wandb": {
+        "project_folder": "multi-go-to-goal-random-15-20",
+        "models": {
+            "name": "model_0",
+            "low": 0,
+            "high": 800,
+            "step": 100
+        }
+    },
+    "model": {
+        "type": "dqn",
+        "method": "policy"
+    },
+    "collect_rollouts": {
+        "observations": 3000,
+        "sample_rate": 0.01
+    },
+    "generate_concepts": {
+        "observations": 500
+    },
+    "calculate_cavs": {
+        "M": 8,
+        "lambda_1": 0.1,
+        "lambda_2": 0.1,
+        "batch_size": 128,
+        "lr": 0.001,
+        "epochs": 500,
+        "convergence_threshold": 0.9
+    },
+    "completeness_score": {
+        "network_epochs": 1,
+        "decisiontree_epochs": 10,
+        "method": "network",
+        "concept_score_method": "binary"
+    },
+    "concepts": [
+        "random",
+        "goal_in_front",
+        "goal_in_view",
+        "goal_to_left",
+        "goal_to_right",
+        "wall_in_view",
+        "agent_in_view",
+        "agent_in_front",
+        "agent_to_left",
+        "agent_to_right"
+    ],
+    "analyze": {
+        "ignore_layers": [
+            "_fc0"
+        ],
+        "layer_idx": -1,
+        "splits": [
+            0.9,
+            0.8,
+            0.7,
+            0.6,
+            0.5,
+            0.4,
+            0.3,
+            0.2,
+            0.1,
+            0.05,
+            0.01,
+            0.001
+        ],
+        "robustness_epochs": 5
+    },
+    "path": {
+        "artifacts": "artifacts",
+        "concepts": "assets/concepts",
+        "observations": "assets/observations",
+        "results": "assets/results"
+    },
+    "force_update": true
+}
