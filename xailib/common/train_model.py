@@ -138,6 +138,7 @@ def train_decision_tree(
     epochs: int = 20,
     result_path: str = os.path.join("assets", "results"),
     figure_path: str = os.path.join("assets", "figures"),
+    filename: str = "decision_tree",
     show: bool = False,
     verbose: bool = False,
 ):
@@ -174,7 +175,8 @@ def train_decision_tree(
         )
         if show:
             plt.show()
-        plt.savefig(os.path.join(figure_path, "decision_tree.png"))
+        image_filename = "image_" + filename.replace(".json", ".png")
+        plt.savefig(os.path.join(figure_path, image_filename))
 
         feature_importances = model.feature_importances_
         feature_split_counts = np.zeros(len(feature_names))
@@ -212,7 +214,7 @@ def train_decision_tree(
 
     average_accuracy = total_accuracy / epochs
 
-    path = os.path.join(result_path, "concept_score_decision_tree.json")
+    path = os.path.join(result_path, filename)
     write_results(average_results, path)
     log_decision_tree_feature_importance(average_results)
 
@@ -220,7 +222,7 @@ def train_decision_tree(
     logging.info(f"Number of Leaves: {model.get_n_leaves()}")
     logging.info(f"Average Test Set Accuracy: {average_accuracy:.4f}")
 
-    path = os.path.join(result_path, "concept_score_decision_tree_info.json")
+    path = os.path.join(result_path, "info_" + filename)
     result = {
         "tree_depth": int(model.get_depth()),
         "n_leaves": int(model.get_n_leaves()),

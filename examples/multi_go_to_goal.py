@@ -12,7 +12,7 @@ env = GoToGoalEnv(
     width=size,
     height=size,
     agents=agents,
-    static=True,
+    static=False,
     max_steps=200,
     preprocessing=PreprocessingEnum.ohe_minimal,
     agent_view_size=7,
@@ -29,7 +29,7 @@ config = (
         learning_rate=3e-4,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=20000,
+        eps_decay=25000,
         update_method="soft",
         target_update=200,
     )
@@ -46,7 +46,7 @@ mconfig = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project=f"multi-go-to-goal-{agents}-{size}", log_interval=20)
+    .wandb(project=f"multi-gtg-{agents}-{size}", log_interval=50)
 )
 
 dqn = MDQN(agents, mconfig, config, multi_training=True)

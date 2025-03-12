@@ -116,6 +116,7 @@ def compute_accuracy_decision_tree(
     epochs: int,
     result_path: str,
     figure_path: str,
+    filename: str,
     verbose: bool = False,
 ):
     test_split = 0.2

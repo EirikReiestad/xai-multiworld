@@ -36,7 +36,7 @@ def get_completeness_score(
     verbose: bool = False,
     result_path: str = os.path.join("assets", "results"),
     figure_path: str = os.path.join("assets", "figures"),
-    filename_shapley: str = "shapley_values.json",
+    filename: str = "completeness_score",
 ):
     if method == "network":
         return get_completeness_score_network(
@@ -50,7 +50,7 @@ def get_completeness_score(
             ignore_layers=ignore_layers,
             verbose=verbose,
             result_path=result_path,
-            filename_shapley=filename_shapley,
+            filename=filename,
         )
     elif method == "decisiontree":
         return get_completeness_score_decision_tree(
@@ -65,6 +65,7 @@ def get_completeness_score(
             verbose=verbose,
             result_path=result_path,
             figure_path=figure_path,
+            filename=filename,
         )
 
 
@@ -80,6 +81,7 @@ def get_completeness_score_decision_tree(
     result_path: str = os.path.join("assets", "results"),
     figure_path: str = os.path.join("assets", "figures"),
     verbose: bool = False,
+    filename: str = "completeness_score_decision_tree.json",
 ):
     models = {"latest": model}
 
@@ -126,7 +128,7 @@ def get_completeness_score_network(
     ignore_layers: List[str] = [],
     verbose: bool = False,
     result_path: str = os.path.join("assets", "results"),
-    filename_shapley: str = "shapley_values.json",
+    filename: str = "completeness_score_network.json",
 ):
     models = {"latest": model}
 
@@ -241,7 +243,7 @@ def get_completeness_score_network(
         avg_sub_accuracy /= epochs
         results[tuple(sorted(comb))] = (avg_sub_loss, avg_sub_accuracy)
 
-    path = os.path.join(result_path, f"concept_combination_accuracies_{layer_idx}.json")
+    path = os.path.join(result_path, filename)
     write_results(results, path)
     shapley_values = calculate_shapley_values(path, concepts)
-    write_results(shapley_values, os.path.join(result_path, filename_shapley))
+    write_results(shapley_values, os.path.join(result_path, "shapley_" + filename))

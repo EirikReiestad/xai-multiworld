@@ -135,6 +135,7 @@ def main():
             concept_score_method=config["completeness_score"]["concept_score_method"],
             verbose=False,
             result_path=result_path,
+            filename="concept_completeness_score_network.json",
         )
     logging.info("Calculating decisiontree completeness score for concepts...")
     completeness_score = get_completeness_score(
@@ -149,6 +150,7 @@ def main():
         concept_score_method=config["completeness_score"]["concept_score_method"],
         verbose=False,
         result_path=result_path,
+        filename="concept_completeness_score_decision_tree.json",
     )
 
     test_positive_activations, test_input, test_output = get_concept_activations(
@@ -257,6 +259,7 @@ def main():
             concept_score_method="soft",
             verbose=False,
             result_path=result_path,
+            filename="cav_completeness_score_network.json",
         )
     logging.info("Calculating decisiontree completeness score for cavs...")
     completeness_score = get_completeness_score(
@@ -271,6 +274,7 @@ def main():
         concept_score_method="soft",
         verbose=False,
         result_path=result_path,
+        filename="cav_completeness_score_decision_tree.json",
     )
 
     mock_activations = {}

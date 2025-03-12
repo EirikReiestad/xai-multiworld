@@ -1,11 +1,11 @@
 {
     "wandb": {
-        "project_folder": "go-to-goal-1",
+        "project_folder": "multi-go-to-goal-random-15-20",
         "models": {
-            "name": "model",
+            "name": "model_0",
             "low": 0,
-            "high": 1500,
-            "step": 300
+            "high": 800,
+            "step": 100 
         }
     },
     "model": {
@@ -14,18 +14,18 @@
     },
     "collect_rollouts": {
         "observations": 3000,
-        "sample_rate": 0.1
+        "sample_rate": 0.01
     },
     "generate_concepts": {
         "observations": 500
     },
     "calculate_cavs": {
-        "M": 10,
+        "M": 8,
         "lambda_1": 0.1,
         "lambda_2": 0.1,
         "batch_size": 128,
         "lr": 1e-3,
-        "epochs": 10,
+        "epochs": 500,
         "convergence_threshold": 0.9
     },
     "completeness_score": {
@@ -40,7 +40,11 @@
         "goal_in_view",
         "goal_to_left",
         "goal_to_right",
-        "wall_in_view"
+        "wall_in_view",
+	"agent_in_view",
+	"agent_in_front",
+	"agent_to_left",
+	"agent_to_right"
     ],
     "analyze": {
         "ignore_layers": [
