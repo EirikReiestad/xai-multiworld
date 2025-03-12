@@ -1,3 +1,4 @@
+import logging
 import os
 
 import numpy as np
@@ -11,8 +12,11 @@ from utils.common.observation import (
     Observation,
     filter_observations,
     normalize_observations,
+    observation_from_file,
 )
 from utils.core.model_loader import ModelLoader
+
+logging.basicConfig(level=logging.INFO)
 
 
 def main():
@@ -34,7 +38,7 @@ def main():
     observations = collect_rollouts(
         env=environment,
         artifact=artifact,
-        n=100,
+        n=10,
         method="policy",
         force_update=True,
     )
@@ -42,29 +46,30 @@ def main():
 
     np.random.shuffle(observations)
     normalized_observations = normalize_observations(observations)
-    data = normalized_observations[..., Observation.OBSERVATION][0:100]
+    data = normalized_observations[..., Observation.OBSERVATION]
     obs = observations_seperate_to_torch([d[0] for d in data])
+    logging.info("Running SHAP explainer")
     explainer = shap.GradientExplainer(model, obs)
-    shap_values = explainer.shap_values(obs)
 
+    observation = observation_from_file(
+        os.path.join("assets", "custom", "multi_gtg_observations.json")
+    )
+    data = observation[..., Observation.OBSERVATION]
+    obs = observations_seperate_to_torch([d[0] for d in data])
+    shap_values = explainer.shap_values(obs)
     mean_shap_values = np.array(shap_values[0]).mean(axis=-1)
     pixel_values = np.array(obs[0], copy=True)
 
-    binary_to_rgb = {
-        0: [255, 0, 0],  # Red
-        1: [0, 255, 0],  # Green
-        2: [0, 0, 255],  # Blue
-        3: [255, 255, 0],  # Yellow
-        4: [0, 255, 255],  # Cyan
-    }
+    grid = pixel_values[0]
+    width, height = grid.shape[:2]
+    environment = create_environment(artifact, width=width, height=height)
+
+    logging.info("Rendering images")
     rgb_images = []
     for pixel_value in pixel_values:
-        image = []
-        for row in pixel_value:
-            image_row = []
-            for cell in row:
-                image_row.append(binary_to_rgb[np.argmax(cell)])
-            image.append(image_row)
+        data = np.array([pixel_value, pixel_value])
+        environment.update_from_numpy(data)
+        image = environment.render()
         rgb_images.append(image)
     rgb_images = np.array(rgb_images)
 

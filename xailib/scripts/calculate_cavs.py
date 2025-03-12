@@ -48,7 +48,14 @@ def main():
     average_class_ratio = average_instance_of_each_class / total_number_of_instances
     K = int(batch_size * average_class_ratio / 2)
 
-    cavs, stats, cav_observations, cav_activations = calculate_cavs(
+    (
+        cavs,
+        stats,
+        positive_observations,
+        negative_observations,
+        positive_activations,
+        negative_observations,
+    ) = calculate_cavs(
         model=model,
         env=environment,
         artifact=artifact,
@@ -61,6 +68,7 @@ def main():
         lr=lr,
         epochs=epochs,
         num_observations=1000,
+        num_sample_observations=200,
         ignore_layers=ignore_layers,
     )
 
@@ -128,7 +136,7 @@ def main():
     cav_names.remove("random")
 
     mock_activations = {}
-    for i, act in cav_activations.items():
+    for i, act in positive_activations.items():
         mock_activations[str(i)] = {"latest": {"layer": {"output": act}}}
 
     logging.info("Calculating statistics for cavs...")

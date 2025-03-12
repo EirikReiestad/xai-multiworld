@@ -10,11 +10,11 @@
     },
     "model": {
         "type": "dqn",
-        "method": "policy"
+        "method": "random"
     },
     "collect_rollouts": {
         "observations": 3000,
-        "sample_rate": 0.01
+        "sample_rate": 1
     },
     "generate_concepts": {
         "observations": 500
@@ -31,7 +31,7 @@
     "completeness_score": {
         "network_epochs": 1,
         "decisiontree_epochs": 10,
-        "method": "network",
+        "method": "decisiontree",
         "concept_score_method": "binary"
     },
     "concepts": [
