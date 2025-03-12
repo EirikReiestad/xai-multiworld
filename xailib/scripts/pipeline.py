@@ -203,7 +203,14 @@ def main():
     K = int(config["calculate_cavs"]["batch_size"] * average_class_ratio / 2)
 
     logging.info("Calculating CAVs...")
-    cavs, stats, cav_observations, cav_activations = calculate_cavs(
+    (
+        cavs,
+        stats,
+        positive_cav_observations,
+        negative_cav_observations,
+        positive_cav_activations,
+        negative_cav_observations,
+    ) = calculate_cavs(
         model=latest_model,
         env=environment,
         artifact=artifact,
@@ -278,7 +285,7 @@ def main():
     )
 
     mock_activations = {}
-    for i, act in cav_activations.items():
+    for i, act in positive_cav_activations.items():
         mock_activations[str(i)] = {"latest": {"layer": {"output": act}}}
 
     logging.info("Calculating statistics for cavs...")
