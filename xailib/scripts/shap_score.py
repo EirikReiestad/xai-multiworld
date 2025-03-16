@@ -1,6 +1,7 @@
 import logging
 import os
 
+import matplotlib.pyplot as plt
 import numpy as np
 import shap
 
@@ -12,7 +13,6 @@ from utils.common.observation import (
     Observation,
     filter_observations,
     normalize_observations,
-    observation_from_file,
 )
 from utils.core.model_loader import ModelLoader
 
@@ -23,9 +23,11 @@ def main():
     model_type = "dqn"
     eval = True
     artifact_path = os.path.join("artifacts")
+    save_path = os.path.join("assets", "rendered")
+    split = 0.8
 
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
-    environment = create_environment(artifact, agents=10)
+    environment = create_environment(artifact)
     models = get_models(
         artifact=artifact,
         model_type=model_type,
@@ -38,25 +40,25 @@ def main():
     observations = collect_rollouts(
         env=environment,
         artifact=artifact,
-        n=10,
+        n=500,
         method="policy",
         force_update=True,
     )
     observations = filter_observations(observations)
 
+    split_size = int(split * len(observations))
+
     np.random.shuffle(observations)
     normalized_observations = normalize_observations(observations)
-    data = normalized_observations[..., Observation.OBSERVATION]
+    data = normalized_observations[..., Observation.OBSERVATION][:split_size]
     obs = observations_seperate_to_torch([d[0] for d in data])
-    logging.info("Running SHAP explainer")
+    logging.info("Running SHAP explainer...")
     explainer = shap.GradientExplainer(model, obs)
-
-    observation = observation_from_file(
-        os.path.join("assets", "custom", "multi_gtg_observations.json")
-    )
-    data = observation[..., Observation.OBSERVATION]
+    data = normalized_observations[..., Observation.OBSERVATION][split_size:]
     obs = observations_seperate_to_torch([d[0] for d in data])
+    logging.info("Calculating SHAP values...")
     shap_values = explainer.shap_values(obs)
+
     mean_shap_values = np.array(shap_values[0]).mean(axis=-1)
     pixel_values = np.array(obs[0], copy=True)
 
@@ -75,7 +77,9 @@ def main():
 
     for i in range(mean_shap_values.shape[0]):
         # NOTE: If the pixel values are not shown, its because image plot does something witih kmeans because the shape != 3 and the values is 0. Just go in the code and add 1e-10 so it doesn't devide by 0.
-        shap.image_plot(mean_shap_values[i], rgb_images[i])
+        shap.image_plot(mean_shap_values[i], rgb_images[i], show=False)
+        plt.savefig(os.path.join(save_path, f"{i}_shap.png"))
+        plt.close()
 
 
 if __name__ == "__main__":

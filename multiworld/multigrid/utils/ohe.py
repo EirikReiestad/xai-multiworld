@@ -61,6 +61,10 @@ def ohe_grid_object(obj: np.ndarray, minimal: bool) -> np.ndarray:
     return np.concatenate((ohe_type, ohe_color, ohe_state))
 
 
+def decode_direction(obj: np.ndarray) -> int:
+    return np.argmax(obj).item()
+
+
 def decode_ohe(obj: np.ndarray, minimal: bool) -> np.ndarray:
     type_ = np.argmax(obj[:N_TYPES])
     if minimal:

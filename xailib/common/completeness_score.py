@@ -36,7 +36,7 @@ def get_completeness_score(
     verbose: bool = False,
     result_path: str = os.path.join("assets", "results"),
     figure_path: str = os.path.join("assets", "figures"),
-    filename: str = "completeness_score",
+    filename: str = "completeness_score.json",
 ):
     if method == "network":
         return get_completeness_score_network(
@@ -93,17 +93,12 @@ def get_completeness_score_decision_tree(
     # np.random.shuffle( labels)  # This is just for sanity check, where it should score lower
     action_space = len(output["latest"][0])
 
-    observation_zipped, _ = zip_observation_data(observations)
-    activations, input, output = compute_activations_from_models(
-        models, observation_zipped, ignore_layers
-    )
-
     concept_probes = {
         key: list(list(value.values())[-1].values())[layer_idx]
         for key, value in probes.items()
     }
 
-    compute_accuracy_decision_tree(
+    return compute_accuracy_decision_tree(
         concepts=concepts,
         activations=activations,
         labels=labels,
@@ -124,7 +119,7 @@ def get_completeness_score_network(
     observations: Observation,
     layer_idx: int,
     concepts: List[str],
-    concept_score_method: Literal["soft", "binary"],
+    concept_score_method: Literal["soft", "binary", "binary_threshold"],
     epochs: int = 10,
     ignore_layers: List[str] = [],
     verbose: bool = False,
@@ -248,3 +243,5 @@ def get_completeness_score_network(
     write_results(results, path)
     shapley_values = calculate_shapley_values(path, concepts)
     write_results(shapley_values, os.path.join(result_path, "shapley_" + filename))
+
+    return None

@@ -2,36 +2,25 @@ import gc
 import logging
 import math
 import os
-import time
 from collections import defaultdict
 from typing import Dict, List, Literal
 
-import matplotlib.pyplot as plt
 import numpy as np
 import torch
 import torch.nn as nn
 from scipy.spatial.distance import pdist
-from sklearn.linear_model import LinearRegression, LogisticRegression
-from sklearn.metrics import accuracy_score
+from sklearn.linear_model import LogisticRegression
 from sklearn.metrics.pairwise import cosine_similarity
-from sklearn.tree import DecisionTreeClassifier, plot_tree
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.utils.fixes import pd
 from tabulate import tabulate
 from torch.utils.data import TensorDataset
 
-from multiworld.base import MultiWorldEnv
-from utils.common.code import get_memory_usage
 from utils.common.collections import get_combinations
-from utils.common.model_artifact import ModelArtifact
 from utils.common.numpy_collections import convert_numpy_to_float
-from utils.common.observation import (
-    Observation,
-    zip_observation_data,
-)
 from utils.common.read import read_results
 from utils.common.write import write_results
 from utils.core.plotting import plot_3d
-from xailib.common.activations import compute_activations_from_models
 from xailib.common.concept_score import (
     binary_concept_scores,
     individual_binary_concept_score,
@@ -123,7 +112,10 @@ def compute_accuracy_decision_tree(
 
     concept_scores = np.array(
         get_concept_score(
-            activations, probes, layer_idx, concept_score_method=concept_score_method
+            activations,
+            probes,
+            layer_idx,
+            concept_score_method=concept_score_method,
         ),
         dtype=np.float32,
     )
@@ -143,6 +135,7 @@ def compute_accuracy_decision_tree(
         filename=filename,
         verbose=verbose,
     )
+    return model
 
 
 def compute_accuracy(
@@ -151,7 +144,7 @@ def compute_accuracy(
     activations: Dict[str, Dict],
     labels: List[int],
     probes: Dict[str, LogisticRegression],
-    concept_score_method: Literal["binary", "soft"],
+    concept_score_method: Literal["binary", "soft", "binary_threshold"],
     layer_idx: int,
     hidden_units: int = 500,
     epochs: int = 500,
@@ -415,7 +408,7 @@ def calculate_probe_similarities(
     ],  # Concept -> Model -> Layer -> Probe
     layer_idx: int,
     result_path: str = os.path.join("assets", "results"),
-    filename: str = "cos_sim_matrix.json",
+    filename: str = "probe_similarities.json",
 ):
     cavs = {}
     for key, value in probes.items():

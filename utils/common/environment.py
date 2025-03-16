@@ -1,3 +1,4 @@
+from typing import Literal
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 from utils.common.model_artifact import ModelArtifact
@@ -9,6 +10,7 @@ def create_environment(
     height: int | None = None,
     agents: int | None = None,
     static: bool = False,
+    render_mode: Literal["human", "rgb_array"] = "rgb_array",
 ):
     _height = artifact.metadata.get("height") or height
     _width = artifact.metadata.get("width") or width
@@ -30,7 +32,7 @@ def create_environment(
             agents=agents,
             preprocessing=preprocessing,
             static=static,
-            render_mode="rgb_array",
+            render_mode=render_mode,
         )
     else:
         raise ValueError(
