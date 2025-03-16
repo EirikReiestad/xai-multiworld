@@ -19,15 +19,15 @@ def main():
         "goal_to_left",
         "goal_to_right",
         "wall_in_view",
-        "agent_in_view",
-        "agent_to_right",
-        "agent_to_left",
-        "agent_in_front",
+        # "agent_in_view",
+        # "agent_to_right",
+        # "agent_to_left",
+        # "agent_in_front",
     ]
     ignore_layers = ["_fc0"]
 
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
-    environment = create_environment(artifact, agents=10)
+    environment = create_environment(artifact)
     models = get_models(
         artifact=artifact,
         model_type=model_type,
@@ -41,7 +41,7 @@ def main():
         observations=100,
         artifact=artifact,
         method="policy",
-        force_update=True,
+        force_update=False,
     )
     (
         positive_observations,

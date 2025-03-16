@@ -25,7 +25,7 @@ def main():
     )
     args = parser.parse_args()
 
-    observations = 500
+    observations = 100
     method = "random"
     if args.generate_concepts is not None and len(args.generate_concepts) > 0:
         observations = int(args.generate_concepts[0])
@@ -48,15 +48,28 @@ def generate_concepts(
 ):
     concepts = [
         "random",
-        # "goal_in_front",
-        # "goal_in_view",
-        # "goal_to_left",
-        # "goal_to_right",
-        # "wall_in_view",
-        # "agent_in_view",
-        # "agent_to_right",
-        # "agent_to_left",
-        # "agent_in_front",
+        "goal_in_front",
+        "goal_in_view",
+        "goal_to_left",
+        "goal_to_right",
+        "goal_at_top",
+        "goal_at_bottom",
+        "goal_around_middle_front",
+        "next_to_goal",
+        "agent_in_view",
+        "agent_to_right",
+        "agent_to_left",
+        "agent_in_front",
+        "rotated_left",
+        "rotated_right",
+        "rotated_up",
+        "rotated_down",
+        "wall_in_view",
+        "wall_in_front",
+        "wall_to_right",
+        "wall_to_left",
+        "next_to_wall",
+        "close_to_wall",
     ]
 
     logging.info(

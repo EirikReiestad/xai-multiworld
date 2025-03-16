@@ -81,17 +81,19 @@ def tabulate_data(data: Dict, filename: str):
     files = {
         "cav_similarity.json": tabulate_similarity_matrix,
         "concept_cav_similarity.json": tabulate_similarity_matrix,
-        "cos_sim_matrix.json": tabulate_similarity_matrix,
+        "probe_similarities.json": tabulate_similarity_matrix,
         "cav_statistics.json": tabulate_cav_statistics,
         "probe_statistics.json": tabulate_cav_statistics,
         "concept_cav_statistics.json": tabulate_cav_statistics,
         "cav_training_stats.json": tabulate_training_stats,
-        "concept_combination_accuracies.json": tabulate_combination_accuracies,
         "probe_robustness.json": tabulate_robustness,
         "sample_efficiency.json": tabulate_sample_efficiency,
-        "decision_tree.json": tabulate_concept_score_decision_tree,
-        "shapley_values.json": tabulate_shapley_values,
-        "info_decision_tree.json": tabulate_concept_score_decision_tree_info,
+        "concept_completeness_score_decision_tree.json": tabulate_concept_score_decision_tree,
+        "cav_completeness_score_decision_tree.json": tabulate_concept_score_decision_tree,
+        "concept_completeness_score_network.json": tabulate_concept_score_network,
+        "info_concept_completeness_score_decision_tree.json": tabulate_concept_score_decision_tree_info,
+        "info_cav_completeness_score_decision_tree.json": tabulate_concept_score_decision_tree_info,
+        "shapley_concept_completeness_score_network.json": tabulate_shapley_values,
     }
 
     try:
@@ -115,6 +117,7 @@ def tabulate_generic(data: Dict) -> Tuple[pd.DataFrame, str]:
 def tabulate_concept_score_decision_tree_info(data: Dict) -> Tuple[pd.DataFrame, str]:
     df = pd.DataFrame([data])
     df = df.transpose()
+    df.columns = [""]
     styled_df = df.copy()
     styled_df.index = styled_df.index.str.replace("_", r"\_")
     styled_df = styled_df.style
@@ -129,6 +132,7 @@ def tabulate_shapley_values(data: Dict) -> Tuple[pd.DataFrame, str]:
     df.columns = ["Shapley Value"]
     df.sort_values(by="Shapley Value", ascending=False, inplace=True)
     styled_df = df.copy()
+    styled_df.index = styled_df.index.str.replace("_", r"\_")
     styled_df = styled_df.style
     latex = styled_df.to_latex()
     latex = format_table(latex)
@@ -149,7 +153,7 @@ def tabulate_robustness(data: Dict) -> Tuple[pd.DataFrame, str]:
     styled_df.columns = styled_df.columns.str.replace("_", r"\_")
     styled_df = styled_df.style
     styled_df.apply(
-        lambda s: highlight_threshold(s, props="bfseries:;", min=0.7, max=1.0),
+        lambda s: highlight_threshold(s, props="bfseries:;", min=0.9, max=1.0),
         axis=0,
     )
     latex = styled_df.to_latex()
@@ -170,7 +174,7 @@ def tabulate_concept_score_decision_tree(data: Dict) -> Tuple[pd.DataFrame, str]
     return df, latex
 
 
-def tabulate_combination_accuracies(data: Dict) -> Tuple[pd.DataFrame, str]:
+def tabulate_concept_score_network(data: Dict) -> Tuple[pd.DataFrame, str]:
     df = pd.DataFrame(data)
     df = df.transpose()
     df.columns = ["Loss", "Accuracy"]
@@ -249,7 +253,7 @@ def tabulate_sample_efficiency(data: Dict) -> Tuple[pd.DataFrame, str]:
     styled_df = df.copy()
     styled_df.columns = styled_df.columns.str.replace("_", r"\_")
     styled_df.index = styled_df.index.str.replace("_", r"\_")
-    latex = styled_df.to_latex(index=False)
+    latex = styled_df.to_latex()
     return df, latex
 
 
@@ -291,5 +295,5 @@ def highlight_nan_values(s, props: str):
 
 
 if __name__ == "__main__":
-    path = os.path.join("archive", "multi-gtg-random-15-20", "results")
+    path = os.path.join("archive", "multi-gtg-15-20", "results")
     main(path)

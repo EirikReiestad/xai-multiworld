@@ -87,8 +87,11 @@ class Grid:
         img[:, :] = Color(Color.black).rgb()
 
         # Draw the grid lines (top and left edges)
-        fill_coords(img, point_in_rect(0, 0.031, 0, 1), (100, 100, 100))
-        fill_coords(img, point_in_rect(0, 1, 0, 0.031), (100, 100, 100))
+        line_color = Color(Color.gray).rgb()
+        fill_coords(img, point_in_rect(0, 0.015, 0, 1), line_color)
+        fill_coords(img, point_in_rect(0, 1, 0, 0.015), line_color)
+        fill_coords(img, point_in_rect(0, 1, 0.985, 1), line_color)
+        fill_coords(img, point_in_rect(0.985, 1, 0, 1), line_color)
 
         if obj is not None:
             obj.render(img)

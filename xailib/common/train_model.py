@@ -138,7 +138,7 @@ def train_decision_tree(
     epochs: int = 20,
     result_path: str = os.path.join("assets", "results"),
     figure_path: str = os.path.join("assets", "figures"),
-    filename: str = "decision_tree",
+    filename: str = "decision_tree.json",
     show: bool = False,
     verbose: bool = False,
 ):
@@ -166,8 +166,9 @@ def train_decision_tree(
         if verbose:
             logging.info(f"Test set accuracy: {accuracy:.4f}")
 
-        plt.figure(figsize=(20, 10))
         feature_names += ["random"]
+        """
+        plt.figure(figsize=(20, 10))
         plot_tree(
             model,
             filled=True,
@@ -177,6 +178,7 @@ def train_decision_tree(
             plt.show()
         image_filename = "image_" + filename.replace(".json", ".png")
         plt.savefig(os.path.join(figure_path, image_filename))
+        """
 
         feature_importances = model.feature_importances_
         feature_split_counts = np.zeros(len(feature_names))
