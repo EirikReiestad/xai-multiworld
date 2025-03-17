@@ -341,23 +341,24 @@ def get_observation_concept_values(state: Dict[str, Dict[str, NDArray]]) -> List
 
     for agent_state in state.values():
         # For each concept, check its presence (using concept checks, as defined in `get_concept_checks`)
-        concept_values.append(get_concept_check_bitmap(agent_state))
+        concept_values.append(
+            get_concept_check_bitmap(agent_state, list(concept_checks.keys()))
+        )
 
     return concept_values
 
 
 def get_concept_check_bitmap(
-    state: Dict[str, NDArray], concepts: List[str] | None = None
+    state: Dict[str, NDArray], concepts: List[str]
 ) -> List[NDArray]:
     concept_bitmap = []
-    concept_names = concepts or concept_checks.keys()
 
-    for concept_name in concept_names:
+    for concept in concepts:
         # Apply the concept check to the state (assuming it returns True/False)
-        concept_present = concept_checks[concept_name](
+        concept_present = concept_checks[concept](
             state
         )  # Will return True if concept is present, else False
-        concept_bitmap.append(1 if concept_present else 0)
+        concept_bitmap.append(int(concept_present))
 
     # Convert the list of 0s and 1s to a numpy array for the current state concept_bit_maps.append(np.array(concept_values))
     return concept_bitmap

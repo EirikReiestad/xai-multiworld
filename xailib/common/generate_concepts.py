@@ -40,6 +40,8 @@ def generate_concepts(
                 for word in existing_concepts
             ]
 
+            print(all_concepts, existing_concepts)
+
             if set(all_concepts).issubset(set(existing_concepts)):
                 logging.info(
                     "Concepts already exists, so we do not need to download them:)"
