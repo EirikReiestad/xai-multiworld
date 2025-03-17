@@ -1,6 +1,7 @@
 import logging
 import os
 from itertools import count
+
 import numpy as np
 
 from multiworld.multigrid.core.concept import get_concept_check_bitmap
@@ -9,8 +10,8 @@ from utils.common.environment import create_environment
 from utils.common.model import get_models
 from utils.common.observation import filter_observations
 from utils.core.model_loader import ModelLoader
-from xailib.common.generate_concepts import generate_concepts
 from xailib.common.completeness_score import get_completeness_score
+from xailib.common.generate_concepts import generate_concepts
 from xailib.utils.observation import get_observations
 from xailib.utils.probes import get_probes_and_activations
 
@@ -62,11 +63,10 @@ def main():
     generate_concepts(
         concepts=concepts,
         env=environment,
-        observations=500,
+        observations=50,
         artifact=artifact,
         method="random",
-        model_type="dqn",
-        force_update=True,
+        force_update=False,
     )
     (
         positive_observations,
@@ -77,7 +77,7 @@ def main():
     observations = collect_rollouts(
         env=environment,
         artifact=artifact,
-        n=2000,
+        n=200,
         method="random",
         force_update=True,
     )
@@ -113,6 +113,7 @@ def main():
             for key, observation in observations.items():
                 concept_score = get_concept_check_bitmap(observation, concepts)
                 concept_score = np.array(concept_score).reshape(1, -1)
+                print(concept_score, type(concept_score))
                 action = model.predict(concept_score)
                 actions[key] = action
             observations, rewards, terminations, truncations, info = environment.step(
