@@ -8,6 +8,7 @@ from copy import Error
 import numpy as np
 from PIL import Image
 
+from multiworld.multigrid.core.action import Action
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 from utils.common.numpy_collections import NumpyEncoder
@@ -15,6 +16,7 @@ from utils.common.observation import (
     Observation,
     observation_data_to_numpy,
     observation_from_file,
+    observation_from_observation_file,
     observation_to_file,
 )
 
@@ -43,7 +45,7 @@ def main(path: str):
     save_directory = os.path.join("assets", "rendered")
 
     if filename is not None:
-        render(path, filename, save_directory, show=False)
+        render(path, filename, save_directory, show=True)
         return
 
     matching_paths = glob.glob(os.path.join(path, "[0-9]*.json"))
@@ -56,10 +58,14 @@ def render(directory: str, filename: str, save_directory: str, show: bool = Fals
     path = os.path.join(directory, filename)
     if not os.path.exists(save_directory):
         os.makedirs(save_directory)
-    observation: Observation = observation_from_file(path)
+
+    # observation: Observation = observation_from_file(path)
+    observation = observation_from_observation_file(path)
+
     numpy_obs = observation_data_to_numpy(observation)
     grid = numpy_obs[0][0]
     width, height = grid.shape[:2]
+
     env = GoToGoalEnv(
         agents=1,
         width=width,
@@ -69,7 +75,7 @@ def render(directory: str, filename: str, save_directory: str, show: bool = Fals
     )
     env.reset()
 
-    np.random.shuffle(numpy_obs)
+    # np.random.shuffle(numpy_obs)
 
     save_filename = filename.replace(".json", ".png")
 
@@ -81,6 +87,8 @@ def render(directory: str, filename: str, save_directory: str, show: bool = Fals
     images = []
     for i, obs in enumerate(numpy_obs):
         env.update_from_numpy(obs)
+        action = Action(observation[..., Observation.LABEL][i])
+        logging.info(f"Action: {action, action.name}")
         while True:
             img = env.render()
             if img is not None:
@@ -131,5 +139,6 @@ if __name__ == "__main__":
     path = os.path.join("archive", "20250313-120443", "results")
     path = os.path.join("assets", "results")
     path = os.path.join("assets", "concepts")
+    path = os.path.join("assets", "observations")
 
     main(path)

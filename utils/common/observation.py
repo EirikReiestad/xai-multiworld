@@ -5,8 +5,6 @@ from typing import Dict, List, Tuple
 import numpy as np
 import torch
 
-from multiworld.utils.typing import ObsType
-from rllib.utils.dqn.preprocessing import preprocess_next_observations
 from utils.common.numpy_collections import NumpyEncoder
 
 
@@ -28,6 +26,39 @@ class Observation(np.ndarray):
         obj[..., cls.OBSERVATION] = None
 
         return obj
+
+
+def observation_from_observation_file(path: str) -> Observation:
+    assert path.endswith(".json")
+    data = json.load(open(path))
+
+    observations = []
+    labels = []
+    terminations = []
+    truncations = []
+    for d in data:
+        obs = list(d["observations"].values())
+        observations.extend(obs)
+        label = list(d["actions"].values())
+        labels.extend(label)
+        terms = list(d["terminations"].values())
+        terminations.extend(terms)
+        truncs = list(d["truncations"].values())
+        truncations.extend(truncs)
+
+    num_observations = len(observations)
+    obs = Observation(num_observations)
+
+    ids = [i for i in range(num_observations)]
+
+    obs[..., Observation.ID] = ids
+    obs[..., Observation.LABEL] = labels
+    obs[..., Observation.TERMINATION] = terminations
+    obs[..., Observation.TRUNCATION] = truncations
+    obs[..., Observation.OBSERVATION] = np.array(observations, dtype=object).reshape(
+        num_observations, 1
+    )
+    return obs
 
 
 def observation_from_file(path: str) -> Observation:
@@ -203,7 +234,7 @@ def normalize_observations(
 
 
 def filter_observations(obs: Observation) -> Observation:
-    mask = (obs[..., Observation.TERMINATION] == False) & (
+    mask = (obs[..., Observation.TERMINATION] == False) | (
         obs[..., Observation.TRUNCATION] == False
     )
     return obs[mask]
