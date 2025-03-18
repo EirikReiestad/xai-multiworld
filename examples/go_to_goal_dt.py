@@ -4,6 +4,9 @@ from functools import partial
 from itertools import count
 
 import numpy as np
+import torch
+from sklearn.tree import DecisionTreeClassifier
+from torch.utils.data.dataset import TensorDataset
 
 from multiworld.multigrid.core.concept import get_concept_check_bitmap
 from multiworld.multigrid.utils.decoder import decode_observation
@@ -11,13 +14,10 @@ from multiworld.multigrid.utils.ohe import decode_direction
 from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 from utils.common.collect_rollouts import collect_rollouts
 from utils.common.environment import create_environment
-from utils.common.model import get_models
-from utils.common.observation import filter_observations
+from utils.common.observation import Observation, filter_observations
 from utils.core.model_loader import ModelLoader
-from xailib.common.completeness_score import get_completeness_score
 from xailib.common.generate_concepts import generate_concepts
-from xailib.utils.observation import get_observations
-from xailib.utils.probes import get_probes_and_activations
+from xailib.common.train_model import train_decision_tree
 
 logging.basicConfig(level=logging.INFO)
 
@@ -48,66 +48,57 @@ def main():
         "next_to_wall",
         "close_to_wall",
     ]
-    ignore_layers = ["_fc0"]
-    layer_idx = -1
-    model_type = "dqn"
     artifact_path = os.path.join("artifacts")
     epochs = 1
 
+    decode_obs = partial(
+        decode_observation, preprocessing=PreprocessingEnum.ohe_minimal
+    )
+
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
     environment = create_environment(artifact, width=10, height=10, static=True)
-    models = get_models(
-        artifact=artifact,
-        model_type=model_type,
-        env=environment,
-        eval=True,
-        artifact_path=artifact_path,
-    )
-    latest_model = {"model": list(models.values())[-1]}
     generate_concepts(
         concepts=concepts,
         env=environment,
-        observations=1000,
+        observations=500,
         artifact=artifact,
         method="policy",
-        force_update=False,
+        force_update=True,
     )
-    (
-        positive_observations,
-        negative_observations,
-        test_positive_observations,
-        test_negative_observations,
-    ) = get_observations(concepts=concepts.copy())
     observations = collect_rollouts(
         env=environment,
         artifact=artifact,
-        n=1000,
-        sample_rate=1,
+        n=5000,
+        sample_rate=0.1,
         method="policy",
         force_update=True,
     )
     observations = filter_observations(observations)
-    logging.info("Getting probes and activations...")
-    probes, positive_activations, negative_activations = get_probes_and_activations(
-        concepts.copy(),
-        ignore_layers,
-        latest_model,
-        positive_observations,
-        negative_observations,
+
+    test_split = 0.2
+
+    concept_scores = []
+    for obs in observations[..., Observation.OBSERVATION]:
+        grid = np.array(obs[0]["observation"])
+        grid = decode_obs({"observation": grid})
+        direction = decode_direction(obs[0]["direction"])
+        state = {"observation": grid["observation"], "direction": direction}
+        concept_score = get_concept_check_bitmap(state, concepts)
+        concept_scores.append(concept_score)
+    concept_scores = np.array(concept_scores)
+    labels = np.array(observations[..., Observation.LABEL], dtype=np.float32)
+
+    dataset = TensorDataset(
+        torch.from_numpy(concept_scores), torch.tensor(labels, dtype=torch.long)
     )
-    logging.info("Calculating completeness score...")
-    model = list(latest_model.values())[-1]
-    model = get_completeness_score(
-        probes=probes,
-        concepts=concepts.copy(),
+    model = DecisionTreeClassifier()
+
+    model = train_decision_tree(
         model=model,
-        observations=observations,
-        method="decisiontree",
-        concept_score_method="binary",
-        layer_idx=layer_idx,
+        dataset=dataset,
+        test_split=test_split,
+        feature_names=concepts.copy(),
         epochs=epochs,
-        ignore_layers=ignore_layers,
-        verbose=False,
     )
 
     environment = create_environment(
@@ -119,9 +110,6 @@ def main():
             actions = {}
             for key, observation in observations.items():
                 grid = observation["observation"]
-                decode_obs = partial(
-                    decode_observation, preprocessing=PreprocessingEnum.ohe_minimal
-                )
                 obs = decode_obs({"observation": grid})
                 grid = obs["observation"]
                 direction = decode_direction(observation["direction"])
