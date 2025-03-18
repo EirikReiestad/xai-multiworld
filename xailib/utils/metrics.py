@@ -119,8 +119,6 @@ def compute_accuracy_decision_tree(
         ),
         dtype=np.float32,
     )
-    for score in concept_scores:
-        print(score)
     dataset = TensorDataset(
         torch.from_numpy(concept_scores), torch.tensor(labels, dtype=torch.long)
     )
@@ -190,8 +188,6 @@ def get_concept_score(
     concept_score_method: Literal["binary", "soft"] = "binary",
 ):
     layer_activations = list(activations["latest"].values())[layer_idx]
-
-    print(probes.keys())
 
     concept_scores = []
     for concept, probe in probes.items():

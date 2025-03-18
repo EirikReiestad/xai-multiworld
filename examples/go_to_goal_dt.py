@@ -1,10 +1,14 @@
 import logging
 import os
+from functools import partial
 from itertools import count
 
 import numpy as np
 
 from multiworld.multigrid.core.concept import get_concept_check_bitmap
+from multiworld.multigrid.utils.decoder import decode_observation
+from multiworld.multigrid.utils.ohe import decode_direction
+from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 from utils.common.collect_rollouts import collect_rollouts
 from utils.common.environment import create_environment
 from utils.common.model import get_models
@@ -51,7 +55,7 @@ def main():
     epochs = 1
 
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
-    environment = create_environment(artifact)
+    environment = create_environment(artifact, width=10, height=10, static=True)
     models = get_models(
         artifact=artifact,
         model_type=model_type,
@@ -63,9 +67,9 @@ def main():
     generate_concepts(
         concepts=concepts,
         env=environment,
-        observations=50,
+        observations=1000,
         artifact=artifact,
-        method="random",
+        method="policy",
         force_update=False,
     )
     (
@@ -77,8 +81,9 @@ def main():
     observations = collect_rollouts(
         env=environment,
         artifact=artifact,
-        n=200,
-        method="random",
+        n=1000,
+        sample_rate=1,
+        method="policy",
         force_update=True,
     )
     observations = filter_observations(observations)
@@ -105,15 +110,24 @@ def main():
         verbose=False,
     )
 
-    environment = create_environment(artifact, render_mode="human")
+    environment = create_environment(
+        artifact, width=10, height=10, static=True, render_mode="human"
+    )
     while True:
         observations, _ = environment.reset()
         for i in count():
             actions = {}
             for key, observation in observations.items():
-                concept_score = get_concept_check_bitmap(observation, concepts)
+                grid = observation["observation"]
+                decode_obs = partial(
+                    decode_observation, preprocessing=PreprocessingEnum.ohe_minimal
+                )
+                obs = decode_obs({"observation": grid})
+                grid = obs["observation"]
+                direction = decode_direction(observation["direction"])
+                state = {"observation": grid, "direction": direction}
+                concept_score = get_concept_check_bitmap(state, concepts)
                 concept_score = np.array(concept_score).reshape(1, -1)
-                print(concept_score, type(concept_score))
                 action = model.predict(concept_score)
                 actions[key] = action
             observations, rewards, terminations, truncations, info = environment.step(
