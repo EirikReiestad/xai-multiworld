@@ -171,7 +171,6 @@ def train_decision_tree(
             logging.info(f"Test set accuracy: {accuracy:.4f}")
 
         feature_names += ["random"]
-        """
         plt.figure(figsize=(20, 10))
         plot_tree(
             model,
@@ -182,7 +181,6 @@ def train_decision_tree(
             plt.show()
         image_filename = "image_" + filename.replace(".json", ".png")
         plt.savefig(os.path.join(figure_path, image_filename))
-        """
 
         feature_importances = model.feature_importances_
         feature_split_counts = np.zeros(len(feature_names))
