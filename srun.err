@@ -1,110 +1,134 @@
 wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
-2025-03-12 16:28:42 | INFO | Downloading models...
-wandb:   1 of 1 files downloaded.  
-2025-03-12 16:28:44 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_0:v0
-2025-03-12 16:28:44 | INFO | Metadata: {'width': 20, 'agents': 15, 'height': 20, 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.8915844368566727, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-2025-03-12 16:28:44 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_0:v0/metadata.json
-wandb:   1 of 1 files downloaded.  
-2025-03-12 16:28:45 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_100:v0
-2025-03-12 16:28:45 | INFO | Metadata: {'width': 20, 'agents': 15, 'height': 20, 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.35960161232941573, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-2025-03-12 16:28:45 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_100:v0/metadata.json
-wandb:   1 of 1 files downloaded.  
-2025-03-12 16:28:46 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_200:v0
-2025-03-12 16:28:46 | INFO | Metadata: {'width': 20, 'agents': 15, 'height': 20, 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.163896068129523, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-2025-03-12 16:28:46 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_200:v0/metadata.json
-wandb:   1 of 1 files downloaded.  
-2025-03-12 16:28:47 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_300:v0
-2025-03-12 16:28:47 | INFO | Metadata: {'width': 20, 'agents': 15, 'height': 20, 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.09190002189511344, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-2025-03-12 16:28:47 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_300:v0/metadata.json
-wandb:   1 of 1 files downloaded.  
-2025-03-12 16:28:49 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_400:v0
-2025-03-12 16:28:49 | INFO | Metadata: {'width': 20, 'agents': 15, 'height': 20, 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.06541415663984554, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-2025-03-12 16:28:49 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_400:v0/metadata.json
-wandb:   1 of 1 files downloaded.  
-2025-03-12 16:28:50 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_500:v0
-2025-03-12 16:28:50 | INFO | Metadata: {'width': 20, 'agents': 15, 'height': 20, 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05567055133079545, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-2025-03-12 16:28:50 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_500:v0/metadata.json
-wandb:   1 of 1 files downloaded.  
-2025-03-12 16:28:51 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_600:v0
-2025-03-12 16:28:51 | INFO | Metadata: {'width': 20, 'agents': 15, 'height': 20, 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05208607925470701, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-2025-03-12 16:28:51 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_600:v0/metadata.json
-wandb:   1 of 1 files downloaded.  
-2025-03-12 16:28:52 | INFO | model downloaded at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_700:v0
-2025-03-12 16:28:52 | INFO | Metadata: {'width': 20, 'agents': 15, 'height': 20, 'conv_layers': [32, 64, 64], 'hidden_units': [128, 128], 'network_type': 'MULTI_INPUT', 'eps_threshold': 0.05076742567046096, 'learning_rate': 0.0003, 'preprocessing': 'ohe_minimal'}
-2025-03-12 16:28:52 | INFO | Metadata saved at: /cluster/work/eirre/xai-multiworld/artifacts/model_0_700:v0/metadata.json
-2025-03-12 16:28:52 | INFO | Creating environment...
-2025-03-12 16:28:55 | INFO | MultiInputNetwork(
-  (_conv0): ConvProcessor(
-    (conv_layers): Sequential(
-      (0): Conv2d(5, 32, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
-      (1): ReLU()
-      (2): Conv2d(32, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
-      (3): ReLU()
-      (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
-      (5): ReLU()
-    )
-  )
-  (_fc0): FCProcessor(
-    (fc_layers): Sequential(
-      (0): Linear(in_features=4, out_features=128, bias=True)
-      (1): ReLU()
-      (2): Linear(in_features=128, out_features=128, bias=True)
-      (3): ReLU()
-      (4): Linear(in_features=128, out_features=3, bias=True)
-    )
-  )
-  (_fc_final): FCProcessor(
-    (fc_layers): Sequential(
-      (0): Linear(in_features=3139, out_features=128, bias=True)
-      (1): ReLU()
-      (2): Linear(in_features=128, out_features=128, bias=True)
-      (3): ReLU()
-      (4): Linear(in_features=128, out_features=3, bias=True)
-    )
-  )
-)
-2025-03-12 16:28:55 | INFO | Collecting rollouts...
-2025-03-12 16:29:27 | WARNING | The number of concepts is greater than 8. This will take a long time to compute, soooo we will not do it:).
-2025-03-12 16:29:27 | INFO | Calculating decisiontree completeness score for concepts...
+wandb: Currently logged in as: eirikreiestad (eirikreiestad-ntnu) to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: Using wandb-core as the SDK backend.  Please refer to https://wandb.me/wandb-core for more information.
+wandb: Tracking run with wandb version 0.19.6
+wandb: Run data is saved locally in ./wandb/run-20250326_112825-n2r5afy2
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run eager-serenity-6
+wandb: ⭐️ View project at https://wandb.ai/eirikreiestad-ntnu/go-to-goal-ppo-1-7
+wandb: 🚀 View run at https://wandb.ai/eirikreiestad-ntnu/go-to-goal-ppo-1-7/runs/n2r5afy2
 Traceback (most recent call last):
-  File "/cluster/work/eirre/xai-multiworld/xailib/scripts/pipeline.py", line 317, in <module>
-    main()
-  File "/cluster/work/eirre/xai-multiworld/xailib/scripts/pipeline.py", line 141, in main
-    completeness_score = get_completeness_score(
-                         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/xailib/common/completeness_score.py", line 56, in get_completeness_score
-    return get_completeness_score_decision_tree(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/xailib/common/completeness_score.py", line 106, in get_completeness_score_decision_tree
-    compute_accuracy_decision_tree(
-TypeError: compute_accuracy_decision_tree() missing 1 required positional argument: 'filename'
-2025-03-12 16:30:00 | INFO | Generating concepts...
-2025-03-12 16:30:00 | INFO | Step 0
-2025-03-12 16:30:00 | INFO | Number of concepts filled: 0 / 10000
-2025-03-12 16:30:22 | INFO | Step 500
-2025-03-12 16:30:22 | INFO | Number of concepts filled: 9254 / 10000
-2025-03-12 16:30:36 | INFO | Step 1000
-2025-03-12 16:30:36 | INFO | Number of concepts filled: 9664 / 10000
-2025-03-12 16:30:49 | INFO | Step 1500
-2025-03-12 16:30:49 | INFO | Number of concepts filled: 9757 / 10000
-2025-03-12 16:31:01 | INFO | Step 2000
-2025-03-12 16:31:01 | INFO | Number of concepts filled: 9841 / 10000
-2025-03-12 16:31:13 | INFO | Step 2500
-2025-03-12 16:31:13 | INFO | Number of concepts filled: 9926 / 10000
-2025-03-12 16:31:25 | INFO | Writing concept observations to disk...
-2025-03-12 16:31:27 | INFO | Loading concept observations...
-2025-03-12 16:31:28 | INFO | Getting probes and activations for concepts...
-2025-03-12 16:31:55 | INFO | Calculating network completeness score for concepts...
-2025-03-12 16:31:55 | INFO | Calculating decisiontree completeness score for concepts...
+  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal_ppo.py", line 42, in <module>
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 99, in train_step
+    self._optimize_model()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 195, in _optimize_model
+    self._optimize_model_batch()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 201, in _optimize_model_batch
+    self._optimize_model_minibatch(buffer_list)
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 213, in _optimize_model_minibatch
+    loss += self._optimize_model_minibatch_episode(buff)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 248, in _optimize_model_minibatch_episode
+    _, action_logits, value = self._predict(state, requires_grad=True)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 132, in _predict
+    action, log_prob = self._get_action(action_logit)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 154, in _get_action
+    return self._get_discrete_action(action_logits=action_logits)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 160, in _get_discrete_action
+    action = dist.sample()
+             ^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/distributions/categorical.py", line 133, in sample
+    probs_2d = self.probs.reshape(-1, self._num_events)
+               ^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/distributions/utils.py", line 149, in __get__
+    value = self.wrapped(instance)
+            ^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/distributions/categorical.py", line 102, in probs
+    return logits_to_probs(self.logits)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/distributions/utils.py", line 91, in logits_to_probs
+    return F.softmax(logits, dim=-1)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/functional.py", line 2140, in softmax
+    ret = input.softmax(dim)
+          ^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/fx/traceback.py", line 175, in format_stack
+    return traceback.format_list(traceback.extract_stack()[:-1])
+                                 ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/traceback.py", line 231, in extract_stack
+    stack = StackSummary.extract(walk_stack(f), limit=limit)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/traceback.py", line 393, in extract
+    return klass._extract_from_extended_frame_gen(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/traceback.py", line 432, in _extract_from_extended_frame_gen
+    linecache.checkcache(filename)
+  File "/cluster/apps/eb/software/Python/3.11.3-GCCcore-12.3.0/lib/python3.11/linecache.py", line 72, in checkcache
+    stat = os.stat(fullname)
+           ^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
 Traceback (most recent call last):
-  File "/cluster/work/eirre/xai-multiworld/xailib/scripts/pipeline.py", line 317, in <module>
-    main()
-  File "/cluster/work/eirre/xai-multiworld/xailib/scripts/pipeline.py", line 141, in main
-    completeness_score = get_completeness_score(
-                         ^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/xailib/common/completeness_score.py", line 56, in get_completeness_score
-    return get_completeness_score_decision_tree(
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/cluster/work/eirre/xai-multiworld/xailib/common/completeness_score.py", line 106, in get_completeness_score_decision_tree
-    compute_accuracy_decision_tree(
-TypeError: compute_accuracy_decision_tree() missing 1 required positional argument: 'filename'
+  File "/cluster/work/eirre/xai-multiworld/examples/go_to_goal_ppo.py", line 42, in <module>
+    ppo.learn()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 36, in learn
+    self.collect_rollouts()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/algorithm.py", line 59, in collect_rollouts
+    self.train_step(
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 99, in train_step
+    self._optimize_model()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 195, in _optimize_model
+    self._optimize_model_batch()
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 201, in _optimize_model_batch
+    self._optimize_model_minibatch(buffer_list)
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 213, in _optimize_model_minibatch
+    loss += self._optimize_model_minibatch_episode(buff)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 248, in _optimize_model_minibatch_episode
+    _, action_logits, value = self._predict(state, requires_grad=True)
+                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 125, in _predict
+    action_probabilities, policy_values = self._get_policy_values(
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/algorithms/ppo/ppo.py", line 182, in _get_policy_values
+    return self._actor_net(*torch_observations), self._critic_net(
+                                                 ^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/multi_input_network.py", line 54, in forward
+    x = self._conv0(x)
+        ^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/work/eirre/xai-multiworld/rllib/core/network/processor.py", line 14, in forward
+    return self.conv_layers(x)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/container.py", line 250, in forward
+    input = module(input)
+            ^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1739, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/module.py", line 1750, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/conv.py", line 554, in forward
+    return self._conv_forward(input, self.weight, self.bias)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/nn/modules/conv.py", line 549, in _conv_forward
+    return F.conv2d(
+           ^^^^^^^^^
+  File "/cluster/home/eirre/.cache/pypoetry/virtualenvs/xai-multiworld-o99YJ8Jy-py3.11/lib/python3.11/site-packages/torch/fx/traceback.py", line 169, in format_stack
+    @compatibility(is_backward_compatible=False)
+    
+KeyboardInterrupt

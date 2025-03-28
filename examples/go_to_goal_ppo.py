@@ -4,27 +4,28 @@ from rllib.algorithms.ppo.ppo_config import PPOConfig
 from rllib.core.network.network import NetworkType
 
 agents = 1
+size = 7
 env = GoToGoalEnv(
-    width=10,
-    height=10,
+    width=size,
+    height=size,
     static=True,
     max_steps=100,
     agents=agents,
     agent_view_size=None,
     success_termination_mode="all",
-    render_mode="human",
+    render_mode="rgb_array",
 )
 config = (
     PPOConfig(
-        batch_size=100,
-        mini_batch_size=32,
-        epochs=5,
+        batch_size=64,
+        mini_batch_size=64,
+        epochs=10,
         gamma=0.99,
         lambda_=0.95,
         epsilon=0.2,
         learning_rate=3e-4,
-        value_weight=0.5,
-        entropy_weight=0.01,
+        value_weight=0.2,
+        entropy_weight=0.2,
         continuous=False,
     )
     .network(network_type=NetworkType.MULTI_INPUT)
@@ -32,7 +33,7 @@ config = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project=f"go-to-goal-ppo-{agents}", log_interval=20)
+    .wandb(project=f"go-to-goal-ppo-{agents}-{size}", log_interval=50)
 )
 
 ppo = PPO(config)

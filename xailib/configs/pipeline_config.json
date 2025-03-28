@@ -1,15 +1,11 @@
 {
     "wandb": {
-        "project_folder": "multi-go-to-goal-random-15-20",
+        "project_folder": "multi-gtg-15-20",
         "models": {
             "name": "model_0",
             "low": 0,
-            "high": 800,
-<<<<<<< HEAD
-            "step": 100 
-=======
-            "step": 100
->>>>>>> 78e2293a780b10da392d5afccdf675416ae0e91f
+            "high": 201,
+            "step": 50
         }
     },
     "model": {
@@ -17,22 +13,14 @@
         "method": "random"
     },
     "collect_rollouts": {
-<<<<<<< HEAD
-        "observations": 3000,
-=======
-        "observations": 1000,
->>>>>>> 78e2293a780b10da392d5afccdf675416ae0e91f
+        "observations": 2000,
         "sample_rate": 1
     },
     "generate_concepts": {
         "observations": 500
     },
     "calculate_cavs": {
-<<<<<<< HEAD
-        "M": 8,
-=======
         "M": 20,
->>>>>>> 78e2293a780b10da392d5afccdf675416ae0e91f
         "lambda_1": 0.1,
         "lambda_2": 0.1,
         "batch_size": 128,
@@ -53,17 +41,10 @@
         "goal_to_left",
         "goal_to_right",
         "wall_in_view",
-<<<<<<< HEAD
 	"agent_in_view",
 	"agent_in_front",
 	"agent_to_left",
 	"agent_to_right"
-=======
-        "agent_in_view",
-        "agent_in_front",
-        "agent_to_left",
-        "agent_to_right"
->>>>>>> 78e2293a780b10da392d5afccdf675416ae0e91f
     ],
     "analyze": {
         "ignore_layers": [
@@ -84,7 +65,7 @@
 	    0.01,
 	    0.001
         ],
-        "robustness_epochs": 5
+        "robustness_epochs": 1
     },
     "path": {
         "artifacts": "artifacts",

@@ -152,6 +152,20 @@ def main():
         result_path=result_path,
         filename="concept_completeness_score_decision_tree.json",
     )
+    completeness_score = get_completeness_score(
+        probes=probes,
+        concepts=config["concepts"],
+        model=latest_model,
+        observations=observations,
+        layer_idx=config["analyze"]["layer_idx"],
+        epochs=config["completeness_score"]["decisiontree_epochs"],
+        ignore_layers=config["analyze"]["ignore_layers"],
+        method="decisiontree",
+        concept_score_method="soft",
+        verbose=False,
+        result_path=result_path,
+        filename="soft_concept_completeness_score_decision_tree.json",
+    )
 
     test_positive_activations, test_input, test_output = get_concept_activations(
         concepts=config["concepts"],
