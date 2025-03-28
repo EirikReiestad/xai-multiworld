@@ -16,7 +16,6 @@ from gymnasium.core import ObservationWrapper
 from numpy.typing import NDArray as ndarray
 
 from multiworld.base import MultiWorldEnv
-from utils.core.constants import Color
 from multiworld.multigrid.base import MultiGridEnv
 from multiworld.multigrid.core.constants import Direction, State, WorldObjectType
 from multiworld.multigrid.core.world_object import WorldObject
@@ -27,6 +26,7 @@ from multiworld.utils.serialization import (
     serialize_observation,
 )
 from multiworld.utils.typing import AgentID, ObsType
+from utils.core.constants import Color
 
 
 @dataclass
@@ -109,6 +109,14 @@ class ObservationCollectorWrapper(gym.Wrapper):
         self._rollouts: List[Observations] = []
         self._verbose = verbose
 
+        # NOTE: We need to store the information because we want the new actions, so we can pair the action it takes at a certain observation
+        self._last_actions = None
+        self._last_observations = None
+        self._last_rewards = None
+        self._last_terminations = None
+        self._last_truncations = None
+        self._last_infos = None
+
     def step(
         self,
         actions: Dict[AgentID, int],
@@ -116,11 +124,24 @@ class ObservationCollectorWrapper(gym.Wrapper):
         observations, rewards, terminations, truncations, infos = super().step(actions)
 
         if np.random.rand() <= self._sample_rate:
-            self._rollouts.append(
-                Observations(
-                    observations, actions, rewards, terminations, truncations, infos
+            if self._last_actions is not None:
+                self._rollouts.append(
+                    Observations(
+                        self._last_observations,
+                        actions,
+                        self._last_rewards,
+                        self._last_terminations,
+                        self._last_truncations,
+                        self._last_infos,
+                    )
                 )
-            )
+
+        self._last_observations = observations
+        self._last_rewards = rewards
+        self._last_terminations = terminations
+        self._last_truncations = truncations
+        self._last_infos = infos
+        self._last_actions = actions
 
         if len(self._rollouts) % (self._observations / 10) == 0 and self._verbose:
             logging.info(

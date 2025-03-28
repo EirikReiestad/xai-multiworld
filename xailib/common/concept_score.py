@@ -15,8 +15,6 @@ def binary_concept_score(activations: np.ndarray, probe: LogisticRegression) -> 
 
 
 def soft_concept_score(activations: np.ndarray, probe: LogisticRegression) -> float:
-    # probe_probs = probe.predict_proba(activations)[:, 1]
-
     activations = activations.reshape(1, -1)
     coef = probe.coef_
     coef = coef.reshape(1, -1)

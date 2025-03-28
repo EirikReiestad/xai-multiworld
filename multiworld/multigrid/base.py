@@ -9,15 +9,17 @@ from multiworld.base import MultiWorldEnv
 from multiworld.core.position import Position
 from multiworld.multigrid.core.action import Action
 from multiworld.multigrid.core.agent import Agent, AgentState
-from multiworld.multigrid.core.constants import TILE_PIXELS, WorldObjectType
+from multiworld.multigrid.core.constants import TILE_PIXELS, Direction, WorldObjectType
 from multiworld.multigrid.core.grid import Grid
 from multiworld.multigrid.core.world_object import Container, WorldObject
 from multiworld.multigrid.utils.decoder import decode_observation
 from multiworld.multigrid.utils.observation import gen_obs_grid_encoding
-from multiworld.multigrid.utils.ohe import ohe_direction
+from multiworld.multigrid.utils.ohe import decode_direction, ohe_direction
 from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
+from multiworld.multigrid.utils.render import add_highlighted_border
 from multiworld.utils.typing import AgentID, ObsType
 from utils.common.callbacks import RenderingCallback, empty_rendering_callback
+from utils.core.constants import Color
 
 
 class MultiGridEnv(MultiWorldEnv):
@@ -81,12 +83,16 @@ class MultiGridEnv(MultiWorldEnv):
             self._agents.append(agent)
         self._world = Grid(width, height)
 
+        self._render_direction = None
+        self._border_size = 20
+
     def update_from_numpy(self, observation: NDArray):
         grid: NDArray[np.int_] = observation[0]
-        decode = partial(decode_observation, preprocessing=self._preprocessing)
-        obs = decode({"observation": grid})
+        decode_obs = partial(decode_observation, preprocessing=self._preprocessing)
+        obs = decode_obs({"observation": grid})
         grid = obs["observation"]
-        direction = observation[1]
+        direction = decode_direction(observation[1])
+        self._render_direction = Direction(direction)
         assert grid.ndim == 3, "Input grid must be 3-dimensional."
         height, width, dim = grid.shape
         assert (
@@ -302,6 +308,10 @@ class MultiGridEnv(MultiWorldEnv):
         img = self._world.render(
             tile_size, agents=self._agents, highlight_mask=highlight_mask
         )
+        if self._render_direction is None:
+            return img
+
+        img = add_highlighted_border(img, self._render_direction, self._border_size)
         return img
 
     def _reset_agents(self):

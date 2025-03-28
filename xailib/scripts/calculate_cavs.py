@@ -7,8 +7,10 @@ from sklearn.linear_model import LogisticRegression
 from utils.common.collect_rollouts import collect_rollouts
 from utils.common.environment import create_environment
 from utils.common.model import get_models
+from utils.common.observation import filter_observations
 from utils.core.model_loader import ModelLoader
 from xailib.common.completeness_score import get_completeness_score
+from xailib.common.lucid import lucid_visualization
 from xailib.core.calculate_cavs.calculate_cavs import calculate_cavs
 from xailib.utils.metrics import (
     calculate_cav_similarity,
@@ -36,7 +38,7 @@ def main():
     )
     model = list(models.values())[-1]
 
-    M = 5
+    M = 10
     lambda_1 = 0.1
     lambda_2 = 0.1
     batch_size = 128
@@ -55,6 +57,7 @@ def main():
         negative_observations,
         positive_activations,
         negative_observations,
+        similarity_weights,
     ) = calculate_cavs(
         model=model,
         env=environment,
@@ -83,6 +86,9 @@ def main():
     mock_probe.classes_ = [0, 1]
     mock_probes["random"] = {"latest": {"layer": mock_probe}}
 
+    # logging.info("Visualizing CAVs using Lucent...")
+    # lucid_visualization(model, cavs)
+
     logging.info("Calculating cav similarity...")
     calculate_cav_similarity(cavs, result_path, "cav_similarity.json")
     for i, cav in cavs.items():
@@ -102,22 +108,8 @@ def main():
         observation_path=os.path.join("assets", "tmp"),
         force_update=False,
     )
+    observations = filter_observations(observations)
 
-    if False:
-        logging.info("Calculating network completeness score for cavs...")
-        completeness_score = get_completeness_score(
-            probes=mock_probes,
-            concepts=cav_names.copy(),
-            model=model,
-            observations=observations,
-            layer_idx=-1,
-            epochs=1,
-            ignore_layers=ignore_layers,
-            method="network",
-            concept_score_method="soft",
-            verbose=False,
-            result_path=result_path,
-        )
     logging.info("Calculating decisiontree completeness score for cavs...")
     completeness_score = get_completeness_score(
         probes=mock_probes,

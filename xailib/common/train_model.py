@@ -8,7 +8,7 @@ import numpy as np
 import torch
 import torch.nn as nn
 from matplotlib import pyplot as plt
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, classification_report
 from sklearn.tree import DecisionTreeClassifier, plot_tree
 from torch.utils.data import DataLoader, TensorDataset, random_split
 
@@ -108,6 +108,7 @@ def train_model(
     test_loss = 0.0
     correct = 0
     total = 0
+
     with torch.no_grad():
         for inputs, labels in test_loader:
             outputs = model(inputs)
@@ -121,8 +122,7 @@ def train_model(
     test_loss /= len(test_loader)
     test_accuracy = 100 * correct / total
 
-    if verbose:
-        logging.info(f"Test Loss: {test_loss:.4f}, Test Accuracy: {test_accuracy:.2f}%")
+    logging.info(f"Test Loss: {test_loss:.4f}, Test Accuracy: {test_accuracy:.2f}%")
 
     del model, train_loader, val_loader, test_loader
     gc.collect()
@@ -138,12 +138,16 @@ def train_decision_tree(
     epochs: int = 20,
     result_path: str = os.path.join("assets", "results"),
     figure_path: str = os.path.join("assets", "figures"),
-    filename: str = "decision_tree",
+    filename: str = "decision_tree.json",
     show: bool = False,
     verbose: bool = False,
 ):
     results = []
     total_accuracy = 0
+
+    y_test = None
+    y_pred = None
+
     for _ in range(epochs):
         test_size = int(len(dataset) * test_split)
         train_size = len(dataset) - test_size
@@ -166,8 +170,9 @@ def train_decision_tree(
         if verbose:
             logging.info(f"Test set accuracy: {accuracy:.4f}")
 
-        plt.figure(figsize=(20, 10))
         feature_names += ["random"]
+        """
+        plt.figure(figsize=(20, 10))
         plot_tree(
             model,
             filled=True,
@@ -177,6 +182,7 @@ def train_decision_tree(
             plt.show()
         image_filename = "image_" + filename.replace(".json", ".png")
         plt.savefig(os.path.join(figure_path, image_filename))
+        """
 
         feature_importances = model.feature_importances_
         feature_split_counts = np.zeros(len(feature_names))
@@ -218,6 +224,13 @@ def train_decision_tree(
     write_results(average_results, path)
     log_decision_tree_feature_importance(average_results)
 
+    report = classification_report(y_test, y_pred, output_dict=True)
+    write_results(
+        report, os.path.join(result_path, "classification_report_" + filename)
+    )
+    if verbose:
+        logging.info(report)
+
     logging.info(f"\nTree Depth: {model.get_depth()}")
     logging.info(f"Number of Leaves: {model.get_n_leaves()}")
     logging.info(f"Average Test Set Accuracy: {average_accuracy:.4f}")
@@ -230,3 +243,5 @@ def train_decision_tree(
     }
 
     write_results(result, path)
+
+    return model

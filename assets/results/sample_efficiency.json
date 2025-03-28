@@ -1,7 +1,97 @@
 {
     "random": {
         "num_observations": 500,
-        "num_samples": 4743,
-        "normalized": 0.10541851149061775
+        "num_samples": 4931,
+        "normalized": 0.1013993104846887
+    },
+    "goal_in_view": {
+        "num_observations": 500,
+        "num_samples": 866,
+        "normalized": 0.5773672055427251
+    },
+    "goal_to_right": {
+        "num_observations": 500,
+        "num_samples": 5799,
+        "normalized": 0.0862217623728229
+    },
+    "goal_to_left": {
+        "num_observations": 500,
+        "num_samples": 2113,
+        "normalized": 0.23663038334122102
+    },
+    "goal_in_front": {
+        "num_observations": 500,
+        "num_samples": 1678,
+        "normalized": 0.29797377830750893
+    },
+    "goal_at_top": {
+        "num_observations": 500,
+        "num_samples": 7044,
+        "normalized": 0.0709823963657013
+    },
+    "goal_at_bottom": {
+        "num_observations": 500,
+        "num_samples": 959,
+        "normalized": 0.5213764337851929
+    },
+    "goal_around_middle_front": {
+        "num_observations": 500,
+        "num_samples": 1196,
+        "normalized": 0.4180602006688963
+    },
+    "next_to_goal": {
+        "num_observations": 500,
+        "num_samples": 3812,
+        "normalized": 0.1311647429171039
+    },
+    "rotated_right": {
+        "num_observations": 500,
+        "num_samples": 2076,
+        "normalized": 0.24084778420038536
+    },
+    "rotated_left": {
+        "num_observations": 500,
+        "num_samples": 1910,
+        "normalized": 0.2617801047120419
+    },
+    "rotated_up": {
+        "num_observations": 500,
+        "num_samples": 2399,
+        "normalized": 0.20842017507294705
+    },
+    "rotated_down": {
+        "num_observations": 500,
+        "num_samples": 1921,
+        "normalized": 0.2602811035918792
+    },
+    "wall_in_view": {
+        "num_observations": 500,
+        "num_samples": 714,
+        "normalized": 0.7002801120448179
+    },
+    "wall_in_front": {
+        "num_observations": 500,
+        "num_samples": 932,
+        "normalized": 0.5364806866952789
+    },
+    "wall_to_right": {
+        "num_observations": 500,
+        "num_samples": 2128,
+        "normalized": 0.2349624060150376
+    },
+    "wall_to_left": {
+        "num_observations": 500,
+        "num_samples": 10289,
+        "normalized": 0.04859558752065313
+    },
+    "next_to_wall": {
+        "num_observations": 500,
+        "num_samples": 11132,
+        "normalized": 0.044915558749550846
+    },
+    "close_to_wall": {
+        "num_observations": 500,
+        "num_samples": 896,
+        "normalized": 0.5580357142857143
     }
 }

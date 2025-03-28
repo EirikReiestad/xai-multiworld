@@ -345,6 +345,7 @@ def calculate_cavs(
     positive_activation_data = {}
     negative_observations = {}
     negative_activation_data = {}
+    similarity_weights = {}
     for m in range(M):
         _, indices = torch.topk(
             similarity_matrix[:, m], min(num_observations, num_sample_observations)
@@ -352,6 +353,9 @@ def calculate_cavs(
         m_observation = [obs[0] for obs in observation_data[indices]]
         positive_observations[str(m)] = m_observation
         positive_activation_data[str(m)] = data[indices]
+        similarity_weights[str(m)] = (
+            similarity_matrix[indices, m].detach().cpu().numpy()
+        )
         filename = f"{m}_cav_positive_observations.json"
         path = os.path.join(result_path, filename)
         with open(path, "w") as f:
@@ -367,6 +371,12 @@ def calculate_cavs(
         with open(path, "w") as f:
             json.dump(negative_observation, f, indent=4, cls=NumpyEncoder)
 
+    write_results(
+        results=similarity_weights,
+        path=os.path.join(result_path, "similarity_weights.json"),
+        custom_cls=NumpyEncoder,
+    )
+
     result_cavs = cavs.detach().cpu().numpy()
     results = {"cavs": result_cavs, "stats": stats.stats}
     write_results(
@@ -381,6 +391,7 @@ def calculate_cavs(
         negative_observations,
         positive_activation_data,
         negative_activation_data,
+        similarity_weights,
     )
 
 

@@ -224,6 +224,7 @@ def main():
         negative_cav_observations,
         positive_cav_activations,
         negative_cav_observations,
+        similarity_weights,
     ) = calculate_cavs(
         model=latest_model,
         env=environment,

@@ -32,7 +32,7 @@ def main():
     parser.add_argument(
         "-ro",
         "--render-observation",
-        nargs=1,
+        nargs="*",
         metavar=("filename"),
         help="Render the observations stored in json files under assets/concepts with argument [filename]",
     )

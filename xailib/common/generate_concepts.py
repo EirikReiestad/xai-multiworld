@@ -36,11 +36,11 @@ def generate_concepts(
                 else existing_concepts
             )
             existing_concepts = [
-                word.rstrip(".json") if word.endswith(".json") else word
+                word[:-5] if word.endswith(".json") else word
                 for word in existing_concepts
             ]
 
-            if set(all_concepts).issubset(set(existing_concepts)):
+            if set(sorted(all_concepts)).issubset(set(sorted(existing_concepts))):
                 logging.info(
                     "Concepts already exists, so we do not need to download them:)"
                 )
