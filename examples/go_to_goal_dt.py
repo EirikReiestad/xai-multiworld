@@ -56,22 +56,14 @@ def main():
     )
 
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
-    environment = create_environment(artifact, width=10, height=10, static=True)
-    generate_concepts(
-        concepts=concepts,
-        env=environment,
-        observations=500,
-        artifact=artifact,
-        method="policy",
-        force_update=True,
-    )
+    environment = create_environment(artifact, static=True)
     observations = collect_rollouts(
         env=environment,
         artifact=artifact,
         n=5000,
         sample_rate=0.1,
         method="policy",
-        force_update=True,
+        force_update=False,
     )
     observations = filter_observations(observations)
 
@@ -101,9 +93,7 @@ def main():
         epochs=epochs,
     )
 
-    environment = create_environment(
-        artifact, width=10, height=10, static=True, render_mode="human"
-    )
+    environment = create_environment(artifact, static=True, render_mode="human")
     while True:
         observations, _ = environment.reset()
         for i in count():

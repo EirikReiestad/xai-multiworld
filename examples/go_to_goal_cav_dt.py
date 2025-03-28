@@ -32,7 +32,7 @@ def main():
     eval = True
     ignore_layers = ["_fc0"]
     result_path = os.path.join("assets", "results")
-    method = "random"
+    method = "policy"
 
     M = 10
     lambda_1 = 0.1
@@ -42,7 +42,7 @@ def main():
     epochs = 1
 
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
-    environment = create_environment(artifact, width=10, height=10, static=True)
+    environment = create_environment(artifact)
     models = get_models(
         artifact=artifact,
         model_type=model_type,
@@ -57,7 +57,7 @@ def main():
         artifact=artifact,
         n=5000,
         sample_rate=0.1,
-        method="policy",
+        method=method,
         force_update=False,
     )
     observations = filter_observations(observations)
@@ -80,7 +80,7 @@ def main():
         model=model,
         env=environment,
         artifact=artifact,
-        method=method,
+        method="random",
         M=M,
         K=K,
         lambda_1=lambda_1,
@@ -88,7 +88,7 @@ def main():
         batch_size=batch_size,
         lr=lr,
         epochs=epochs,
-        num_observations=1000,
+        num_observations=2000,
         num_sample_observations=200,
         ignore_layers=ignore_layers,
     )
@@ -158,9 +158,7 @@ def main():
         epochs=epochs,
     )
 
-    environment = create_environment(
-        artifact, width=10, height=10, static=True, render_mode="human"
-    )
+    environment = create_environment(artifact, static=True, render_mode="human")
     while True:
         observations, _ = environment.reset()
         for i in count():

@@ -17,7 +17,7 @@ env = GoToGoalEnv(
     preprocessing=PreprocessingEnum.ohe_minimal,
     agent_view_size=7,
     success_termination_mode="all",
-    render_mode="human",
+    render_mode="rgb_array",
 )
 
 
@@ -47,6 +47,7 @@ mconfig = (
     .debugging(log_level="INFO")
     .rendering()
     # .wandb(project=f"multi-go-to-goal-{agents}-{size}", log_interval=100)
+    .wandb(project=f"test", log_interval=10)
 )
 
 dqn = MDQN(agents, mconfig, config)
