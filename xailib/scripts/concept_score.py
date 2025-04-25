@@ -19,10 +19,10 @@ def main():
         "goal_to_left",
         "goal_to_right",
         "wall_in_view",
-        # "agent_in_view",
-        # "agent_to_right",
-        # "agent_to_left",
-        # "agent_in_front",
+        "agent_in_view",
+        "agent_to_right",
+        "agent_to_left",
+        "agent_in_front",
     ]
     ignore_layers = ["_fc0"]
 
@@ -41,7 +41,7 @@ def main():
         observations=100,
         artifact=artifact,
         method="policy",
-        force_update=False,
+        force_update=True,
     )
     (
         positive_observations,
