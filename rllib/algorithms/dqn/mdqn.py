@@ -1,3 +1,4 @@
+from collections import deque
 from typing import Any, Dict, Mapping, SupportsFloat
 
 import numpy as np
@@ -9,6 +10,7 @@ from rllib.algorithms.algorithm_config import AlgorithmConfig
 from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.utils.dqn.preprocessing import preprocess_next_observations
+from utils.core.wandb import LogMethod
 
 
 class MDQN(Algorithm):
@@ -18,15 +20,21 @@ class MDQN(Algorithm):
         config: AlgorithmConfig,
         dqn_config: DQNConfig,
         multi_training: bool = False,
+        performance_measure_len: int = 10,
     ):
         assert (
             dqn_config._wandb_project is None
         ), "Ups, we will only run one wandb project at a time:) So please deactivate wandb for the DQN Config and add it to the AlgorithmConfig, thank you!"
         super().__init__(config)
+        performance_measure_len *= self._env._max_steps
         self._multi_training = multi_training
         self._config = config
         self._dqn_config = dqn_config
         self._dqns = {key: DQN(dqn_config) for key in range(agents)}
+        self._performance_measure_len = performance_measure_len
+        self._performance_measure = {
+            key: deque(maxlen=performance_measure_len) for key in range(agents)
+        }
 
     def train_step(
         self,
@@ -42,6 +50,12 @@ class MDQN(Algorithm):
         next_obs = preprocess_next_observations(
             next_observations, terminations, truncations
         )
+
+        # Just add reward for active step, not when waiting for the others to finish
+        for key, reward in rewards.items():
+            if (terminations[key] or truncations[key]) and reward == 0:
+                continue
+            self._performance_measure[key].append(reward)
 
         for key in self._dqns.keys():
             self._dqns[key]._steps_done = self._steps_done
@@ -59,6 +73,7 @@ class MDQN(Algorithm):
 
         self._optimize_model()
         self._hard_update_target()
+        self._soft_update_outlier_agents()
 
     def log_episode(self):
         super().log_episode()
@@ -134,6 +149,39 @@ class MDQN(Algorithm):
             loss = self._dqns[key]._optimize_model()
             if loss is not None:
                 losses[key] = loss
+
+    def _soft_update_outlier_agents(self):
+        if self._steps_done < self._performance_measure_len:
+            return
+
+        performance = {
+            key: float(np.mean(values))
+            for key, values in self._performance_measure.items()
+        }
+        performance_values = list(performance.values())
+        median_performance = np.median(performance_values)
+        q25, q75 = np.percentile(performance_values, [25, 75])
+        iqr = q75 - q25
+
+        lower_bound = median_performance - 1 * iqr
+
+        self.add_log("outlier_update_lower_bound", lower_bound)
+
+        sorted_performance = {
+            k: v for k, v in sorted(performance.items(), key=lambda item: item[1])
+        }
+        best_agent = list(sorted_performance.keys())[-1]
+        best_agent_network = self._dqns[best_agent].model
+
+        extern_updates = 0
+        for key, value in sorted_performance.items():
+            if value < lower_bound:
+                self._dqns[key]._soft_update_target(best_agent_network)
+                self.add_log(f"extern_update_{key}", 1, LogMethod.CUMULATIVE)
+                extern_updates += 1
+                continue
+            self.add_log(f"extern_update_{key}", 0, LogMethod.CUMULATIVE)
+        self.add_log("extern_update", extern_updates, LogMethod.CUMULATIVE)
 
     def _hard_update_target(self):
         if self._multi_training:

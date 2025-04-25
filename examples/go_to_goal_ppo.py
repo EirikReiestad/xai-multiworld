@@ -11,7 +11,7 @@ env = GoToGoalEnv(
     static=True,
     max_steps=100,
     agents=agents,
-    agent_view_size=None,
+    agent_view_size=7,
     success_termination_mode="all",
     render_mode="rgb_array",
 )

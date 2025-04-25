@@ -29,7 +29,7 @@ config = (
         learning_rate=3e-4,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=25000,
+        eps_decay=35000,
         update_method="soft",
         target_update=200,
     )
