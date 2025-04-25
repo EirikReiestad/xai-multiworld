@@ -167,6 +167,8 @@ class MDQN(Algorithm):
 
         self.add_log("outlier_update_lower_bound", lower_bound)
 
+        self.add_log("outlier_update_lower_bound", lower_bound)
+
         sorted_performance = {
             k: v for k, v in sorted(performance.items(), key=lambda item: item[1])
         }

@@ -7,6 +7,7 @@ COLORS = {
     "LightGray": np.array([217, 217, 217]),
     "DarkGray": np.array([117, 117, 117]),
     "DarkRed": np.array([238, 125, 95]),
+    "LightRed": np.array([247, 207, 196]),
     "DarkRedBorder": np.array([202, 65, 35]),
     "Yellow": np.array([255, 201, 67]),
     "LightYellow": np.array([255, 236, 189]),
@@ -20,7 +21,6 @@ COLORS = {
     "White": np.array([255, 255, 255]),
     "LightPink": np.array([246, 196, 233]),
     "Pink": np.array([229, 87, 189]),
-    "LightRed": np.array([247, 207, 196]),
 }
 
 
