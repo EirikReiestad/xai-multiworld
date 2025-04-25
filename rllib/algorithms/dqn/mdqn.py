@@ -161,9 +161,11 @@ class MDQN(Algorithm):
         performance_values = list(performance.values())
         median_performance = np.median(performance_values)
         q25, q75 = np.percentile(performance_values, [25, 75])
-        iqr = q25 - q25
+        iqr = q75 - q25
 
         lower_bound = median_performance - 1.5 * iqr
+
+        self.add_log("outlier_update_lower_bound", lower_bound)
 
         sorted_performance = {
             k: v for k, v in sorted(performance.items(), key=lambda item: item[1])
@@ -179,7 +181,7 @@ class MDQN(Algorithm):
                 extern_updates += 1
                 continue
             self.add_log(f"extern_update_{key}", 0, LogMethod.CUMULATIVE)
-        self.add_log("extern_update", 1, LogMethod.CUMULATIVE)
+        self.add_log("extern_update", extern_updates, LogMethod.CUMULATIVE)
 
     def _hard_update_target(self):
         if self._multi_training:
