@@ -1,0 +1,52 @@
+{
+    "random": {
+        "num_observations": 500,
+        "num_samples": 4687,
+        "normalized": 0.10667804565820355
+    },
+    "goal_in_view": {
+        "num_observations": 500,
+        "num_samples": 5148,
+        "normalized": 0.09712509712509712
+    },
+    "goal_to_right": {
+        "num_observations": 500,
+        "num_samples": 11794,
+        "normalized": 0.042394437849754114
+    },
+    "goal_to_left": {
+        "num_observations": 500,
+        "num_samples": 12571,
+        "normalized": 0.03977408320738207
+    },
+    "goal_in_front": {
+        "num_observations": 500,
+        "num_samples": 45011,
+        "normalized": 0.011108395725489325
+    },
+    "agent_in_view": {
+        "num_observations": 500,
+        "num_samples": 722,
+        "normalized": 0.6925207756232687
+    },
+    "agent_to_right": {
+        "num_observations": 500,
+        "num_samples": 1211,
+        "normalized": 0.41288191577208916
+    },
+    "agent_to_left": {
+        "num_observations": 500,
+        "num_samples": 1210,
+        "normalized": 0.4132231404958678
+    },
+    "agent_in_front": {
+        "num_observations": 500,
+        "num_samples": 3215,
+        "normalized": 0.15552099533437014
+    },
+    "wall_in_view": {
+        "num_observations": 500,
+        "num_samples": 925,
+        "normalized": 0.5405405405405406
+    }
+}
