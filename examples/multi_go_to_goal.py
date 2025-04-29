@@ -5,15 +5,16 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.mdqn import MDQN
 from rllib.core.network.network import NetworkType
 
-agents = 15
-size = 20
+agents = 20
+size = 30
+max_steps = 250
 
 env = GoToGoalEnv(
     width=size,
     height=size,
     agents=agents,
-    static=False,
-    max_steps=200,
+    static=True,
+    max_steps=max_steps,
     preprocessing=PreprocessingEnum.ohe_minimal,
     agent_view_size=7,
     success_termination_mode="all",
@@ -29,9 +30,9 @@ config = (
         learning_rate=3e-4,
         eps_start=0.9,
         eps_end=0.05,
-        eps_decay=35000,
+        eps_decay=40000,
         update_method="soft",
-        target_update=200,
+        target_update=max_steps,
     )
     .network(network_type=NetworkType.MULTI_INPUT)
     .environment(env=env)
@@ -46,7 +47,8 @@ mconfig = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project=f"multi-gtg-{agents}-{size}", log_interval=50)
+    .wandb(project=f"multi-gtg-{size}", log_interval=50)
+    # .wandb(project=f"multi-gtg-{agents}-{size}", log_interval=50)
 )
 
 dqn = MDQN(agents, mconfig, config, multi_training=True)
