@@ -14,6 +14,7 @@ from utils.core.model_loader import ModelLoader
 from xailib.common.completeness_score import get_completeness_score
 from xailib.common.generate_concepts import generate_concepts
 from xailib.core.calculate_cavs.calculate_cavs import calculate_cavs
+from xailib.core.shap.calculate_shap import calculate_shap
 from xailib.utils.activations import get_activations, get_concept_activations
 from xailib.utils.metrics import (
     calculate_cav_similarity,
@@ -318,6 +319,15 @@ def main():
     )
     calculate_probe_similarities(
         mock_probes, -1, result_path, filename="concept_cav_similarity.json"
+    )
+
+    logging.info("Calculating SHAP")
+    calculate_shap(
+        artifact=artifact,
+        environment=environment,
+        model=latest_model,
+        observations=observations,
+        save_path=result_path,
     )
 
 
