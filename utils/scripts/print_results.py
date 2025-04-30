@@ -1,15 +1,15 @@
 import argparse
 import json
-from utils.core.constants import get_colormap, get_palette
 import logging
 import os
 from typing import Dict, Tuple
-import matplotlib.pyplot as plt
-import seaborn as sns
 
+import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 from joblib.pool import np
 
+from utils.core.constants import get_colormap, get_palette
 from utils.core.plotting import plot_3d
 
 logger = logging.getLogger(__name__)
@@ -111,7 +111,7 @@ def plot_data(df: pd.DataFrame, filename: str, savepath: str, verbose: bool = Tr
         "cav_completeness_score_decision_tree.json": plot_concept_score_decision_tree,
     }
     try:
-        files[filename](df)
+        files[filename](df, savepath)
         plt.tight_layout()
         plt.savefig(savepath, bbox_inches="tight")
     except KeyError as e:
@@ -126,7 +126,7 @@ def tabulate_generic(data: Dict) -> Tuple[pd.DataFrame, str]:
     return df, latex
 
 
-def plot_generic(df: pd.DataFrame):
+def plot_generic(df: pd.DataFrame, savepath: str = ""):
     raise
 
 
@@ -155,7 +155,7 @@ def tabulate_shapley_values(data: Dict) -> Tuple[pd.DataFrame, str]:
     return df, latex
 
 
-def plot_shapley_values(df: pd.DataFrame):
+def plot_shapley_values(df: pd.DataFrame, savepath: str = ""):
     raise
 
 
@@ -181,7 +181,7 @@ def tabulate_robustness(data: Dict) -> Tuple[pd.DataFrame, str]:
     return df, latex
 
 
-def plot_robustness(df: pd.DataFrame):
+def plot_robustness(df: pd.DataFrame, savepath: str = ""):
     categories = df.columns
     df_reset = df.reset_index().rename(columns={"index": "threshold"})
 
@@ -230,7 +230,7 @@ def tabulate_concept_score_decision_tree(data: Dict) -> Tuple[pd.DataFrame, str]
     return df, latex
 
 
-def plot_concept_score_decision_tree(df: pd.DataFrame):
+def plot_concept_score_decision_tree(df: pd.DataFrame, savepath: str = ""):
     df_reset = df.reset_index().rename(columns={"index": "category"})
 
     categories = df_reset["category"].unique()
@@ -272,7 +272,7 @@ def tabulate_concept_score_network(data: Dict) -> Tuple[pd.DataFrame, str]:
     return df, latex
 
 
-def plot_concept_score_network(df: pd.DataFrame):
+def plot_concept_score_network(df: pd.DataFrame, savepath: str = ""):
     pass
 
 
@@ -285,7 +285,7 @@ def tabulate_training_stats(data: Dict) -> Tuple[pd.DataFrame, str]:
     return df, latex
 
 
-def plot_training_stats(df: pd.DataFrame):
+def plot_training_stats(df: pd.DataFrame, savepath: str = ""):
     raise
 
 
@@ -309,10 +309,24 @@ def tabulate_cav_statistics(data: Dict) -> Tuple[pd.DataFrame, str]:
     return df, latex
 
 
-def plot_cav_statistics(df: pd.DataFrame):
+def plot_cav_statistics(df: pd.DataFrame, savepath: str = ""):
+    for cat in ["density", "distance"]:
+        plot_cav_statistic(df, cat)
+        plt.tight_layout()
+        new_savepath = savepath.replace(".png", str(cat) + ".png")
+        plt.savefig(new_savepath, bbox_inches="tight")
+    plot_cav_statistic(df)
+
+
+def plot_cav_statistic(
+    df: pd.DataFrame, category: list[str] | str = ["density", "distance"]
+):
     df_reset = df.reset_index()
 
-    categories = ["density", "distance"]
+    categories = category
+    if not isinstance(category, list):
+        categories = [category]
+
     df_filtered = df_reset[df_reset["statistic"].isin(categories)]
 
     df_melted = pd.melt(
@@ -330,12 +344,19 @@ def plot_cav_statistics(df: pd.DataFrame):
         palette=colormap_palette,
     )
 
-    plt.title("Statistics per Column Index", fontsize=16)
-    plt.xlabel("Column Index", fontsize=12)
-    plt.ylabel("Value", fontsize=12)
+    y_label = "Value"
+    title = "Statistics per concept"
+    if isinstance(category, str):
+        y_label = category
+        title = f"{category.capitalize()} per concept"
+
+    plt.title(title, fontsize=16)
+    plt.xlabel("concepts", fontsize=12)
+    plt.ylabel(y_label, fontsize=12)
     plt.xticks(rotation=45, ha="right")
-    plt.legend(title="Statistic", bbox_to_anchor=(1.05, 1), loc="upper left")
-    plt.tight_layout()  # Adjust layout to prevent labels overlapping
+    if len(categories) > 1:
+        plt.legend(title="Statistic", bbox_to_anchor=(1.05, 1), loc="upper left")
+    plt.tight_layout()
 
 
 def tabulate_similarity_matrix(data: Dict) -> Tuple[pd.DataFrame, str]:
@@ -361,7 +382,7 @@ def tabulate_similarity_matrix(data: Dict) -> Tuple[pd.DataFrame, str]:
     return df, latex
 
 
-def plot_similarity_matrix(df: pd.DataFrame):
+def plot_similarity_matrix(df: pd.DataFrame, savepath: str = ""):
     plt.figure(figsize=(12, 10))
     sns.heatmap(df, annot=False, fmt=".3f", cmap=get_colormap(), linewidths=0.5)
     # annot=True: show values in cells
@@ -386,7 +407,7 @@ def tabulate_sample_efficiency(data: Dict) -> Tuple[pd.DataFrame, str]:
     return df, latex
 
 
-def plot_sample_efficiency(df: pd.DataFrame):
+def plot_sample_efficiency(df: pd.DataFrame, savepath: str = ""):
     # Check if 'normalized' column exists
     if "normalized" not in df.columns:
         logging.error(
@@ -422,7 +443,7 @@ def tabulate_combination_accuracy(data: Dict):
     return pd.DataFrame.from_dict(data, orient="index", columns=["Value", "Count"])
 
 
-def plot_combination_accuracy(df: pd.DataFrame):
+def plot_combination_accuracy(df: pd.DataFrame, savepath: str = ""):
     raise
 
 
@@ -460,5 +481,5 @@ def highlight_nan_values(s, props: str):
 
 
 if __name__ == "__main__":
-    path = os.path.join("archive", "gtgv0", "results")
+    path = os.path.join("archive", "gtgv1", "results")
     main(path)
