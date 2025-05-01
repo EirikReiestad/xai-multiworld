@@ -1,0 +1,112 @@
+{
+    "random": {
+        "num_observations": 1000,
+        "num_samples": 9916,
+        "normalized": 0.10084711577248891
+    },
+    "goal_in_view": {
+        "num_observations": 1000,
+        "num_samples": 6784,
+        "normalized": 0.1474056603773585
+    },
+    "goal_to_right": {
+        "num_observations": 1000,
+        "num_samples": 17582,
+        "normalized": 0.05687635081333182
+    },
+    "goal_to_left": {
+        "num_observations": 1000,
+        "num_samples": 18789,
+        "normalized": 0.05322263026238757
+    },
+    "goal_in_front": {
+        "num_observations": 1000,
+        "num_samples": 15812,
+        "normalized": 0.06324310650139135
+    },
+    "goal_at_top": {
+        "num_observations": 1000,
+        "num_samples": 44388,
+        "normalized": 0.022528611336397223
+    },
+    "goal_at_bottom": {
+        "num_observations": 1000,
+        "num_samples": 7134,
+        "normalized": 0.14017381553125877
+    },
+    "next_to_goal": {
+        "num_observations": 1000,
+        "num_samples": 18823,
+        "normalized": 0.053126494182648885
+    },
+    "agent_in_view": {
+        "num_observations": 1000,
+        "num_samples": 1143,
+        "normalized": 0.8748906386701663
+    },
+    "agent_to_right": {
+        "num_observations": 1000,
+        "num_samples": 1825,
+        "normalized": 0.547945205479452
+    },
+    "agent_to_left": {
+        "num_observations": 1000,
+        "num_samples": 1883,
+        "normalized": 0.5310674455655868
+    },
+    "agent_in_front": {
+        "num_observations": 1000,
+        "num_samples": 3431,
+        "normalized": 0.29146021568055963
+    },
+    "rotated_right": {
+        "num_observations": 1000,
+        "num_samples": 3043,
+        "normalized": 0.3286230693394676
+    },
+    "rotated_left": {
+        "num_observations": 1000,
+        "num_samples": 5136,
+        "normalized": 0.19470404984423675
+    },
+    "rotated_up": {
+        "num_observations": 1000,
+        "num_samples": 4213,
+        "normalized": 0.23736055067647757
+    },
+    "rotated_down": {
+        "num_observations": 1000,
+        "num_samples": 3698,
+        "normalized": 0.2704164413196322
+    },
+    "wall_in_view": {
+        "num_observations": 1000,
+        "num_samples": 2121,
+        "normalized": 0.47147571900047147
+    },
+    "wall_in_front": {
+        "num_observations": 1000,
+        "num_samples": 3841,
+        "normalized": 0.26034886748242647
+    },
+    "wall_to_right": {
+        "num_observations": 1000,
+        "num_samples": 7728,
+        "normalized": 0.12939958592132506
+    },
+    "wall_to_left": {
+        "num_observations": 1000,
+        "num_samples": 6112,
+        "normalized": 0.16361256544502617
+    },
+    "next_to_wall": {
+        "num_observations": 1000,
+        "num_samples": 8908,
+        "normalized": 0.1122586439155815
+    },
+    "close_to_wall": {
+        "num_observations": 1000,
+        "num_samples": 2586,
+        "normalized": 0.3866976024748647
+    }
+}

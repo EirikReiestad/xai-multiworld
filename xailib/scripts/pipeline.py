@@ -112,6 +112,10 @@ def main():
         test_positive_observations,
         test_negative_observations,
     ) = get_observations(config["concepts"])
+    observations = filter_observations(positive_observations)
+    observations = filter_observations(negative_observations)
+    observations = filter_observations(test_positive_observations)
+    observations = filter_observations(test_negative_observations))
 
     logging.info("Getting probes and activations for concepts...")
     probes, positive_activations, negative_activations = get_probes_and_activations(

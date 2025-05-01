@@ -258,6 +258,7 @@ def calculate_probe_robustness(
     results_path: str = os.path.join("assets", "results"),
     ignore_layers: List[str] = [],
 ):
+    epochs = 2
     concept_similarities = defaultdict(lambda: defaultdict(float))
     for _ in range(epochs):
         concept_probe_robustness = probe_robustness(

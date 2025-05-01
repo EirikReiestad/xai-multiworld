@@ -1,7 +1,12 @@
+import logging
+
 from utils.common.environment import create_environment
 from utils.common.model import get_latest_model
 from utils.core.model_loader import ModelLoader
 from xailib.utils.metrics import calculate_probe_robustness
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 
 def main():
@@ -27,6 +32,7 @@ def main():
         artifact, model_type, artifact_path, environment, eval=eval
     )
 
+    logging.info("Calculating probe robustness")
     calculate_probe_robustness(
         concepts=concepts,
         model=latest_model,

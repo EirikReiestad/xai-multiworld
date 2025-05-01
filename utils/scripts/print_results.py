@@ -168,6 +168,9 @@ def tabulate_robustness(data: Dict) -> Tuple[pd.DataFrame, str]:
             processed_data[condition][key] = value[0][0]
     data = processed_data
     df = pd.DataFrame(data)
+    df["random"] = (
+        df["random"] / 20
+    )  # Because random for some reason has the range of [20, 0]
     styled_df = df.copy()
     styled_df.index = styled_df.index.str.replace("_", r"\_")
     styled_df.columns = styled_df.columns.str.replace("_", r"\_")
@@ -278,6 +281,7 @@ def plot_concept_score_network(df: pd.DataFrame, savepath: str = ""):
 
 def tabulate_training_stats(data: Dict) -> Tuple[pd.DataFrame, str]:
     df = pd.DataFrame(data, index=None)
+    df = df.drop(columns=["timestamp", "elapsed_time"])
     styled_df = df.copy()
     styled_df.columns = styled_df.columns.str.replace("_", r"\_")
     styled_df.index = styled_df.index.str.replace("_", r"\_")
@@ -481,5 +485,5 @@ def highlight_nan_values(s, props: str):
 
 
 if __name__ == "__main__":
-    path = os.path.join("archive", "gtgv1", "results")
+    path = os.path.join("archive", "gtgv2", "results")
     main(path)
