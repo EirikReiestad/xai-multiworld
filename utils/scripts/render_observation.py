@@ -59,8 +59,10 @@ def render(directory: str, filename: str, save_directory: str, show: bool = Fals
     if not os.path.exists(save_directory):
         os.makedirs(save_directory)
 
-    # observation: Observation = observation_from_file(path)
-    observation = observation_from_observation_file(path)
+    try:
+        observation = observation_from_observation_file(path)
+    except KeyError:
+        observation: Observation = observation_from_file(path)
 
     numpy_obs = observation_data_to_numpy(observation)
     grid = numpy_obs[0][0]
@@ -87,8 +89,8 @@ def render(directory: str, filename: str, save_directory: str, show: bool = Fals
     images = []
     for i, obs in enumerate(numpy_obs):
         env.update_from_numpy(obs)
-        action = Action(observation[..., Observation.LABEL][i])
-        logging.info(f"Action: {action, action.name}")
+        # action = Action(observation[..., Observation.LABEL][i])
+        # logging.info(f"Action: {action, action.name}")
         while True:
             img = env.render()
             if img is not None:
@@ -135,10 +137,9 @@ def render(directory: str, filename: str, save_directory: str, show: bool = Fals
 
 
 if __name__ == "__main__":
-    path = os.path.join("archive", "multi-gtg-15-20", "results")
-    path = os.path.join("archive", "20250313-120443", "results")
     path = os.path.join("assets", "results")
     path = os.path.join("assets", "concepts")
     path = os.path.join("assets", "observations")
+    path = os.path.join("archive", "gtgv2", "results")
 
     main(path)
