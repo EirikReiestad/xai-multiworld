@@ -234,7 +234,7 @@ def normalize_observations(
 
 
 def filter_observations(obs: Observation) -> Observation:
-    mask = (obs[..., Observation.TERMINATION] == False) | (
+    mask = (obs[..., Observation.TERMINATION] == False) & (
         obs[..., Observation.TRUNCATION] == False
     )
     return obs[mask]

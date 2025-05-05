@@ -13,11 +13,11 @@
         "method": "policy"
     },
     "collect_rollouts": {
-        "observations": 1000,
+        "observations": 100,
         "sample_rate": 0.2
     },
     "generate_concepts": {
-        "observations": 1000
+        "observations": 100
     },
     "calculate_cavs": {
         "M": 20,

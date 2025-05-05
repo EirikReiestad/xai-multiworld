@@ -3,15 +3,12 @@ import glob
 import json
 import logging
 import os
-from copy import Error
 
 import numpy as np
 from PIL import Image
 
-from multiworld.multigrid.core.action import Action
 from multiworld.multigrid.envs.go_to_goal import GoToGoalEnv
 from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
-from utils.common.numpy_collections import NumpyEncoder
 from utils.common.observation import (
     Observation,
     observation_data_to_numpy,
@@ -47,6 +44,8 @@ def main(path: str):
     if filename is not None:
         render(path, filename, save_directory, show=True)
         return
+
+    logging.info("Render observation...")
 
     matching_paths = glob.glob(os.path.join(path, "[0-9]*.json"))
     filenames = [os.path.basename(filepath) for filepath in matching_paths]
@@ -97,7 +96,7 @@ def render(directory: str, filename: str, save_directory: str, show: bool = Fals
                 images.append(img)
                 image = Image.fromarray(img, "RGB")
                 path = os.path.join(save_directory, f"{count}_{save_filename}")
-                image.save(path)
+                # image.save(path)
                 if show:
                     image.show()
             if not show:
@@ -140,6 +139,6 @@ if __name__ == "__main__":
     path = os.path.join("assets", "results")
     path = os.path.join("assets", "concepts")
     path = os.path.join("assets", "observations")
-    path = os.path.join("archive", "gtgv2", "results")
+    path = os.path.join("archive", "gtgv3", "results")
 
     main(path)
