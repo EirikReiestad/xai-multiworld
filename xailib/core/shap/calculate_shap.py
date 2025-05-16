@@ -57,7 +57,7 @@ def calculate_shap(
         rgb_images.append(image)
     rgb_images = np.array(rgb_images)
 
-    for i in range(mean_shap_values.shape[0]):
+    for i in range(min(50, mean_shap_values.shape[0])):
         # NOTE: If the pixel values are not shown, its because image plot does something witih kmeans because the shape != 3 and the values is 0. Just go in the code and add 1e-10 so it doesn't devide by 0.
         shap.image_plot(mean_shap_values[i], rgb_images[i], show=False)
         plt.savefig(os.path.join(save_path, f"{i}_shap.png"))

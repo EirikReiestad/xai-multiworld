@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:artifacts/model_0_50:v0/metadata.json
-{"width": 20, "agents": 15, "height": 20, "conv_layers": [32, 64, 64], "hidden_units": [128, 128], "network_type": "MULTI_INPUT", "eps_threshold": 0.6152546567331132, "learning_rate": 0.0003, "preprocessing": "ohe_minimal"}
-========
-{"width": 20, "agents": 15, "height": 20, "conv_layers": [32, 64, 64], "hidden_units": [128, 128], "network_type": "MULTI_INPUT", "eps_threshold": 0.13595606980180563, "learning_rate": 0.0003, "preprocessing": "ohe_minimal"}
->>>>>>>> 4d699a702635e13560aee4c82d580398b2a1164b:artifacts/model_0_400:v1/metadata.json

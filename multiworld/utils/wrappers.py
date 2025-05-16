@@ -26,6 +26,7 @@ from multiworld.utils.serialization import (
     serialize_observation,
 )
 from multiworld.utils.typing import AgentID, ObsType
+from utils.common.observation import filter_observations
 from utils.core.constants import Color
 
 
@@ -253,6 +254,8 @@ class ConceptObsWrapper(gym.Wrapper):
                 continue
 
             for agent_id, obs in observations.items():
+                if terminations[agent_id] or truncations[agent_id]:
+                    continue
                 decoded_obs = self._decoder(obs.copy())
                 if not self._concepts_filled[concept]:
                     self._sample_efficiency[concept] += 1
