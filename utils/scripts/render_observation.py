@@ -139,6 +139,6 @@ if __name__ == "__main__":
     path = os.path.join("assets", "results")
     path = os.path.join("assets", "concepts")
     path = os.path.join("assets", "observations")
-    path = os.path.join("archive", "gtgv3", "results")
+    path = os.path.join("archive", "gtgv4", "results")
 
     main(path)

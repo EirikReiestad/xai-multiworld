@@ -34,6 +34,8 @@ supersuit = "^3.9.3"
 pymunk = "^6.11.1"
 tqdm = "^4.67.1"
 torch-lucent = {git = "https://github.com/TomFrederik/lucent.git"}
+scikit-image = "^0.25.2"
+xgboost = "^3.0.1"
 
 [tool.pyright]
 venvPath = "."

@@ -1,12 +1,13 @@
 #!/bin/bash
 
-TEMP=$(getopt -o hecp: --long help,example,pipeline,concept-score -- "$@")
+TEMP=$(getopt -o hecpx: --long help,example,concept-score,pipeline,experiments -- "$@")
 eval set -- "$TEMP"
 
 help_flag=false
 example_flag=false
 concept_score_flag=false
 pipeline_score_flag=false
+experiment_flag=false
 
 while true; do
     case "$1" in
@@ -25,6 +26,11 @@ while true; do
         ;;
     -c | --concept-score)
         concept_score_flag=true
+        shift
+        break
+        ;;
+    -x | --experiments)
+        experiment_flag=true
         shift
         break
         ;;
@@ -54,12 +60,18 @@ if [ "$concept_score_flag" = true ]; then
     exit 0
 fi
 
-if [ "$help_flag" = true ] || true ; then
+if [ "$experiment_flag" = true ]; then
+    sbatch scripts/idun/experiments.sh
+    exit 0
+fi
+
+if [ "$help_flag" = true ] || true; then
     echo "Usage: $0 [options]"
     echo "Options:"
     echo "  --help           Show this help message"
     echo "  --example        Run the example script"
     echo "  --pipeline       Run the pipeline"
     echo "  --xailib         Run the xailib script with additional arguments"
+    echo "  --experiments    Run the experiments script"
     exit 0
 fi

@@ -1,0 +1,238 @@
+import json
+import os
+import time
+from collections import defaultdict
+
+import cv2
+import numpy as np
+from numpy.random import shuffle
+from experiments.src.compute_statistics import calculate_shapley_values
+import torch
+from experiments.src.model_handler import test_model, train_model
+from experiments.src.network import FFNet
+from experiments.src.utils import get_combinations
+from torch.optim.lr_scheduler import StepLR
+from torch.utils.data import DataLoader, TensorDataset, random_split
+
+
+def get_neural_network_feature_importance(
+    M: int,
+    X: np.ndarray,
+    y,
+    output_size,
+    log_interval,
+    dry_run,
+    gamma,
+    batch_size,
+    test_batch_size,
+    epochs: int = 10,
+    result_path: str = "experiments/results",
+    filename: str = "completeness_score_network.json",
+):
+    y = torch.Tensor(y)
+    X = torch.Tensor(X)
+    print(f"Input shape: {X.shape}, target shape{y.shape}")
+    dataset = TensorDataset(X, y)
+    train_size = int(0.8 * len(dataset))
+    test_size = len(dataset) - train_size
+    print(f"Training set size: {train_size}, test set size: {test_size}")
+
+    train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
+
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
+    test_loader = DataLoader(test_dataset, batch_size=test_batch_size, shuffle=False)
+
+    lr = 0.1
+    epochs = 20
+
+    best_test_acc = 0
+
+    results = defaultdict()
+    combs = get_combinations(list(range(M)))
+    shuffle(combs)
+    max_combs = 3
+    for i, comb in enumerate(combs[:max_combs]):
+        print(f"\n\n===== Computing accuracy for {comb} ({i}/{max_combs}) =====")
+        sub_X = torch.Tensor([data.detach().numpy()[comb] for data in X])
+        dataset = TensorDataset(sub_X, y)
+        train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
+        sub_train_loader = DataLoader(
+            train_dataset, batch_size=batch_size, shuffle=False
+        )
+        sub_test_loader = DataLoader(
+            test_dataset, batch_size=test_batch_size, shuffle=False
+        )
+
+        model = FFNet(len(comb), output_size)
+        optimizer = torch.optim.Adadelta(model.parameters(), lr=lr)
+        scheduler = StepLR(optimizer, step_size=1, gamma=gamma)
+
+        patience = 2
+        patience_count = 0
+
+        best_accuracy = 0
+        train_acc = 0
+        test_acc = 0
+
+        for epoch in range(epochs):
+            train_acc = train_model(
+                log_interval,
+                dry_run,
+                model,
+                None,
+                sub_train_loader,
+                optimizer,
+                epoch,
+            )
+            test_acc = test_model(model, None, sub_test_loader)
+
+            scheduler.step()
+            patience_count += 1
+            if train_acc > best_accuracy:
+                best_accuracy = train_acc
+                patience_count = 0
+
+            if patience_count == patience:
+                break
+
+        best_test_acc = max(best_test_acc, test_acc)
+
+        results[tuple(sorted(comb))] = test_acc
+
+    path = os.path.join(result_path, filename)
+    with open(path, "w") as f:
+        json.dump(results, f, indent=4)
+    shapley_values = calculate_shapley_values(path, list(range(M)))
+    path = os.path.join(result_path, "shapley_" + filename)
+    with open(path, "w") as f:
+        json.dump(shapley_values, f, indent=4)
+
+    return best_test_acc, shapley_values
+
+
+def get_neural_network_completeness_score(
+    M,
+    concept_scores_train,
+    all_train_targets,
+    batch_size,
+    test_batch_size,
+    log_interval,
+    dry_run,
+    gamma,
+    iteration,
+):
+    print("\nBaseline test with Neural Network trained on concepts")
+    model = FFNet(M, concept_scores_train.shape[-1])
+    concept_scores_train = torch.Tensor(concept_scores_train)
+    all_train_targets = torch.Tensor(all_train_targets)
+    print(
+        f"Input shape: {concept_scores_train.shape}, target shape{all_train_targets.shape}"
+    )
+    dataset = TensorDataset(concept_scores_train, all_train_targets)
+    train_size = int(0.8 * len(dataset))
+    test_size = len(dataset) - train_size
+    print(f"Training set size: {train_size}, test set size: {test_size}")
+
+    train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
+
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
+    test_loader = DataLoader(test_dataset, batch_size=test_batch_size, shuffle=False)
+
+    stats_file = f"experiments/results/nn_concept_training_stats_{iteration}.txt"
+    all_stats = []
+    lr = 0.1
+    epochs = 20
+    optimizer = torch.optim.Adadelta(model.parameters(), lr=lr)
+    scheduler = StepLR(optimizer, step_size=1, gamma=gamma)
+
+    best_test_acc = 0
+    patience = 5
+    patience_counter = 0
+
+    for epoch in range(1, epochs + 1):
+        start_time = time.time()
+        train_acc = train_model(
+            log_interval,
+            dry_run,
+            model,
+            None,
+            train_loader,
+            optimizer,
+            epoch,
+        )
+        test_acc = test_model(model, None, test_loader)
+        scheduler.step()
+        epoch_time = time.time() - start_time
+        stats = {
+            "epoch": epoch,
+            "train_accuracy": train_acc,
+            "test_accuracy": test_acc,
+            "epoch_time": epoch_time,
+        }
+        all_stats.append(stats)
+        print(
+            f"Epoch {epoch} | Train Acc: {train_acc} | Test Acc: {test_acc} | Time: {epoch_time} sec"
+        )
+        # Early stopping logic
+        if test_acc > best_test_acc:
+            best_test_acc = test_acc
+            patience_counter = 0
+        else:
+            patience_counter += 1
+            if patience_counter >= patience:
+                print(f"Early stopping at epoch {epoch}")
+                break
+
+    with open(stats_file, "w") as f:
+        json.dump(all_stats, f, indent=4)
+    return best_test_acc, {}
+
+
+def calculate_weights(model, cavs, layer_name, data) -> dict:
+    # NOTE: This is for CNN
+    weights = {}
+    for i, (key, cav_data) in enumerate(data.items()):
+        acts = get_activations(model, cav_data, layer_name)
+        acts_flatten = acts.view(acts.size(0), -1)
+        weight = acts_flatten * cavs[i]
+        weight_original = weight.view(weight.size(0), *acts.shape[1:])
+        weight_original = weight_original.sum(dim=1)
+
+        size = cav_data[0].shape[1:]
+        x_resized = np.zeros((weight_original.shape[0], *size))
+        for i in range(weight_original.shape[0]):
+            numpy_x = weight_original[i].detach().numpy()
+            x_resized[i] = cv2.resize(
+                numpy_x,
+                size,
+                interpolation=cv2.INTER_LINEAR,
+            )
+        weights[key] = x_resized
+    return weights
+
+
+def get_activations(model, data, layer_name):
+    activations = []
+
+    def hook_fn(module, input, output):
+        activations.append(output)
+
+    hook = None
+    for name, module in model.named_modules():
+        if name == layer_name:
+            hook = module.register_forward_hook(hook_fn)
+            break
+
+    if hook is None:
+        raise ValueError(
+            f"{layer_name} is not a valid layer. Possible layers: {[name for name, _ in model.named_modules()]}"
+        )
+
+    model.eval()
+    with torch.no_grad():
+        # data = data.to(next(model.parameters()).device)
+        output = model(data)
+    if hook is not None:
+        hook.remove()
+    return output
+    return activations[0]
