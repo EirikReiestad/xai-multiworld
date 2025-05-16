@@ -9,7 +9,7 @@ import pandas as pd
 import seaborn as sns
 from joblib.pool import np
 
-from utils.core.constants import get_colormap, get_palette
+from utils.core.constants import Color, get_colormap, get_palette
 from utils.core.plotting import plot_3d
 
 logger = logging.getLogger(__name__)
@@ -244,8 +244,9 @@ def plot_concept_score_decision_tree(df: pd.DataFrame, savepath: str = ""):
         data=df_reset,
         x="category",
         y="Importance",
-        hue="category",
-        palette=colormap_palette,
+        # hue="category",
+        # palette=colormap_palette,
+        color=tuple(Color(Color.green).rgb() / 255.0),
         legend=False,
     )
     plt.title("Concept Importance", fontsize=16)
@@ -314,7 +315,7 @@ def tabulate_cav_statistics(data: Dict) -> Tuple[pd.DataFrame, str]:
 
 
 def plot_cav_statistics(df: pd.DataFrame, savepath: str = ""):
-    for cat in ["density", "distance"]:
+    for cat in ["density", "distance", "mean"]:
         plot_cav_statistic(df, cat)
         plt.tight_layout()
         new_savepath = savepath.replace(".png", str(cat) + ".png")
@@ -340,13 +341,23 @@ def plot_cav_statistic(
     colormap_palette = get_palette(categories)
 
     plt.figure(figsize=(18, 8))
-    sns.barplot(
-        data=df_melted,
-        x="column_index",
-        y="value",
-        hue="statistic",
-        palette=colormap_palette,
-    )
+    if len(categories) == 1:
+        sns.barplot(
+            data=df_melted,
+            x="column_index",
+            y="value",
+            # hue="statistic",
+            # palette=colormap_palette,
+            color=tuple(Color(Color.green).rgb() / 255.0),
+        )
+    else:
+        sns.barplot(
+            data=df_melted,
+            x="column_index",
+            y="value",
+            hue="statistic",
+            palette=colormap_palette,
+        )
 
     y_label = "Value"
     title = "Statistics per concept"
@@ -431,8 +442,9 @@ def plot_sample_efficiency(df: pd.DataFrame, savepath: str = ""):
         data=df_reset,
         x="category",
         y="normalized",
-        hue="category",
-        palette=colormap_palette,
+        # hue="category",
+        # palette=colormap_palette,
+        color=tuple(Color(Color.green).rgb() / 255.0),
         legend=False,
     )
 
@@ -485,5 +497,5 @@ def highlight_nan_values(s, props: str):
 
 
 if __name__ == "__main__":
-    path = os.path.join("archive", "gtgv2", "results")
+    path = os.path.join("archive", "gtgv4", "results")
     main(path)
