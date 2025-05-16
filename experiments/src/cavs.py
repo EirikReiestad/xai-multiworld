@@ -77,13 +77,17 @@ def get_cavs(
     average_positive_observations = {}
     for key, value in positive_observations.items():
         if iteration == 0:
-            store_images(list(value), f"tmp/average_positive_observations/{key}")
+            store_images(
+                list(value), f"experiments/tmp/average_positive_observations/{key}"
+            )
         avg_obs = torch.stack([v * weights[key][i] for i, v in enumerate(value)]).mean(
             dim=0
         )
         average_positive_observations[key] = avg_obs
     if iteration == 0:
-        store_images(list(average_positive_observations.values()), "tmp/avg_obs")
+        store_images(
+            list(average_positive_observations.values()), "experiments/tmp/avg_obs"
+        )
 
     return average_positive_observations, positive_observations
 
