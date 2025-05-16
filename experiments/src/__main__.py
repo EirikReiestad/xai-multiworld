@@ -1,7 +1,9 @@
+import itertools
 import json
 import os
 
-from experiments.src.nn_handler import get_neural_network_completeness_score
+import numpy as np
+
 from experiments.src.cavs import get_cavs
 from experiments.src.compute_statistics import calc_similarity_matrix
 from experiments.src.concept_score_handler import calc_concept_scores
@@ -16,6 +18,7 @@ from experiments.src.logistic_regression import (
 )
 from experiments.src.model_handler import train_or_load_model
 from experiments.src.network import Net
+from experiments.src.nn_handler import get_neural_network_completeness_score
 from experiments.src.random_forest_handler import get_random_forest_completeness_score
 from experiments.src.svm_handler import get_svm_completeness_score
 from experiments.src.xgboost_handler import get_xgboost_completeness_score
@@ -55,11 +58,11 @@ def main():
     )
 
     # --- Experiment Parameters ---
-    M_values = [15] * 20
+    M_values = [15] * 10
     max_depth_values = [15]
     lambda_1 = 0.1
     lambda_2 = 0.1
-    lambda_3 = 0.3
+    lambda_3 = 0.1
     batch_size = 128
     cav_lr = 1e-3
     cav_epochs = 1
@@ -76,172 +79,183 @@ def main():
     # --- Storage for all results ---
     results = []
 
+    lambdas_1 = np.linspace(0, 1, 4)
+    lambdas_2 = np.linspace(0, 1, 4)
+    lambdas_3 = np.linspace(0, 1, 4)
+    lambda_combinations = list(itertools.product(lambdas_1, lambdas_2, lambdas_3))
+
     # --- Main Experiment Loop ---
     for M in M_values:
-        print(f"\nTesting with M={M}")
-        K = int(batch_size * average_class_ratio / 2)
+        for lambdas in lambda_combinations:
+            lambda_1, lambda_2, lambda_3 = lambdas
+            print(f"\nTesting with M={M}")
+            K = int(batch_size * average_class_ratio / 2)
 
-        # CAVs and positive obs
-        average_positive_observations, positive_observations = get_cavs(
-            model,
-            layer_name,
-            train_loader,
-            test_loader,
-            M,
-            K,
-            lambda_1,
-            lambda_2,
-            lambda_3,
-            batch_size,
-            cav_lr,
-            cav_epochs,
-            iteration,
-        )
+            # CAVs and positive obs
+            average_positive_observations, positive_observations = get_cavs(
+                model,
+                layer_name,
+                train_loader,
+                test_loader,
+                M,
+                K,
+                lambda_1,
+                lambda_2,
+                lambda_3,
+                batch_size,
+                cav_lr,
+                cav_epochs,
+                iteration,
+            )
 
-        # Similarity matrix
-        similarity_matrix = calc_similarity_matrix(
-            average_positive_observations, positive_observations
-        )
+            # Similarity matrix
+            similarity_matrix = calc_similarity_matrix(
+                average_positive_observations, positive_observations
+            )
 
-        # Concept score vectors
-        concept_scores_train = calc_concept_scores(
-            average_positive_observations, all_train_X
-        )
-        concept_scores_test = calc_concept_scores(
-            average_positive_observations, all_test_X
-        )
+            # Concept score vectors
+            concept_scores_train = calc_concept_scores(
+                average_positive_observations, all_train_X
+            )
+            concept_scores_test = calc_concept_scores(
+                average_positive_observations, all_test_X
+            )
 
-        # Decision tree experiments
-        decision_tree_accuracy = 0
-        for max_depth in max_depth_values:
-            accuracy, res = get_decision_tree_completeness_score(
+            # Decision tree experiments
+            decision_tree_accuracy = 0
+            for max_depth in max_depth_values:
+                accuracy, res = get_decision_tree_completeness_score(
+                    concept_scores_train,
+                    all_train_targets,
+                    concept_scores_test,
+                    all_test_targets,
+                    M,
+                    max_depth,
+                    iteration,
+                )
+
+                results.append(
+                    {
+                        "M": M,
+                        "max_depth": max_depth,
+                        "accuracy": accuracy,
+                        "similarity_matrix": similarity_matrix,
+                    }
+                )
+                decision_tree_accuracy = max(decision_tree_accuracy, accuracy)
+
+            xgboost_accuracy, res = get_xgboost_completeness_score(
                 concept_scores_train,
                 all_train_targets,
                 concept_scores_test,
                 all_test_targets,
                 M,
-                max_depth,
+                None,
                 iteration,
             )
 
-            results.append(
-                {
-                    "M": M,
-                    "max_depth": max_depth,
-                    "accuracy": accuracy,
-                    "similarity_matrix": similarity_matrix,
-                }
+            random_forest_accuracy, res = get_random_forest_completeness_score(
+                concept_scores_train,
+                all_train_targets,
+                concept_scores_test,
+                all_test_targets,
+                M,
+                None,
+                iteration,
             )
-            decision_tree_accuracy = max(decision_tree_accuracy, accuracy)
 
-        xgboost_accuracy, res = get_xgboost_completeness_score(
-            concept_scores_train,
+            elasticnet_accuracy, res = get_elasticnet_completeness_score(
+                concept_scores_train,
+                all_train_targets,
+                concept_scores_test,
+                all_test_targets,
+                M,
+                iteration,
+            )
+
+            svm_accuracy, res = get_svm_completeness_score(
+                concept_scores_train,
+                all_train_targets,
+                concept_scores_test,
+                all_test_targets,
+                M,
+                iteration,
+            )
+
+            logistic_regression_accuracy, res = (
+                get_logistic_regression_completeness_score(
+                    concept_scores_train,
+                    all_train_targets,
+                    concept_scores_test,
+                    all_test_targets,
+                    M,
+                    iteration,
+                )
+            )
+
+            """
+            accuracy, res = get_neural_network_feature_importance(
+                M,
+                concept_scores_train,
+                all_train_targets,
+                log_interval,
+                dry_run,
+                gamma,
+                batch_size,
+                test_batch_size,
+                epochs,
+            )
+            """
+
+            # Baseline neural net experiment
+            nn_accuracy, res = get_neural_network_completeness_score(
+                M,
+                concept_scores_train,
+                all_train_targets,
+                batch_size,
+                test_batch_size,
+                log_interval,
+                dry_run,
+                gamma,
+                iteration,
+            )
+
+            with open("experiments/results/cav_experiment_results.json", "w") as f:
+                json.dump(results, f, indent=4)
+
+            os.makedirs("experiments/results/accuracies", exist_ok=True)
+
+            with open(
+                f"experiments/results/accuracies/{lambda_1}_{lambda_2}_{lambda_3}_{iteration}.json",
+                "w",
+            ) as f:
+                accuracies = {
+                    "decision_tree": decision_tree_accuracy,
+                    "xgboost": xgboost_accuracy,
+                    "random_forest": random_forest_accuracy,
+                    "elasticnet": elasticnet_accuracy,
+                    "svm": svm_accuracy,
+                    "logistic_regesssion": logistic_regression_accuracy,
+                    "nn": nn_accuracy,
+                }
+                json.dump(accuracies, f, indent=4)
+
+            iteration += 1
+
+        # Baseline perfect info decision tree
+        get_baseline_decision_tree_completeness_score(
+            all_train_X,
             all_train_targets,
-            concept_scores_test,
+            all_test_X,
             all_test_targets,
-            M,
-            None,
-            iteration,
+            max_depth_values,
+            results,
         )
 
-        random_forest_accuracy, res = get_random_forest_completeness_score(
-            concept_scores_train,
-            all_train_targets,
-            concept_scores_test,
-            all_test_targets,
-            M,
-            None,
-            iteration,
-        )
-
-        elasticnet_accuracy, res = get_elasticnet_completeness_score(
-            concept_scores_train,
-            all_train_targets,
-            concept_scores_test,
-            all_test_targets,
-            M,
-            iteration,
-        )
-
-        svm_accuracy, res = get_svm_completeness_score(
-            concept_scores_train,
-            all_train_targets,
-            concept_scores_test,
-            all_test_targets,
-            M,
-            iteration,
-        )
-
-        logistic_regression_accuracy, res = get_logistic_regression_completeness_score(
-            concept_scores_train,
-            all_train_targets,
-            concept_scores_test,
-            all_test_targets,
-            M,
-            iteration,
-        )
-
-        """
-        accuracy, res = get_neural_network_feature_importance(
-            M,
-            concept_scores_train,
-            all_train_targets,
-            log_interval,
-            dry_run,
-            gamma,
-            batch_size,
-            test_batch_size,
-            epochs,
-        )
-        """
-
-        # Baseline neural net experiment
-        nn_accuracy, res = get_neural_network_completeness_score(
-            M,
-            concept_scores_train,
-            all_train_targets,
-            batch_size,
-            test_batch_size,
-            log_interval,
-            dry_run,
-            gamma,
-            iteration,
-        )
-
+        # Save all results
         with open("experiments/results/cav_experiment_results.json", "w") as f:
-            json.dump(results, f, indent=4)
-
-        with open(
-            f"experiments/results/cav_experiment_accuracy_{lambda_3}_{iteration}.json",
-            "w",
-        ) as f:
-            accuracies = {
-                "decision_tree": decision_tree_accuracy,
-                "xgboost": xgboost_accuracy,
-                "random_forest": random_forest_accuracy,
-                "elasticnet": elasticnet_accuracy,
-                "svm": svm_accuracy,
-                "logistic_regesssion": logistic_regression_accuracy,
-                "nn": nn_accuracy,
-            }
-            json.dump(accuracies, f, indent=4)
-
-        iteration += 1
-
-    # Baseline perfect info decision tree
-    get_baseline_decision_tree_completeness_score(
-        all_train_X,
-        all_train_targets,
-        all_test_X,
-        all_test_targets,
-        max_depth_values,
-        results,
-    )
-
-    # Save all results
-    with open("experiments/results/cav_experiment_results.json", "w") as f:
-        json.dump(results, f, indent=2)
-    print("\nResults have been saved to json_results/cav_experiment_results.json")
+            json.dump(results, f, indent=2)
+        print("\nResults have been saved to json_results/cav_experiment_results.json")
 
 
 if __name__ == "__main__":
