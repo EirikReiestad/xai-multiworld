@@ -59,7 +59,7 @@ def main():
     max_depth_values = [15]
     lambda_1 = 0.1
     lambda_2 = 0.1
-    lambda_3 = 0
+    lambda_3 = 0.3
     batch_size = 128
     cav_lr = 1e-3
     cav_epochs = 1

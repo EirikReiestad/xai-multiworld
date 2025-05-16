@@ -1,8 +1,8 @@
 Cleaning up
 Running from this directory: /cluster/work/eirre/xai-multiworld
-Name of job: pipeline
-ID of job: 22615438
-The jo was run on these nodes: idun-05-22
+Name of job: multi-agent-rl
+ID of job: 22828679
+The jo was run on these nodes: idun-03-23
 
 Currently Loaded Modules:
   1) GCCcore/13.2.0                       7) Tcl/8.6.13-GCCcore-13.2.0    (H)
@@ -65,4 +65,1281 @@ Installing dependencies from lock file
 No dependencies to install or update
 
 Installing the current project: xai-multiworld (0.1.0)
-Linux idun-05-22 5.14.0-427.13.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Wed May 1 19:11:28 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
+
+Test set: Average loss: 0.0364, Accuracy: 9874/10000 (99%)
+
+
+Testing with M=15
+Step 0000 | Epoch 01 | Objective: -3.9001 | Coherence: 18.6350 | Separation: 57.6356 | Information gain: 7.5000 | Grad Norm: 4.3723 | Time: 0.0s
+Step 0010 | Epoch 01 | Objective: -3.6430 | Coherence: 19.5030 | Separation: 55.9328 | Information gain: 7.5000 | Grad Norm: 4.2851 | Time: 0.3s
+Step 0020 | Epoch 01 | Objective: -3.3949 | Coherence: 20.3825 | Separation: 54.3314 | Information gain: 7.5000 | Grad Norm: 4.0506 | Time: 0.5s
+Step 0030 | Epoch 01 | Objective: -3.1573 | Coherence: 21.3047 | Separation: 52.8776 | Information gain: 7.5000 | Grad Norm: 3.8395 | Time: 0.7s
+Step 0040 | Epoch 01 | Objective: -2.9347 | Coherence: 22.2593 | Separation: 51.6062 | Information gain: 7.5000 | Grad Norm: 3.8601 | Time: 1.0s
+Step 0050 | Epoch 01 | Objective: -2.7157 | Coherence: 23.2238 | Separation: 50.3803 | Information gain: 7.5000 | Grad Norm: 3.6812 | Time: 1.2s
+Step 0060 | Epoch 01 | Objective: -2.4981 | Coherence: 24.1877 | Separation: 49.1686 | Information gain: 7.5000 | Grad Norm: 3.6304 | Time: 1.4s
+Step 0070 | Epoch 01 | Objective: -2.2784 | Coherence: 25.1556 | Separation: 47.9400 | Information gain: 7.5000 | Grad Norm: 3.7189 | Time: 1.7s
+Step 0080 | Epoch 01 | Objective: -2.0675 | Coherence: 26.1456 | Separation: 46.8205 | Information gain: 7.5000 | Grad Norm: 3.5197 | Time: 1.9s
+Step 0090 | Epoch 01 | Objective: -1.8654 | Coherence: 27.0862 | Separation: 45.7402 | Information gain: 7.5000 | Grad Norm: 3.3252 | Time: 2.2s
+Step 0100 | Epoch 01 | Objective: -1.6610 | Coherence: 28.0181 | Separation: 44.6277 | Information gain: 7.5000 | Grad Norm: 3.3364 | Time: 2.4s
+Step 0110 | Epoch 01 | Objective: -1.4629 | Coherence: 28.9729 | Separation: 43.6016 | Information gain: 7.6667 | Grad Norm: 3.2039 | Time: 2.6s
+Step 0120 | Epoch 01 | Objective: -1.2783 | Coherence: 29.9587 | Separation: 42.7415 | Information gain: 7.6667 | Grad Norm: 3.1213 | Time: 2.8s
+Step 0130 | Epoch 01 | Objective: -1.0975 | Coherence: 30.9408 | Separation: 41.9153 | Information gain: 7.6667 | Grad Norm: 3.0179 | Time: 3.1s
+Step 0140 | Epoch 01 | Objective: -0.9267 | Coherence: 31.8479 | Separation: 41.1148 | Information gain: 7.6667 | Grad Norm: 3.0146 | Time: 3.3s
+Step 0150 | Epoch 01 | Objective: -0.7603 | Coherence: 32.6838 | Separation: 40.2869 | Information gain: 7.6667 | Grad Norm: 2.9169 | Time: 3.5s
+Step 0160 | Epoch 01 | Objective: -0.5976 | Coherence: 33.4706 | Separation: 39.4470 | Information gain: 7.5000 | Grad Norm: 2.9191 | Time: 3.8s
+Step 0170 | Epoch 01 | Objective: -0.4426 | Coherence: 34.2089 | Separation: 38.6347 | Information gain: 7.5000 | Grad Norm: 2.9108 | Time: 4.0s
+Step 0180 | Epoch 01 | Objective: -0.3001 | Coherence: 34.8751 | Separation: 37.8761 | Information gain: 7.6667 | Grad Norm: 2.7843 | Time: 4.2s
+Step 0190 | Epoch 01 | Objective: -0.1555 | Coherence: 35.5356 | Separation: 37.0901 | Information gain: 7.6667 | Grad Norm: 2.8085 | Time: 4.5s
+Step 0200 | Epoch 01 | Objective: -0.0097 | Coherence: 36.1735 | Separation: 36.2704 | Information gain: 7.5000 | Grad Norm: 2.8097 | Time: 4.7s
+Step 0210 | Epoch 01 | Objective: 0.1365 | Coherence: 36.7939 | Separation: 35.4289 | Information gain: 7.5000 | Grad Norm: 2.8530 | Time: 4.9s
+Step 0220 | Epoch 01 | Objective: 0.2723 | Coherence: 37.3691 | Separation: 34.6457 | Information gain: 7.5000 | Grad Norm: 2.7044 | Time: 5.2s
+Step 0230 | Epoch 01 | Objective: 0.3985 | Coherence: 37.8760 | Separation: 33.8908 | Information gain: 7.5000 | Grad Norm: 2.9715 | Time: 5.4s
+Step 0240 | Epoch 01 | Objective: 0.5084 | Coherence: 38.3806 | Separation: 33.2963 | Information gain: 7.5000 | Grad Norm: 2.6117 | Time: 5.6s
+Step 0250 | Epoch 01 | Objective: 0.6186 | Coherence: 38.9554 | Separation: 32.7696 | Information gain: 7.5000 | Grad Norm: 2.6731 | Time: 5.9s
+Step 0260 | Epoch 01 | Objective: 0.7310 | Coherence: 39.4843 | Separation: 32.1747 | Information gain: 7.5000 | Grad Norm: 2.6424 | Time: 6.1s
+Step 0270 | Epoch 01 | Objective: 0.8454 | Coherence: 40.0050 | Separation: 31.5506 | Information gain: 7.5000 | Grad Norm: 2.6066 | Time: 6.3s
+Step 0275 | Epoch 01 | Objective: 0.9012 | Coherence: 40.2579 | Separation: 31.2464 | Information gain: 7.3333 | Grad Norm: 2.5687 | Time: 6.5s
+Similarity matrix:
+          0         1         2  ...        12        13        14
+0  0.640247  0.465155  0.505220  ...  0.484337  0.488702  0.582111
+1  0.410963  0.540860  0.506586  ...  0.439707  0.465724  0.467114
+2  0.470461  0.557628  0.587396  ...  0.460349  0.476426  0.499606
+3  0.423914  0.485345  0.468475  ...  0.552831  0.555667  0.444656
+4  0.564042  0.455456  0.493908  ...  0.535262  0.527170  0.536127
+
+[5 rows x 15 columns]
+  Testing with max_depth=15
+  MNIST DecisionTree Test accuracy (M=15, max_depth=15): 0.8101
+  Testing XGBoost with max_depth=None
+  MNIST XGBoost Test accuracy (M=15, max_depth=None): 0.9056
+  Testing Random Forest with max_depth=None
+  MNIST RandomForest Test accuracy (M=15, max_depth=None): 0.8871
+  Testing ElasticNet with alpha=0.01, l1_ratio=0.5
+  ElasticNet Test MSE (M=15, alpha=0.01, l1_ratio=0.5): 5.1687, accuracy=0.1076
+Testing SVM
+  SVM Test Accuracy: 0.8664
+Testing Logistic Regression
+  Logistic Regression Test Accuracy: 0.8424
+
+Baseline test with Neural Network trained on concepts
+Input shape: torch.Size([60000, 15]), target shapetorch.Size([60000])
+Training set size: 48000, test set size: 12000
+
+Test set: Average loss: 0.6370, Accuracy: 9768/12000 (81%)
+
+Epoch 1 | Train Acc: 0.6650833333333334 | Test Acc: 0.814 | Time: 1.006077527999878 sec
+
+Test set: Average loss: 0.4914, Accuracy: 10141/12000 (85%)
+
+Epoch 2 | Train Acc: 0.8310208333333333 | Test Acc: 0.8450833333333333 | Time: 1.0010416507720947 sec
+
+Test set: Average loss: 0.4293, Accuracy: 10344/12000 (86%)
+
+Epoch 3 | Train Acc: 0.8572083333333333 | Test Acc: 0.862 | Time: 1.1211674213409424 sec
+
+Test set: Average loss: 0.3976, Accuracy: 10453/12000 (87%)
+
+Epoch 4 | Train Acc: 0.8701041666666667 | Test Acc: 0.8710833333333333 | Time: 1.0021448135375977 sec
+
+Test set: Average loss: 0.3742, Accuracy: 10548/12000 (88%)
+
+Epoch 5 | Train Acc: 0.880125 | Test Acc: 0.879 | Time: 1.0017461776733398 sec
+
+Test set: Average loss: 0.3598, Accuracy: 10599/12000 (88%)
+
+Epoch 6 | Train Acc: 0.8866875 | Test Acc: 0.88325 | Time: 1.0019545555114746 sec
+
+Test set: Average loss: 0.3507, Accuracy: 10635/12000 (89%)
+
+Epoch 7 | Train Acc: 0.8899375 | Test Acc: 0.88625 | Time: 1.0017187595367432 sec
+
+Test set: Average loss: 0.3445, Accuracy: 10661/12000 (89%)
+
+Epoch 8 | Train Acc: 0.893125 | Test Acc: 0.8884166666666666 | Time: 1.002495527267456 sec
+
+Test set: Average loss: 0.3399, Accuracy: 10686/12000 (89%)
+
+Epoch 9 | Train Acc: 0.8946458333333334 | Test Acc: 0.8905 | Time: 1.001617431640625 sec
+
+Test set: Average loss: 0.3365, Accuracy: 10701/12000 (89%)
+
+Epoch 10 | Train Acc: 0.8960625 | Test Acc: 0.89175 | Time: 1.002425193786621 sec
+
+Test set: Average loss: 0.3340, Accuracy: 10705/12000 (89%)
+
+Epoch 11 | Train Acc: 0.8970833333333333 | Test Acc: 0.8920833333333333 | Time: 1.0015449523925781 sec
+
+Test set: Average loss: 0.3325, Accuracy: 10714/12000 (89%)
+
+Epoch 12 | Train Acc: 0.8975625 | Test Acc: 0.8928333333333334 | Time: 1.1071693897247314 sec
+
+Test set: Average loss: 0.3315, Accuracy: 10717/12000 (89%)
+
+Epoch 13 | Train Acc: 0.898 | Test Acc: 0.8930833333333333 | Time: 1.002882719039917 sec
+
+Test set: Average loss: 0.3308, Accuracy: 10719/12000 (89%)
+
+Epoch 14 | Train Acc: 0.8984375 | Test Acc: 0.89325 | Time: 1.002453327178955 sec
+
+Test set: Average loss: 0.3304, Accuracy: 10721/12000 (89%)
+
+Epoch 15 | Train Acc: 0.8984791666666667 | Test Acc: 0.8934166666666666 | Time: 1.003533124923706 sec
+
+Test set: Average loss: 0.3301, Accuracy: 10725/12000 (89%)
+
+Epoch 16 | Train Acc: 0.8988958333333333 | Test Acc: 0.89375 | Time: 1.0018310546875 sec
+
+Test set: Average loss: 0.3299, Accuracy: 10727/12000 (89%)
+
+Epoch 17 | Train Acc: 0.8990416666666666 | Test Acc: 0.8939166666666667 | Time: 1.0015854835510254 sec
+
+Test set: Average loss: 0.3298, Accuracy: 10728/12000 (89%)
+
+Epoch 18 | Train Acc: 0.8990625 | Test Acc: 0.894 | Time: 1.0021369457244873 sec
+
+Test set: Average loss: 0.3297, Accuracy: 10727/12000 (89%)
+
+Epoch 19 | Train Acc: 0.899 | Test Acc: 0.8939166666666667 | Time: 1.0019927024841309 sec
+
+Test set: Average loss: 0.3296, Accuracy: 10727/12000 (89%)
+
+Epoch 20 | Train Acc: 0.899125 | Test Acc: 0.8939166666666667 | Time: 1.003577709197998 sec
+
+Testing with M=15
+Step 0000 | Epoch 01 | Objective: -3.7762 | Coherence: 10.8144 | Separation: 57.5767 | Information gain: 9.0000 | Grad Norm: 4.7029 | Time: 0.0s
+Step 0010 | Epoch 01 | Objective: -3.4788 | Coherence: 11.7383 | Separation: 55.5259 | Information gain: 9.0000 | Grad Norm: 4.6228 | Time: 0.3s
+Step 0020 | Epoch 01 | Objective: -3.1933 | Coherence: 12.7412 | Separation: 53.5071 | Information gain: 8.8333 | Grad Norm: 4.5790 | Time: 0.5s
+Step 0030 | Epoch 01 | Objective: -2.8781 | Coherence: 13.8149 | Separation: 51.5962 | Information gain: 9.0000 | Grad Norm: 4.4587 | Time: 0.7s
+Step 0040 | Epoch 01 | Objective: -2.5641 | Coherence: 14.9226 | Separation: 49.7303 | Information gain: 9.1667 | Grad Norm: 4.4003 | Time: 1.0s
+Step 0050 | Epoch 01 | Objective: -2.2453 | Coherence: 16.0618 | Separation: 47.8482 | Information gain: 9.3333 | Grad Norm: 4.3581 | Time: 1.2s
+Step 0060 | Epoch 01 | Objective: -1.9564 | Coherence: 17.2368 | Separation: 46.1345 | Information gain: 9.3333 | Grad Norm: 4.1322 | Time: 1.4s
+Step 0070 | Epoch 01 | Objective: -1.6785 | Coherence: 18.4721 | Separation: 44.5901 | Information gain: 9.3333 | Grad Norm: 4.0476 | Time: 1.7s
+Step 0080 | Epoch 01 | Objective: -1.4142 | Coherence: 19.7088 | Separation: 43.0176 | Information gain: 9.1667 | Grad Norm: 3.9483 | Time: 1.9s
+Step 0090 | Epoch 01 | Objective: -1.1389 | Coherence: 20.9389 | Separation: 41.4948 | Information gain: 9.1667 | Grad Norm: 3.9065 | Time: 2.1s
+Step 0100 | Epoch 01 | Objective: -0.8631 | Coherence: 22.1600 | Separation: 39.9576 | Information gain: 9.1667 | Grad Norm: 3.7849 | Time: 2.3s
+Step 0110 | Epoch 01 | Objective: -0.5882 | Coherence: 23.3634 | Separation: 38.5790 | Information gain: 9.3333 | Grad Norm: 3.6216 | Time: 2.6s
+Step 0120 | Epoch 01 | Objective: -0.3426 | Coherence: 24.5831 | Separation: 37.3419 | Information gain: 9.3333 | Grad Norm: 3.5891 | Time: 2.8s
+Step 0130 | Epoch 01 | Objective: -0.1004 | Coherence: 25.7558 | Separation: 36.0936 | Information gain: 9.3333 | Grad Norm: 3.4739 | Time: 3.0s
+Step 0140 | Epoch 01 | Objective: 0.1151 | Coherence: 26.8474 | Separation: 35.0298 | Information gain: 9.3333 | Grad Norm: 3.3412 | Time: 3.3s
+Step 0150 | Epoch 01 | Objective: 0.3074 | Coherence: 27.8187 | Separation: 34.0779 | Information gain: 9.3333 | Grad Norm: 3.2977 | Time: 3.5s
+Step 0160 | Epoch 01 | Objective: 0.4897 | Coherence: 28.7164 | Separation: 33.1529 | Information gain: 9.3333 | Grad Norm: 3.0888 | Time: 3.7s
+Step 0170 | Epoch 01 | Objective: 0.6654 | Coherence: 29.5849 | Separation: 32.2642 | Information gain: 9.3333 | Grad Norm: 3.0052 | Time: 4.0s
+Step 0180 | Epoch 01 | Objective: 0.8342 | Coherence: 30.4682 | Separation: 31.4599 | Information gain: 9.3333 | Grad Norm: 2.8824 | Time: 4.2s
+Step 0185 | Epoch 01 | Objective: 0.9116 | Coherence: 30.9040 | Separation: 31.1215 | Information gain: 9.3333 | Grad Norm: 2.9303 | Time: 4.3s
+Similarity matrix:
+          0         1         2  ...        12        13        14
+0  0.585166  0.385657  0.534918  ...  0.453402  0.413246  0.452283
+1  0.432377  0.645616  0.403100  ...  0.628737  0.642622  0.479387
+2  0.539353  0.387199  0.613170  ...  0.467607  0.413077  0.386023
+3  0.480865  0.425553  0.427057  ...  0.462561  0.436495  0.573134
+4  0.485628  0.444846  0.445813  ...  0.454183  0.454491  0.501498
+
+[5 rows x 15 columns]
+  Testing with max_depth=15
+  MNIST DecisionTree Test accuracy (M=15, max_depth=15): 0.7894
+  Testing XGBoost with max_depth=None
+  MNIST XGBoost Test accuracy (M=15, max_depth=None): 0.8876
+  Testing Random Forest with max_depth=None
+  MNIST RandomForest Test accuracy (M=15, max_depth=None): 0.8693
+  Testing ElasticNet with alpha=0.01, l1_ratio=0.5
+  ElasticNet Test MSE (M=15, alpha=0.01, l1_ratio=0.5): 5.3076, accuracy=0.0813
+Testing SVM
+  SVM Test Accuracy: 0.8480
+Testing Logistic Regression
+  Logistic Regression Test Accuracy: 0.8210
+
+Baseline test with Neural Network trained on concepts
+Input shape: torch.Size([60000, 15]), target shapetorch.Size([60000])
+Training set size: 48000, test set size: 12000
+
+Test set: Average loss: 0.6971, Accuracy: 9424/12000 (79%)
+
+Epoch 1 | Train Acc: 0.6635833333333333 | Test Acc: 0.7853333333333333 | Time: 1.1759767532348633 sec
+
+Test set: Average loss: 0.5457, Accuracy: 9832/12000 (82%)
+
+Epoch 2 | Train Acc: 0.8133333333333334 | Test Acc: 0.8193333333333334 | Time: 1.0302345752716064 sec
+
+Test set: Average loss: 0.4878, Accuracy: 10112/12000 (84%)
+
+Epoch 3 | Train Acc: 0.8399791666666667 | Test Acc: 0.8426666666666667 | Time: 1.0292062759399414 sec
+
+Test set: Average loss: 0.4521, Accuracy: 10252/12000 (85%)
+
+Epoch 4 | Train Acc: 0.8557708333333334 | Test Acc: 0.8543333333333333 | Time: 1.028364658355713 sec
+
+Test set: Average loss: 0.4296, Accuracy: 10349/12000 (86%)
+
+Epoch 5 | Train Acc: 0.867125 | Test Acc: 0.8624166666666667 | Time: 1.0284254550933838 sec
+
+Test set: Average loss: 0.4106, Accuracy: 10427/12000 (87%)
+
+Epoch 6 | Train Acc: 0.8750416666666667 | Test Acc: 0.8689166666666667 | Time: 1.0287296772003174 sec
+
+Test set: Average loss: 0.3990, Accuracy: 10469/12000 (87%)
+
+Epoch 7 | Train Acc: 0.8805416666666667 | Test Acc: 0.8724166666666666 | Time: 1.034529685974121 sec
+
+Test set: Average loss: 0.3906, Accuracy: 10487/12000 (87%)
+
+Epoch 8 | Train Acc: 0.8843958333333334 | Test Acc: 0.8739166666666667 | Time: 1.0391314029693604 sec
+
+Test set: Average loss: 0.3844, Accuracy: 10528/12000 (88%)
+
+Epoch 9 | Train Acc: 0.8868333333333334 | Test Acc: 0.8773333333333333 | Time: 1.0416226387023926 sec
+
+Test set: Average loss: 0.3799, Accuracy: 10532/12000 (88%)
+
+Epoch 10 | Train Acc: 0.8880833333333333 | Test Acc: 0.8776666666666667 | Time: 1.1519653797149658 sec
+
+Test set: Average loss: 0.3769, Accuracy: 10544/12000 (88%)
+
+Epoch 11 | Train Acc: 0.8886458333333334 | Test Acc: 0.8786666666666667 | Time: 1.0535328388214111 sec
+
+Test set: Average loss: 0.3747, Accuracy: 10547/12000 (88%)
+
+Epoch 12 | Train Acc: 0.8895 | Test Acc: 0.8789166666666667 | Time: 1.0521459579467773 sec
+
+Test set: Average loss: 0.3733, Accuracy: 10547/12000 (88%)
+
+Epoch 13 | Train Acc: 0.8899166666666667 | Test Acc: 0.8789166666666667 | Time: 1.0508387088775635 sec
+
+Test set: Average loss: 0.3723, Accuracy: 10551/12000 (88%)
+
+Epoch 14 | Train Acc: 0.8900625 | Test Acc: 0.87925 | Time: 1.0515565872192383 sec
+
+Test set: Average loss: 0.3716, Accuracy: 10551/12000 (88%)
+
+Epoch 15 | Train Acc: 0.8901458333333333 | Test Acc: 0.87925 | Time: 1.0510849952697754 sec
+
+Test set: Average loss: 0.3712, Accuracy: 10556/12000 (88%)
+
+Epoch 16 | Train Acc: 0.8903958333333334 | Test Acc: 0.8796666666666667 | Time: 1.051194429397583 sec
+
+Test set: Average loss: 0.3709, Accuracy: 10556/12000 (88%)
+
+Epoch 17 | Train Acc: 0.8907083333333333 | Test Acc: 0.8796666666666667 | Time: 1.0509796142578125 sec
+
+Test set: Average loss: 0.3707, Accuracy: 10558/12000 (88%)
+
+Epoch 18 | Train Acc: 0.8907916666666666 | Test Acc: 0.8798333333333334 | Time: 1.0512640476226807 sec
+
+Test set: Average loss: 0.3706, Accuracy: 10561/12000 (88%)
+
+Epoch 19 | Train Acc: 0.8908125 | Test Acc: 0.8800833333333333 | Time: 1.1620736122131348 sec
+
+Test set: Average loss: 0.3705, Accuracy: 10565/12000 (88%)
+
+Epoch 20 | Train Acc: 0.8908125 | Test Acc: 0.8804166666666666 | Time: 1.0516080856323242 sec
+
+Testing with M=15
+Step 0000 | Epoch 01 | Objective: -2.9781 | Coherence: 18.7819 | Separation: 62.8959 | Information gain: 7.1667 | Grad Norm: 4.8399 | Time: 0.1s
+Step 0010 | Epoch 01 | Objective: -2.6206 | Coherence: 19.9966 | Separation: 60.8694 | Information gain: 7.3333 | Grad Norm: 4.7657 | Time: 0.3s
+Step 0020 | Epoch 01 | Objective: -2.3048 | Coherence: 21.1521 | Separation: 58.8663 | Information gain: 7.3333 | Grad Norm: 4.5989 | Time: 0.5s
+Step 0030 | Epoch 01 | Objective: -2.0073 | Coherence: 22.2298 | Separation: 56.9696 | Information gain: 7.3333 | Grad Norm: 4.5006 | Time: 0.8s
+Step 0040 | Epoch 01 | Objective: -1.6825 | Coherence: 23.3367 | Separation: 55.1612 | Information gain: 7.5000 | Grad Norm: 4.3269 | Time: 1.0s
+Step 0050 | Epoch 01 | Objective: -1.4459 | Coherence: 24.3677 | Separation: 53.4932 | Information gain: 7.3333 | Grad Norm: 4.1458 | Time: 1.2s
+Step 0060 | Epoch 01 | Objective: -1.1824 | Coherence: 25.3906 | Separation: 51.8816 | Information gain: 7.3333 | Grad Norm: 4.1116 | Time: 1.5s
+Step 0070 | Epoch 01 | Objective: -0.9659 | Coherence: 26.4092 | Separation: 50.4015 | Information gain: 7.1667 | Grad Norm: 3.9278 | Time: 1.7s
+Step 0080 | Epoch 01 | Objective: -0.7168 | Coherence: 27.4230 | Separation: 48.9248 | Information gain: 7.1667 | Grad Norm: 3.9336 | Time: 1.9s
+Step 0090 | Epoch 01 | Objective: -0.4324 | Coherence: 28.4499 | Separation: 47.4404 | Information gain: 7.3333 | Grad Norm: 3.7824 | Time: 2.1s
+Step 0100 | Epoch 01 | Objective: -0.2034 | Coherence: 29.5167 | Separation: 46.2169 | Information gain: 7.3333 | Grad Norm: 3.8156 | Time: 2.4s
+Step 0110 | Epoch 01 | Objective: 0.0237 | Coherence: 30.5900 | Separation: 45.0196 | Information gain: 7.3333 | Grad Norm: 3.5707 | Time: 2.6s
+Step 0120 | Epoch 01 | Objective: 0.2502 | Coherence: 31.6534 | Separation: 43.8179 | Information gain: 7.3333 | Grad Norm: 3.5810 | Time: 2.8s
+Step 0130 | Epoch 01 | Objective: 0.4635 | Coherence: 32.6571 | Separation: 42.6883 | Information gain: 7.3333 | Grad Norm: 3.4155 | Time: 3.0s
+Step 0140 | Epoch 01 | Objective: 0.6733 | Coherence: 33.6073 | Separation: 41.5408 | Information gain: 7.3333 | Grad Norm: 3.4553 | Time: 3.3s
+Step 0150 | Epoch 01 | Objective: 0.9080 | Coherence: 34.5360 | Separation: 40.4563 | Information gain: 7.5000 | Grad Norm: 3.3591 | Time: 3.5s
+Step 0150 | Epoch 01 | Objective: 0.9080 | Coherence: 34.5360 | Separation: 40.4563 | Information gain: 7.5000 | Grad Norm: 3.3591 | Time: 3.5s
+Similarity matrix:
+          0         1         2  ...        12        13        14
+0  0.563664  0.510856  0.464030  ...  0.369729  0.559542  0.502544
+1  0.537269  0.586561  0.480119  ...  0.306281  0.519043  0.553200
+2  0.471882  0.459694  0.562204  ...  0.412467  0.461950  0.509758
+3  0.593809  0.508042  0.481631  ...  0.414978  0.604038  0.491197
+4  0.530532  0.440188  0.511780  ...  0.484319  0.538306  0.465075
+
+[5 rows x 15 columns]
+  Testing with max_depth=15
+  MNIST DecisionTree Test accuracy (M=15, max_depth=15): 0.7976
+  Testing XGBoost with max_depth=None
+  MNIST XGBoost Test accuracy (M=15, max_depth=None): 0.8953
+  Testing Random Forest with max_depth=None
+  MNIST RandomForest Test accuracy (M=15, max_depth=None): 0.8803
+  Testing ElasticNet with alpha=0.01, l1_ratio=0.5
+  ElasticNet Test MSE (M=15, alpha=0.01, l1_ratio=0.5): 5.2442, accuracy=0.0799
+Testing SVM
+  SVM Test Accuracy: 0.8562
+Testing Logistic Regression
+  Logistic Regression Test Accuracy: 0.8325
+
+Baseline test with Neural Network trained on concepts
+Input shape: torch.Size([60000, 15]), target shapetorch.Size([60000])
+Training set size: 48000, test set size: 12000
+
+Test set: Average loss: 0.7282, Accuracy: 9298/12000 (77%)
+
+Epoch 1 | Train Acc: 0.6447916666666667 | Test Acc: 0.7748333333333334 | Time: 1.1821410655975342 sec
+
+Test set: Average loss: 0.5034, Accuracy: 10074/12000 (84%)
+
+Epoch 2 | Train Acc: 0.8246458333333333 | Test Acc: 0.8395 | Time: 1.0150096416473389 sec
+
+Test set: Average loss: 0.4355, Accuracy: 10314/12000 (86%)
+
+Epoch 3 | Train Acc: 0.8514583333333333 | Test Acc: 0.8595 | Time: 1.014676570892334 sec
+
+Test set: Average loss: 0.3977, Accuracy: 10465/12000 (87%)
+
+Epoch 4 | Train Acc: 0.8642916666666667 | Test Acc: 0.8720833333333333 | Time: 1.014247179031372 sec
+
+Test set: Average loss: 0.3766, Accuracy: 10558/12000 (88%)
+
+Epoch 5 | Train Acc: 0.8742708333333333 | Test Acc: 0.8798333333333334 | Time: 1.0147061347961426 sec
+
+Test set: Average loss: 0.3617, Accuracy: 10607/12000 (88%)
+
+Epoch 6 | Train Acc: 0.8807916666666666 | Test Acc: 0.8839166666666667 | Time: 1.0136306285858154 sec
+
+Test set: Average loss: 0.3535, Accuracy: 10623/12000 (89%)
+
+Epoch 7 | Train Acc: 0.8846041666666666 | Test Acc: 0.88525 | Time: 1.014805793762207 sec
+
+Test set: Average loss: 0.3467, Accuracy: 10649/12000 (89%)
+
+Epoch 8 | Train Acc: 0.8876041666666666 | Test Acc: 0.8874166666666666 | Time: 1.015169382095337 sec
+
+Test set: Average loss: 0.3420, Accuracy: 10667/12000 (89%)
+
+Epoch 9 | Train Acc: 0.8898958333333333 | Test Acc: 0.8889166666666667 | Time: 1.0176987648010254 sec
+
+Test set: Average loss: 0.3384, Accuracy: 10671/12000 (89%)
+
+Epoch 10 | Train Acc: 0.8911666666666667 | Test Acc: 0.88925 | Time: 1.1308681964874268 sec
+
+Test set: Average loss: 0.3360, Accuracy: 10683/12000 (89%)
+
+Epoch 11 | Train Acc: 0.8922916666666667 | Test Acc: 0.89025 | Time: 1.0132181644439697 sec
+
+Test set: Average loss: 0.3345, Accuracy: 10691/12000 (89%)
+
+Epoch 12 | Train Acc: 0.893375 | Test Acc: 0.8909166666666667 | Time: 1.0125651359558105 sec
+
+Test set: Average loss: 0.3334, Accuracy: 10694/12000 (89%)
+
+Epoch 13 | Train Acc: 0.893625 | Test Acc: 0.8911666666666667 | Time: 1.0123701095581055 sec
+
+Test set: Average loss: 0.3327, Accuracy: 10696/12000 (89%)
+
+Epoch 14 | Train Acc: 0.8939791666666667 | Test Acc: 0.8913333333333333 | Time: 1.0117130279541016 sec
+
+Test set: Average loss: 0.3321, Accuracy: 10697/12000 (89%)
+
+Epoch 15 | Train Acc: 0.8943125 | Test Acc: 0.8914166666666666 | Time: 1.0119879245758057 sec
+
+Test set: Average loss: 0.3317, Accuracy: 10705/12000 (89%)
+
+Epoch 16 | Train Acc: 0.8945833333333333 | Test Acc: 0.8920833333333333 | Time: 1.014167070388794 sec
+
+Test set: Average loss: 0.3314, Accuracy: 10702/12000 (89%)
+
+Epoch 17 | Train Acc: 0.8947291666666667 | Test Acc: 0.8918333333333334 | Time: 1.0126655101776123 sec
+
+Test set: Average loss: 0.3312, Accuracy: 10702/12000 (89%)
+
+Epoch 18 | Train Acc: 0.89475 | Test Acc: 0.8918333333333334 | Time: 1.0132665634155273 sec
+
+Test set: Average loss: 0.3310, Accuracy: 10709/12000 (89%)
+
+Epoch 19 | Train Acc: 0.8948958333333333 | Test Acc: 0.8924166666666666 | Time: 1.107017993927002 sec
+
+Test set: Average loss: 0.3309, Accuracy: 10711/12000 (89%)
+
+Epoch 20 | Train Acc: 0.8949166666666667 | Test Acc: 0.8925833333333333 | Time: 1.012967824935913 sec
+
+Testing with M=15
+Step 0000 | Epoch 01 | Objective: -3.4208 | Coherence: 15.7509 | Separation: 49.9591 | Information gain: 7.3333 | Grad Norm: 3.9729 | Time: 0.0s
+Step 0010 | Epoch 01 | Objective: -3.1785 | Coherence: 16.4921 | Separation: 48.2771 | Information gain: 7.1667 | Grad Norm: 3.6814 | Time: 0.3s
+Step 0020 | Epoch 01 | Objective: -2.9572 | Coherence: 17.1849 | Separation: 46.7564 | Information gain: 7.1667 | Grad Norm: 3.6364 | Time: 0.5s
+Step 0030 | Epoch 01 | Objective: -2.7359 | Coherence: 17.9098 | Separation: 45.2683 | Information gain: 6.8333 | Grad Norm: 3.5566 | Time: 0.8s
+Step 0040 | Epoch 01 | Objective: -2.5116 | Coherence: 18.7150 | Separation: 43.8309 | Information gain: 6.8333 | Grad Norm: 3.4825 | Time: 1.0s
+Step 0050 | Epoch 01 | Objective: -2.2864 | Coherence: 19.6099 | Separation: 42.4736 | Information gain: 7.0000 | Grad Norm: 3.4810 | Time: 1.2s
+Step 0060 | Epoch 01 | Objective: -2.0732 | Coherence: 20.4685 | Separation: 41.2002 | Information gain: 7.0000 | Grad Norm: 3.3483 | Time: 1.5s
+Step 0070 | Epoch 01 | Objective: -1.8618 | Coherence: 21.3168 | Separation: 39.9344 | Information gain: 7.0000 | Grad Norm: 3.3278 | Time: 1.7s
+Step 0080 | Epoch 01 | Objective: -1.6706 | Coherence: 22.1759 | Separation: 38.8823 | Information gain: 7.0000 | Grad Norm: 3.1856 | Time: 1.9s
+Step 0090 | Epoch 01 | Objective: -1.5095 | Coherence: 22.9570 | Separation: 38.0521 | Information gain: 7.0000 | Grad Norm: 3.0351 | Time: 2.2s
+Step 0100 | Epoch 01 | Objective: -1.3624 | Coherence: 23.7943 | Separation: 37.4179 | Information gain: 7.0000 | Grad Norm: 2.9234 | Time: 2.4s
+Step 0110 | Epoch 01 | Objective: -1.2175 | Coherence: 24.6179 | Separation: 36.7929 | Information gain: 7.1667 | Grad Norm: 3.0807 | Time: 2.6s
+Step 0120 | Epoch 01 | Objective: -1.0727 | Coherence: 25.4070 | Separation: 36.1337 | Information gain: 7.3333 | Grad Norm: 2.9436 | Time: 2.9s
+Step 0130 | Epoch 01 | Objective: -0.9249 | Coherence: 26.1897 | Separation: 35.4387 | Information gain: 7.3333 | Grad Norm: 3.0038 | Time: 3.1s
+Step 0140 | Epoch 01 | Objective: -0.7759 | Coherence: 26.9806 | Separation: 34.7396 | Information gain: 7.1667 | Grad Norm: 3.2943 | Time: 3.3s
+Step 0150 | Epoch 01 | Objective: -0.6419 | Coherence: 27.6902 | Separation: 34.1095 | Information gain: 7.1667 | Grad Norm: 2.9593 | Time: 3.6s
+Step 0160 | Epoch 01 | Objective: -0.5097 | Coherence: 28.3309 | Separation: 33.4274 | Information gain: 7.1667 | Grad Norm: 2.8016 | Time: 3.8s
+Step 0170 | Epoch 01 | Objective: -0.3904 | Coherence: 28.9369 | Separation: 32.8411 | Information gain: 7.1667 | Grad Norm: 2.7456 | Time: 4.0s
+Step 0180 | Epoch 01 | Objective: -0.2694 | Coherence: 29.5464 | Separation: 32.2400 | Information gain: 7.1667 | Grad Norm: 2.6878 | Time: 4.3s
+Step 0190 | Epoch 01 | Objective: -0.1502 | Coherence: 30.1712 | Separation: 31.6730 | Information gain: 7.1667 | Grad Norm: 2.8825 | Time: 4.5s
+Step 0200 | Epoch 01 | Objective: -0.0283 | Coherence: 30.8245 | Separation: 31.1074 | Information gain: 7.1667 | Grad Norm: 2.6766 | Time: 4.7s
+Step 0210 | Epoch 01 | Objective: 0.0911 | Coherence: 31.4574 | Separation: 30.5468 | Information gain: 7.3333 | Grad Norm: 2.8777 | Time: 5.0s
+Step 0220 | Epoch 01 | Objective: 0.1962 | Coherence: 32.0727 | Separation: 30.1111 | Information gain: 7.3333 | Grad Norm: 2.5910 | Time: 5.2s
+Step 0230 | Epoch 01 | Objective: 0.2936 | Coherence: 32.6433 | Separation: 29.7074 | Information gain: 7.3333 | Grad Norm: 2.6044 | Time: 5.4s
+Step 0240 | Epoch 01 | Objective: 0.3913 | Coherence: 33.1630 | Separation: 29.2505 | Information gain: 7.3333 | Grad Norm: 2.5068 | Time: 5.7s
+Step 0250 | Epoch 01 | Objective: 0.4808 | Coherence: 33.6694 | Separation: 28.8612 | Information gain: 7.5000 | Grad Norm: 2.6251 | Time: 5.9s
+Step 0260 | Epoch 01 | Objective: 0.5600 | Coherence: 34.1048 | Separation: 28.5044 | Information gain: 7.6667 | Grad Norm: 2.4417 | Time: 6.1s
+Step 0270 | Epoch 01 | Objective: 0.6430 | Coherence: 34.5057 | Separation: 28.0754 | Information gain: 7.6667 | Grad Norm: 2.4392 | Time: 6.4s
+Step 0280 | Epoch 01 | Objective: 0.7241 | Coherence: 34.8953 | Separation: 27.6540 | Information gain: 7.6667 | Grad Norm: 2.4013 | Time: 6.6s
+Step 0290 | Epoch 01 | Objective: 0.8062 | Coherence: 35.3347 | Separation: 27.2728 | Information gain: 8.0000 | Grad Norm: 2.5827 | Time: 6.8s
+Step 0300 | Epoch 01 | Objective: 0.8860 | Coherence: 35.7596 | Separation: 26.8994 | Information gain: 8.0000 | Grad Norm: 2.5525 | Time: 7.1s
+Step 0302 | Epoch 01 | Objective: 0.9025 | Coherence: 35.8472 | Separation: 26.8219 | Information gain: 8.0000 | Grad Norm: 2.5212 | Time: 7.1s
+Similarity matrix:
+          0         1         2  ...        12        13        14
+0  0.582478  0.496272  0.480656  ...  0.436080  0.493518  0.444976
+1  0.538172  0.634955  0.464266  ...  0.510578  0.551890  0.598250
+2  0.490688  0.436440  0.587903  ...  0.449168  0.373328  0.455573
+3  0.471929  0.469085  0.442267  ...  0.526465  0.432632  0.434746
+4  0.588874  0.579538  0.442199  ...  0.458436  0.552783  0.511789
+
+[5 rows x 15 columns]
+  Testing with max_depth=15
+  MNIST DecisionTree Test accuracy (M=15, max_depth=15): 0.8011
+  Testing XGBoost with max_depth=None
+  MNIST XGBoost Test accuracy (M=15, max_depth=None): 0.8960
+  Testing Random Forest with max_depth=None
+  MNIST RandomForest Test accuracy (M=15, max_depth=None): 0.8803
+  Testing ElasticNet with alpha=0.01, l1_ratio=0.5
+  ElasticNet Test MSE (M=15, alpha=0.01, l1_ratio=0.5): 5.0199, accuracy=0.1146
+Testing SVM
+  SVM Test Accuracy: 0.8549
+Testing Logistic Regression
+  Logistic Regression Test Accuracy: 0.8297
+
+Baseline test with Neural Network trained on concepts
+Input shape: torch.Size([60000, 15]), target shapetorch.Size([60000])
+Training set size: 48000, test set size: 12000
+
+Test set: Average loss: 0.6660, Accuracy: 9642/12000 (80%)
+
+Epoch 1 | Train Acc: 0.6783541666666667 | Test Acc: 0.8035 | Time: 1.0064342021942139 sec
+
+Test set: Average loss: 0.4965, Accuracy: 10081/12000 (84%)
+
+Epoch 2 | Train Acc: 0.8277708333333333 | Test Acc: 0.8400833333333333 | Time: 1.0035560131072998 sec
+
+Test set: Average loss: 0.4339, Accuracy: 10298/12000 (86%)
+
+Epoch 3 | Train Acc: 0.8525833333333334 | Test Acc: 0.8581666666666666 | Time: 1.0061662197113037 sec
+
+Test set: Average loss: 0.3995, Accuracy: 10414/12000 (87%)
+
+Epoch 4 | Train Acc: 0.8671666666666666 | Test Acc: 0.8678333333333333 | Time: 1.0028398036956787 sec
+
+Test set: Average loss: 0.3791, Accuracy: 10477/12000 (87%)
+
+Epoch 5 | Train Acc: 0.8755625 | Test Acc: 0.8730833333333333 | Time: 1.0038573741912842 sec
+
+Test set: Average loss: 0.3637, Accuracy: 10543/12000 (88%)
+
+Epoch 6 | Train Acc: 0.8819375 | Test Acc: 0.8785833333333334 | Time: 1.0022809505462646 sec
+
+Test set: Average loss: 0.3529, Accuracy: 10592/12000 (88%)
+
+Epoch 7 | Train Acc: 0.8852708333333333 | Test Acc: 0.8826666666666667 | Time: 1.003291368484497 sec
+
+Test set: Average loss: 0.3456, Accuracy: 10622/12000 (89%)
+
+Epoch 8 | Train Acc: 0.8883958333333334 | Test Acc: 0.8851666666666667 | Time: 1.0035159587860107 sec
+
+Test set: Average loss: 0.3402, Accuracy: 10659/12000 (89%)
+
+Epoch 9 | Train Acc: 0.89025 | Test Acc: 0.88825 | Time: 1.1249077320098877 sec
+
+Test set: Average loss: 0.3370, Accuracy: 10672/12000 (89%)
+
+Epoch 10 | Train Acc: 0.8919375 | Test Acc: 0.8893333333333333 | Time: 1.0041711330413818 sec
+
+Test set: Average loss: 0.3348, Accuracy: 10680/12000 (89%)
+
+Epoch 11 | Train Acc: 0.8930416666666666 | Test Acc: 0.89 | Time: 1.0047383308410645 sec
+
+Test set: Average loss: 0.3333, Accuracy: 10692/12000 (89%)
+
+Epoch 12 | Train Acc: 0.8938125 | Test Acc: 0.891 | Time: 1.0046205520629883 sec
+
+Test set: Average loss: 0.3323, Accuracy: 10697/12000 (89%)
+
+Epoch 13 | Train Acc: 0.8942083333333334 | Test Acc: 0.8914166666666666 | Time: 1.0043187141418457 sec
+
+Test set: Average loss: 0.3315, Accuracy: 10702/12000 (89%)
+
+Epoch 14 | Train Acc: 0.8945208333333333 | Test Acc: 0.8918333333333334 | Time: 1.0035114288330078 sec
+
+Test set: Average loss: 0.3310, Accuracy: 10707/12000 (89%)
+
+Epoch 15 | Train Acc: 0.8948125 | Test Acc: 0.89225 | Time: 1.0040416717529297 sec
+
+Test set: Average loss: 0.3307, Accuracy: 10707/12000 (89%)
+
+Epoch 16 | Train Acc: 0.8953958333333333 | Test Acc: 0.89225 | Time: 1.003098726272583 sec
+
+Test set: Average loss: 0.3305, Accuracy: 10706/12000 (89%)
+
+Epoch 17 | Train Acc: 0.895625 | Test Acc: 0.8921666666666667 | Time: 1.0040194988250732 sec
+
+Test set: Average loss: 0.3303, Accuracy: 10706/12000 (89%)
+
+Epoch 18 | Train Acc: 0.8958958333333333 | Test Acc: 0.8921666666666667 | Time: 1.1094212532043457 sec
+
+Test set: Average loss: 0.3302, Accuracy: 10705/12000 (89%)
+
+Epoch 19 | Train Acc: 0.8960625 | Test Acc: 0.8920833333333333 | Time: 1.0024528503417969 sec
+
+Test set: Average loss: 0.3301, Accuracy: 10703/12000 (89%)
+
+Epoch 20 | Train Acc: 0.8961875 | Test Acc: 0.8919166666666667 | Time: 1.001802682876587 sec
+Early stopping at epoch 20
+
+Testing with M=15
+Step 0000 | Epoch 01 | Objective: -1.6494 | Coherence: 22.0807 | Separation: 60.5743 | Information gain: 7.3333 | Grad Norm: 4.4793 | Time: 0.1s
+Step 0010 | Epoch 01 | Objective: -1.3988 | Coherence: 23.2746 | Separation: 58.7628 | Information gain: 7.1667 | Grad Norm: 4.3214 | Time: 0.3s
+Step 0020 | Epoch 01 | Objective: -1.1118 | Coherence: 24.4568 | Separation: 57.0751 | Information gain: 7.1667 | Grad Norm: 4.2345 | Time: 0.6s
+Step 0030 | Epoch 01 | Objective: -0.8418 | Coherence: 25.5898 | Separation: 55.5082 | Information gain: 7.1667 | Grad Norm: 3.9924 | Time: 0.8s
+Step 0040 | Epoch 01 | Objective: -0.5443 | Coherence: 26.7082 | Separation: 54.1517 | Information gain: 7.3333 | Grad Norm: 3.9226 | Time: 1.0s
+Step 0050 | Epoch 01 | Objective: -0.3004 | Coherence: 27.7581 | Separation: 52.7618 | Information gain: 7.3333 | Grad Norm: 3.9021 | Time: 1.3s
+Step 0060 | Epoch 01 | Objective: -0.0470 | Coherence: 28.7966 | Separation: 51.2664 | Information gain: 7.3333 | Grad Norm: 3.9258 | Time: 1.5s
+Step 0070 | Epoch 01 | Objective: 0.2061 | Coherence: 29.8463 | Separation: 49.7856 | Information gain: 7.3333 | Grad Norm: 3.7506 | Time: 1.7s
+Step 0080 | Epoch 01 | Objective: 0.4108 | Coherence: 30.8837 | Separation: 48.2758 | Information gain: 7.1667 | Grad Norm: 3.7659 | Time: 2.0s
+Step 0090 | Epoch 01 | Objective: 0.6545 | Coherence: 31.8689 | Separation: 46.8238 | Information gain: 7.1667 | Grad Norm: 3.6192 | Time: 2.2s
+Step 0100 | Epoch 01 | Objective: 0.8781 | Coherence: 32.7699 | Separation: 45.4885 | Information gain: 7.1667 | Grad Norm: 3.4377 | Time: 2.5s
+Step 0102 | Epoch 01 | Objective: 0.9209 | Coherence: 32.9495 | Separation: 45.2408 | Information gain: 7.1667 | Grad Norm: 3.3511 | Time: 2.5s
+Similarity matrix:
+          0         1         2  ...        12        13        14
+0  0.598289 -0.468728  0.468650  ...  0.555709  0.390571  0.479589
+1  0.433198 -0.551985  0.540743  ...  0.524349  0.429679  0.446789
+2  0.481132 -0.584182  0.620527  ...  0.559143  0.468650  0.547829
+3  0.336105 -0.427801  0.439791  ...  0.383831  0.510651  0.374778
+4  0.472806 -0.557519  0.526029  ...  0.538133  0.519835  0.416056
+
+[5 rows x 15 columns]
+  Testing with max_depth=15
+  MNIST DecisionTree Test accuracy (M=15, max_depth=15): 0.7998
+  Testing XGBoost with max_depth=None
+  MNIST XGBoost Test accuracy (M=15, max_depth=None): 0.9007
+  Testing Random Forest with max_depth=None
+  MNIST RandomForest Test accuracy (M=15, max_depth=None): 0.8901
+  Testing ElasticNet with alpha=0.01, l1_ratio=0.5
+  ElasticNet Test MSE (M=15, alpha=0.01, l1_ratio=0.5): 5.0515, accuracy=0.0826
+Testing SVM
+  SVM Test Accuracy: 0.8611
+Testing Logistic Regression
+  Logistic Regression Test Accuracy: 0.8342
+
+Baseline test with Neural Network trained on concepts
+Input shape: torch.Size([60000, 15]), target shapetorch.Size([60000])
+Training set size: 48000, test set size: 12000
+
+Test set: Average loss: 0.7462, Accuracy: 9272/12000 (77%)
+
+Epoch 1 | Train Acc: 0.6548333333333334 | Test Acc: 0.7726666666666666 | Time: 1.2174732685089111 sec
+
+Test set: Average loss: 0.5468, Accuracy: 9902/12000 (83%)
+
+Epoch 2 | Train Acc: 0.8237708333333333 | Test Acc: 0.8251666666666667 | Time: 1.0666892528533936 sec
+
+Test set: Average loss: 0.4621, Accuracy: 10228/12000 (85%)
+
+Epoch 3 | Train Acc: 0.8528958333333333 | Test Acc: 0.8523333333333334 | Time: 1.0642564296722412 sec
+
+Test set: Average loss: 0.4227, Accuracy: 10386/12000 (87%)
+
+Epoch 4 | Train Acc: 0.8691666666666666 | Test Acc: 0.8655 | Time: 1.0642938613891602 sec
+
+Test set: Average loss: 0.3983, Accuracy: 10480/12000 (87%)
+
+Epoch 5 | Train Acc: 0.8790208333333334 | Test Acc: 0.8733333333333333 | Time: 1.0606489181518555 sec
+
+Test set: Average loss: 0.3795, Accuracy: 10540/12000 (88%)
+
+Epoch 6 | Train Acc: 0.8854583333333333 | Test Acc: 0.8783333333333333 | Time: 1.066272497177124 sec
+
+Test set: Average loss: 0.3668, Accuracy: 10585/12000 (88%)
+
+Epoch 7 | Train Acc: 0.8900833333333333 | Test Acc: 0.8820833333333333 | Time: 1.071850299835205 sec
+
+Test set: Average loss: 0.3577, Accuracy: 10618/12000 (88%)
+
+Epoch 8 | Train Acc: 0.8934791666666667 | Test Acc: 0.8848333333333334 | Time: 1.073157548904419 sec
+
+Test set: Average loss: 0.3508, Accuracy: 10646/12000 (89%)
+
+Epoch 9 | Train Acc: 0.8962083333333334 | Test Acc: 0.8871666666666667 | Time: 1.0672898292541504 sec
+
+Test set: Average loss: 0.3463, Accuracy: 10662/12000 (89%)
+
+Epoch 10 | Train Acc: 0.8978541666666666 | Test Acc: 0.8885 | Time: 1.17950439453125 sec
+
+Test set: Average loss: 0.3433, Accuracy: 10686/12000 (89%)
+
+Epoch 11 | Train Acc: 0.899 | Test Acc: 0.8905 | Time: 1.0701754093170166 sec
+
+Test set: Average loss: 0.3413, Accuracy: 10695/12000 (89%)
+
+Epoch 12 | Train Acc: 0.8995625 | Test Acc: 0.89125 | Time: 1.0669312477111816 sec
+
+Test set: Average loss: 0.3401, Accuracy: 10690/12000 (89%)
+
+Epoch 13 | Train Acc: 0.9001875 | Test Acc: 0.8908333333333334 | Time: 1.0712387561798096 sec
+
+Test set: Average loss: 0.3393, Accuracy: 10693/12000 (89%)
+
+Epoch 14 | Train Acc: 0.9007291666666667 | Test Acc: 0.8910833333333333 | Time: 1.0735554695129395 sec
+
+Test set: Average loss: 0.3388, Accuracy: 10691/12000 (89%)
+
+Epoch 15 | Train Acc: 0.9008541666666666 | Test Acc: 0.8909166666666667 | Time: 1.0677580833435059 sec
+
+Test set: Average loss: 0.3384, Accuracy: 10695/12000 (89%)
+
+Epoch 16 | Train Acc: 0.9007916666666667 | Test Acc: 0.89125 | Time: 1.0784308910369873 sec
+
+Test set: Average loss: 0.3382, Accuracy: 10696/12000 (89%)
+
+Epoch 17 | Train Acc: 0.9008333333333334 | Test Acc: 0.8913333333333333 | Time: 1.0706703662872314 sec
+
+Test set: Average loss: 0.3380, Accuracy: 10697/12000 (89%)
+
+Epoch 18 | Train Acc: 0.9008333333333334 | Test Acc: 0.8914166666666666 | Time: 1.0739479064941406 sec
+
+Test set: Average loss: 0.3379, Accuracy: 10699/12000 (89%)
+
+Epoch 19 | Train Acc: 0.9008125 | Test Acc: 0.8915833333333333 | Time: 1.204190969467163 sec
+
+Test set: Average loss: 0.3378, Accuracy: 10701/12000 (89%)
+
+Epoch 20 | Train Acc: 0.9007708333333333 | Test Acc: 0.89175 | Time: 1.0683164596557617 sec
+
+Testing with M=15
+Step 0000 | Epoch 01 | Objective: -3.0341 | Coherence: 9.7876 | Separation: 48.6283 | Information gain: 8.5000 | Grad Norm: 4.1383 | Time: 0.0s
+Step 0010 | Epoch 01 | Objective: -2.7416 | Coherence: 11.0989 | Separation: 47.1814 | Information gain: 8.6667 | Grad Norm: 3.9747 | Time: 0.3s
+Step 0020 | Epoch 01 | Objective: -2.4909 | Coherence: 12.2752 | Separation: 45.8513 | Information gain: 8.6667 | Grad Norm: 3.7865 | Time: 0.5s
+Step 0030 | Epoch 01 | Objective: -2.2542 | Coherence: 13.4213 | Separation: 44.6298 | Information gain: 8.6667 | Grad Norm: 3.7665 | Time: 0.8s
+Step 0040 | Epoch 01 | Objective: -2.0085 | Coherence: 14.6510 | Separation: 43.5695 | Information gain: 8.8333 | Grad Norm: 3.6907 | Time: 1.0s
+Step 0050 | Epoch 01 | Objective: -1.7719 | Coherence: 15.8414 | Separation: 42.5603 | Information gain: 9.0000 | Grad Norm: 3.5688 | Time: 1.2s
+Step 0060 | Epoch 01 | Objective: -1.5555 | Coherence: 17.0006 | Separation: 41.5560 | Information gain: 9.0000 | Grad Norm: 3.4207 | Time: 1.5s
+Step 0070 | Epoch 01 | Objective: -1.3606 | Coherence: 18.1527 | Separation: 40.5923 | Information gain: 8.8333 | Grad Norm: 3.4757 | Time: 1.7s
+Step 0080 | Epoch 01 | Objective: -1.1568 | Coherence: 19.3309 | Separation: 39.7322 | Information gain: 8.8333 | Grad Norm: 3.3995 | Time: 1.9s
+Step 0090 | Epoch 01 | Objective: -0.9611 | Coherence: 20.4889 | Separation: 38.9335 | Information gain: 8.8333 | Grad Norm: 3.2735 | Time: 2.2s
+Step 0100 | Epoch 01 | Objective: -0.7617 | Coherence: 21.6049 | Separation: 38.0554 | Information gain: 8.8333 | Grad Norm: 3.2651 | Time: 2.4s
+Step 0110 | Epoch 01 | Objective: -0.5487 | Coherence: 22.7077 | Separation: 37.1951 | Information gain: 9.0000 | Grad Norm: 3.3421 | Time: 2.6s
+Step 0120 | Epoch 01 | Objective: -0.3558 | Coherence: 23.8034 | Separation: 36.3610 | Information gain: 9.0000 | Grad Norm: 3.2050 | Time: 2.9s
+Step 0130 | Epoch 01 | Objective: -0.1616 | Coherence: 24.8523 | Separation: 35.6352 | Information gain: 9.1667 | Grad Norm: 3.0576 | Time: 3.1s
+Step 0140 | Epoch 01 | Objective: 0.0145 | Coherence: 25.8534 | Separation: 34.8748 | Information gain: 9.1667 | Grad Norm: 3.0696 | Time: 3.3s
+Step 0150 | Epoch 01 | Objective: 0.1820 | Coherence: 26.8702 | Separation: 34.2171 | Information gain: 9.1667 | Grad Norm: 2.9797 | Time: 3.6s
+Step 0160 | Epoch 01 | Objective: 0.3244 | Coherence: 27.9210 | Separation: 33.6766 | Information gain: 9.0000 | Grad Norm: 2.9399 | Time: 3.8s
+Step 0170 | Epoch 01 | Objective: 0.4721 | Coherence: 28.8824 | Separation: 33.1619 | Information gain: 9.0000 | Grad Norm: 2.8231 | Time: 4.0s
+Step 0180 | Epoch 01 | Objective: 0.5994 | Coherence: 29.7770 | Separation: 32.7827 | Information gain: 9.0000 | Grad Norm: 2.7551 | Time: 4.3s
+Step 0190 | Epoch 01 | Objective: 0.7254 | Coherence: 30.6427 | Separation: 32.3885 | Information gain: 9.0000 | Grad Norm: 2.6551 | Time: 4.5s
+Step 0200 | Epoch 01 | Objective: 0.8517 | Coherence: 31.4738 | Separation: 31.9565 | Information gain: 9.0000 | Grad Norm: 2.8103 | Time: 4.8s
+Step 0204 | Epoch 01 | Objective: 0.9031 | Coherence: 31.8036 | Separation: 31.7725 | Information gain: 9.0000 | Grad Norm: 2.6750 | Time: 4.8s
+Similarity matrix:
+          0         1         2  ...        12        13        14
+0  0.573846  0.527171  0.392550  ...  0.213149  0.377294  0.450778
+1  0.546982  0.570843  0.423836  ...  0.217509  0.373581  0.494508
+2  0.410679  0.429726  0.586103  ...  0.315694  0.454139  0.480623
+3  0.490735  0.516080  0.516254  ...  0.323057  0.479890  0.529381
+4  0.485018  0.454130  0.471945  ...  0.207717  0.387666  0.449077
+
+[5 rows x 15 columns]
+  Testing with max_depth=15
+  MNIST DecisionTree Test accuracy (M=15, max_depth=15): 0.7899
+  Testing XGBoost with max_depth=None
+  MNIST XGBoost Test accuracy (M=15, max_depth=None): 0.8948
+  Testing Random Forest with max_depth=None
+  MNIST RandomForest Test accuracy (M=15, max_depth=None): 0.8761
+  Testing ElasticNet with alpha=0.01, l1_ratio=0.5
+  ElasticNet Test MSE (M=15, alpha=0.01, l1_ratio=0.5): 4.9673, accuracy=0.1018
+Testing SVM
+  SVM Test Accuracy: 0.8502
+Testing Logistic Regression
+  Logistic Regression Test Accuracy: 0.8235
+
+Baseline test with Neural Network trained on concepts
+Input shape: torch.Size([60000, 15]), target shapetorch.Size([60000])
+Training set size: 48000, test set size: 12000
+
+Test set: Average loss: 0.7528, Accuracy: 9266/12000 (77%)
+
+Epoch 1 | Train Acc: 0.6515625 | Test Acc: 0.7721666666666667 | Time: 1.0357434749603271 sec
+
+Test set: Average loss: 0.5377, Accuracy: 9926/12000 (83%)
+
+Epoch 2 | Train Acc: 0.8216458333333333 | Test Acc: 0.8271666666666667 | Time: 1.0309255123138428 sec
+
+Test set: Average loss: 0.4470, Accuracy: 10265/12000 (86%)
+
+Epoch 3 | Train Acc: 0.84875 | Test Acc: 0.8554166666666667 | Time: 1.0308449268341064 sec
+
+Test set: Average loss: 0.4025, Accuracy: 10449/12000 (87%)
+
+Epoch 4 | Train Acc: 0.86325 | Test Acc: 0.87075 | Time: 1.030461311340332 sec
+
+Test set: Average loss: 0.3815, Accuracy: 10525/12000 (88%)
+
+Epoch 5 | Train Acc: 0.8736041666666666 | Test Acc: 0.8770833333333333 | Time: 1.0310719013214111 sec
+
+Test set: Average loss: 0.3678, Accuracy: 10588/12000 (88%)
+
+Epoch 6 | Train Acc: 0.8804375 | Test Acc: 0.8823333333333333 | Time: 1.030414342880249 sec
+
+Test set: Average loss: 0.3581, Accuracy: 10624/12000 (89%)
+
+Epoch 7 | Train Acc: 0.8857916666666666 | Test Acc: 0.8853333333333333 | Time: 1.164137363433838 sec
+
+Test set: Average loss: 0.3511, Accuracy: 10647/12000 (89%)
+
+Epoch 8 | Train Acc: 0.8886875 | Test Acc: 0.88725 | Time: 1.029939889907837 sec
+
+Test set: Average loss: 0.3455, Accuracy: 10676/12000 (89%)
+
+Epoch 9 | Train Acc: 0.8911458333333333 | Test Acc: 0.8896666666666667 | Time: 1.0300076007843018 sec
+
+Test set: Average loss: 0.3415, Accuracy: 10698/12000 (89%)
+
+Epoch 10 | Train Acc: 0.8928125 | Test Acc: 0.8915 | Time: 1.0329995155334473 sec
+
+Test set: Average loss: 0.3388, Accuracy: 10718/12000 (89%)
+
+Epoch 11 | Train Acc: 0.8939166666666667 | Test Acc: 0.8931666666666667 | Time: 1.030928134918213 sec
+
+Test set: Average loss: 0.3371, Accuracy: 10728/12000 (89%)
+
+Epoch 12 | Train Acc: 0.8947916666666667 | Test Acc: 0.894 | Time: 1.030127763748169 sec
+
+Test set: Average loss: 0.3360, Accuracy: 10731/12000 (89%)
+
+Epoch 13 | Train Acc: 0.89525 | Test Acc: 0.89425 | Time: 1.03011155128479 sec
+
+Test set: Average loss: 0.3352, Accuracy: 10734/12000 (89%)
+
+Epoch 14 | Train Acc: 0.8956041666666666 | Test Acc: 0.8945 | Time: 1.030390977859497 sec
+
+Test set: Average loss: 0.3347, Accuracy: 10742/12000 (90%)
+
+Epoch 15 | Train Acc: 0.8956875 | Test Acc: 0.8951666666666667 | Time: 1.029876947402954 sec
+
+Test set: Average loss: 0.3344, Accuracy: 10745/12000 (90%)
+
+Epoch 16 | Train Acc: 0.8958333333333334 | Test Acc: 0.8954166666666666 | Time: 1.1411068439483643 sec
+
+Test set: Average loss: 0.3343, Accuracy: 10747/12000 (90%)
+
+Epoch 17 | Train Acc: 0.8961041666666667 | Test Acc: 0.8955833333333333 | Time: 1.0317933559417725 sec
+
+Test set: Average loss: 0.3341, Accuracy: 10746/12000 (90%)
+
+Epoch 18 | Train Acc: 0.89625 | Test Acc: 0.8955 | Time: 1.0315604209899902 sec
+
+Test set: Average loss: 0.3341, Accuracy: 10744/12000 (90%)
+
+Epoch 19 | Train Acc: 0.8962708333333333 | Test Acc: 0.8953333333333333 | Time: 1.0299162864685059 sec
+
+Test set: Average loss: 0.3340, Accuracy: 10744/12000 (90%)
+
+Epoch 20 | Train Acc: 0.8963541666666667 | Test Acc: 0.8953333333333333 | Time: 1.0312695503234863 sec
+
+Testing with M=15
+Step 0000 | Epoch 01 | Objective: -1.4521 | Coherence: 16.8817 | Separation: 45.7355 | Information gain: 7.1667 | Grad Norm: 4.0951 | Time: 0.0s
+Step 0010 | Epoch 01 | Objective: -1.1701 | Coherence: 17.8859 | Separation: 43.9201 | Information gain: 7.1667 | Grad Norm: 4.0609 | Time: 0.3s
+Step 0020 | Epoch 01 | Objective: -0.9302 | Coherence: 18.9138 | Separation: 42.2157 | Information gain: 7.0000 | Grad Norm: 3.8870 | Time: 0.5s
+Step 0030 | Epoch 01 | Objective: -0.6699 | Coherence: 19.9259 | Separation: 40.6246 | Information gain: 7.0000 | Grad Norm: 3.7828 | Time: 0.7s
+Step 0040 | Epoch 01 | Objective: -0.3775 | Coherence: 20.9594 | Separation: 39.0680 | Information gain: 7.1667 | Grad Norm: 3.6067 | Time: 1.0s
+Step 0050 | Epoch 01 | Objective: -0.1405 | Coherence: 21.9960 | Separation: 37.7348 | Information gain: 7.1667 | Grad Norm: 3.3794 | Time: 1.2s
+Step 0060 | Epoch 01 | Objective: 0.0854 | Coherence: 22.9293 | Separation: 36.7416 | Information gain: 7.3333 | Grad Norm: 3.0331 | Time: 1.4s
+Step 0070 | Epoch 01 | Objective: 0.2621 | Coherence: 23.7733 | Separation: 35.8193 | Information gain: 7.3333 | Grad Norm: 3.1545 | Time: 1.6s
+Step 0080 | Epoch 01 | Objective: 0.4341 | Coherence: 24.5943 | Separation: 34.9204 | Information gain: 7.3333 | Grad Norm: 3.0957 | Time: 1.9s
+Step 0090 | Epoch 01 | Objective: 0.5578 | Coherence: 25.4123 | Separation: 34.1673 | Information gain: 7.1667 | Grad Norm: 2.7706 | Time: 2.1s
+Step 0100 | Epoch 01 | Objective: 0.7658 | Coherence: 26.1739 | Separation: 33.5162 | Information gain: 7.5000 | Grad Norm: 2.8479 | Time: 2.3s
+Step 0110 | Epoch 01 | Objective: 0.9051 | Coherence: 26.8843 | Separation: 32.8334 | Information gain: 7.5000 | Grad Norm: 2.6512 | Time: 2.5s
+Step 0110 | Epoch 01 | Objective: 0.9051 | Coherence: 26.8843 | Separation: 32.8334 | Information gain: 7.5000 | Grad Norm: 2.6512 | Time: 2.5s
+Similarity matrix:
+          0         1         2  ...        12        13        14
+0  0.512397  0.390215  0.458762  ...  0.335191  0.444509  0.428294
+1  0.385768  0.557005  0.491538  ...  0.396972  0.531652  0.508943
+2  0.522247  0.496808  0.609252  ...  0.348542  0.575139  0.570390
+3  0.478629  0.422532  0.467743  ...  0.469492  0.508099  0.439492
+4  0.344740  0.523489  0.440470  ...  0.370489  0.482313  0.438582
+
+[5 rows x 15 columns]
+  Testing with max_depth=15
+  MNIST DecisionTree Test accuracy (M=15, max_depth=15): 0.8007
+  Testing XGBoost with max_depth=None
+  MNIST XGBoost Test accuracy (M=15, max_depth=None): 0.8997
+  Testing Random Forest with max_depth=None
+  MNIST RandomForest Test accuracy (M=15, max_depth=None): 0.8828
+  Testing ElasticNet with alpha=0.01, l1_ratio=0.5
+  ElasticNet Test MSE (M=15, alpha=0.01, l1_ratio=0.5): 4.9565, accuracy=0.0990
+Testing SVM
+  SVM Test Accuracy: 0.8539
+Testing Logistic Regression
+  Logistic Regression Test Accuracy: 0.8236
+
+Baseline test with Neural Network trained on concepts
+Input shape: torch.Size([60000, 15]), target shapetorch.Size([60000])
+Training set size: 48000, test set size: 12000
+
+Test set: Average loss: 0.6696, Accuracy: 9562/12000 (80%)
+
+Epoch 1 | Train Acc: 0.6530625 | Test Acc: 0.7968333333333333 | Time: 1.0206272602081299 sec
+
+Test set: Average loss: 0.5147, Accuracy: 10016/12000 (83%)
+
+Epoch 2 | Train Acc: 0.8134791666666666 | Test Acc: 0.8346666666666667 | Time: 1.0155980587005615 sec
+
+Test set: Average loss: 0.4492, Accuracy: 10229/12000 (85%)
+
+Epoch 3 | Train Acc: 0.8458333333333333 | Test Acc: 0.8524166666666667 | Time: 1.0162057876586914 sec
+
+Test set: Average loss: 0.4060, Accuracy: 10434/12000 (87%)
+
+Epoch 4 | Train Acc: 0.8664166666666666 | Test Acc: 0.8695 | Time: 1.015516757965088 sec
+
+Test set: Average loss: 0.3774, Accuracy: 10562/12000 (88%)
+
+Epoch 5 | Train Acc: 0.8777291666666667 | Test Acc: 0.8801666666666667 | Time: 1.015047311782837 sec
+
+Test set: Average loss: 0.3608, Accuracy: 10627/12000 (89%)
+
+Epoch 6 | Train Acc: 0.8855416666666667 | Test Acc: 0.8855833333333333 | Time: 1.0149173736572266 sec
+
+Test set: Average loss: 0.3498, Accuracy: 10672/12000 (89%)
+
+Epoch 7 | Train Acc: 0.8902708333333333 | Test Acc: 0.8893333333333333 | Time: 1.1356158256530762 sec
+
+Test set: Average loss: 0.3422, Accuracy: 10697/12000 (89%)
+
+Epoch 8 | Train Acc: 0.894 | Test Acc: 0.8914166666666666 | Time: 1.0193736553192139 sec
+
+Test set: Average loss: 0.3371, Accuracy: 10718/12000 (89%)
+
+Epoch 9 | Train Acc: 0.8958541666666666 | Test Acc: 0.8931666666666667 | Time: 1.014984130859375 sec
+
+Test set: Average loss: 0.3334, Accuracy: 10734/12000 (89%)
+
+Epoch 10 | Train Acc: 0.8976458333333334 | Test Acc: 0.8945 | Time: 1.0167498588562012 sec
+
+Test set: Average loss: 0.3308, Accuracy: 10754/12000 (90%)
+
+Epoch 11 | Train Acc: 0.8990625 | Test Acc: 0.8961666666666667 | Time: 1.0172598361968994 sec
+
+Test set: Average loss: 0.3289, Accuracy: 10760/12000 (90%)
+
+Epoch 12 | Train Acc: 0.9000625 | Test Acc: 0.8966666666666666 | Time: 1.0170364379882812 sec
+
+Test set: Average loss: 0.3278, Accuracy: 10766/12000 (90%)
+
+Epoch 13 | Train Acc: 0.9005833333333333 | Test Acc: 0.8971666666666667 | Time: 1.0169284343719482 sec
+
+Test set: Average loss: 0.3270, Accuracy: 10772/12000 (90%)
+
+Epoch 14 | Train Acc: 0.9011041666666667 | Test Acc: 0.8976666666666666 | Time: 1.0184516906738281 sec
+
+Test set: Average loss: 0.3266, Accuracy: 10768/12000 (90%)
+
+Epoch 15 | Train Acc: 0.9011666666666667 | Test Acc: 0.8973333333333333 | Time: 1.0172834396362305 sec
+
+Test set: Average loss: 0.3263, Accuracy: 10766/12000 (90%)
+
+Epoch 16 | Train Acc: 0.901375 | Test Acc: 0.8971666666666667 | Time: 1.1441473960876465 sec
+
+Test set: Average loss: 0.3261, Accuracy: 10770/12000 (90%)
+
+Epoch 17 | Train Acc: 0.9015625 | Test Acc: 0.8975 | Time: 1.015519618988037 sec
+
+Test set: Average loss: 0.3260, Accuracy: 10772/12000 (90%)
+
+Epoch 18 | Train Acc: 0.9015833333333333 | Test Acc: 0.8976666666666666 | Time: 1.0173640251159668 sec
+
+Test set: Average loss: 0.3259, Accuracy: 10768/12000 (90%)
+
+Epoch 19 | Train Acc: 0.9015416666666667 | Test Acc: 0.8973333333333333 | Time: 1.0165324211120605 sec
+Early stopping at epoch 19
+
+Testing with M=15
+Step 0000 | Epoch 01 | Objective: -3.8819 | Coherence: 14.2637 | Separation: 53.0824 | Information gain: 6.1667 | Grad Norm: 4.5107 | Time: 0.1s
+Step 0010 | Epoch 01 | Objective: -3.5772 | Coherence: 15.2837 | Separation: 51.0558 | Information gain: 6.1667 | Grad Norm: 4.4168 | Time: 0.3s
+Step 0020 | Epoch 01 | Objective: -3.2711 | Coherence: 16.3706 | Separation: 49.0815 | Information gain: 6.1667 | Grad Norm: 4.2297 | Time: 0.5s
+Step 0030 | Epoch 01 | Objective: -2.9851 | Coherence: 17.5367 | Separation: 47.3878 | Information gain: 6.3333 | Grad Norm: 4.1096 | Time: 0.8s
+Step 0040 | Epoch 01 | Objective: -2.7320 | Coherence: 18.6390 | Separation: 45.9592 | Information gain: 6.3333 | Grad Norm: 3.8750 | Time: 1.0s
+Step 0050 | Epoch 01 | Objective: -2.5069 | Coherence: 19.7123 | Separation: 44.7813 | Information gain: 6.3333 | Grad Norm: 3.7475 | Time: 1.2s
+Step 0060 | Epoch 01 | Objective: -2.2976 | Coherence: 20.7633 | Separation: 43.7396 | Information gain: 6.3333 | Grad Norm: 3.5334 | Time: 1.5s
+Step 0070 | Epoch 01 | Objective: -2.1144 | Coherence: 21.7676 | Separation: 42.9115 | Information gain: 6.3333 | Grad Norm: 3.5688 | Time: 1.7s
+Step 0080 | Epoch 01 | Objective: -1.9325 | Coherence: 22.7378 | Separation: 42.0628 | Information gain: 6.3333 | Grad Norm: 3.3106 | Time: 1.9s
+Step 0090 | Epoch 01 | Objective: -1.7627 | Coherence: 23.6180 | Separation: 41.2446 | Information gain: 6.5000 | Grad Norm: 3.4045 | Time: 2.2s
+Step 0100 | Epoch 01 | Objective: -1.5923 | Coherence: 24.4068 | Separation: 40.3298 | Information gain: 6.5000 | Grad Norm: 3.2805 | Time: 2.4s
+Step 0110 | Epoch 01 | Objective: -1.4228 | Coherence: 25.1250 | Separation: 39.3534 | Information gain: 6.5000 | Grad Norm: 3.3826 | Time: 2.6s
+Step 0120 | Epoch 01 | Objective: -1.2529 | Coherence: 25.8926 | Separation: 38.4212 | Information gain: 6.8333 | Grad Norm: 3.3781 | Time: 2.9s
+Step 0130 | Epoch 01 | Objective: -1.0784 | Coherence: 26.7118 | Separation: 37.4959 | Information gain: 7.0000 | Grad Norm: 3.3175 | Time: 3.1s
+Step 0140 | Epoch 01 | Objective: -0.8973 | Coherence: 27.5334 | Separation: 36.5068 | Information gain: 6.8333 | Grad Norm: 3.3280 | Time: 3.3s
+Step 0150 | Epoch 01 | Objective: -0.7171 | Coherence: 28.3655 | Separation: 35.5365 | Information gain: 7.1667 | Grad Norm: 3.1640 | Time: 3.6s
+Step 0160 | Epoch 01 | Objective: -0.5400 | Coherence: 29.2221 | Separation: 34.6216 | Information gain: 7.1667 | Grad Norm: 3.0522 | Time: 3.8s
+Step 0170 | Epoch 01 | Objective: -0.3685 | Coherence: 30.0279 | Separation: 33.7129 | Information gain: 7.3333 | Grad Norm: 3.1410 | Time: 4.0s
+Step 0180 | Epoch 01 | Objective: -0.2057 | Coherence: 30.7442 | Separation: 32.8014 | Information gain: 7.3333 | Grad Norm: 2.9126 | Time: 4.3s
+Step 0190 | Epoch 01 | Objective: -0.0439 | Coherence: 31.4283 | Separation: 31.8669 | Information gain: 7.3333 | Grad Norm: 2.8852 | Time: 4.5s
+Step 0200 | Epoch 01 | Objective: 0.0998 | Coherence: 32.0941 | Separation: 31.0961 | Information gain: 7.5000 | Grad Norm: 2.8502 | Time: 4.7s
+Step 0210 | Epoch 01 | Objective: 0.2428 | Coherence: 32.7548 | Separation: 30.3266 | Information gain: 7.5000 | Grad Norm: 3.0195 | Time: 5.0s
+Step 0220 | Epoch 01 | Objective: 0.3828 | Coherence: 33.3835 | Separation: 29.5550 | Information gain: 7.5000 | Grad Norm: 2.8043 | Time: 5.2s
+Step 0230 | Epoch 01 | Objective: 0.5122 | Coherence: 33.9370 | Separation: 28.8146 | Information gain: 7.5000 | Grad Norm: 2.7802 | Time: 5.4s
+Step 0240 | Epoch 01 | Objective: 0.6399 | Coherence: 34.4633 | Separation: 28.0644 | Information gain: 7.5000 | Grad Norm: 3.1628 | Time: 5.7s
+Step 0250 | Epoch 01 | Objective: 0.7616 | Coherence: 34.9898 | Separation: 27.3741 | Information gain: 7.5000 | Grad Norm: 2.7967 | Time: 5.9s
+Step 0260 | Epoch 01 | Objective: 0.8665 | Coherence: 35.5038 | Separation: 26.8384 | Information gain: 7.6667 | Grad Norm: 2.7088 | Time: 6.1s
+Step 0264 | Epoch 01 | Objective: 0.9091 | Coherence: 35.7024 | Separation: 26.6114 | Information gain: 7.6667 | Grad Norm: 2.7000 | Time: 6.2s
+Similarity matrix:
+          0         1         2  ...        12        13        14
+0  0.606898  0.512240  0.480812  ...  0.496534  0.557244  0.558078
+1  0.498392  0.581381  0.452827  ...  0.547440  0.489903  0.506084
+2  0.465505  0.446462  0.591615  ...  0.445414  0.541580  0.495699
+3  0.517061  0.500401  0.572762  ...  0.455743  0.555952  0.592047
+4  0.465382  0.427196  0.515911  ...  0.494710  0.523071  0.485900
+
+[5 rows x 15 columns]
+  Testing with max_depth=15
+  MNIST DecisionTree Test accuracy (M=15, max_depth=15): 0.8024
+  Testing XGBoost with max_depth=None
+  MNIST XGBoost Test accuracy (M=15, max_depth=None): 0.8960
+  Testing Random Forest with max_depth=None
+  MNIST RandomForest Test accuracy (M=15, max_depth=None): 0.8848
+  Testing ElasticNet with alpha=0.01, l1_ratio=0.5
+  ElasticNet Test MSE (M=15, alpha=0.01, l1_ratio=0.5): 4.8451, accuracy=0.1026
+Testing SVM
+  SVM Test Accuracy: 0.8583
+Testing Logistic Regression
+  Logistic Regression Test Accuracy: 0.8357
+
+Baseline test with Neural Network trained on concepts
+Input shape: torch.Size([60000, 15]), target shapetorch.Size([60000])
+Training set size: 48000, test set size: 12000
+
+Test set: Average loss: 0.6179, Accuracy: 9886/12000 (82%)
+
+Epoch 1 | Train Acc: 0.6694375 | Test Acc: 0.8238333333333333 | Time: 1.0099120140075684 sec
+
+Test set: Average loss: 0.4748, Accuracy: 10234/12000 (85%)
+
+Epoch 2 | Train Acc: 0.8345625 | Test Acc: 0.8528333333333333 | Time: 1.0064804553985596 sec
+
+Test set: Average loss: 0.4228, Accuracy: 10398/12000 (87%)
+
+Epoch 3 | Train Acc: 0.8594583333333333 | Test Acc: 0.8665 | Time: 1.0050110816955566 sec
+
+Test set: Average loss: 0.3899, Accuracy: 10509/12000 (88%)
+
+Epoch 4 | Train Acc: 0.8732291666666666 | Test Acc: 0.87575 | Time: 1.0045881271362305 sec
+
+Test set: Average loss: 0.3700, Accuracy: 10603/12000 (88%)
+
+Epoch 5 | Train Acc: 0.8826666666666667 | Test Acc: 0.8835833333333334 | Time: 1.1259334087371826 sec
+
+Test set: Average loss: 0.3581, Accuracy: 10655/12000 (89%)
+
+Epoch 6 | Train Acc: 0.8883333333333333 | Test Acc: 0.8879166666666667 | Time: 1.006056308746338 sec
+
+Test set: Average loss: 0.3504, Accuracy: 10692/12000 (89%)
+
+Epoch 7 | Train Acc: 0.8924375 | Test Acc: 0.891 | Time: 1.0057356357574463 sec
+
+Test set: Average loss: 0.3451, Accuracy: 10716/12000 (89%)
+
+Epoch 8 | Train Acc: 0.8949791666666667 | Test Acc: 0.893 | Time: 1.006187915802002 sec
+
+Test set: Average loss: 0.3412, Accuracy: 10729/12000 (89%)
+
+Epoch 9 | Train Acc: 0.8966666666666666 | Test Acc: 0.8940833333333333 | Time: 1.009514331817627 sec
+
+Test set: Average loss: 0.3384, Accuracy: 10734/12000 (89%)
+
+Epoch 10 | Train Acc: 0.898 | Test Acc: 0.8945 | Time: 1.007303237915039 sec
+
+Test set: Average loss: 0.3366, Accuracy: 10740/12000 (90%)
+
+Epoch 11 | Train Acc: 0.8989791666666667 | Test Acc: 0.895 | Time: 1.0056126117706299 sec
+
+Test set: Average loss: 0.3353, Accuracy: 10746/12000 (90%)
+
+Epoch 12 | Train Acc: 0.89975 | Test Acc: 0.8955 | Time: 1.0060451030731201 sec
+
+Test set: Average loss: 0.3344, Accuracy: 10749/12000 (90%)
+
+Epoch 13 | Train Acc: 0.8998541666666666 | Test Acc: 0.89575 | Time: 1.0061359405517578 sec
+
+Test set: Average loss: 0.3339, Accuracy: 10747/12000 (90%)
+
+Epoch 14 | Train Acc: 0.9002916666666667 | Test Acc: 0.8955833333333333 | Time: 1.1238234043121338 sec
+
+Test set: Average loss: 0.3336, Accuracy: 10749/12000 (90%)
+
+Epoch 15 | Train Acc: 0.9003958333333333 | Test Acc: 0.89575 | Time: 1.00608491897583 sec
+
+Test set: Average loss: 0.3334, Accuracy: 10748/12000 (90%)
+
+Epoch 16 | Train Acc: 0.9005 | Test Acc: 0.8956666666666667 | Time: 1.005612850189209 sec
+
+Test set: Average loss: 0.3333, Accuracy: 10747/12000 (90%)
+
+Epoch 17 | Train Acc: 0.9006875 | Test Acc: 0.8955833333333333 | Time: 1.0069751739501953 sec
+
+Test set: Average loss: 0.3333, Accuracy: 10750/12000 (90%)
+
+Epoch 18 | Train Acc: 0.90075 | Test Acc: 0.8958333333333334 | Time: 1.0046906471252441 sec
+
+Test set: Average loss: 0.3332, Accuracy: 10752/12000 (90%)
+
+Epoch 19 | Train Acc: 0.9009375 | Test Acc: 0.896 | Time: 1.006330966949463 sec
+
+Test set: Average loss: 0.3331, Accuracy: 10752/12000 (90%)
+
+Epoch 20 | Train Acc: 0.901125 | Test Acc: 0.896 | Time: 1.004554271697998 sec
+
+Testing with M=15
+Step 0000 | Epoch 01 | Objective: -1.8101 | Coherence: 19.6620 | Separation: 58.7634 | Information gain: 7.0000 | Grad Norm: 4.0505 | Time: 0.1s
+Step 0010 | Epoch 01 | Objective: -1.5825 | Coherence: 20.3174 | Separation: 57.1421 | Information gain: 7.0000 | Grad Norm: 3.9503 | Time: 0.3s
+Step 0020 | Epoch 01 | Objective: -1.3119 | Coherence: 21.0751 | Separation: 55.6938 | Information gain: 7.1667 | Grad Norm: 3.8858 | Time: 0.5s
+Step 0030 | Epoch 01 | Objective: -1.0839 | Coherence: 21.8886 | Separation: 54.2275 | Information gain: 7.1667 | Grad Norm: 3.8575 | Time: 0.8s
+Step 0040 | Epoch 01 | Objective: -0.7551 | Coherence: 22.7128 | Separation: 52.7635 | Information gain: 7.5000 | Grad Norm: 3.7487 | Time: 1.0s
+Step 0050 | Epoch 01 | Objective: -0.5243 | Coherence: 23.5232 | Separation: 51.2659 | Information gain: 7.5000 | Grad Norm: 3.7283 | Time: 1.3s
+Step 0060 | Epoch 01 | Objective: -0.2933 | Coherence: 24.3474 | Separation: 49.7803 | Information gain: 7.5000 | Grad Norm: 3.6520 | Time: 1.5s
+Step 0070 | Epoch 01 | Objective: -0.0670 | Coherence: 25.2086 | Separation: 48.3790 | Information gain: 7.5000 | Grad Norm: 3.5596 | Time: 1.7s
+Step 0080 | Epoch 01 | Objective: 0.1368 | Coherence: 26.0462 | Separation: 47.1777 | Information gain: 7.5000 | Grad Norm: 3.4404 | Time: 2.0s
+Step 0090 | Epoch 01 | Objective: 0.2693 | Coherence: 26.9477 | Separation: 46.2551 | Information gain: 7.3333 | Grad Norm: 3.4474 | Time: 2.2s
+Step 0100 | Epoch 01 | Objective: 0.4419 | Coherence: 27.8577 | Separation: 45.4384 | Information gain: 7.3333 | Grad Norm: 3.2369 | Time: 2.5s
+Step 0110 | Epoch 01 | Objective: 0.6134 | Coherence: 28.7447 | Separation: 44.6103 | Information gain: 7.3333 | Grad Norm: 3.3155 | Time: 2.7s
+Step 0120 | Epoch 01 | Objective: 0.8286 | Coherence: 29.5765 | Separation: 43.7904 | Information gain: 7.5000 | Grad Norm: 3.1491 | Time: 3.0s
+Step 0125 | Epoch 01 | Objective: 0.9030 | Coherence: 29.9632 | Separation: 43.4330 | Information gain: 7.5000 | Grad Norm: 3.1329 | Time: 3.1s
+Similarity matrix:
+          0         1         2  ...        12        13        14
+0  0.558917  0.441551  0.338701  ...  0.448610  0.449059  0.494318
+1  0.438937  0.561935  0.399734  ...  0.485247  0.509686  0.458418
+2  0.385904  0.441791  0.655493  ...  0.504726  0.391547  0.521048
+3  0.384424  0.485525  0.599943  ...  0.477837  0.431191  0.482082
+4  0.488774  0.506666  0.330452  ...  0.474050  0.479045  0.447078
+
+[5 rows x 15 columns]
+  Testing with max_depth=15
+  MNIST DecisionTree Test accuracy (M=15, max_depth=15): 0.8202
+  Testing XGBoost with max_depth=None
+  MNIST XGBoost Test accuracy (M=15, max_depth=None): 0.9015
+  Testing Random Forest with max_depth=None
+  MNIST RandomForest Test accuracy (M=15, max_depth=None): 0.8925
+  Testing ElasticNet with alpha=0.01, l1_ratio=0.5
+  ElasticNet Test MSE (M=15, alpha=0.01, l1_ratio=0.5): 4.9040, accuracy=0.1006
+Testing SVM
+  SVM Test Accuracy: 0.8622
+Testing Logistic Regression
+  Logistic Regression Test Accuracy: 0.8364
+
+Baseline test with Neural Network trained on concepts
+Input shape: torch.Size([60000, 15]), target shapetorch.Size([60000])
+Training set size: 48000, test set size: 12000
+
+Test set: Average loss: 0.5810, Accuracy: 10039/12000 (84%)
+
+Epoch 1 | Train Acc: 0.6870625 | Test Acc: 0.8365833333333333 | Time: 1.0806388854980469 sec
+
+Test set: Average loss: 0.4573, Accuracy: 10325/12000 (86%)
+
+Epoch 2 | Train Acc: 0.8397083333333333 | Test Acc: 0.8604166666666667 | Time: 1.0694420337677002 sec
+
+Test set: Average loss: 0.4090, Accuracy: 10471/12000 (87%)
+
+Epoch 3 | Train Acc: 0.860875 | Test Acc: 0.8725833333333334 | Time: 1.0689067840576172 sec
+
+Test set: Average loss: 0.3803, Accuracy: 10571/12000 (88%)
+
+Epoch 4 | Train Acc: 0.8735833333333334 | Test Acc: 0.8809166666666667 | Time: 1.0741214752197266 sec
+
+Test set: Average loss: 0.3626, Accuracy: 10641/12000 (89%)
+
+Epoch 5 | Train Acc: 0.8817708333333333 | Test Acc: 0.88675 | Time: 1.0701403617858887 sec
+
+Test set: Average loss: 0.3503, Accuracy: 10696/12000 (89%)
+
+Epoch 6 | Train Acc: 0.8873125 | Test Acc: 0.8913333333333333 | Time: 1.0665526390075684 sec
+
+Test set: Average loss: 0.3423, Accuracy: 10717/12000 (89%)
+
+Epoch 7 | Train Acc: 0.8903541666666667 | Test Acc: 0.8930833333333333 | Time: 1.2075040340423584 sec
+
+Test set: Average loss: 0.3370, Accuracy: 10730/12000 (89%)
+
+Epoch 8 | Train Acc: 0.8930833333333333 | Test Acc: 0.8941666666666667 | Time: 1.0743870735168457 sec
+
+Test set: Average loss: 0.3333, Accuracy: 10743/12000 (90%)
+
+Epoch 9 | Train Acc: 0.8951666666666667 | Test Acc: 0.89525 | Time: 1.0727896690368652 sec
+
+Test set: Average loss: 0.3306, Accuracy: 10751/12000 (90%)
+
+Epoch 10 | Train Acc: 0.8963958333333333 | Test Acc: 0.8959166666666667 | Time: 1.0726759433746338 sec
+
+Test set: Average loss: 0.3288, Accuracy: 10764/12000 (90%)
+
+Epoch 11 | Train Acc: 0.8970833333333333 | Test Acc: 0.897 | Time: 1.0687856674194336 sec
+
+Test set: Average loss: 0.3275, Accuracy: 10769/12000 (90%)
+
+Epoch 12 | Train Acc: 0.8976875 | Test Acc: 0.8974166666666666 | Time: 1.0748870372772217 sec
+
+Test set: Average loss: 0.3266, Accuracy: 10768/12000 (90%)
+
+Epoch 13 | Train Acc: 0.89825 | Test Acc: 0.8973333333333333 | Time: 1.0745885372161865 sec
+
+Test set: Average loss: 0.3260, Accuracy: 10774/12000 (90%)
+
+Epoch 14 | Train Acc: 0.8983541666666667 | Test Acc: 0.8978333333333334 | Time: 1.069610834121704 sec
+
+Test set: Average loss: 0.3256, Accuracy: 10777/12000 (90%)
+
+Epoch 15 | Train Acc: 0.8987083333333333 | Test Acc: 0.8980833333333333 | Time: 1.0727355480194092 sec
+
+Test set: Average loss: 0.3253, Accuracy: 10775/12000 (90%)
+
+Epoch 16 | Train Acc: 0.8988333333333334 | Test Acc: 0.8979166666666667 | Time: 1.1868858337402344 sec
+
+Test set: Average loss: 0.3251, Accuracy: 10772/12000 (90%)
+
+Epoch 17 | Train Acc: 0.899 | Test Acc: 0.8976666666666666 | Time: 1.068751573562622 sec
+
+Test set: Average loss: 0.3250, Accuracy: 10773/12000 (90%)
+
+Epoch 18 | Train Acc: 0.8991875 | Test Acc: 0.89775 | Time: 1.0702576637268066 sec
+
+Test set: Average loss: 0.3249, Accuracy: 10773/12000 (90%)
+
+Epoch 19 | Train Acc: 0.8991875 | Test Acc: 0.89775 | Time: 1.0713615417480469 sec
+
+Test set: Average loss: 0.3248, Accuracy: 10772/12000 (90%)
+
+Epoch 20 | Train Acc: 0.8992291666666666 | Test Acc: 0.8976666666666666 | Time: 1.074233055114746 sec
+Early stopping at epoch 20
+
+Testing with M=15
+Step 0000 | Epoch 01 | Objective: -2.4571 | Coherence: 16.5710 | Separation: 48.4758 | Information gain: 7.3333 | Grad Norm: 4.2219 | Time: 0.0s
+Step 0010 | Epoch 01 | Objective: -2.1551 | Coherence: 18.0386 | Separation: 47.0892 | Information gain: 7.5000 | Grad Norm: 3.9208 | Time: 0.3s
+Step 0020 | Epoch 01 | Objective: -1.8862 | Coherence: 19.5116 | Separation: 45.8738 | Information gain: 7.5000 | Grad Norm: 3.8849 | Time: 0.5s
+Step 0030 | Epoch 01 | Objective: -1.6217 | Coherence: 20.9092 | Separation: 44.6265 | Information gain: 7.5000 | Grad Norm: 3.8552 | Time: 0.8s
+Step 0040 | Epoch 01 | Objective: -1.3559 | Coherence: 22.2648 | Separation: 43.3237 | Information gain: 7.5000 | Grad Norm: 3.8276 | Time: 1.0s
+Step 0050 | Epoch 01 | Objective: -1.1068 | Coherence: 23.6205 | Separation: 42.1889 | Information gain: 7.5000 | Grad Norm: 3.7194 | Time: 1.2s
+Step 0060 | Epoch 01 | Objective: -0.8777 | Coherence: 24.9580 | Separation: 41.0688 | Information gain: 7.3333 | Grad Norm: 3.6437 | Time: 1.5s
+Step 0070 | Epoch 01 | Objective: -0.6433 | Coherence: 26.2096 | Separation: 39.9755 | Information gain: 7.3333 | Grad Norm: 3.5231 | Time: 1.7s
+Step 0080 | Epoch 01 | Objective: -0.4210 | Coherence: 27.3645 | Separation: 38.9075 | Information gain: 7.3333 | Grad Norm: 3.4104 | Time: 1.9s
+Step 0090 | Epoch 01 | Objective: -0.2081 | Coherence: 28.3569 | Separation: 37.7717 | Information gain: 7.3333 | Grad Norm: 3.2600 | Time: 2.2s
+Step 0100 | Epoch 01 | Objective: -0.0081 | Coherence: 29.2505 | Separation: 36.4986 | Information gain: 7.1667 | Grad Norm: 3.4238 | Time: 2.4s
+Step 0110 | Epoch 01 | Objective: 0.1991 | Coherence: 30.1593 | Separation: 35.3354 | Information gain: 7.1667 | Grad Norm: 3.3234 | Time: 2.6s
+Step 0120 | Epoch 01 | Objective: 0.3756 | Coherence: 31.0328 | Separation: 34.4438 | Information gain: 7.1667 | Grad Norm: 3.0112 | Time: 2.9s
+Step 0130 | Epoch 01 | Objective: 0.5326 | Coherence: 31.7625 | Separation: 33.6030 | Information gain: 7.1667 | Grad Norm: 2.8656 | Time: 3.1s
+Step 0140 | Epoch 01 | Objective: 0.6789 | Coherence: 32.4713 | Separation: 32.8486 | Information gain: 7.1667 | Grad Norm: 2.7295 | Time: 3.3s
+Step 0150 | Epoch 01 | Objective: 0.8068 | Coherence: 33.1851 | Separation: 32.1174 | Information gain: 7.0000 | Grad Norm: 2.8101 | Time: 3.6s
+Step 0158 | Epoch 01 | Objective: 0.9099 | Coherence: 33.7561 | Separation: 31.6573 | Information gain: 7.0000 | Grad Norm: 2.6696 | Time: 3.8s
+Similarity matrix:
+          0         1         2  ...        12        13        14
+0  0.559831  0.447274  0.420577  ...  0.422760  0.461743  0.496929
+1  0.500513  0.598522  0.422523  ...  0.498540  0.423521  0.506748
+2  0.459839  0.419786  0.598723  ...  0.492411  0.496927  0.400226
+3  0.542995  0.555957  0.458009  ...  0.516302  0.458542  0.479602
+4  0.517676  0.619776  0.469347  ...  0.560259  0.442982  0.456449
+
+[5 rows x 15 columns]
+  Testing with max_depth=15
+  MNIST DecisionTree Test accuracy (M=15, max_depth=15): 0.7771
+  Testing XGBoost with max_depth=None
+  MNIST XGBoost Test accuracy (M=15, max_depth=None): 0.8780
+  Testing Random Forest with max_depth=None
+  MNIST RandomForest Test accuracy (M=15, max_depth=None): 0.8554
+  Testing ElasticNet with alpha=0.01, l1_ratio=0.5
+  ElasticNet Test MSE (M=15, alpha=0.01, l1_ratio=0.5): 5.1112, accuracy=0.0945
+Testing SVM
+  SVM Test Accuracy: 0.8416
+Testing Logistic Regression
+  Logistic Regression Test Accuracy: 0.8179
+
+Baseline test with Neural Network trained on concepts
+Input shape: torch.Size([60000, 15]), target shapetorch.Size([60000])
+Training set size: 48000, test set size: 12000
+
+Test set: Average loss: 0.7518, Accuracy: 9243/12000 (77%)
+
+Epoch 1 | Train Acc: 0.6327083333333333 | Test Acc: 0.77025 | Time: 1.0370867252349854 sec
+
+Test set: Average loss: 0.5753, Accuracy: 9783/12000 (82%)
+
+Epoch 2 | Train Acc: 0.7892083333333333 | Test Acc: 0.81525 | Time: 1.0319111347198486 sec
+
+Test set: Average loss: 0.5055, Accuracy: 10051/12000 (84%)
+
+Epoch 3 | Train Acc: 0.8255416666666666 | Test Acc: 0.8375833333333333 | Time: 1.1650793552398682 sec
+
+Test set: Average loss: 0.4588, Accuracy: 10265/12000 (86%)
+
+Epoch 4 | Train Acc: 0.8479375 | Test Acc: 0.8554166666666667 | Time: 1.0311739444732666 sec
+
+Test set: Average loss: 0.4319, Accuracy: 10365/12000 (86%)
+
+Epoch 5 | Train Acc: 0.86225 | Test Acc: 0.86375 | Time: 1.0301458835601807 sec
+
+Test set: Average loss: 0.4095, Accuracy: 10451/12000 (87%)
+
+Epoch 6 | Train Acc: 0.870875 | Test Acc: 0.8709166666666667 | Time: 1.0334079265594482 sec
+
+Test set: Average loss: 0.3946, Accuracy: 10506/12000 (88%)
+
+Epoch 7 | Train Acc: 0.8770625 | Test Acc: 0.8755 | Time: 1.0311100482940674 sec
+
+Test set: Average loss: 0.3843, Accuracy: 10542/12000 (88%)
+
+Epoch 8 | Train Acc: 0.8808125 | Test Acc: 0.8785 | Time: 1.0296721458435059 sec
+
+Test set: Average loss: 0.3791, Accuracy: 10558/12000 (88%)
+
+Epoch 9 | Train Acc: 0.8836458333333334 | Test Acc: 0.8798333333333334 | Time: 1.0324406623840332 sec
+
+Test set: Average loss: 0.3758, Accuracy: 10579/12000 (88%)
+
+Epoch 10 | Train Acc: 0.8860416666666666 | Test Acc: 0.8815833333333334 | Time: 1.0337564945220947 sec
+
+Test set: Average loss: 0.3736, Accuracy: 10594/12000 (88%)
+
+Epoch 11 | Train Acc: 0.8874375 | Test Acc: 0.8828333333333334 | Time: 1.0329234600067139 sec
+
+Test set: Average loss: 0.3720, Accuracy: 10600/12000 (88%)
+
+Epoch 12 | Train Acc: 0.888625 | Test Acc: 0.8833333333333333 | Time: 1.160787582397461 sec
+
+Test set: Average loss: 0.3708, Accuracy: 10606/12000 (88%)
+
+Epoch 13 | Train Acc: 0.8891875 | Test Acc: 0.8838333333333334 | Time: 1.0348560810089111 sec
+
+Test set: Average loss: 0.3698, Accuracy: 10609/12000 (88%)
+
+Epoch 14 | Train Acc: 0.8895208333333333 | Test Acc: 0.8840833333333333 | Time: 1.0354416370391846 sec
+
+Test set: Average loss: 0.3690, Accuracy: 10610/12000 (88%)
+
+Epoch 15 | Train Acc: 0.8895416666666667 | Test Acc: 0.8841666666666667 | Time: 1.0339221954345703 sec
+
+Test set: Average loss: 0.3685, Accuracy: 10608/12000 (88%)
+
+Epoch 16 | Train Acc: 0.889625 | Test Acc: 0.884 | Time: 1.034013271331787 sec
+
+Test set: Average loss: 0.3681, Accuracy: 10611/12000 (88%)
+
+Epoch 17 | Train Acc: 0.8896875 | Test Acc: 0.88425 | Time: 1.0342371463775635 sec
+
+Test set: Average loss: 0.3679, Accuracy: 10614/12000 (88%)
+
+Epoch 18 | Train Acc: 0.8898541666666666 | Test Acc: 0.8845 | Time: 1.0350377559661865 sec
+
+Test set: Average loss: 0.3677, Accuracy: 10615/12000 (88%)
+
+Epoch 19 | Train Acc: 0.8901041666666667 | Test Acc: 0.8845833333333334 | Time: 1.0342504978179932 sec
+
+Test set: Average loss: 0.3675, Accuracy: 10621/12000 (89%)
+
+Epoch 20 | Train Acc: 0.8901875 | Test Acc: 0.8850833333333333 | Time: 1.0343232154846191 sec
+
+Testing with M=15
