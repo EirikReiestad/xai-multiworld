@@ -16,7 +16,7 @@ def read_multi_files(filename: str, n: int):
     return df
 
 
-def store_images_from_loader(loader, folder="tmp", num_images=10):
+def store_images_from_loader(loader, folder="experiments/tmp", num_images=10):
     os.makedirs(folder, exist_ok=True)
     count = 0
     for images, labels in loader:
@@ -42,7 +42,7 @@ def write_results(results: dict, path: str, custom_cls=None):
         json.dump(results, f, cls=custom_cls)
 
 
-def store_images(images, folder="tmp"):
+def store_images(images, folder="experiments/tmp"):
     os.makedirs(folder, exist_ok=True)
     for i, image in enumerate(images):
         try:
