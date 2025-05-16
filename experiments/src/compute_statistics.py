@@ -27,7 +27,7 @@ def calculate_statistics(
     concepts: list[str],
     activations: dict[str, Any],
     probes: dict[str, LogisticRegression],
-    results_path: str = "results",
+    results_path: str = "experiments/results",
     filename: str = "probe_statistics.json",
 ):
     stats = {}
@@ -102,9 +102,9 @@ def calculate_statistic(
 
 def collect_and_compute_variance(
     base_filenames,  # e.g. ['feature_importances', 'randomforest_feature_importances', ...]
-    results_dir="results",
+    results_dir="experiments/results",
     num_iterations=10,
-    output_file="results/importance_variance_stats.pkl",
+    output_file="experiments/results/importance_variance_stats.pkl",
 ):
     method_count = len(base_filenames)
     stats = []
@@ -159,9 +159,9 @@ def collect_and_compute_variance(
 
 def collect_accuracies(
     base_filenames,  # e.g. ['feature_importances', 'randomforest_feature_importances', ...]
-    results_dir="results",
+    results_dir="experiments/results",
     num_iterations=10,
-    output_file="results/accuracies.json",
+    output_file="experiments/results/accuracies.json",
 ):
     data = defaultdict(lambda: defaultdict(list))
     for idx in range(num_iterations):
@@ -181,9 +181,9 @@ def collect_accuracies(
 def collect_max_accuracy(
     base_filenames: list[str],
     other_files: list[str] = [],
-    results_dir="results",
+    results_dir="experiments/results",
     num_iterations=10,
-    output_file="results/max_accuracies.pkl",
+    output_file="experiments/results/max_accuracies.pkl",
 ):
     max_accuracies = [[] for _ in range(len(base_filenames))]
     for idx in range(num_iterations):

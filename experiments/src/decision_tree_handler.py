@@ -40,9 +40,10 @@ def get_decision_tree_completeness_score(
     ):
         res[m] = (float(importance), int(split))
 
-    os.makedirs("assets/results", exist_ok=True)
+    os.makedirs("experiments/results", exist_ok=True)
     with open(
-        f"assets/results/feature_importances{suffix}_{max_depth}_{iteration}.json", "w"
+        f"experiments/results/feature_importances{suffix}_{max_depth}_{iteration}.json",
+        "w",
     ) as f:
         json.dump(res, f, indent=4)
 

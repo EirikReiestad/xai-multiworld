@@ -52,8 +52,8 @@ def train_decision_tree(
     test_split: float,
     feature_names: List[str],
     epochs: int = 20,
-    result_path: str = "results",
-    figure_path: str = "results",
+    result_path: str = "experiments/results",
+    figure_path: str = "experiments/results",
     filename: str = "decision_tree.json",
     show: bool = False,
     verbose: bool = False,
@@ -452,8 +452,8 @@ def get_concept_scores(
     concepts: List[str],
     test_activations: Dict[str, Dict[str, Dict[str, np.ndarray]]],
     probes: Dict[str, Dict[str, Dict[str, LogisticRegression]]],
-    results_path: str = "results",
-    figure_path: str = "results",
+    results_path: str = "experiments/results",
+    figure_path: str = "experiments/results",
     show: bool = False,
 ) -> Dict[str, Dict[str, float]]:
     concept_scores = {}
@@ -511,7 +511,7 @@ def binary_concept_score(activations: np.ndarray, probe: LogisticRegression) -> 
 def plot_3d(
     X: Dict[str, Dict[str, Any]],
     filename: str = "plot3d",
-    folder_path: str = "plots",
+    folder_path: str = "experiments/plots",
     label: str = "",
     title: str = "Plot",
     show: bool = True,
@@ -573,8 +573,8 @@ def get_tcav_scores(
     test_activations: Dict[str, Dict[str, Dict[str, np.ndarray]]],
     test_output: Dict[str, Dict[str, Dict[str, np.ndarray]]],
     probes: Dict[str, Dict[str, Dict[str, LogisticRegression]]],
-    results_path: str = "results",
-    figure_path: str = "results",
+    results_path: str = "experiments/results",
+    figure_path: str = "experiments/results",
     show: bool = False,
 ) -> Dict[str, Dict[str, float]]:
     concept_tcav_scores = {}

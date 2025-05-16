@@ -1,5 +1,5 @@
 import statsmodels.api as sm
-from src.compute_statistics import (
+from experiments.src.compute_statistics import (
     collect_accuracies,
     collect_and_compute_variance,
 )
