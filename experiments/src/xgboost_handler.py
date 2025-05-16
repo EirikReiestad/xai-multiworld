@@ -52,7 +52,7 @@ def get_xgboost_completeness_score(
     os.makedirs("experiments/results", exist_ok=True)
     with open(
         f"experiments/results/xgboost_feature_importances{suffix}_{iteration}.json", "w"
-    ) as f:experiments
+    ) as f:
         json.dump(res, f, indent=4)
 
     y_pred = model_xgb.predict(concept_scores_test)
