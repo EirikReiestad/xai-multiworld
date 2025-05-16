@@ -2,7 +2,7 @@ from typing import List
 import matplotlib.colors as mcolors
 import numpy as np
 
-from src.utils import IndexedEnum
+from experiments.src.utils import IndexedEnum
 
 COLORS = {
     "Gray": np.array([169, 169, 169]),

@@ -1,7 +1,7 @@
 import torch
-from src.dataset_generator import generate_concept_data
-from src.network import Net
-from src.utils import (
+from experiments.src.dataset_generator import generate_concept_data
+from experiments.src.network import Net
+from experiments.src.utils import (
     get_concept_activations,
     get_concept_scores,
     get_probes_and_activations,
@@ -26,19 +26,19 @@ def main():
     for key in positive_observations.keys():
         store_images(
             torch.tensor(positive_observations[key][0:20]),
-            f"tmp/positive_observations/{key}",
+            f"experiments/tmp/positive_observations/{key}",
         )
         store_images(
             torch.tensor(negative_observations[key][0:20]),
-            f"tmp/negative_observations/{key}",
+            f"experiments/tmp/negative_observations/{key}",
         )
         store_images(
             torch.tensor(test_positive_observations[key][0:20]),
-            f"tmp/test_positive_observations/{key}",
+            f"experiments/tmp/test_positive_observations/{key}",
         )
         store_images(
             torch.tensor(test_negative_observations[key][0:20]),
-            f"tmp/test_negative_observations/{key}",
+            f"experiments/tmp/test_negative_observations/{key}",
         )
 
     models = {"latest": model}
