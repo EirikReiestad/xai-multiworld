@@ -147,6 +147,16 @@ class Grid:
                 assert xmin >= 0 and xmax <= width_px and xmin < xmax
                 img[ymin:ymax, xmin:xmax, :] = tile_img
 
+        from PIL import Image
+
+        if not hasattr(Grid, "_img_count"):
+            Grid._img_count = 0
+
+        Grid._img_count += 1
+
+        if Grid._img_count < 10:
+            im = Image.fromarray(img)
+            im.save(f"tmp/env_{self._img_count}.png")
         return img
 
     def in_bounds(self, pos: Position | list[Position]) -> bool | list[bool]:
