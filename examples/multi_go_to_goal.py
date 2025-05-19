@@ -5,7 +5,7 @@ from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.algorithms.dqn.mdqn import MDQN
 from rllib.core.network.network import NetworkType
 
-agents = 20
+agents = 30
 size = 30
 max_steps = 250
 
@@ -47,7 +47,7 @@ mconfig = (
     .training()
     .debugging(log_level="INFO")
     .rendering()
-    .wandb(project=f"multi-gtg-{size}", log_interval=50)
+    .wandb(project=f"multi-gtg-{size}-static", log_interval=50)
     # .wandb(project=f"multi-gtg-{agents}-{size}", log_interval=50)
 )
 
