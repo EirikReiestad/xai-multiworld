@@ -36,6 +36,8 @@ tqdm = "^4.67.1"
 torch-lucent = {git = "https://github.com/TomFrederik/lucent.git"}
 scikit-image = "^0.25.2"
 xgboost = "^3.0.1"
+statsmodels = "^0.14.4"
+plotly = "^6.1.0"
 
 [tool.pyright]
 venvPath = "."

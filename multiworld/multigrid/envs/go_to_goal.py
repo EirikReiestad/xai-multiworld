@@ -54,4 +54,7 @@ class GoToGoalEnv(MultiGridEnv):
                 continue
             if np.array_equal(obj, self.goal):
                 agent.pos = Position(-1, -1)
+        import matplotlib.pyplot as plt
+
+        plt.savefig("tmp/env.png")
         return observations, rewards, terminations, truncations, info

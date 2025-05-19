@@ -1,15 +1,17 @@
 import json
-import matplotlib.patches as mpatches
 import os
 import pickle
 from collections import defaultdict
 
-from matplotlib.lines import Line2D
+import matplotlib.patches as mpatches
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import plotly.express as px
+import plotly.graph_objects as go
 import seaborn as sns
 from sklearn.preprocessing import MinMaxScaler
+
 from experiments.src.constants import get_colormap, get_palette
 
 
@@ -356,6 +358,61 @@ def plot_variance_stats(
 
 def plot_accuracy(
     file="accuracies.json",
+    plot_model="decision_tree",
+    folder="experiments/results",
+    save_path="experiments/plots/",
+    labels=None,
+):
+    path = os.path.join(folder, file)
+    with open(path) as f:
+        data = json.load(f)
+
+    records = {"lambda": [], "model": [], "value": []}
+    for lambdas, models in data.items():
+        for model, vals in models.items():
+            for v in vals:
+                records["lambda"].append(lambdas)
+                records["model"].append(model)
+                records["value"].append(v)
+    df = pd.DataFrame(records)
+    df = df[df["model"] == plot_model]
+    df[["lambda1", "lambda2", "lambda3"]] = (
+        df["lambda"].str.split(";", expand=True).astype(float)
+    )
+    mean_df = (
+        df.groupby(["lambda1", "lambda2", "lambda3"])["value"].mean().reset_index()
+    )
+
+    os.makedirs(save_path, exist_ok=True)
+    slices = [
+        ("lambda1", ["lambda2", "lambda3"]),
+        ("lambda2", ["lambda1", "lambda3"]),
+        ("lambda3", ["lambda1", "lambda2"]),
+    ]
+    for fixed, (var1, var2) in slices:
+        subdf = mean_df[mean_df[fixed] == 0]
+        if not subdf.empty:
+            pivot = subdf.pivot(index=var2, columns=var1, values="value")
+            plt.figure(figsize=(6, 5))
+            sns.heatmap(
+                pivot,
+                annot=True,
+                fmt=".3f",
+                cmap=get_colormap(),
+                cbar_kws={"label": "Mean Accuracy"},
+            )
+            plt.title(f"Decision Tree: Mean Accuracy (when {fixed}=0)")
+            plt.xlabel(var1)
+            plt.ylabel(var2)
+            out_path = os.path.join(save_path, f"heatmap_{fixed}_{plot_model}.png")
+            plt.tight_layout()
+            plt.savefig(out_path)
+            plt.close()
+            print(f"Saved {out_path}")
+
+
+def plot_accuracy_all(
+    file="accuracies.json",
     folder="experiments/results",
     save_path="experiments/plots/accuracies.png",
     labels=None,
@@ -364,90 +421,118 @@ def plot_accuracy(
     with open(path) as f:
         data = json.load(f)
 
-    records = []
-    for experiment, models in data.items():
-        for model, accs in models.items():
-            for acc in accs:
-                records.append(
-                    {
-                        "Experiment": experiment,
-                        "Model": model.replace("_", " "),
-                        "Accuracy": acc,
-                    }
-                )
+    records = {
+        "lambda": [],
+        "model": [],
+        "value": [],
+    }
+
+    for lambdas, models in data.items():
+        for model, vals in models.items():
+            for v in vals:
+                records["lambda"].append(lambdas)
+                records["model"].append(model)
+                records["value"].append(v)
 
     df = pd.DataFrame(records)
-    df = df[~df["Model"].str.contains("elasticnet", case=False)]
+    df = df[~df["model"].str.contains("elasticnet", case=False)]
 
-    if len(df["Experiment"].unique()) == 1:
-        # Palette/legend by model, no hue
-        labels = labels or df["Model"].unique().tolist()
-        palette = get_palette(labels)
-        colors = [palette[label] for label in labels]
+    color_labels = df["lambda"].unique().tolist()
+    labels = labels or color_labels
+    palette = get_palette(list(color_labels))
+    colors = [palette[label] for label in color_labels]
 
-        plt.figure(figsize=(12, 6))
-        sns.boxplot(
-            data=df,
-            x="Model",
-            y="Accuracy",
-            palette=palette,
-            showmeans=True,
-            meanprops={
-                "marker": "o",
-                "markerfacecolor": "white",
-                "markeredgecolor": "black",
-            },
-        )
-        plt.title("CAV Experiment Accuracy")
-        plt.xticks(rotation=20)
-        legend_handles = [
-            mpatches.Patch(color=colors[i], label=f"{i+1}: {labels[i]}")
-            for i in range(len(labels))
-        ]
-        plt.legend(
-            handles=legend_handles,
-            loc="center left",
-            bbox_to_anchor=(1, 0.5),
-            title="Model",
-        )
-    else:
-        # Palette/legend by experiment, hue is model, legend is models
-        color_labels = df["Experiment"].unique().tolist()
-        labels = labels or color_labels
-        palette = get_palette(list(color_labels))
-        colors = [palette[label] for label in color_labels]
+    plt.figure(figsize=(14, 7))
+    sns.pointplot(
+        data=df,
+        x="model",
+        y="value",
+        hue="lambda",
+        dodge=0.3,
+        linestyle="none",
+        errorbar="sd",
+        capsize=0.1,
+        markers="o",
+    )
+    """
+    sns.boxplot(
+        data=df,
+        x="model",
+        y="value",
+        hue="lambda",
+        palette=palette,
+        showmeans=True,
+        meanprops={
+            "marker": "o",
+            "markerfacecolor": "white",
+            "markeredgecolor": "black",
+        },
+    )
+    """
+    plt.title("CAV Experiment Accuracy")
+    plt.xticks(rotation=20)
+    legend_handles = [
+        mpatches.Patch(color=colors[i], label=f"{i+1}: {labels[i]}")
+        for i in range(len(labels))
+    ]
+    plt.legend(
+        handles=legend_handles,
+        loc="center left",
+        bbox_to_anchor=(1, 0.5),
+        title="Experiment",
+    )
 
-        plt.figure(figsize=(14, 7))
-        sns.boxplot(
-            data=df,
-            x="Model",
-            y="Accuracy",
-            hue="Experiment",
-            palette=palette,
-            showmeans=True,
-            meanprops={
-                "marker": "o",
-                "markerfacecolor": "white",
-                "markeredgecolor": "black",
-            },
-        )
-        plt.title("CAV Experiment Accuracy")
-        plt.xticks(rotation=20)
-        legend_handles = [
-            mpatches.Patch(color=colors[i], label=f"{i+1}: {labels[i]}")
-            for i in range(len(labels))
-        ]
-        plt.legend(
-            handles=legend_handles,
-            loc="center left",
-            bbox_to_anchor=(1, 0.5),
-            title="Experiment",
-        )
-
-    plt.tight_layout(rect=[0, 0, 1, 1])
+    # plt.tight_layout(rect=[0, 0, 1, 1])
     plt.savefig(save_path)
     print(f"Plot saved to {save_path}")
-    plt.show()
+    # plt.show()
+
+
+def plot_accuracy_ternary(
+    file="accuracies.json",
+    plot_model="decision_tree",
+    folder="experiments/results",
+    save_path="experiments/plots",
+    labels=None,
+):
+    path = os.path.join(folder, file)
+    with open(path) as f:
+        data = json.load(f)
+
+    records = {"lambda": [], "model": [], "value": []}
+    for lambdas, models in data.items():
+        for model, vals in models.items():
+            for v in vals:
+                records["lambda"].append(lambdas)
+                records["model"].append(model)
+                records["value"].append(v)
+    df = pd.DataFrame(records)
+    df = df[df["model"] == plot_model]
+    df[["lambda1", "lambda2", "lambda3"]] = (
+        df["lambda"].str.split(";", expand=True).astype(float)
+    )
+    stats_df = (
+        df.groupby(["lambda1", "lambda2", "lambda3"])
+        .agg(mean_value=("value", "mean"), variance=("value", "var"))
+        .reset_index()
+    )
+    # plotly requires variance to be positive and not NaN for size
+    stats_df["variance"] = stats_df["variance"].fillna(0)
+    fig = px.scatter_ternary(
+        stats_df,
+        a="lambda1",
+        b="lambda2",
+        c="lambda3",
+        color="mean_value",
+        size="variance",
+        size_max=20,
+        color_continuous_scale="Viridis",
+        title=f"{plot_model} Mean Accuracy (Variance as Circle Size)",
+    )
+    fig.update_traces(marker=dict(line=dict(width=1, color="DarkSlateGrey")))
+    save_path = os.path.join(save_path, f"accuracies_ternary_{plot_model}.html")
+    fig.write_html(save_path)
+    print(f"Plot saved to {save_path}")
 
 
 if __name__ == "__main__":
@@ -468,4 +553,14 @@ if __name__ == "__main__":
     )
     plot_variance_stats()
     """
-    plot_accuracy(file="accuracies.json", labels=["λ=0.1", "λ=0.5", "λ=1.0"])
+    for model in [
+        "decision_tree",
+        "xgboost",
+        "random_forest",
+        "svm",
+        "logistic_regression",
+        "nn",
+    ]:
+        plot_accuracy(file="accuracies.json", plot_model=model)
+        plot_accuracy_ternary(file="accuracies.json", plot_model=model)
+    plot_accuracy_all(file="accuracies.json")

@@ -158,23 +158,29 @@ def collect_and_compute_variance(
 
 
 def collect_accuracies(
-    base_filenames,  # e.g. ['feature_importances', 'randomforest_feature_importances', ...]
-    results_dir="experiments/results",
-    num_iterations=10,
+    results_dir="experiments/results/accuracies",
     output_file="experiments/results/accuracies.json",
 ):
-    data = defaultdict(lambda: defaultdict(list))
-    for idx in range(num_iterations):
-        files = [
-            os.path.join(results_dir, f"{base}_{idx}.json") for base in base_filenames
-        ]
-        for base, file in zip(base_filenames, files):
-            with open(file, "r") as f:
-                d = json.load(f)
-                for key, value in d.items():
-                    data[base][key].append(value)
+    dir_list = os.listdir(results_dir)
+
+    results = defaultdict(lambda: defaultdict(list))
+
+    for file in dir_list:
+        if not file.endswith(".json"):
+            continue
+        lambda_1, lambda_2, lambda_3, iteration = file.removesuffix(".json").split("_")
+        lambda_1 = round(float(lambda_1), 2)
+        lambda_2 = round(float(lambda_2), 2)
+        lambda_3 = round(float(lambda_3), 2)
+        main_key = f"{lambda_1};{lambda_2};{lambda_3}"
+        file_path = os.path.join(results_dir, file)
+        with open(file_path, "r") as f:
+            data = json.load(f)
+            for key, value in data.items():
+                results[main_key][key].append(value)
+
     with open(output_file, "w") as f:
-        json.dump(data, f)
+        json.dump(results, f)
     print(f"Saved accuracies to {output_file}")
 
 

@@ -10,6 +10,8 @@ import seaborn as sns
 from matplotlib import cm
 from numpy.typing import NDArray
 
+from experiments.src.constants import get_colormap
+
 mpl.rcParams["axes3d.mouserotationstyle"] = (
     "azel"  # 'azel', 'trackball', 'sphere', or 'arcball'
 )
@@ -81,7 +83,6 @@ def plot_heatmap(
     title: str = "",
     yticks: List | bool = False,
     xticks: List | bool = False,
-    cmap="coolwarm",
     figsize=(10, 8),
     cbar=True,
     show: bool = False,
@@ -103,7 +104,7 @@ def plot_heatmap(
         annot=True,
         xticklabels=xticks,
         yticklabels=yticks,
-        cmap=cmap,
+        cmap=get_colormap(),
         cbar=cbar,
         alpha=alpha,
         norm=norm,
@@ -153,13 +154,12 @@ def plot_3d(
     min = matrix.min() if min is None else min
     max = matrix.max() if max is None else max
 
-    cmap = cm.get_cmap("plasma")
     ax.plot_surface(
         _xx,
         _yy,
         matrix,
         edgecolor="k",
-        cmap=cmap,
+        cmap=get_colormap(),
         alpha=1.0,
         shade=True,
     )
