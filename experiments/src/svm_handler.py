@@ -1,5 +1,6 @@
 import json
 import os
+from typing import Literal
 
 import numpy as np
 from sklearn.metrics import accuracy_score
@@ -13,10 +14,11 @@ def get_svm_completeness_score(
     y_true,
     M,
     iteration,
+    kernel: Literal["linear", "rbf"] = "linear",
     suffix="",
 ):
     print("Testing SVM")
-    model_svm = SVC(kernel="linear", probability=True, max_iter=10000)
+    model_svm = SVC(kernel=kernel, probability=True, max_iter=10000)
     model_svm.fit(concept_scores_train, all_train_targets)
 
     # SVM feature importances (absolute value of coefficients)
@@ -27,7 +29,8 @@ def get_svm_completeness_score(
 
     os.makedirs("experiments/results", exist_ok=True)
     with open(
-        f"experiments/results/svm_feature_importances{suffix}_{iteration}.json", "w"
+        f"experiments/results/svm_{kernel}_feature_importances{suffix}_{iteration}.json",
+        "w",
     ) as f:
         json.dump(res, f, indent=4)
 

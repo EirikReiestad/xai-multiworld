@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "decision_tree": 0.7937,
     "xgboost": 0.8961,
     "random_forest": 0.8814,
@@ -6,4 +7,13 @@
     "svm": 0.8536,
     "logistic_regesssion": 0.8304,
     "nn": 0.8965
+=======
+    "decision_tree": 0.7962,
+    "xgboost": 0.8933,
+    "random_forest": 0.8738,
+    "elasticnet": 0.11,
+    "svm": 0.8549,
+    "logistic_regesssion": 0.8294,
+    "nn": 0.891
+>>>>>>> 312a5c5b0b742f9a9960331bcf7a5cc4e6e32747
 }

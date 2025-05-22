@@ -14,7 +14,7 @@
     },
     "collect_rollouts": {
         "observations": 2000,
-        "sample_rate": 0.05
+        "sample_rate": 0.01
     },
     "generate_concepts": {
         "observations": 1000

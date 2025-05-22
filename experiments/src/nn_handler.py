@@ -39,9 +39,6 @@ def get_neural_network_feature_importance(
 
     train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
 
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
-    test_loader = DataLoader(test_dataset, batch_size=test_batch_size, shuffle=False)
-
     lr = 0.1
     epochs = 20
 

@@ -45,6 +45,7 @@ class ModelDownloader(WandB):
 
         for model_name in model_names:
             split = model_name.split(":")
+            print(split)
             model_artifacts.append(split[0])
             version_numbers.append(split[1])
 

@@ -44,17 +44,15 @@ def main():
     calculate_statistics(df)
     """
 
-    """
     base_filenames = [
         "feature_importances_15",
         "randomforest_feature_importances",
         "xgboost_feature_importances",
         "elasticnet_feature_importances",
+        "logistic_regression_feature_importances",
+        "svm_feature_importances",
     ]
     collect_and_compute_variance(base_filenames)
-    collect_max_accuracy(base_filenames)
-    """
-    collect_accuracies()
 
 
 if __name__ == "__main__":
