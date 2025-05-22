@@ -5,14 +5,15 @@ from collections import defaultdict
 
 import cv2
 import numpy as np
-from numpy.random import shuffle
-from experiments.src.compute_statistics import calculate_shapley_values
 import torch
+from numpy.random import shuffle
+from torch.optim.lr_scheduler import StepLR
+from torch.utils.data import DataLoader, TensorDataset, random_split
+
+from experiments.src.compute_statistics import calculate_shapley_values
 from experiments.src.model_handler import test_model, train_model
 from experiments.src.network import FFNet
 from experiments.src.utils import get_combinations
-from torch.optim.lr_scheduler import StepLR
-from torch.utils.data import DataLoader, TensorDataset, random_split
 
 
 def get_neural_network_feature_importance(
@@ -42,67 +43,82 @@ def get_neural_network_feature_importance(
     lr = 0.1
     epochs = 20
 
-    best_test_acc = 0
+    model = FFNet(M, output_size)
+
+    train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
+    sub_train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
+    sub_test_loader = DataLoader(
+        test_dataset, batch_size=test_batch_size, shuffle=False
+    )
+
+    optimizer = torch.optim.Adadelta(model.parameters(), lr=lr)
+    scheduler = StepLR(optimizer, step_size=1, gamma=gamma)
+
+    patience = 5
+    patience_count = 0
+
+    best_accuracy = 0
+    train_acc = 0
+    test_acc = 0
+
+    for epoch in range(epochs):
+        train_acc = train_model(
+            log_interval,
+            dry_run,
+            model,
+            None,
+            sub_train_loader,
+            optimizer,
+            epoch,
+        )
+        test_acc = test_model(model, None, sub_test_loader)
+
+        scheduler.step()
+        patience_count += 1
+        if train_acc > best_accuracy:
+            best_accuracy = train_acc
+            patience_count = 0
+
+        if patience_count == patience:
+            break
+        break
 
     results = defaultdict()
+    best_test_acc = 0
     combs = get_combinations(list(range(M)))
     shuffle(combs)
-    max_combs = 3
+    max_combs = 1000
     for i, comb in enumerate(combs[:max_combs]):
-        print(f"\n\n===== Computing accuracy for {comb} ({i}/{max_combs}) =====")
-        sub_X = torch.Tensor([data.detach().numpy()[comb] for data in X])
-        dataset = TensorDataset(sub_X, y)
-        train_dataset, test_dataset = random_split(dataset, [train_size, test_size])
-        sub_train_loader = DataLoader(
-            train_dataset, batch_size=batch_size, shuffle=False
+        sub_X = create_sub_X(train_dataset, test_dataset, comb)
+        test_targets = torch.stack(
+            [test_dataset.dataset[i][1] for i in test_dataset.indices]
         )
-        sub_test_loader = DataLoader(
-            test_dataset, batch_size=test_batch_size, shuffle=False
+        sub_dataset = torch.utils.data.TensorDataset(sub_X, test_targets)
+        sub_test_loader = torch.utils.data.DataLoader(
+            sub_dataset, batch_size=test_batch_size, shuffle=False
         )
-
-        model = FFNet(len(comb), output_size)
-        optimizer = torch.optim.Adadelta(model.parameters(), lr=lr)
-        scheduler = StepLR(optimizer, step_size=1, gamma=gamma)
-
-        patience = 2
-        patience_count = 0
-
-        best_accuracy = 0
-        train_acc = 0
-        test_acc = 0
-
-        for epoch in range(epochs):
-            train_acc = train_model(
-                log_interval,
-                dry_run,
-                model,
-                None,
-                sub_train_loader,
-                optimizer,
-                epoch,
-            )
-            test_acc = test_model(model, None, sub_test_loader)
-
-            scheduler.step()
-            patience_count += 1
-            if train_acc > best_accuracy:
-                best_accuracy = train_acc
-                patience_count = 0
-
-            if patience_count == patience:
-                break
-
+        test_acc, test_loss = test_model(model, None, sub_test_loader)
+        print(
+            f"\n\n===== Computing accuracy for {comb} ({i}/{max_combs}) accuracy: {test_acc} ====="
+        )
         best_test_acc = max(best_test_acc, test_acc)
-
-        results[tuple(sorted(comb))] = test_acc
+        results[tuple(sorted(comb))] = (test_acc, test_loss)
 
     path = os.path.join(result_path, filename)
     with open(path, "w") as f:
-        json.dump(results, f, indent=4)
-    shapley_values = calculate_shapley_values(path, list(range(M)))
+        json_results = {str(key): value for key, value in results.items()}
+        json.dump(json_results, f, indent=4)
+    shapley_values = calculate_shapley_values(results, list(range(M)))
+    shapley_values_results = {}
+    for key, value in shapley_values.items():
+        shapley_values_results[key] = [value, 0]
+
     path = os.path.join(result_path, "shapley_" + filename)
     with open(path, "w") as f:
         json.dump(shapley_values, f, indent=4)
+    path = os.path.join(result_path, "nn_feature_importances.json")
+    with open(path, "w") as f:
+        json.dump(shapley_values_results, f, indent=4)
 
     return best_test_acc, shapley_values
 
@@ -233,3 +249,15 @@ def get_activations(model, data, layer_name):
         hook.remove()
     return output
     return activations[0]
+
+
+def create_sub_X(train_dataset, test_dataset, comb):
+    # Extract tensors from Subset datasets
+    test_X = torch.stack([test_dataset.dataset[i][0] for i in test_dataset.indices])
+    train_X = torch.stack([train_dataset.dataset[i][0] for i in train_dataset.indices])
+    sub_X = test_X.clone()
+    unknown = list(set(range(train_X.shape[1])) - set(comb))
+    rand_idxs = torch.randint(0, len(train_X), (test_X.shape[0],))
+    rand_samples = train_X[rand_idxs]
+    sub_X[:, unknown] = rand_samples[:, unknown]
+    return sub_X
