@@ -95,4 +95,4 @@ def test_model(model, device, test_loader):
             100.0 * accuracy,
         )
     )
-    return accuracy
+    return accuracy, test_loss

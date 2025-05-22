@@ -242,9 +242,7 @@ def pearson_correlation(A, B):
     return correlation
 
 
-def calculate_shapley_values(path: str, concepts: list[str]):
-    results = read_results(path)
-
+def calculate_shapley_values(results, concepts: list[str]):
     table_accuracy = sorted(
         [(comb, loss, accuracy) for comb, (loss, accuracy) in results.items()],
         key=lambda x: x[2],
