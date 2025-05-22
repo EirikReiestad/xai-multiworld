@@ -44,6 +44,7 @@ def main():
 
     # --- Data Preparation ---
     train_loader, test_loader = prepare_data(dataset_name, batch_size, test_batch_size)
+    output_size = 10
 
     # --- Model Loading/Training ---
     model = Net()
@@ -125,6 +126,19 @@ def main():
                 average_positive_observations, all_test_X
             )
 
+            accuracy, res = get_neural_network_feature_importance(
+                M,
+                concept_scores_train,
+                all_train_targets,
+                output_size,
+                log_interval,
+                dry_run,
+                gamma,
+                batch_size,
+                test_batch_size,
+                epochs,
+            )
+
             # Decision tree experiments
             decision_tree_accuracy = 0
             for max_depth in max_depth_values:
@@ -204,18 +218,6 @@ def main():
                     M,
                     iteration,
                 )
-            )
-
-            accuracy, res = get_neural_network_feature_importance(
-                M,
-                concept_scores_train,
-                all_train_targets,
-                log_interval,
-                dry_run,
-                gamma,
-                batch_size,
-                test_batch_size,
-                epochs,
             )
 
             # Baseline neural net experiment
