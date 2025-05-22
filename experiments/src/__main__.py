@@ -69,7 +69,7 @@ def main():
     average_instance_of_each_class = 1
     total_number_of_instances = 10
     average_class_ratio = average_instance_of_each_class / total_number_of_instances
-    layer_name = "fc2"
+    layer_name = "fc1"
     iteration = 0
 
     # --- Flatten dataset for processing ---

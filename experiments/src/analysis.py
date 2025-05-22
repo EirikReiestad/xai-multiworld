@@ -54,13 +54,7 @@ def main():
     collect_and_compute_variance(base_filenames)
     collect_max_accuracy(base_filenames)
     """
-
-    base_filenames = [
-        "cav_experiment_accuracy_0.1",
-        "cav_experiment_accuracy_0.5",
-        "cav_experiment_accuracy_1",
-    ]
-    collect_accuracies(base_filenames)
+    collect_accuracies()
 
 
 if __name__ == "__main__":
