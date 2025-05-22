@@ -605,14 +605,3 @@ if __name__ == "__main__":
         compare_labels=compare_labels,
     )
     plot_variance_stats()
-    for model in [
-        "decision_tree",
-        "xgboost",
-        "random_forest",
-        "svm",
-        "logistic_regression",
-        "nn",
-    ]:
-        plot_accuracy(file="accuracies.json", plot_model=model)
-        plot_accuracy_ternary(file="accuracies.json", plot_model=model)
-    plot_accuracy_all(file="accuracies.json", avg=True)

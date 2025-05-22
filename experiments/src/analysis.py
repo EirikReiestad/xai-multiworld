@@ -53,7 +53,6 @@ def main():
         "svm_feature_importances",
     ]
     collect_and_compute_variance(base_filenames)
-    collect_accuracies()
 
 
 if __name__ == "__main__":
