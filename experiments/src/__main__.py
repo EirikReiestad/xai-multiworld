@@ -18,7 +18,10 @@ from experiments.src.logistic_regression import (
 )
 from experiments.src.model_handler import train_or_load_model
 from experiments.src.network import Net
-from experiments.src.nn_handler import get_neural_network_completeness_score
+from experiments.src.nn_handler import (
+    get_neural_network_completeness_score,
+    get_neural_network_feature_importance,
+)
 from experiments.src.random_forest_handler import get_random_forest_completeness_score
 from experiments.src.svm_handler import get_svm_completeness_score
 from experiments.src.xgboost_handler import get_xgboost_completeness_score
@@ -174,7 +177,16 @@ def main():
                 iteration,
             )
 
-            svm_accuracy, res = get_svm_completeness_score(
+            svm_linear_accuracy, res = get_svm_completeness_score(
+                concept_scores_train,
+                all_train_targets,
+                concept_scores_test,
+                all_test_targets,
+                M,
+                iteration,
+            )
+
+            svm_rbf_accuracy, res = get_svm_completeness_score(
                 concept_scores_train,
                 all_train_targets,
                 concept_scores_test,
@@ -233,7 +245,8 @@ def main():
                     "xgboost": xgboost_accuracy,
                     "random_forest": random_forest_accuracy,
                     "elasticnet": elasticnet_accuracy,
-                    "svm": svm_accuracy,
+                    "svm_linear": svm_linear_accuracy,
+                    "svm_rbf": svm_rbf_accuracy,
                     "logistic_regesssion": logistic_regression_accuracy,
                     "nn": nn_accuracy,
                 }
