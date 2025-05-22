@@ -497,5 +497,5 @@ def highlight_nan_values(s, props: str):
 
 
 if __name__ == "__main__":
-    path = os.path.join("archive", "gtgv4", "results")
+    path = os.path.join("archive", "gtgv5", "results")
     main(path)

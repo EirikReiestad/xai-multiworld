@@ -298,9 +298,12 @@ def plot_variance_stats(
             continue
         label_converter = {
             "feature_importances": "decision tree",
+            "feature_importances_15": "decision tree",
             "randomforest_feature_importances": "randomforest",
             "xgboost_feature_importances": "xgboost",
             "elasticnet_feature_importances": "elasticnet",
+            "logistic_regression_feature_importances": "logistic regression",
+            "svm_feature_importances": "svm",
         }
         mean_variance = [v["mean_variance"] for v in values]
         mean = np.mean([v["mean_variance"] for v in values])
@@ -367,6 +370,16 @@ def plot_accuracy(
     with open(path) as f:
         data = json.load(f)
 
+    plot_model_to_title = {
+        "decision_tree": "Decision Tree",
+        "random_forest": "Random Forest",
+        "xgboost": "XGBoost",
+        "elasticnet": "Elasticnet",
+        "logistic_regression": "Logistic Regression",
+        "svm": "SVM",
+        "nn": "NN",
+    }
+
     records = {"lambda": [], "model": [], "value": []}
     for lambdas, models in data.items():
         for model, vals in models.items():
@@ -401,7 +414,9 @@ def plot_accuracy(
                 cmap=get_colormap(),
                 cbar_kws={"label": "Mean Accuracy"},
             )
-            plt.title(f"Decision Tree: Mean Accuracy (when {fixed}=0)")
+            plt.title(
+                f"{plot_model_to_title[plot_model]}: Mean Accuracy (when {fixed}=0)"
+            )
             plt.xlabel(var1)
             plt.ylabel(var2)
             out_path = os.path.join(save_path, f"heatmap_{fixed}_{plot_model}.png")
@@ -416,6 +431,7 @@ def plot_accuracy_all(
     folder="experiments/results",
     save_path="experiments/plots/accuracies.png",
     labels=None,
+    avg: bool = False,
 ):
     path = os.path.join(folder, file)
     with open(path) as f:
@@ -437,23 +453,45 @@ def plot_accuracy_all(
     df = pd.DataFrame(records)
     df = df[~df["model"].str.contains("elasticnet", case=False)]
 
-    color_labels = df["lambda"].unique().tolist()
-    labels = labels or color_labels
-    palette = get_palette(list(color_labels))
-    colors = [palette[label] for label in color_labels]
+    if avg:
+        df = df.drop(columns=["lambda"])
+        color_labels = df["model"].unique().tolist()
+        labels = labels or color_labels
+        palette = get_palette(list(color_labels))
+        colors = [palette[label] for label in color_labels]
 
-    plt.figure(figsize=(14, 7))
-    sns.pointplot(
-        data=df,
-        x="model",
-        y="value",
-        hue="lambda",
-        dodge=0.3,
-        linestyle="none",
-        errorbar="sd",
-        capsize=0.1,
-        markers="o",
-    )
+        plt.figure(figsize=(14, 7))
+        sns.boxplot(
+            data=df,
+            x="model",
+            y="value",
+            hue="model",
+            palette=palette,
+            showmeans=True,
+            meanprops={
+                "marker": "o",
+                "markerfacecolor": "white",
+                "markeredgecolor": "black",
+            },
+        )
+    else:
+        color_labels = df["lambda"].unique().tolist()
+        labels = labels or color_labels
+        palette = get_palette(list(color_labels))
+        colors = [palette[label] for label in color_labels]
+
+        plt.figure(figsize=(14, 7))
+        sns.pointplot(
+            data=df,
+            x="model",
+            y="value",
+            hue="lambda",
+            dodge=0.3,
+            linestyle="none",
+            errorbar="sd",
+            capsize=0.1,
+            markers="o",
+        )
     """
     sns.boxplot(
         data=df,
@@ -481,8 +519,15 @@ def plot_accuracy_all(
         bbox_to_anchor=(1, 0.5),
         title="Experiment",
     )
+    if avg:
+        plt.legend(
+            handles=legend_handles,
+            loc="center left",
+            bbox_to_anchor=(1, 0.5),
+            title="Model",
+        )
 
-    # plt.tight_layout(rect=[0, 0, 1, 1])
+    plt.tight_layout(rect=[0, 0, 1, 1])
     plt.savefig(save_path)
     print(f"Plot saved to {save_path}")
     # plt.show()
@@ -537,14 +582,22 @@ def plot_accuracy_ternary(
 
 if __name__ == "__main__":
     # Example usage for the comparison plot:
-    """
     compare_json_files = [
         "experiments/results/feature_importances_15_0.json",
         "experiments/results/randomforest_feature_importances_0.json",
         "experiments/results/xgboost_feature_importances_0.json",
         "experiments/results/elasticnet_feature_importances_0.json",
+        "experiments/results/logistic_regression_feature_importances_0.json",
+        "experiments/results/svm_feature_importances_0.json",
     ]
-    compare_labels = ["decisiontree", "randomforest", "xboost", "elasticnet"]
+    compare_labels = [
+        "decision tree",
+        "random forest",
+        "xgboost",
+        "elasticnet",
+        "logistic regression",
+        "svm",
+    ]
     create_visualizations(
         results_file="experiments/results/cav_experiment_results_mnist.json",
         plots_dir="experiments/plots",
@@ -552,7 +605,6 @@ if __name__ == "__main__":
         compare_labels=compare_labels,
     )
     plot_variance_stats()
-    """
     for model in [
         "decision_tree",
         "xgboost",
@@ -563,4 +615,4 @@ if __name__ == "__main__":
     ]:
         plot_accuracy(file="accuracies.json", plot_model=model)
         plot_accuracy_ternary(file="accuracies.json", plot_model=model)
-    plot_accuracy_all(file="accuracies.json")
+    plot_accuracy_all(file="accuracies.json", avg=True)

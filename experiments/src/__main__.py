@@ -58,7 +58,7 @@ def main():
     )
 
     # --- Experiment Parameters ---
-    M_values = [15] * 10
+    M_values = [15] * 5
     max_depth_values = [15]
     lambda_1 = 0.1
     lambda_2 = 0.1
@@ -83,6 +83,7 @@ def main():
     lambdas_2 = np.linspace(0, 1, 4)
     lambdas_3 = np.linspace(0, 1, 4)
     lambda_combinations = list(itertools.product(lambdas_1, lambdas_2, lambdas_3))
+    lambda_combinations = iter([[0.1, 0.1, 0.1]])
 
     # --- Main Experiment Loop ---
     for M in M_values:
@@ -193,7 +194,6 @@ def main():
                 )
             )
 
-            """
             accuracy, res = get_neural_network_feature_importance(
                 M,
                 concept_scores_train,
@@ -205,7 +205,6 @@ def main():
                 test_batch_size,
                 epochs,
             )
-            """
 
             # Baseline neural net experiment
             nn_accuracy, res = get_neural_network_completeness_score(

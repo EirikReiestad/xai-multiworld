@@ -31,7 +31,7 @@ def main():
     args = parser.parse_args()
 
     model_name = "model"
-    version = "latest"
+    version = "20-agents"
 
     if args.download_models:
         project_folder, model_name, low, high, step = args.download_models

@@ -4,7 +4,7 @@
         "models": {
             "name": "model_0",
             "low": 0,
-            "high": 700,
+            "high": 1000,
             "step": 100
         }
     },
@@ -14,10 +14,10 @@
     },
     "collect_rollouts": {
         "observations": 100,
-        "sample_rate": 0.2
+        "sample_rate": 0.01
     },
     "generate_concepts": {
-        "observations": 100
+        "observations": 1000
     },
     "calculate_cavs": {
         "M": 20,
