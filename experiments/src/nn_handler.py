@@ -87,7 +87,7 @@ def get_neural_network_feature_importance(
     best_test_acc = 0
     combs = get_combinations(list(range(M)))
     shuffle(combs)
-    max_combs = 1000
+    max_combs = 10
     for i, comb in enumerate(combs[:max_combs]):
         sub_X = create_sub_X(train_dataset, test_dataset, comb)
         test_targets = torch.stack(
@@ -173,7 +173,7 @@ def get_neural_network_completeness_score(
             optimizer,
             epoch,
         )
-        test_acc = test_model(model, None, test_loader)
+        test_acc, test_loss = test_model(model, None, test_loader)
         scheduler.step()
         epoch_time = time.time() - start_time
         stats = {
