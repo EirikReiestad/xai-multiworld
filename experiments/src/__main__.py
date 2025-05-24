@@ -46,9 +46,7 @@ def main(
     os.makedirs(result_path, exist_ok=True)
 
     # --- Data Preparation ---
-    train_loader, test_loader = prepare_data(
-        dataset_name, batch_size, test_batch_size, n_train=1000, n_test=1000
-    )
+    train_loader, test_loader = prepare_data(dataset_name, batch_size, test_batch_size)
     output_size = 10
 
     # --- Model Loading/Training ---
