@@ -260,22 +260,25 @@ def calculate_shapley_values(results, concepts: list[str]):
     )
 
     shapley_values = defaultdict(float)
-    N = len(concepts)
+    M = len(concepts)
     for concept in concepts:
         other_concepts = concepts.copy()
         other_concepts.remove(concept)
         for comb in get_combinations(other_concepts):
             comb_u_concept = tuple(sorted(comb + [concept]))
+            if comb_u_concept not in results or tuple(comb) not in results:
+                continue
+            print(comb, comb_u_concept)
             comb = tuple(sorted(comb))
             coalition_size = len(comb)
             factorial_term = (
                 math.factorial(coalition_size)
-                * math.factorial(N - coalition_size - 1)
-                / math.factorial(N)
+                * math.factorial(M - coalition_size - 1)
+                / math.factorial(M)
             )
 
-            accuracy = results[comb_u_concept][1]
-            comb_accuracy = results[comb][1]
+            accuracy = results[comb_u_concept][0]
+            comb_accuracy = results[comb][0]
 
             marginal_contribution = accuracy - comb_accuracy
             shapley_values[concept] += factorial_term * marginal_contribution
