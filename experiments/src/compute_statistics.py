@@ -14,11 +14,9 @@ from scipy.spatial.distance import pdist
 from scipy.stats import t
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics.pairwise import cosine_similarity
-from experiments.src.file_handler import read_results, write_results
+from experiments.src.file_handler import write_results
 from experiments.src.utils import (
     convert_numpy_to_float,
-    get_combinations,
-    log_shapley_values,
 )
 from tabulate import tabulate
 
@@ -259,30 +257,23 @@ def calculate_shapley_values(results, concepts: list[str]):
         "\n" + tabulate(table_loss, headers=["Combination", "Loss", "Accuracy"])
     )
 
-    shapley_values = defaultdict(float)
-    M = len(concepts)
+    shapley_values = defaultdict(list)
     for concept in concepts:
-        other_concepts = concepts.copy()
-        other_concepts.remove(concept)
-        for comb in get_combinations(other_concepts):
-            comb_u_concept = tuple(sorted(comb + [concept]))
-            if comb_u_concept not in results or tuple(comb) not in results:
+        for subset in results:
+            if concept in subset:
                 continue
-            print(comb, comb_u_concept)
-            comb = tuple(sorted(comb))
-            coalition_size = len(comb)
-            factorial_term = (
-                math.factorial(coalition_size)
-                * math.factorial(M - coalition_size - 1)
-                / math.factorial(M)
-            )
+            subset_with = tuple(sorted(list(subset) + [concept]))
+            if subset_with not in results:
+                continue
+            loss_without = results[subset][1]
+            loss_with = results[subset_with][1]
+            marginal = loss_without - loss_with
+            shapley_values[concept].append(marginal)
 
-            accuracy = results[comb_u_concept][0]
-            comb_accuracy = results[comb][0]
-
-            marginal_contribution = accuracy - comb_accuracy
-            shapley_values[concept] += factorial_term * marginal_contribution
-    log_shapley_values(shapley_values)
+    shapley_values = {
+        c: (sum(vals) / len(vals) if vals else 0.0)
+        for c, vals in shapley_values.items()
+    }
     return shapley_values
 
 
