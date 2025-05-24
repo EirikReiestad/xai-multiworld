@@ -88,7 +88,7 @@ def get_neural_network_feature_importance(
     best_test_acc = 0
     combs = get_combinations(list(range(M)))
     shuffle(combs)
-    max_combs = 10
+    max_combs = 1000
     for i, comb in enumerate(combs[:max_combs]):
         sub_X = create_sub_X(train_dataset, test_dataset, comb)
         test_targets = torch.stack(

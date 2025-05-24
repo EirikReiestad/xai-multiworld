@@ -37,6 +37,7 @@ def main():
     log_interval = 10
     dry_run = False
     load_model = True
+    concept_importance = False
     dataset_name = "mnist"
     model_name = f"experiments/{dataset_name}.pt"
 
@@ -83,10 +84,15 @@ def main():
     # --- Storage for all results ---
     results = []
 
-    lambdas_1 = np.linspace(0, 1, 4)
-    lambdas_2 = np.linspace(0, 1, 4)
-    lambdas_3 = np.linspace(0, 1, 4)
-    lambda_combinations = list(itertools.product(lambdas_1, lambdas_2, lambdas_3))
+    lambdas_1 = np.linspace(-1, 1, 5)
+    lambdas_2 = np.linspace(-1, 1, 5)
+    lambdas_3 = np.linspace(-1, 1, 5)
+
+    lambda_combinations = [
+        (l1, l2, l3)
+        for l1, l2, l3 in itertools.product(lambdas_1, lambdas_2, lambdas_3)
+        if (l1 + l2 + l3) == 1
+    ]
     lambda_combinations = iter([[0.1, 0.1, 0.1]])
 
     # --- Main Experiment Loop ---
@@ -126,19 +132,20 @@ def main():
                 average_positive_observations, all_test_X
             )
 
-            accuracy, res = get_neural_network_feature_importance(
-                M,
-                concept_scores_train,
-                all_train_targets,
-                output_size,
-                log_interval,
-                dry_run,
-                gamma,
-                batch_size,
-                test_batch_size,
-                iteration,
-                epochs,
-            )
+            if concept_importance:
+                accuracy, res = get_neural_network_feature_importance(
+                    M,
+                    concept_scores_train,
+                    all_train_targets,
+                    output_size,
+                    log_interval,
+                    dry_run,
+                    gamma,
+                    batch_size,
+                    test_batch_size,
+                    iteration,
+                    epochs,
+                )
 
             # Baseline neural net experiment
             nn_accuracy, res = get_neural_network_completeness_score(
@@ -271,7 +278,9 @@ def main():
         # Save all results
         with open("experiments/results/cav_experiment_results.json", "w") as f:
             json.dump(results, f, indent=2)
-        print("\nResults have been saved to json_results/cav_experiment_results.json")
+        print(
+            "\nResults have been saved to experiments/results/cav_experiment_results.json"
+        )
 
 
 if __name__ == "__main__":

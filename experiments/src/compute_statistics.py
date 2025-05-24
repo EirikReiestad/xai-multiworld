@@ -4,6 +4,7 @@ import logging
 import math
 import os
 import pickle
+import random
 from collections import defaultdict
 from typing import Any
 
@@ -14,11 +15,12 @@ from scipy.spatial.distance import pdist
 from scipy.stats import t
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics.pairwise import cosine_similarity
+from tabulate import tabulate
+
 from experiments.src.file_handler import write_results
 from experiments.src.utils import (
     convert_numpy_to_float,
 )
-from tabulate import tabulate
 
 
 def calculate_statistics(
@@ -240,7 +242,9 @@ def pearson_correlation(A, B):
     return correlation
 
 
-def calculate_shapley_values(results, concepts: list[str]):
+def calculate_shapley_values(
+    results, concepts: list[str], num_permutations: int = 1000
+):
     table_accuracy = sorted(
         [(comb, loss, accuracy) for comb, (loss, accuracy) in results.items()],
         key=lambda x: x[2],
@@ -258,22 +262,25 @@ def calculate_shapley_values(results, concepts: list[str]):
     )
 
     shapley_values = defaultdict(list)
-    for concept in concepts:
-        for subset in results:
-            if concept in subset:
+    for _ in range(num_permutations):
+        perm = list(concepts)
+        random.shuffle(perm)
+        coalition = ()
+        for concept in perm:
+            prev = tuple(sorted(coalition))
+            coalition = tuple(sorted(list(coalition) + [concept]))
+            if prev not in results or coalition not in results:
                 continue
-            subset_with = tuple(sorted(list(subset) + [concept]))
-            if subset_with not in results:
-                continue
-            loss_without = results[subset][1]
-            loss_with = results[subset_with][1]
-            marginal = loss_without - loss_with
+            marginal = results[prev][1] - results[coalition][1]
             shapley_values[concept].append(marginal)
 
+    print(shapley_values)
     shapley_values = {
-        c: (sum(vals) / len(vals) if vals else 0.0)
-        for c, vals in shapley_values.items()
+        c: (sum(vs) / len(vs) if vs else 0.0) for c, vs in shapley_values.items()
     }
+    print(shapley_values)
+    if shapley_values == {}:
+        raise ValueError("No Shapley values:(")
     return shapley_values
 
 
