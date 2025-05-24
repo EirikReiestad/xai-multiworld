@@ -14,6 +14,7 @@ def get_random_forest_completeness_score(
     M,
     max_depth,
     iteration,
+    result_path,
     suffix="",
 ):
     print(f"  Testing Random Forest with max_depth={max_depth}")
@@ -37,9 +38,8 @@ def get_random_forest_completeness_score(
     ):
         res[m] = (float(importance), int(split))
 
-    os.makedirs("experiments/results", exist_ok=True)
     with open(
-        f"experiments/results/randomforest_feature_importances{suffix}_{iteration}.json",
+        f"{result_path}/randomforest_feature_importances{suffix}_{iteration}.json",
         "w",
     ) as f:
         json.dump(res, f, indent=4)

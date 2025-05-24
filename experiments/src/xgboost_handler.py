@@ -14,6 +14,7 @@ def get_xgboost_completeness_score(
     M,
     max_depth,
     iteration,
+    result_path,
     suffix: str = "",
 ):
     print(f"  Testing XGBoost with max_depth={max_depth}")
@@ -49,9 +50,8 @@ def get_xgboost_completeness_score(
     ):
         res[m] = (float(importance), int(split))
 
-    os.makedirs("experiments/results", exist_ok=True)
     with open(
-        f"experiments/results/xgboost_feature_importances{suffix}_{iteration}.json", "w"
+        f"{result_path}/xgboost_feature_importances{suffix}_{iteration}.json", "w"
     ) as f:
         json.dump(res, f, indent=4)
 

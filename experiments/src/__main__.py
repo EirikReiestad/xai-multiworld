@@ -27,24 +27,28 @@ from experiments.src.svm_handler import get_svm_completeness_score
 from experiments.src.xgboost_handler import get_xgboost_completeness_score
 
 
-def main():
+def main(
+    batch_size=32,
+    test_batch_size=1000,
+    epochs=10,
+    lr=1e-1,
+    gamma=0.7,
+    log_interval=10,
+    dry_run=False,
+    load_model=True,
+    concept_importance=True,
+    dataset_name="mnist",
+    result_path="experiments/results",
+):
     # --- Settings ---
-    batch_size = 32
-    test_batch_size = 1000
-    epochs = 10
-    lr = 1e-1
-    gamma = 0.7
-    log_interval = 10
-    dry_run = False
-    load_model = True
-    concept_importance = False
-    dataset_name = "mnist"
-    model_name = f"experiments/{dataset_name}.pt"
 
-    os.makedirs("experiments/results", exist_ok=True)
+    model_name = f"experiments/{dataset_name}.pt"
+    os.makedirs(result_path, exist_ok=True)
 
     # --- Data Preparation ---
-    train_loader, test_loader = prepare_data(dataset_name, batch_size, test_batch_size)
+    train_loader, test_loader = prepare_data(
+        dataset_name, batch_size, test_batch_size, n_train=1000, n_test=1000
+    )
     output_size = 10
 
     # --- Model Loading/Training ---
@@ -63,11 +67,8 @@ def main():
     )
 
     # --- Experiment Parameters ---
-    M_values = [15] * 6
+    M_values = [5] * 6
     max_depth_values = [15]
-    lambda_1 = 0.1
-    lambda_2 = 0.1
-    lambda_3 = 0.1
     batch_size = 128
     cav_lr = 1e-3
     cav_epochs = 1
@@ -84,16 +85,16 @@ def main():
     # --- Storage for all results ---
     results = []
 
-    lambdas_1 = np.linspace(-1, 1, 5)
-    lambdas_2 = np.linspace(-1, 1, 5)
-    lambdas_3 = np.linspace(-1, 1, 5)
-
+    lambdas = np.linspace(1, -1, 5)
     lambda_combinations = [
         (l1, l2, l3)
-        for l1, l2, l3 in itertools.product(lambdas_1, lambdas_2, lambdas_3)
-        if (l1 + l2 + l3) == 1
+        for l1, l2, l3 in itertools.product(lambdas, repeat=3)
+        if abs((l1 + l2 + l3) - 1) < 1e-8
     ]
-    lambda_combinations = iter([[0.1, 0.1, 0.1]])
+
+    print(lambda_combinations)
+    print(f"Number of combinations: {len(lambda_combinations)}")
+    lambda_combinations = [[1 / 3, 1 / 3, 1 / 3]]
 
     # --- Main Experiment Loop ---
     for M in M_values:
@@ -116,6 +117,7 @@ def main():
                 batch_size,
                 cav_lr,
                 cav_epochs,
+                result_path,
                 iteration,
             )
 
@@ -145,6 +147,7 @@ def main():
                     test_batch_size,
                     iteration,
                     epochs,
+                    result_path,
                 )
 
             # Baseline neural net experiment
@@ -159,6 +162,7 @@ def main():
                 dry_run,
                 gamma,
                 iteration,
+                result_path,
             )
 
             # Decision tree experiments
@@ -172,6 +176,7 @@ def main():
                     M,
                     max_depth,
                     iteration,
+                    result_path,
                 )
 
                 results.append(
@@ -192,6 +197,7 @@ def main():
                 M,
                 None,
                 iteration,
+                result_path,
             )
 
             random_forest_accuracy, res = get_random_forest_completeness_score(
@@ -202,6 +208,7 @@ def main():
                 M,
                 None,
                 iteration,
+                result_path,
             )
 
             elasticnet_accuracy, res = get_elasticnet_completeness_score(
@@ -211,6 +218,7 @@ def main():
                 all_test_targets,
                 M,
                 iteration,
+                result_path,
             )
 
             svm_linear_accuracy, res = get_svm_completeness_score(
@@ -220,8 +228,10 @@ def main():
                 all_test_targets,
                 M,
                 iteration,
+                result_path,
             )
 
+            """
             svm_rbf_accuracy, res = get_svm_completeness_score(
                 concept_scores_train,
                 all_train_targets,
@@ -229,7 +239,10 @@ def main():
                 all_test_targets,
                 M,
                 iteration,
+                result_path,
+                kernel="rbf",
             )
+            """
 
             logistic_regression_accuracy, res = (
                 get_logistic_regression_completeness_score(
@@ -239,16 +252,17 @@ def main():
                     all_test_targets,
                     M,
                     iteration,
+                    result_path,
                 )
             )
 
-            with open("experiments/results/cav_experiment_results.json", "w") as f:
+            with open(f"{result_path}/cav_experiment_results.json", "w") as f:
                 json.dump(results, f, indent=4)
 
-            os.makedirs("experiments/results/accuracies", exist_ok=True)
+            os.makedirs(f"{result_path}/accuracies", exist_ok=True)
 
             with open(
-                f"experiments/results/accuracies/{lambda_1}_{lambda_2}_{lambda_3}_{iteration}.json",
+                f"{result_path}/accuracies/{lambda_1}_{lambda_2}_{lambda_3}_{iteration}.json",
                 "w",
             ) as f:
                 accuracies = {
@@ -257,7 +271,7 @@ def main():
                     "random_forest": random_forest_accuracy,
                     "elasticnet": elasticnet_accuracy,
                     "svm_linear": svm_linear_accuracy,
-                    "svm_rbf": svm_rbf_accuracy,
+                    # "svm_rbf": svm_rbf_accuracy,
                     "logistic_regesssion": logistic_regression_accuracy,
                     "nn": nn_accuracy,
                 }
@@ -273,15 +287,14 @@ def main():
             all_test_targets,
             max_depth_values,
             results,
+            result_path,
         )
 
         # Save all results
-        with open("experiments/results/cav_experiment_results.json", "w") as f:
+        with open(f"{result_path}/cav_experiment_results.json", "w") as f:
             json.dump(results, f, indent=2)
-        print(
-            "\nResults have been saved to experiments/results/cav_experiment_results.json"
-        )
+        print(f"\nResults have been saved to {result_path}/cav_experiment_results.json")
 
 
 if __name__ == "__main__":
-    main()
+    main(result_path="experiments/test")

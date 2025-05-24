@@ -28,6 +28,7 @@ def get_cavs(
     batch_size,
     cav_lr,
     cav_epochs,
+    result_path,
     iteration=0,
 ):
     (
@@ -49,6 +50,7 @@ def get_cavs(
         batch_size=batch_size,
         lr=cav_lr,
         epochs=cav_epochs,
+        result_path=result_path,
     )
 
     probes = {}
@@ -62,6 +64,7 @@ def get_cavs(
         list(positive_activations.keys()),
         positive_activations,
         probes,
+        result_path=result_path,
         filename=f"cav_statistics_{iteration}.json",
     )
 

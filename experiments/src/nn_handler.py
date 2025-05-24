@@ -1,4 +1,6 @@
 import json
+import random
+import itertools
 import os
 import time
 from collections import defaultdict
@@ -88,8 +90,17 @@ def get_neural_network_feature_importance(
     best_test_acc = 0
     combs = get_combinations(list(range(M)))
     shuffle(combs)
-    max_combs = 1000
-    for i, comb in enumerate(combs[:max_combs]):
+    max_combs = 10
+    n_subsets = 2
+    combinations = []
+    for comb in combs[:max_combs]:
+        for _ in range(n_subsets):
+            subset_size = random.randint(1, len(comb))
+            subset = sorted(tuple(random.sample(comb, subset_size)))
+            if subset in combinations:
+                continue
+            combinations.append(subset)
+    for i, comb in enumerate(combinations):
         sub_X = create_sub_X(train_dataset, test_dataset, comb)
         test_targets = torch.stack(
             [test_dataset.dataset[i][1] for i in test_dataset.indices]
@@ -111,7 +122,7 @@ def get_neural_network_feature_importance(
         json.dump(json_results, f, indent=4)
     shapley_values = calculate_shapley_values(results, list(range(M)))
     shapley_values_results = {}
-    for key, value in shapley_values.items():
+    for key, value in sorted(shapley_values.items()):
         shapley_values_results[key] = [value, 0]
 
     path = os.path.join(result_path, f"shapley_{iteration}_{filename}")
@@ -135,6 +146,7 @@ def get_neural_network_completeness_score(
     dry_run,
     gamma,
     iteration,
+    result_path,
 ):
     print("\nBaseline test with Neural Network trained on concepts")
     print(concept_scores_train.shape)
@@ -154,7 +166,7 @@ def get_neural_network_completeness_score(
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
     test_loader = DataLoader(test_dataset, batch_size=test_batch_size, shuffle=False)
 
-    stats_file = f"experiments/results/nn_concept_training_stats_{iteration}.txt"
+    stats_file = f"{result_path}/nn_concept_training_stats_{iteration}.txt"
     all_stats = []
     lr = 0.1
     epochs = 20

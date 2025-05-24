@@ -14,6 +14,7 @@ def get_elasticnet_completeness_score(
     y_true,
     M,
     iteration,
+    result_path,
     alpha=0.01,
     l1_ratio=0.5,
     suffix="",
@@ -28,9 +29,8 @@ def get_elasticnet_completeness_score(
     for m, importance in zip(range(M), feature_importances):
         res[m] = (float(importance), 0)  # No split count for ElasticNet
 
-    os.makedirs("experiments/results", exist_ok=True)
     with open(
-        f"experiments/results/elasticnet_feature_importances{suffix}_{iteration}.json",
+        f"{result_path}/elasticnet_feature_importances{suffix}_{iteration}.json",
         "w",
     ) as f:
         json.dump(res, f, indent=4)

@@ -14,10 +14,11 @@ def get_svm_completeness_score(
     y_true,
     M,
     iteration,
+    result_path,
     kernel: Literal["linear", "rbf"] = "linear",
     suffix="",
 ):
-    print("Testing SVM")
+    print("  Testing SVM")
     model_svm = SVC(kernel=kernel, probability=True, max_iter=10000)
     model_svm.fit(concept_scores_train, all_train_targets)
 
@@ -27,9 +28,8 @@ def get_svm_completeness_score(
     for m, importance in zip(range(M), feature_importances):
         res[m] = (float(importance), 0)  # No split count for SVM
 
-    os.makedirs("experiments/results", exist_ok=True)
     with open(
-        f"experiments/results/svm_{kernel}_feature_importances{suffix}_{iteration}.json",
+        f"{result_path}/svm_{kernel}_feature_importances{suffix}_{iteration}.json",
         "w",
     ) as f:
         json.dump(res, f, indent=4)

@@ -2,17 +2,24 @@ from typing import Literal
 
 import numpy as np
 import torch
-from torch.utils.data import DataLoader, TensorDataset
+from torch.utils.data import DataLoader, Subset, TensorDataset
 from torchvision import datasets, transforms
 
 
 def generate_dataset(
-    name: Literal["mnist", "square"], batch_size: int, test_batch_size: int
+    name: Literal["mnist", "square"],
+    batch_size: int,
+    test_batch_size: int,
+    n_train: int | None,
+    n_test: int | None,
 ):
     name = name.lower()
     if name == "mnist":
         return generate_mnist_dataset(
-            batch_size=batch_size, test_batch_size=test_batch_size
+            batch_size=batch_size,
+            test_batch_size=test_batch_size,
+            n_train=n_train,
+            n_test=n_test,
         )
     elif name == "square":
         return generate_square_dataset(
@@ -97,18 +104,31 @@ def generate_square_dataset(
     return train_loader, test_loader
 
 
-def generate_mnist_dataset(batch_size: int = 32, test_batch_size: int = 32):
+def generate_mnist_dataset(
+    batch_size: int = 32,
+    test_batch_size: int = 32,
+    n_train: int | None = None,
+    n_test: int | None = None,
+):
     transform = transforms.Compose(
         [transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))]
     )
 
-    dataset1 = datasets.MNIST("../data", train=True, download=True, transform=transform)
-    dataset2 = datasets.MNIST("../data", train=False, transform=transform)
+    train_set = datasets.MNIST(
+        "../data", train=True, download=True, transform=transform
+    )
+    test_set = datasets.MNIST("../data", train=False, transform=transform)
+
+    if n_train is not None:
+        train_set = Subset(train_set, range(n_train))
+    if n_test is not None:
+        test_set = Subset(test_set, range(n_test))
+
     train_loader = torch.utils.data.DataLoader(
-        dataset1, batch_size=batch_size, shuffle=False
+        train_set, batch_size=batch_size, shuffle=False
     )
     test_loader = torch.utils.data.DataLoader(
-        dataset2, batch_size=test_batch_size, shuffle=False
+        test_set, batch_size=test_batch_size, shuffle=False
     )
     return train_loader, test_loader
 

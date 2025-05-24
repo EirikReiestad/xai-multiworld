@@ -13,9 +13,10 @@ def get_logistic_regression_completeness_score(
     y_true,
     M,
     iteration,
+    result_path,
     suffix="",
 ):
-    print("Testing Logistic Regression")
+    print("  Testing Logistic Regression")
     model_lr = LogisticRegression(max_iter=10000)
     model_lr.fit(concept_scores_train, all_train_targets)
 
@@ -25,9 +26,8 @@ def get_logistic_regression_completeness_score(
     for m, importance in zip(range(M), feature_importances):
         res[m] = (float(importance), 0)  # No split count for Logistic Regression
 
-    os.makedirs("experiments/results", exist_ok=True)
     with open(
-        f"experiments/results/logistic_regression_feature_importances{suffix}_{iteration}.json",
+        f"{result_path}/logistic_regression_feature_importances{suffix}_{iteration}.json",
         "w",
     ) as f:
         json.dump(res, f, indent=4)

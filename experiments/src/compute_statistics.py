@@ -27,7 +27,7 @@ def calculate_statistics(
     concepts: list[str],
     activations: dict[str, Any],
     probes: dict[str, LogisticRegression],
-    results_path: str = "experiments/results",
+    result_path: str = "experiments/results",
     filename: str = "probe_statistics.json",
 ):
     stats = {}
@@ -39,7 +39,7 @@ def calculate_statistics(
         )
         stats[concept] = stat
 
-    path = os.path.join(results_path, filename)
+    path = os.path.join(result_path, filename)
     stats = convert_numpy_to_float(stats)
     write_results(stats, path)
     return stats
@@ -274,11 +274,9 @@ def calculate_shapley_values(
             marginal = results[prev][1] - results[coalition][1]
             shapley_values[concept].append(marginal)
 
-    print(shapley_values)
     shapley_values = {
         c: (sum(vs) / len(vs) if vs else 0.0) for c, vs in shapley_values.items()
     }
-    print(shapley_values)
     if shapley_values == {}:
         raise ValueError("No Shapley values:(")
     return shapley_values

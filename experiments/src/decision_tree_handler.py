@@ -14,6 +14,7 @@ def get_decision_tree_completeness_score(
     M,
     max_depth,
     iteration,
+    result_path,
     suffix: str = "",
 ):
     print(f"  Testing with max_depth={max_depth}")
@@ -40,9 +41,8 @@ def get_decision_tree_completeness_score(
     ):
         res[m] = (float(importance), int(split))
 
-    os.makedirs("experiments/results", exist_ok=True)
     with open(
-        f"experiments/results/feature_importances{suffix}_{max_depth}_{iteration}.json",
+        f"{result_path}/feature_importances{suffix}_{max_depth}_{iteration}.json",
         "w",
     ) as f:
         json.dump(res, f, indent=4)
@@ -62,6 +62,7 @@ def get_baseline_decision_tree_completeness_score(
     all_test_targets,
     max_depth_values,
     results,
+    result_path,
 ):
     X_train_flatten = all_train_X.reshape(all_train_X.shape[0], -1)
     y_train = all_train_targets.numpy()
@@ -79,11 +80,16 @@ def get_baseline_decision_tree_completeness_score(
         )
 
         # Store baseline results
-        results.append(
-            {
-                "M": "baseline",
-                "max_depth": max_depth,
-                "accuracy": baseline_accuracy,
-                "similarity_matrix": None,
-            }
-        )
+        result = {
+            "M": "baseline",
+            "max_depth": max_depth,
+            "accuracy": baseline_accuracy,
+            "similarity_matrix": None,
+        }
+        results.append(result)
+
+        with open(
+            f"{result_path}/baseline_decision_tree_{max_depth}.json",
+            "w",
+        ) as f:
+            json.dump(result, f, indent=4)

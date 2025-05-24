@@ -3,9 +3,19 @@ from experiments.src.file_handler import store_images_from_loader
 import torch
 
 
-def prepare_data(dataset_name, batch_size, test_batch_size):
+def prepare_data(
+    dataset_name,
+    batch_size,
+    test_batch_size,
+    n_train: int | None = None,
+    n_test: int | None = None,
+):
     train_loader, test_loader = generate_dataset(
-        name=dataset_name, batch_size=batch_size, test_batch_size=test_batch_size
+        name=dataset_name,
+        batch_size=batch_size,
+        test_batch_size=test_batch_size,
+        n_train=n_train,
+        n_test=n_test,
     )
     store_images_from_loader(train_loader)
     return train_loader, test_loader
