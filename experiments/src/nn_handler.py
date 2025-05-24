@@ -26,6 +26,7 @@ def get_neural_network_feature_importance(
     gamma,
     batch_size,
     test_batch_size,
+    iteration: int,
     epochs: int = 10,
     result_path: str = "experiments/results",
     filename: str = "completeness_score_network.json",
@@ -113,10 +114,10 @@ def get_neural_network_feature_importance(
     for key, value in shapley_values.items():
         shapley_values_results[key] = [value, 0]
 
-    path = os.path.join(result_path, "shapley_" + filename)
+    path = os.path.join(result_path, f"shapley_{iteration}_{filename}")
     with open(path, "w") as f:
         json.dump(shapley_values, f, indent=4)
-    path = os.path.join(result_path, "nn_feature_importances.json")
+    path = os.path.join(result_path, f"nn_feature_importances_{iteration}.json")
     with open(path, "w") as f:
         json.dump(shapley_values_results, f, indent=4)
 
@@ -127,6 +128,7 @@ def get_neural_network_completeness_score(
     M,
     concept_scores_train,
     all_train_targets,
+    output_size,
     batch_size,
     test_batch_size,
     log_interval,
@@ -135,7 +137,8 @@ def get_neural_network_completeness_score(
     iteration,
 ):
     print("\nBaseline test with Neural Network trained on concepts")
-    model = FFNet(M, concept_scores_train.shape[-1])
+    print(concept_scores_train.shape)
+    model = FFNet(M, output_size)
     concept_scores_train = torch.Tensor(concept_scores_train)
     all_train_targets = torch.Tensor(all_train_targets)
     print(

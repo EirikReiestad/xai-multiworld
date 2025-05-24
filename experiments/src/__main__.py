@@ -136,7 +136,22 @@ def main():
                 gamma,
                 batch_size,
                 test_batch_size,
+                iteration,
                 epochs,
+            )
+
+            # Baseline neural net experiment
+            nn_accuracy, res = get_neural_network_completeness_score(
+                M,
+                concept_scores_train,
+                all_train_targets,
+                output_size,
+                batch_size,
+                test_batch_size,
+                log_interval,
+                dry_run,
+                gamma,
+                iteration,
             )
 
             # Decision tree experiments
@@ -218,19 +233,6 @@ def main():
                     M,
                     iteration,
                 )
-            )
-
-            # Baseline neural net experiment
-            nn_accuracy, res = get_neural_network_completeness_score(
-                M,
-                concept_scores_train,
-                all_train_targets,
-                batch_size,
-                test_batch_size,
-                log_interval,
-                dry_run,
-                gamma,
-                iteration,
             )
 
             with open("experiments/results/cav_experiment_results.json", "w") as f:
