@@ -1,7 +1,7 @@
 Cleaning up
 Running from this directory: /cluster/work/eirre/xai-multiworld
 Name of job: multi-agent-rl
-ID of job: 22842627
+ID of job: 22846814
 The jo was run on these nodes: idun-04-11
 
 Currently Loaded Modules:
@@ -70,54 +70,6035 @@ Test set: Average loss: 0.0364, Accuracy: 9874/10000 (99%)
 
 
 Testing with M=15
-Step 0000 | Epoch 01 | Objective: -3.2349 | Coherence: 16.8397 | Separation: 56.8556 | Information gain: 7.6667 | Grad Norm: 4.3572 | Time: 0.4s
-Step 0010 | Epoch 01 | Objective: -2.9697 | Coherence: 17.8470 | Separation: 55.2108 | Information gain: 7.6667 | Grad Norm: 4.2500 | Time: 0.6s
-Step 0020 | Epoch 01 | Objective: -2.7039 | Coherence: 18.8564 | Separation: 53.5622 | Information gain: 7.6667 | Grad Norm: 4.2116 | Time: 0.8s
-Step 0030 | Epoch 01 | Objective: -2.4397 | Coherence: 19.8720 | Separation: 51.9353 | Information gain: 7.6667 | Grad Norm: 4.0964 | Time: 1.0s
-Step 0040 | Epoch 01 | Objective: -2.1914 | Coherence: 20.8634 | Separation: 50.4443 | Information gain: 7.6667 | Grad Norm: 3.8701 | Time: 1.3s
-Step 0050 | Epoch 01 | Objective: -1.9435 | Coherence: 21.8252 | Separation: 48.9264 | Information gain: 7.6667 | Grad Norm: 3.8715 | Time: 1.5s
-Step 0060 | Epoch 01 | Objective: -1.7020 | Coherence: 22.8296 | Separation: 47.5159 | Information gain: 7.6667 | Grad Norm: 3.6559 | Time: 1.7s
-Step 0070 | Epoch 01 | Objective: -1.4849 | Coherence: 23.8681 | Separation: 46.2166 | Information gain: 7.5000 | Grad Norm: 3.6346 | Time: 1.9s
-Step 0080 | Epoch 01 | Objective: -1.2688 | Coherence: 24.8636 | Separation: 45.0511 | Information gain: 7.5000 | Grad Norm: 3.4616 | Time: 2.2s
-Step 0090 | Epoch 01 | Objective: -1.0599 | Coherence: 25.7968 | Separation: 43.8961 | Information gain: 7.5000 | Grad Norm: 3.4606 | Time: 2.4s
-Step 0100 | Epoch 01 | Objective: -0.8745 | Coherence: 26.6669 | Separation: 42.7455 | Information gain: 7.3333 | Grad Norm: 3.3316 | Time: 2.6s
-Step 0110 | Epoch 01 | Objective: -0.6746 | Coherence: 27.5155 | Separation: 41.5950 | Information gain: 7.3333 | Grad Norm: 3.2723 | Time: 2.8s
-Step 0120 | Epoch 01 | Objective: -0.4769 | Coherence: 28.2952 | Separation: 40.3972 | Information gain: 7.3333 | Grad Norm: 3.2583 | Time: 3.1s
-Step 0130 | Epoch 01 | Objective: -0.2795 | Coherence: 29.0805 | Separation: 39.2089 | Information gain: 7.3333 | Grad Norm: 3.2179 | Time: 3.3s
-Step 0140 | Epoch 01 | Objective: -0.0905 | Coherence: 29.8190 | Separation: 38.0573 | Information gain: 7.3333 | Grad Norm: 3.1765 | Time: 3.5s
-Step 0150 | Epoch 01 | Objective: 0.0938 | Coherence: 30.5955 | Separation: 36.9906 | Information gain: 7.3333 | Grad Norm: 3.0025 | Time: 3.8s
-Step 0160 | Epoch 01 | Objective: 0.2555 | Coherence: 31.3930 | Separation: 36.0042 | Information gain: 7.1667 | Grad Norm: 2.9138 | Time: 4.0s
-Step 0170 | Epoch 01 | Objective: 0.4334 | Coherence: 32.2658 | Separation: 35.0984 | Information gain: 7.1667 | Grad Norm: 2.9927 | Time: 4.2s
-Step 0180 | Epoch 01 | Objective: 0.5841 | Coherence: 33.1137 | Separation: 34.2732 | Information gain: 7.0000 | Grad Norm: 3.0323 | Time: 4.4s
-Step 0190 | Epoch 01 | Objective: 0.7260 | Coherence: 33.9304 | Separation: 33.5041 | Information gain: 6.8333 | Grad Norm: 3.1780 | Time: 4.7s
-Step 0200 | Epoch 01 | Objective: 0.8932 | Coherence: 34.6670 | Separation: 32.7348 | Information gain: 7.0000 | Grad Norm: 2.8412 | Time: 4.9s
-Step 0201 | Epoch 01 | Objective: 0.9086 | Coherence: 34.7403 | Separation: 32.6547 | Information gain: 7.0000 | Grad Norm: 2.8159 | Time: 4.9s
+Step 0000 | Epoch 01 | Objective: -2.5577 | Coherence: 23.6854 | Separation: 57.9292 | Information gain: 8.6667 | Grad Norm: 4.6886 | Time: 0.5s
+Step 0010 | Epoch 01 | Objective: -2.2332 | Coherence: 24.5572 | Separation: 55.5562 | Information gain: 8.6667 | Grad Norm: 4.6639 | Time: 0.7s
+Step 0020 | Epoch 01 | Objective: -1.9021 | Coherence: 25.4875 | Separation: 53.1757 | Information gain: 8.6667 | Grad Norm: 4.4214 | Time: 1.0s
+Step 0030 | Epoch 01 | Objective: -1.6012 | Coherence: 26.4880 | Separation: 51.1669 | Information gain: 8.6667 | Grad Norm: 4.1924 | Time: 1.2s
+Step 0040 | Epoch 01 | Objective: -1.3305 | Coherence: 27.4884 | Separation: 49.2933 | Information gain: 8.5000 | Grad Norm: 4.1102 | Time: 1.4s
+Step 0050 | Epoch 01 | Objective: -1.0510 | Coherence: 28.5236 | Separation: 47.5339 | Information gain: 8.5000 | Grad Norm: 4.0086 | Time: 1.6s
+Step 0060 | Epoch 01 | Objective: -0.7891 | Coherence: 29.4941 | Separation: 45.8853 | Information gain: 8.5000 | Grad Norm: 3.8302 | Time: 1.8s
+Step 0070 | Epoch 01 | Objective: -0.5355 | Coherence: 30.4541 | Separation: 44.3093 | Information gain: 8.5000 | Grad Norm: 3.9069 | Time: 2.1s
+Step 0080 | Epoch 01 | Objective: -0.2896 | Coherence: 31.4831 | Separation: 42.8796 | Information gain: 8.5000 | Grad Norm: 3.5167 | Time: 2.3s
+Step 0090 | Epoch 01 | Objective: -0.0803 | Coherence: 32.4949 | Separation: 41.7977 | Information gain: 8.5000 | Grad Norm: 3.4123 | Time: 2.5s
+Step 0100 | Epoch 01 | Objective: 0.1122 | Coherence: 33.4812 | Separation: 40.8589 | Information gain: 8.5000 | Grad Norm: 3.2416 | Time: 2.7s
+Step 0110 | Epoch 01 | Objective: 0.3015 | Coherence: 34.4284 | Separation: 39.9137 | Information gain: 8.5000 | Grad Norm: 3.1870 | Time: 3.0s
+Step 0120 | Epoch 01 | Objective: 0.4708 | Coherence: 35.3066 | Separation: 39.0984 | Information gain: 8.5000 | Grad Norm: 3.0036 | Time: 3.2s
+Step 0130 | Epoch 01 | Objective: 0.6295 | Coherence: 36.1206 | Separation: 38.3261 | Information gain: 8.5000 | Grad Norm: 2.8717 | Time: 3.4s
+Step 0140 | Epoch 01 | Objective: 0.7535 | Coherence: 36.8190 | Separation: 37.6178 | Information gain: 8.3333 | Grad Norm: 2.7388 | Time: 3.6s
+Step 0150 | Epoch 01 | Objective: 0.8979 | Coherence: 37.4403 | Separation: 36.7947 | Information gain: 8.3333 | Grad Norm: 2.8597 | Time: 3.9s
+Step 0151 | Epoch 01 | Objective: 0.9120 | Coherence: 37.5019 | Separation: 36.7148 | Information gain: 8.3333 | Grad Norm: 2.7676 | Time: 3.9s
 Similarity matrix:
           0         1         2  ...        12        13        14
-0  0.640571  0.517020  0.625197  ...  0.299442  0.470064  0.422283
-1  0.535189  0.609415  0.546344  ...  0.410953  0.415965  0.399935
-2  0.588157  0.495752  0.601048  ...  0.311358  0.438870  0.427675
-3  0.463249  0.555807  0.470515  ...  0.486602  0.513965  0.472109
-4  0.411860  0.385645  0.407961  ...  0.425042  0.555124  0.513310
+0  0.625601  0.531005  0.571555  ...  0.522063  0.581543  0.542701
+1  0.515807  0.605296  0.492373  ...  0.462673  0.482487  0.471605
+2  0.517658  0.461097  0.567562  ...  0.426695  0.484981  0.468102
+3  0.574373  0.470962  0.568540  ...  0.512315  0.575719  0.532214
+4  0.483631  0.454880  0.480073  ...  0.336175  0.397465  0.428672
 
 [5 rows x 15 columns]
-  Testing with max_depth=15
-  MNIST DecisionTree Test accuracy (M=15, max_depth=15): 0.7829
-  Testing XGBoost with max_depth=None
-  MNIST XGBoost Test accuracy (M=15, max_depth=None): 0.8900
-  Testing Random Forest with max_depth=None
-  MNIST RandomForest Test accuracy (M=15, max_depth=None): 0.8740
-  Testing ElasticNet with alpha=0.01, l1_ratio=0.5
-  ElasticNet Test MSE (M=15, alpha=0.01, l1_ratio=0.5): 5.1554, accuracy=0.0883
-Testing SVM
-  SVM Test Accuracy: 0.8536
-Testing SVM
-  SVM Test Accuracy: 0.8536
-Testing Logistic Regression
-  Logistic Regression Test Accuracy: 0.8283
 Input shape: torch.Size([60000, 15]), target shapetorch.Size([60000])
 Training set size: 48000, test set size: 12000
 
+Test set: Average loss: 0.6489, Accuracy: 9583/12000 (80%)
 
-===== Computing accuracy for [0, 1, 6, 7, 8, 10, 12, 14] (0/3) =====
+
+Test set: Average loss: 1.8172, Accuracy: 4908/12000 (41%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 7, 8, 12, 13, 14] (0/1000) accuracy: 0.409 =====
+
+Test set: Average loss: 2.2290, Accuracy: 3472/12000 (29%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 6, 10, 11, 12, 14] (1/1000) accuracy: 0.28933333333333333 =====
+
+Test set: Average loss: 2.5836, Accuracy: 2969/12000 (25%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 12, 14] (2/1000) accuracy: 0.24741666666666667 =====
+
+Test set: Average loss: 2.5671, Accuracy: 2704/12000 (23%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 6, 9, 13] (3/1000) accuracy: 0.22533333333333333 =====
+
+Test set: Average loss: 2.3471, Accuracy: 3533/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 6, 8, 10, 14] (4/1000) accuracy: 0.29441666666666666 =====
+
+Test set: Average loss: 1.3461, Accuracy: 6525/12000 (54%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 5, 7, 8, 10, 11, 12, 14] (5/1000) accuracy: 0.54375 =====
+
+Test set: Average loss: 3.1146, Accuracy: 1801/12000 (15%)
+
+
+
+===== Computing accuracy for [4, 5, 14] (6/1000) accuracy: 0.15008333333333335 =====
+
+Test set: Average loss: 2.4945, Accuracy: 2870/12000 (24%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 9, 10, 11, 13] (7/1000) accuracy: 0.23916666666666667 =====
+
+Test set: Average loss: 2.1208, Accuracy: 4363/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 5, 6, 7, 8, 9, 10] (8/1000) accuracy: 0.3635833333333333 =====
+
+Test set: Average loss: 2.8809, Accuracy: 2188/12000 (18%)
+
+
+
+===== Computing accuracy for [0, 5, 9, 11] (9/1000) accuracy: 0.18233333333333332 =====
+
+Test set: Average loss: 2.8646, Accuracy: 2246/12000 (19%)
+
+
+
+===== Computing accuracy for [5, 7, 10, 11] (10/1000) accuracy: 0.18716666666666668 =====
+
+Test set: Average loss: 2.4367, Accuracy: 2880/12000 (24%)
+
+
+
+===== Computing accuracy for [1, 4, 6, 10, 13, 14] (11/1000) accuracy: 0.24 =====
+
+Test set: Average loss: 1.2894, Accuracy: 6612/12000 (55%)
+
+
+
+===== Computing accuracy for [1, 3, 7, 8, 9, 10, 11, 12, 13, 14] (12/1000) accuracy: 0.551 =====
+
+Test set: Average loss: 1.6433, Accuracy: 5642/12000 (47%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 7, 9, 10, 11, 13, 14] (13/1000) accuracy: 0.4701666666666667 =====
+
+Test set: Average loss: 2.2460, Accuracy: 3583/12000 (30%)
+
+
+
+===== Computing accuracy for [3, 4, 6, 7, 10, 12, 14] (14/1000) accuracy: 0.2985833333333333 =====
+
+Test set: Average loss: 1.6430, Accuracy: 5363/12000 (45%)
+
+
+
+===== Computing accuracy for [1, 5, 6, 7, 8, 9, 11, 13, 14] (15/1000) accuracy: 0.4469166666666667 =====
+
+Test set: Average loss: 2.4017, Accuracy: 3352/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 6, 8, 9, 11] (16/1000) accuracy: 0.2793333333333333 =====
+
+Test set: Average loss: 2.1800, Accuracy: 4280/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 2, 6, 8, 9, 12, 13, 14] (17/1000) accuracy: 0.3566666666666667 =====
+
+Test set: Average loss: 2.6745, Accuracy: 2649/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 3, 6, 9, 10, 14] (18/1000) accuracy: 0.22075 =====
+
+Test set: Average loss: 2.3238, Accuracy: 3306/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 7, 11, 13] (19/1000) accuracy: 0.2755 =====
+
+Test set: Average loss: 2.1839, Accuracy: 3734/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 7, 11, 13, 14] (20/1000) accuracy: 0.31116666666666665 =====
+
+Test set: Average loss: 2.4400, Accuracy: 3423/12000 (29%)
+
+
+
+===== Computing accuracy for [2, 5, 6, 7, 8, 9, 12, 13] (21/1000) accuracy: 0.28525 =====
+
+Test set: Average loss: 2.0535, Accuracy: 4011/12000 (33%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 6, 8, 12, 14] (22/1000) accuracy: 0.33425 =====
+
+Test set: Average loss: 3.1383, Accuracy: 1653/12000 (14%)
+
+
+
+===== Computing accuracy for [2, 4, 5, 6] (23/1000) accuracy: 0.13775 =====
+
+Test set: Average loss: 2.0468, Accuracy: 4056/12000 (34%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 7, 8, 9, 14] (24/1000) accuracy: 0.338 =====
+
+Test set: Average loss: 2.1265, Accuracy: 3738/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 6, 7, 10, 11, 12] (25/1000) accuracy: 0.3115 =====
+
+Test set: Average loss: 2.8743, Accuracy: 2293/12000 (19%)
+
+
+
+===== Computing accuracy for [2, 3, 9, 10, 12, 13] (26/1000) accuracy: 0.19108333333333333 =====
+
+Test set: Average loss: 2.3255, Accuracy: 3237/12000 (27%)
+
+
+
+===== Computing accuracy for [2, 7, 9, 11, 13, 14] (27/1000) accuracy: 0.26975 =====
+
+Test set: Average loss: 2.1369, Accuracy: 4063/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 5, 7, 11, 12, 13] (28/1000) accuracy: 0.33858333333333335 =====
+
+Test set: Average loss: 2.1169, Accuracy: 3917/12000 (33%)
+
+
+
+===== Computing accuracy for [1, 3, 7, 9, 11, 14] (29/1000) accuracy: 0.3264166666666667 =====
+
+Test set: Average loss: 1.5225, Accuracy: 5964/12000 (50%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 7, 9, 10, 11, 12, 13] (30/1000) accuracy: 0.497 =====
+
+Test set: Average loss: 2.0216, Accuracy: 4064/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 10, 11, 12] (31/1000) accuracy: 0.33866666666666667 =====
+
+Test set: Average loss: 2.4732, Accuracy: 3083/12000 (26%)
+
+
+
+===== Computing accuracy for [2, 3, 7, 11, 13, 14] (32/1000) accuracy: 0.2569166666666667 =====
+
+Test set: Average loss: 1.8585, Accuracy: 4421/12000 (37%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 6, 9, 11, 12, 13] (33/1000) accuracy: 0.36841666666666667 =====
+
+Test set: Average loss: 2.3277, Accuracy: 3646/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 7, 9, 10, 13] (34/1000) accuracy: 0.30383333333333334 =====
+
+Test set: Average loss: 2.0946, Accuracy: 4189/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 7, 10, 12, 13, 14] (35/1000) accuracy: 0.34908333333333336 =====
+
+Test set: Average loss: 2.1808, Accuracy: 3407/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 7, 8, 14] (36/1000) accuracy: 0.28391666666666665 =====
+
+Test set: Average loss: 2.7557, Accuracy: 2510/12000 (21%)
+
+
+
+===== Computing accuracy for [5, 7, 10, 13, 14] (37/1000) accuracy: 0.20916666666666667 =====
+
+Test set: Average loss: 2.8826, Accuracy: 2187/12000 (18%)
+
+
+
+===== Computing accuracy for [2, 4, 8, 10, 13] (38/1000) accuracy: 0.18225 =====
+
+Test set: Average loss: 2.5333, Accuracy: 2900/12000 (24%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 6, 8, 12] (39/1000) accuracy: 0.24166666666666667 =====
+
+Test set: Average loss: 2.4097, Accuracy: 3355/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 5, 6, 9, 10, 14] (40/1000) accuracy: 0.27958333333333335 =====
+
+Test set: Average loss: 2.3103, Accuracy: 3595/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 3, 5, 9, 11, 14] (41/1000) accuracy: 0.2995833333333333 =====
+
+Test set: Average loss: 1.9395, Accuracy: 4459/12000 (37%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 6, 7, 9, 10, 11, 12, 13] (42/1000) accuracy: 0.3715833333333333 =====
+
+Test set: Average loss: 1.3984, Accuracy: 6341/12000 (53%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 8, 9, 10, 11, 12, 13, 14] (43/1000) accuracy: 0.5284166666666666 =====
+
+Test set: Average loss: 1.6218, Accuracy: 5388/12000 (45%)
+
+
+
+===== Computing accuracy for [0, 1, 7, 8, 11, 12, 14] (44/1000) accuracy: 0.449 =====
+
+Test set: Average loss: 1.6342, Accuracy: 5438/12000 (45%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 5, 8, 9, 10, 11, 12, 13] (45/1000) accuracy: 0.45316666666666666 =====
+
+Test set: Average loss: 2.7729, Accuracy: 2443/12000 (20%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 6, 9, 10, 13] (46/1000) accuracy: 0.20358333333333334 =====
+
+Test set: Average loss: 2.0172, Accuracy: 4269/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 5, 7, 9, 11, 13, 14] (47/1000) accuracy: 0.35575 =====
+
+Test set: Average loss: 1.9758, Accuracy: 4727/12000 (39%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 5, 6, 7, 8, 9, 12] (48/1000) accuracy: 0.3939166666666667 =====
+
+Test set: Average loss: 2.5679, Accuracy: 2736/12000 (23%)
+
+
+
+===== Computing accuracy for [1, 5, 9, 11, 13] (49/1000) accuracy: 0.228 =====
+
+Test set: Average loss: 2.5738, Accuracy: 3040/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 8, 9, 10, 13] (50/1000) accuracy: 0.25333333333333335 =====
+
+Test set: Average loss: 1.6370, Accuracy: 5321/12000 (44%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 5, 6, 8, 10, 12, 14] (51/1000) accuracy: 0.4434166666666667 =====
+
+Test set: Average loss: 2.7886, Accuracy: 2419/12000 (20%)
+
+
+
+===== Computing accuracy for [0, 3, 5, 10, 12, 13] (52/1000) accuracy: 0.20158333333333334 =====
+
+Test set: Average loss: 2.0281, Accuracy: 4221/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 7, 10, 11, 12] (53/1000) accuracy: 0.35175 =====
+
+Test set: Average loss: 2.2969, Accuracy: 3551/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 6, 10, 11, 14] (54/1000) accuracy: 0.29591666666666666 =====
+
+Test set: Average loss: 2.0414, Accuracy: 4637/12000 (39%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 5, 7, 10, 12, 14] (55/1000) accuracy: 0.3864166666666667 =====
+
+Test set: Average loss: 2.4940, Accuracy: 2942/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 7, 9] (56/1000) accuracy: 0.24516666666666667 =====
+
+Test set: Average loss: 2.2525, Accuracy: 3415/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 4, 9, 10, 11, 12, 13] (57/1000) accuracy: 0.28458333333333335 =====
+
+Test set: Average loss: 2.0274, Accuracy: 4195/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 6, 9, 10, 12, 13] (58/1000) accuracy: 0.34958333333333336 =====
+
+Test set: Average loss: 1.7219, Accuracy: 5255/12000 (44%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 6, 8, 11, 12, 13, 14] (59/1000) accuracy: 0.4379166666666667 =====
+
+Test set: Average loss: 2.8527, Accuracy: 2416/12000 (20%)
+
+
+
+===== Computing accuracy for [0, 11, 14] (60/1000) accuracy: 0.20133333333333334 =====
+
+Test set: Average loss: 2.1921, Accuracy: 3797/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 6, 9, 10, 11] (61/1000) accuracy: 0.3164166666666667 =====
+
+Test set: Average loss: 2.2237, Accuracy: 3603/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 11, 12, 13] (62/1000) accuracy: 0.30025 =====
+
+Test set: Average loss: 2.4551, Accuracy: 3277/12000 (27%)
+
+
+
+===== Computing accuracy for [2, 8, 9, 12, 13, 14] (63/1000) accuracy: 0.27308333333333334 =====
+
+Test set: Average loss: 1.5878, Accuracy: 5823/12000 (49%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 7, 8, 10, 12, 13, 14] (64/1000) accuracy: 0.48525 =====
+
+Test set: Average loss: 2.1130, Accuracy: 3846/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 6, 7, 8, 13, 14] (65/1000) accuracy: 0.3205 =====
+
+Test set: Average loss: 2.2463, Accuracy: 3784/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 6, 8, 9, 10, 11, 13] (66/1000) accuracy: 0.31533333333333335 =====
+
+Test set: Average loss: 2.4729, Accuracy: 3354/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 6, 7, 8, 9, 10] (67/1000) accuracy: 0.2795 =====
+
+Test set: Average loss: 2.1962, Accuracy: 3834/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 5, 7, 8, 10, 14] (68/1000) accuracy: 0.3195 =====
+
+Test set: Average loss: 1.8865, Accuracy: 4610/12000 (38%)
+
+
+
+===== Computing accuracy for [2, 4, 5, 7, 8, 9, 10, 11, 12] (69/1000) accuracy: 0.38416666666666666 =====
+
+Test set: Average loss: 2.4036, Accuracy: 3534/12000 (29%)
+
+
+
+===== Computing accuracy for [2, 3, 6, 7, 8, 9, 10, 12] (70/1000) accuracy: 0.2945 =====
+
+Test set: Average loss: 1.7128, Accuracy: 4908/12000 (41%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 7, 8, 11, 12] (71/1000) accuracy: 0.409 =====
+
+Test set: Average loss: 2.9743, Accuracy: 2165/12000 (18%)
+
+
+
+===== Computing accuracy for [8, 9, 12] (72/1000) accuracy: 0.18041666666666667 =====
+
+Test set: Average loss: 2.3524, Accuracy: 3226/12000 (27%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 8, 11, 13] (73/1000) accuracy: 0.2688333333333333 =====
+
+Test set: Average loss: 1.7917, Accuracy: 5059/12000 (42%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13] (74/1000) accuracy: 0.4215833333333333 =====
+
+Test set: Average loss: 1.7673, Accuracy: 4753/12000 (40%)
+
+
+
+===== Computing accuracy for [0, 4, 7, 9, 10, 11, 12, 14] (75/1000) accuracy: 0.39608333333333334 =====
+
+Test set: Average loss: 3.1199, Accuracy: 1996/12000 (17%)
+
+
+
+===== Computing accuracy for [0, 2, 7, 10] (76/1000) accuracy: 0.16633333333333333 =====
+
+Test set: Average loss: 2.6996, Accuracy: 2696/12000 (22%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 7] (77/1000) accuracy: 0.22466666666666665 =====
+
+Test set: Average loss: 2.9500, Accuracy: 2205/12000 (18%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 7, 10] (78/1000) accuracy: 0.18375 =====
+
+Test set: Average loss: 2.5971, Accuracy: 3167/12000 (26%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 7, 12, 14] (79/1000) accuracy: 0.2639166666666667 =====
+
+Test set: Average loss: 2.3039, Accuracy: 3376/12000 (28%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 6, 8, 10, 12] (80/1000) accuracy: 0.2813333333333333 =====
+
+Test set: Average loss: 2.2108, Accuracy: 3770/12000 (31%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 6, 8, 13, 14] (81/1000) accuracy: 0.31416666666666665 =====
+
+Test set: Average loss: 2.9696, Accuracy: 2251/12000 (19%)
+
+
+
+===== Computing accuracy for [2, 3, 10, 12, 14] (82/1000) accuracy: 0.18758333333333332 =====
+
+Test set: Average loss: 2.8430, Accuracy: 2468/12000 (21%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 5, 12] (83/1000) accuracy: 0.20566666666666666 =====
+
+Test set: Average loss: 2.9913, Accuracy: 2004/12000 (17%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 6, 9, 10] (84/1000) accuracy: 0.167 =====
+
+Test set: Average loss: 2.5289, Accuracy: 2497/12000 (21%)
+
+
+
+===== Computing accuracy for [2, 4, 5, 6, 10, 11, 13] (85/1000) accuracy: 0.20808333333333334 =====
+
+Test set: Average loss: 1.7246, Accuracy: 5114/12000 (43%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 7, 8, 9, 11, 12, 13] (86/1000) accuracy: 0.4261666666666667 =====
+
+Test set: Average loss: 2.8146, Accuracy: 2459/12000 (20%)
+
+
+
+===== Computing accuracy for [5, 6, 8, 9, 12] (87/1000) accuracy: 0.20491666666666666 =====
+
+Test set: Average loss: 2.3878, Accuracy: 3301/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 4, 9, 11, 12, 13] (88/1000) accuracy: 0.27508333333333335 =====
+
+Test set: Average loss: 1.3999, Accuracy: 6333/12000 (53%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 8, 9, 11, 12, 13, 14] (89/1000) accuracy: 0.52775 =====
+
+Test set: Average loss: 2.0080, Accuracy: 4087/12000 (34%)
+
+
+
+===== Computing accuracy for [1, 2, 7, 9, 10, 11, 12, 13] (90/1000) accuracy: 0.34058333333333335 =====
+
+Test set: Average loss: 2.4418, Accuracy: 3178/12000 (26%)
+
+
+
+===== Computing accuracy for [5, 7, 8, 9, 10, 14] (91/1000) accuracy: 0.2648333333333333 =====
+
+Test set: Average loss: 1.7631, Accuracy: 5091/12000 (42%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 6, 7, 8, 9, 10, 11, 12] (92/1000) accuracy: 0.42425 =====
+
+Test set: Average loss: 2.1929, Accuracy: 3631/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 6, 9, 10, 12, 13] (93/1000) accuracy: 0.3025833333333333 =====
+
+Test set: Average loss: 1.5994, Accuracy: 5652/12000 (47%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 6, 8, 10, 11, 13, 14] (94/1000) accuracy: 0.471 =====
+
+Test set: Average loss: 1.8761, Accuracy: 4526/12000 (38%)
+
+
+
+===== Computing accuracy for [0, 1, 7, 8, 9, 11, 12] (95/1000) accuracy: 0.37716666666666665 =====
+
+Test set: Average loss: 2.3311, Accuracy: 3208/12000 (27%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 9, 10, 12, 14] (96/1000) accuracy: 0.2673333333333333 =====
+
+Test set: Average loss: 1.8328, Accuracy: 4853/12000 (40%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 7, 8, 9, 10, 11, 12] (97/1000) accuracy: 0.40441666666666665 =====
+
+Test set: Average loss: 2.2163, Accuracy: 3783/12000 (32%)
+
+
+
+===== Computing accuracy for [1, 7, 8, 9, 10, 11, 13] (98/1000) accuracy: 0.31525 =====
+
+Test set: Average loss: 2.6367, Accuracy: 2500/12000 (21%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 9, 10, 11, 13] (99/1000) accuracy: 0.20833333333333334 =====
+
+Test set: Average loss: 1.8101, Accuracy: 5107/12000 (43%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 6, 8, 11, 13, 14] (100/1000) accuracy: 0.4255833333333333 =====
+
+Test set: Average loss: 2.8576, Accuracy: 2080/12000 (17%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 6] (101/1000) accuracy: 0.17333333333333334 =====
+
+Test set: Average loss: 1.6472, Accuracy: 5131/12000 (43%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 8, 10, 11, 12, 14] (102/1000) accuracy: 0.4275833333333333 =====
+
+Test set: Average loss: 2.4724, Accuracy: 3330/12000 (28%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 6, 8, 9, 12] (103/1000) accuracy: 0.2775 =====
+
+Test set: Average loss: 2.4504, Accuracy: 2875/12000 (24%)
+
+
+
+===== Computing accuracy for [1, 3, 6, 12, 13] (104/1000) accuracy: 0.23958333333333334 =====
+
+Test set: Average loss: 1.7125, Accuracy: 5094/12000 (42%)
+
+
+
+===== Computing accuracy for [2, 4, 6, 7, 10, 11, 12, 13, 14] (105/1000) accuracy: 0.4245 =====
+
+Test set: Average loss: 1.8035, Accuracy: 5346/12000 (45%)
+
+
+
+===== Computing accuracy for [3, 4, 7, 8, 9, 10, 12, 13, 14] (106/1000) accuracy: 0.4455 =====
+
+Test set: Average loss: 2.4010, Accuracy: 3359/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 6, 9, 10, 14] (107/1000) accuracy: 0.27991666666666665 =====
+
+Test set: Average loss: 2.4575, Accuracy: 3281/12000 (27%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 6, 8, 9, 12] (108/1000) accuracy: 0.27341666666666664 =====
+
+Test set: Average loss: 2.1622, Accuracy: 3804/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 7, 11, 12] (109/1000) accuracy: 0.317 =====
+
+Test set: Average loss: 1.5270, Accuracy: 6113/12000 (51%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 6, 7, 8, 9, 10, 11, 13, 14] (110/1000) accuracy: 0.5094166666666666 =====
+
+Test set: Average loss: 1.7785, Accuracy: 5120/12000 (43%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 6, 7, 9, 10, 13, 14] (111/1000) accuracy: 0.4266666666666667 =====
+
+Test set: Average loss: 2.2223, Accuracy: 4124/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 6, 7, 8, 12, 13] (112/1000) accuracy: 0.3436666666666667 =====
+
+Test set: Average loss: 1.9766, Accuracy: 4335/12000 (36%)
+
+
+
+===== Computing accuracy for [2, 4, 7, 8, 9, 10, 11, 12, 13] (113/1000) accuracy: 0.36125 =====
+
+Test set: Average loss: 1.9619, Accuracy: 4384/12000 (37%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 6, 8, 9, 10, 11, 14] (114/1000) accuracy: 0.36533333333333334 =====
+
+Test set: Average loss: 1.7878, Accuracy: 5023/12000 (42%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 7, 8, 12, 14] (115/1000) accuracy: 0.4185833333333333 =====
+
+Test set: Average loss: 2.3691, Accuracy: 3371/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 1, 7, 9, 10, 11] (116/1000) accuracy: 0.28091666666666665 =====
+
+Test set: Average loss: 1.0646, Accuracy: 7775/12000 (65%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 5, 6, 8, 9, 10, 11, 12, 13, 14] (117/1000) accuracy: 0.6479166666666667 =====
+
+Test set: Average loss: 1.8230, Accuracy: 4960/12000 (41%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 9, 11, 12, 13, 14] (118/1000) accuracy: 0.41333333333333333 =====
+
+Test set: Average loss: 2.1120, Accuracy: 3997/12000 (33%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 7, 9, 13, 14] (119/1000) accuracy: 0.33308333333333334 =====
+
+Test set: Average loss: 2.6105, Accuracy: 2691/12000 (22%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 7, 9, 14] (120/1000) accuracy: 0.22425 =====
+
+Test set: Average loss: 1.9230, Accuracy: 4629/12000 (39%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 8, 11, 13, 14] (121/1000) accuracy: 0.38575 =====
+
+Test set: Average loss: 2.3212, Accuracy: 3573/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 9, 11, 13, 14] (122/1000) accuracy: 0.29775 =====
+
+Test set: Average loss: 1.8815, Accuracy: 4951/12000 (41%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 6, 7, 8, 12, 13, 14] (123/1000) accuracy: 0.41258333333333336 =====
+
+Test set: Average loss: 2.5740, Accuracy: 3037/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 9, 12, 13] (124/1000) accuracy: 0.2530833333333333 =====
+
+Test set: Average loss: 1.9966, Accuracy: 4308/12000 (36%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 7, 9, 10, 11, 12, 13] (125/1000) accuracy: 0.359 =====
+
+Test set: Average loss: 1.9264, Accuracy: 4374/12000 (36%)
+
+
+
+===== Computing accuracy for [4, 5, 6, 7, 10, 11, 12, 14] (126/1000) accuracy: 0.3645 =====
+
+Test set: Average loss: 2.4283, Accuracy: 3020/12000 (25%)
+
+
+
+===== Computing accuracy for [4, 5, 6, 7, 10, 11, 13] (127/1000) accuracy: 0.25166666666666665 =====
+
+Test set: Average loss: 2.2133, Accuracy: 3969/12000 (33%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 6, 7, 9, 10, 12] (128/1000) accuracy: 0.33075 =====
+
+Test set: Average loss: 2.9787, Accuracy: 2410/12000 (20%)
+
+
+
+===== Computing accuracy for [2, 3, 7, 10, 14] (129/1000) accuracy: 0.20083333333333334 =====
+
+Test set: Average loss: 1.8281, Accuracy: 4798/12000 (40%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 8, 9, 11, 12, 13] (130/1000) accuracy: 0.3998333333333333 =====
+
+Test set: Average loss: 1.7188, Accuracy: 5368/12000 (45%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 6, 7, 8, 9, 10, 11, 12, 13] (131/1000) accuracy: 0.44733333333333336 =====
+
+Test set: Average loss: 1.5055, Accuracy: 6056/12000 (50%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 6, 7, 8, 9, 10, 11, 12] (132/1000) accuracy: 0.5046666666666667 =====
+
+Test set: Average loss: 2.5825, Accuracy: 2759/12000 (23%)
+
+
+
+===== Computing accuracy for [0, 2, 8, 9, 10, 11] (133/1000) accuracy: 0.22991666666666666 =====
+
+Test set: Average loss: 2.4006, Accuracy: 3246/12000 (27%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 6, 8, 9, 12] (134/1000) accuracy: 0.2705 =====
+
+Test set: Average loss: 2.1763, Accuracy: 3368/12000 (28%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 6, 7, 13, 14] (135/1000) accuracy: 0.2806666666666667 =====
+
+Test set: Average loss: 2.5752, Accuracy: 3287/12000 (27%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 7, 10, 14] (136/1000) accuracy: 0.27391666666666664 =====
+
+Test set: Average loss: 2.5096, Accuracy: 2930/12000 (24%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 6, 14] (137/1000) accuracy: 0.24416666666666667 =====
+
+Test set: Average loss: 2.4455, Accuracy: 2949/12000 (25%)
+
+
+
+===== Computing accuracy for [4, 8, 10, 12, 13, 14] (138/1000) accuracy: 0.24575 =====
+
+Test set: Average loss: 2.7044, Accuracy: 2673/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 8, 12, 13] (139/1000) accuracy: 0.22275 =====
+
+Test set: Average loss: 2.5281, Accuracy: 3128/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 6, 7, 9, 10] (140/1000) accuracy: 0.26066666666666666 =====
+
+Test set: Average loss: 2.7692, Accuracy: 2244/12000 (19%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 9, 11] (141/1000) accuracy: 0.187 =====
+
+Test set: Average loss: 2.1848, Accuracy: 3508/12000 (29%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 6, 7, 11] (142/1000) accuracy: 0.29233333333333333 =====
+
+Test set: Average loss: 1.8521, Accuracy: 5099/12000 (42%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 7, 8, 10, 11, 12, 13] (143/1000) accuracy: 0.42491666666666666 =====
+
+Test set: Average loss: 2.1925, Accuracy: 3801/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 9, 12, 14] (144/1000) accuracy: 0.31675 =====
+
+Test set: Average loss: 1.9438, Accuracy: 4122/12000 (34%)
+
+
+
+===== Computing accuracy for [2, 4, 6, 8, 10, 11, 12, 14] (145/1000) accuracy: 0.3435 =====
+
+Test set: Average loss: 2.2266, Accuracy: 3356/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 8, 10, 11, 14] (146/1000) accuracy: 0.2796666666666667 =====
+
+Test set: Average loss: 1.6579, Accuracy: 5589/12000 (47%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 5, 7, 8, 12, 13, 14] (147/1000) accuracy: 0.46575 =====
+
+Test set: Average loss: 1.4343, Accuracy: 6302/12000 (53%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 6, 7, 8, 9, 11, 12, 13, 14] (148/1000) accuracy: 0.5251666666666667 =====
+
+Test set: Average loss: 2.1797, Accuracy: 3412/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 9, 10, 11, 12] (149/1000) accuracy: 0.2843333333333333 =====
+
+Test set: Average loss: 2.3463, Accuracy: 3210/12000 (27%)
+
+
+
+===== Computing accuracy for [1, 4, 6, 7, 12, 13] (150/1000) accuracy: 0.2675 =====
+
+Test set: Average loss: 2.0594, Accuracy: 4231/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 11, 12, 13, 14] (151/1000) accuracy: 0.35258333333333336 =====
+
+Test set: Average loss: 2.8787, Accuracy: 2234/12000 (19%)
+
+
+
+===== Computing accuracy for [2, 5, 6, 8, 10, 13] (152/1000) accuracy: 0.18616666666666667 =====
+
+Test set: Average loss: 1.6502, Accuracy: 5263/12000 (44%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 7, 8, 10, 11, 12] (153/1000) accuracy: 0.4385833333333333 =====
+
+Test set: Average loss: 1.7950, Accuracy: 5087/12000 (42%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 5, 6, 7, 8, 10, 11, 13] (154/1000) accuracy: 0.42391666666666666 =====
+
+Test set: Average loss: 2.2544, Accuracy: 3732/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 6, 7, 8, 9] (155/1000) accuracy: 0.311 =====
+
+Test set: Average loss: 2.5308, Accuracy: 3152/12000 (26%)
+
+
+
+===== Computing accuracy for [2, 6, 7, 8, 10, 12, 13] (156/1000) accuracy: 0.26266666666666666 =====
+
+Test set: Average loss: 1.6773, Accuracy: 5262/12000 (44%)
+
+
+
+===== Computing accuracy for [0, 2, 7, 8, 9, 10, 11, 12, 14] (157/1000) accuracy: 0.4385 =====
+
+Test set: Average loss: 1.7053, Accuracy: 5259/12000 (44%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 8, 9, 10, 12, 13, 14] (158/1000) accuracy: 0.43825 =====
+
+Test set: Average loss: 2.4911, Accuracy: 2826/12000 (24%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 6, 9, 12] (159/1000) accuracy: 0.2355 =====
+
+Test set: Average loss: 2.7697, Accuracy: 2574/12000 (21%)
+
+
+
+===== Computing accuracy for [3, 5, 6, 9, 14] (160/1000) accuracy: 0.2145 =====
+
+Test set: Average loss: 2.1199, Accuracy: 4132/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 7, 8, 9, 10, 12, 13] (161/1000) accuracy: 0.3443333333333333 =====
+
+Test set: Average loss: 2.0541, Accuracy: 4055/12000 (34%)
+
+
+
+===== Computing accuracy for [3, 5, 7, 11, 12, 13, 14] (162/1000) accuracy: 0.33791666666666664 =====
+
+Test set: Average loss: 2.0795, Accuracy: 4113/12000 (34%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 7, 9, 12, 14] (163/1000) accuracy: 0.34275 =====
+
+Test set: Average loss: 2.5894, Accuracy: 2733/12000 (23%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 10] (164/1000) accuracy: 0.22775 =====
+
+Test set: Average loss: 2.3246, Accuracy: 3443/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 6, 9, 11, 14] (165/1000) accuracy: 0.28691666666666665 =====
+
+Test set: Average loss: 2.5902, Accuracy: 2851/12000 (24%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 7, 9, 10] (166/1000) accuracy: 0.23758333333333334 =====
+
+Test set: Average loss: 2.1320, Accuracy: 4018/12000 (33%)
+
+
+
+===== Computing accuracy for [0, 5, 7, 11, 12, 13, 14] (167/1000) accuracy: 0.3348333333333333 =====
+
+Test set: Average loss: 1.8048, Accuracy: 4994/12000 (42%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 7, 8, 9, 10, 11, 13, 14] (168/1000) accuracy: 0.4161666666666667 =====
+
+Test set: Average loss: 2.4433, Accuracy: 2955/12000 (25%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 6, 7, 12] (169/1000) accuracy: 0.24625 =====
+
+Test set: Average loss: 2.9120, Accuracy: 1990/12000 (17%)
+
+
+
+===== Computing accuracy for [2, 9, 11, 13] (170/1000) accuracy: 0.16583333333333333 =====
+
+Test set: Average loss: 2.0683, Accuracy: 4164/12000 (35%)
+
+
+
+===== Computing accuracy for [2, 3, 7, 9, 11, 12, 13, 14] (171/1000) accuracy: 0.347 =====
+
+Test set: Average loss: 2.2218, Accuracy: 3432/12000 (29%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 7, 8, 9, 11] (172/1000) accuracy: 0.286 =====
+
+Test set: Average loss: 2.5148, Accuracy: 2946/12000 (25%)
+
+
+
+===== Computing accuracy for [3, 6, 7, 9, 10, 11] (173/1000) accuracy: 0.2455 =====
+
+Test set: Average loss: 2.2748, Accuracy: 3269/12000 (27%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 6, 8, 13, 14] (174/1000) accuracy: 0.27241666666666664 =====
+
+Test set: Average loss: 2.3379, Accuracy: 3611/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 2, 6, 7, 8, 9, 10, 11, 13] (175/1000) accuracy: 0.30091666666666667 =====
+
+Test set: Average loss: 2.5471, Accuracy: 2806/12000 (23%)
+
+
+
+===== Computing accuracy for [2, 3, 7, 9, 10, 11, 13] (176/1000) accuracy: 0.23383333333333334 =====
+
+Test set: Average loss: 2.1573, Accuracy: 3715/12000 (31%)
+
+
+
+===== Computing accuracy for [2, 4, 6, 8, 10, 12, 13, 14] (177/1000) accuracy: 0.3095833333333333 =====
+
+Test set: Average loss: 1.4169, Accuracy: 6523/12000 (54%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 6, 7, 8, 9, 12, 13, 14] (178/1000) accuracy: 0.5435833333333333 =====
+
+Test set: Average loss: 2.4475, Accuracy: 3124/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 4, 6, 7, 9, 10, 11] (179/1000) accuracy: 0.26033333333333336 =====
+
+Test set: Average loss: 2.4796, Accuracy: 2948/12000 (25%)
+
+
+
+===== Computing accuracy for [1, 4, 8, 11, 13] (180/1000) accuracy: 0.24566666666666667 =====
+
+Test set: Average loss: 2.0713, Accuracy: 4326/12000 (36%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 6, 7, 10, 12, 13, 14] (181/1000) accuracy: 0.3605 =====
+
+Test set: Average loss: 2.2150, Accuracy: 3602/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 5, 6, 7, 9, 12, 14] (182/1000) accuracy: 0.3001666666666667 =====
+
+Test set: Average loss: 2.4510, Accuracy: 3161/12000 (26%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 6, 8, 9, 13] (183/1000) accuracy: 0.2634166666666667 =====
+
+Test set: Average loss: 2.2508, Accuracy: 3782/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 7, 10, 11, 14] (184/1000) accuracy: 0.31516666666666665 =====
+
+Test set: Average loss: 1.6518, Accuracy: 5470/12000 (46%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 6, 7, 8, 9, 10, 11, 12, 13] (185/1000) accuracy: 0.4558333333333333 =====
+
+Test set: Average loss: 1.9397, Accuracy: 4485/12000 (37%)
+
+
+
+===== Computing accuracy for [1, 3, 7, 8, 10, 11, 14] (186/1000) accuracy: 0.37375 =====
+
+Test set: Average loss: 2.2321, Accuracy: 3729/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 4, 6, 8, 9, 10, 11, 12, 13] (187/1000) accuracy: 0.31075 =====
+
+Test set: Average loss: 1.6681, Accuracy: 5595/12000 (47%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 5, 6, 7, 8, 10, 11, 13, 14] (188/1000) accuracy: 0.46625 =====
+
+Test set: Average loss: 1.6579, Accuracy: 5546/12000 (46%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 7, 8, 10, 11, 12, 13, 14] (189/1000) accuracy: 0.46216666666666667 =====
+
+Test set: Average loss: 3.0384, Accuracy: 1955/12000 (16%)
+
+
+
+===== Computing accuracy for [2, 4, 12] (190/1000) accuracy: 0.16291666666666665 =====
+
+Test set: Average loss: 2.0354, Accuracy: 4300/12000 (36%)
+
+
+
+===== Computing accuracy for [3, 6, 9, 11, 12, 13, 14] (191/1000) accuracy: 0.35833333333333334 =====
+
+Test set: Average loss: 1.6217, Accuracy: 5793/12000 (48%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 6, 8, 9, 12, 13, 14] (192/1000) accuracy: 0.48275 =====
+
+Test set: Average loss: 2.0010, Accuracy: 4448/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 7, 8, 9, 10, 11, 13] (193/1000) accuracy: 0.37066666666666664 =====
+
+Test set: Average loss: 2.1262, Accuracy: 3641/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 7, 8, 9, 14] (194/1000) accuracy: 0.30341666666666667 =====
+
+Test set: Average loss: 2.2305, Accuracy: 3767/12000 (31%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 7, 8, 9, 13] (195/1000) accuracy: 0.3139166666666667 =====
+
+Test set: Average loss: 2.3040, Accuracy: 3437/12000 (29%)
+
+
+
+===== Computing accuracy for [2, 6, 11, 12, 13, 14] (196/1000) accuracy: 0.28641666666666665 =====
+
+Test set: Average loss: 2.3788, Accuracy: 3085/12000 (26%)
+
+
+
+===== Computing accuracy for [1, 8, 10, 11, 12] (197/1000) accuracy: 0.25708333333333333 =====
+
+Test set: Average loss: 2.9039, Accuracy: 2290/12000 (19%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 6, 9, 10] (198/1000) accuracy: 0.19083333333333333 =====
+
+Test set: Average loss: 2.2862, Accuracy: 3957/12000 (33%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 6, 12, 13, 14] (199/1000) accuracy: 0.32975 =====
+
+Test set: Average loss: 2.1690, Accuracy: 4054/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 6, 9, 11, 14] (200/1000) accuracy: 0.3378333333333333 =====
+
+Test set: Average loss: 2.3052, Accuracy: 3718/12000 (31%)
+
+
+
+===== Computing accuracy for [2, 7, 8, 10, 12, 13, 14] (201/1000) accuracy: 0.30983333333333335 =====
+
+Test set: Average loss: 2.4808, Accuracy: 3046/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 7, 14] (202/1000) accuracy: 0.25383333333333336 =====
+
+Test set: Average loss: 1.4409, Accuracy: 6015/12000 (50%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 8, 10, 11, 12, 13, 14] (203/1000) accuracy: 0.50125 =====
+
+Test set: Average loss: 1.7551, Accuracy: 4928/12000 (41%)
+
+
+
+===== Computing accuracy for [1, 5, 6, 7, 8, 11, 13, 14] (204/1000) accuracy: 0.4106666666666667 =====
+
+Test set: Average loss: 1.5374, Accuracy: 5617/12000 (47%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 9, 10, 11, 12, 13, 14] (205/1000) accuracy: 0.46808333333333335 =====
+
+Test set: Average loss: 2.2692, Accuracy: 3611/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 7, 13, 14] (206/1000) accuracy: 0.30091666666666667 =====
+
+Test set: Average loss: 1.9832, Accuracy: 4554/12000 (38%)
+
+
+
+===== Computing accuracy for [2, 3, 6, 8, 11, 12, 13, 14] (207/1000) accuracy: 0.3795 =====
+
+Test set: Average loss: 2.1325, Accuracy: 4231/12000 (35%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 6, 12, 13, 14] (208/1000) accuracy: 0.35258333333333336 =====
+
+Test set: Average loss: 2.7041, Accuracy: 2385/12000 (20%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 9, 10, 14] (209/1000) accuracy: 0.19875 =====
+
+Test set: Average loss: 2.3414, Accuracy: 3402/12000 (28%)
+
+
+
+===== Computing accuracy for [1, 5, 7, 8, 10, 12, 13] (210/1000) accuracy: 0.2835 =====
+
+Test set: Average loss: 2.2472, Accuracy: 3379/12000 (28%)
+
+
+
+===== Computing accuracy for [5, 6, 7, 8, 11, 14] (211/1000) accuracy: 0.28158333333333335 =====
+
+Test set: Average loss: 2.7692, Accuracy: 2490/12000 (21%)
+
+
+
+===== Computing accuracy for [3, 5, 6, 13, 14] (212/1000) accuracy: 0.2075 =====
+
+Test set: Average loss: 2.1274, Accuracy: 3825/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 8, 10, 11, 13] (213/1000) accuracy: 0.31875 =====
+
+Test set: Average loss: 2.7361, Accuracy: 2492/12000 (21%)
+
+
+
+===== Computing accuracy for [4, 7, 8, 12] (214/1000) accuracy: 0.20766666666666667 =====
+
+Test set: Average loss: 1.9224, Accuracy: 4571/12000 (38%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 5, 8, 9, 11, 13, 14] (215/1000) accuracy: 0.3809166666666667 =====
+
+Test set: Average loss: 2.9695, Accuracy: 2085/12000 (17%)
+
+
+
+===== Computing accuracy for [0, 3, 9, 10, 13] (216/1000) accuracy: 0.17375 =====
+
+Test set: Average loss: 2.1020, Accuracy: 3854/12000 (32%)
+
+
+
+===== Computing accuracy for [3, 7, 8, 9, 11, 12] (217/1000) accuracy: 0.32116666666666666 =====
+
+Test set: Average loss: 2.3139, Accuracy: 3294/12000 (27%)
+
+
+
+===== Computing accuracy for [1, 3, 6, 9, 10, 11, 13] (218/1000) accuracy: 0.2745 =====
+
+Test set: Average loss: 2.3555, Accuracy: 3455/12000 (29%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 7, 8, 13, 14] (219/1000) accuracy: 0.28791666666666665 =====
+
+Test set: Average loss: 2.3920, Accuracy: 3136/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 8, 9, 10, 11] (220/1000) accuracy: 0.2613333333333333 =====
+
+Test set: Average loss: 1.8940, Accuracy: 4505/12000 (38%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 6, 7, 11, 13, 14] (221/1000) accuracy: 0.3754166666666667 =====
+
+Test set: Average loss: 2.5214, Accuracy: 2843/12000 (24%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 12, 14] (222/1000) accuracy: 0.23691666666666666 =====
+
+Test set: Average loss: 1.6746, Accuracy: 5389/12000 (45%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 7, 8, 10, 11, 14] (223/1000) accuracy: 0.44908333333333333 =====
+
+Test set: Average loss: 2.0901, Accuracy: 4099/12000 (34%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 6, 7, 9, 10, 14] (224/1000) accuracy: 0.34158333333333335 =====
+
+Test set: Average loss: 2.0818, Accuracy: 4487/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 6, 8, 9, 10, 12, 13, 14] (225/1000) accuracy: 0.3739166666666667 =====
+
+Test set: Average loss: 2.0928, Accuracy: 4056/12000 (34%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 6, 7, 8, 12] (226/1000) accuracy: 0.338 =====
+
+Test set: Average loss: 1.2496, Accuracy: 6783/12000 (57%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 7, 8, 9, 10, 11, 12, 14] (227/1000) accuracy: 0.56525 =====
+
+Test set: Average loss: 1.5781, Accuracy: 5788/12000 (48%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 7, 9, 10, 11, 12, 13] (228/1000) accuracy: 0.48233333333333334 =====
+
+Test set: Average loss: 3.2209, Accuracy: 1721/12000 (14%)
+
+
+
+===== Computing accuracy for [1, 13] (229/1000) accuracy: 0.14341666666666666 =====
+
+Test set: Average loss: 1.5287, Accuracy: 5785/12000 (48%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 6, 8, 9, 10, 12, 14] (230/1000) accuracy: 0.4820833333333333 =====
+
+Test set: Average loss: 2.0237, Accuracy: 4575/12000 (38%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 7, 10, 11, 13, 14] (231/1000) accuracy: 0.38125 =====
+
+Test set: Average loss: 2.3241, Accuracy: 3393/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 7, 8, 9, 10, 12] (232/1000) accuracy: 0.28275 =====
+
+Test set: Average loss: 2.0902, Accuracy: 4203/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 6, 7, 9, 10, 14] (233/1000) accuracy: 0.35025 =====
+
+Test set: Average loss: 2.4994, Accuracy: 3012/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 7, 9, 10, 14] (234/1000) accuracy: 0.251 =====
+
+Test set: Average loss: 1.9150, Accuracy: 4480/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 6, 7, 10, 11, 12] (235/1000) accuracy: 0.37333333333333335 =====
+
+Test set: Average loss: 2.1475, Accuracy: 3683/12000 (31%)
+
+
+
+===== Computing accuracy for [1, 7, 8, 10, 11, 12] (236/1000) accuracy: 0.30691666666666667 =====
+
+Test set: Average loss: 2.1687, Accuracy: 3497/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 9, 10, 11, 12] (237/1000) accuracy: 0.29141666666666666 =====
+
+Test set: Average loss: 2.2161, Accuracy: 3848/12000 (32%)
+
+
+
+===== Computing accuracy for [2, 4, 5, 6, 7, 8, 10, 12, 13] (238/1000) accuracy: 0.32066666666666666 =====
+
+Test set: Average loss: 2.0811, Accuracy: 4057/12000 (34%)
+
+
+
+===== Computing accuracy for [4, 5, 6, 7, 9, 10, 11, 14] (239/1000) accuracy: 0.33808333333333335 =====
+
+Test set: Average loss: 2.2468, Accuracy: 3358/12000 (28%)
+
+
+
+===== Computing accuracy for [1, 7, 8, 9, 14] (240/1000) accuracy: 0.2798333333333333 =====
+
+Test set: Average loss: 2.4427, Accuracy: 3020/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 6, 9, 12] (241/1000) accuracy: 0.25166666666666665 =====
+
+Test set: Average loss: 1.8703, Accuracy: 5279/12000 (44%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 5, 6, 8, 9, 11, 12, 13] (242/1000) accuracy: 0.4399166666666667 =====
+
+Test set: Average loss: 2.1082, Accuracy: 4159/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 9, 11, 12, 14] (243/1000) accuracy: 0.34658333333333335 =====
+
+Test set: Average loss: 2.8702, Accuracy: 2368/12000 (20%)
+
+
+
+===== Computing accuracy for [5, 7, 8, 10, 13] (244/1000) accuracy: 0.19733333333333333 =====
+
+Test set: Average loss: 2.3485, Accuracy: 3550/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 6, 8, 9, 11, 13] (245/1000) accuracy: 0.29583333333333334 =====
+
+Test set: Average loss: 2.3843, Accuracy: 3478/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 7, 10, 12, 13] (246/1000) accuracy: 0.28983333333333333 =====
+
+Test set: Average loss: 1.8058, Accuracy: 5347/12000 (45%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 7, 8, 9, 10, 12, 13] (247/1000) accuracy: 0.44558333333333333 =====
+
+Test set: Average loss: 1.9741, Accuracy: 4221/12000 (35%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 7, 8, 9, 11] (248/1000) accuracy: 0.35175 =====
+
+Test set: Average loss: 2.4853, Accuracy: 3165/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 6, 12, 14] (249/1000) accuracy: 0.26375 =====
+
+Test set: Average loss: 2.2931, Accuracy: 3590/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 7, 9, 10, 11, 13] (250/1000) accuracy: 0.2991666666666667 =====
+
+Test set: Average loss: 2.9930, Accuracy: 2289/12000 (19%)
+
+
+
+===== Computing accuracy for [2, 3, 6, 8, 13] (251/1000) accuracy: 0.19075 =====
+
+Test set: Average loss: 2.1462, Accuracy: 4143/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 7, 10, 11, 13, 14] (252/1000) accuracy: 0.34525 =====
+
+Test set: Average loss: 2.2369, Accuracy: 3828/12000 (32%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 7, 9, 13, 14] (253/1000) accuracy: 0.319 =====
+
+Test set: Average loss: 2.8443, Accuracy: 2244/12000 (19%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 9, 10, 13] (254/1000) accuracy: 0.187 =====
+
+Test set: Average loss: 2.8067, Accuracy: 2465/12000 (21%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 7, 10, 13] (255/1000) accuracy: 0.20541666666666666 =====
+
+Test set: Average loss: 2.4857, Accuracy: 2987/12000 (25%)
+
+
+
+===== Computing accuracy for [1, 9, 10, 11, 14] (256/1000) accuracy: 0.24891666666666667 =====
+
+Test set: Average loss: 2.7262, Accuracy: 2636/12000 (22%)
+
+
+
+===== Computing accuracy for [3, 9, 11, 14] (257/1000) accuracy: 0.21966666666666668 =====
+
+Test set: Average loss: 2.2978, Accuracy: 3587/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 6, 7, 8, 9, 11, 13] (258/1000) accuracy: 0.29891666666666666 =====
+
+Test set: Average loss: 2.1267, Accuracy: 4065/12000 (34%)
+
+
+
+===== Computing accuracy for [1, 3, 10, 11, 12, 13, 14] (259/1000) accuracy: 0.33875 =====
+
+Test set: Average loss: 1.5617, Accuracy: 6304/12000 (53%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 5, 6, 8, 9, 12, 13, 14] (260/1000) accuracy: 0.5253333333333333 =====
+
+Test set: Average loss: 1.7959, Accuracy: 4680/12000 (39%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 6, 10, 11, 12, 13, 14] (261/1000) accuracy: 0.39 =====
+
+Test set: Average loss: 2.0423, Accuracy: 4302/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 7, 8, 9, 10, 11] (262/1000) accuracy: 0.3585 =====
+
+Test set: Average loss: 2.0836, Accuracy: 3729/12000 (31%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 7, 8, 11, 14] (263/1000) accuracy: 0.31075 =====
+
+Test set: Average loss: 1.7841, Accuracy: 5170/12000 (43%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 6, 7, 8, 9, 10, 14] (264/1000) accuracy: 0.43083333333333335 =====
+
+Test set: Average loss: 1.8613, Accuracy: 4869/12000 (41%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 9, 11, 12, 14] (265/1000) accuracy: 0.40575 =====
+
+Test set: Average loss: 2.2986, Accuracy: 3492/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 8, 9, 11, 13] (266/1000) accuracy: 0.291 =====
+
+Test set: Average loss: 2.9815, Accuracy: 2199/12000 (18%)
+
+
+
+===== Computing accuracy for [4, 6, 8, 9, 13] (267/1000) accuracy: 0.18325 =====
+
+Test set: Average loss: 1.9471, Accuracy: 4713/12000 (39%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 6, 7, 8, 9, 10, 14] (268/1000) accuracy: 0.39275 =====
+
+Test set: Average loss: 2.3555, Accuracy: 3654/12000 (30%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 6, 8, 9, 10, 12, 13] (269/1000) accuracy: 0.3045 =====
+
+Test set: Average loss: 2.0122, Accuracy: 4470/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 7, 8, 9, 10, 11, 13] (270/1000) accuracy: 0.3725 =====
+
+Test set: Average loss: 1.8440, Accuracy: 4680/12000 (39%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 7, 8, 12, 14] (271/1000) accuracy: 0.39 =====
+
+Test set: Average loss: 2.3691, Accuracy: 3594/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 8, 9] (272/1000) accuracy: 0.2995 =====
+
+Test set: Average loss: 2.5790, Accuracy: 3127/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 7, 10, 14] (273/1000) accuracy: 0.26058333333333333 =====
+
+Test set: Average loss: 1.9977, Accuracy: 4122/12000 (34%)
+
+
+
+===== Computing accuracy for [1, 3, 5, 6, 11, 12, 14] (274/1000) accuracy: 0.3435 =====
+
+Test set: Average loss: 2.3393, Accuracy: 3559/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 10, 11, 13, 14] (275/1000) accuracy: 0.2965833333333333 =====
+
+Test set: Average loss: 1.8902, Accuracy: 4825/12000 (40%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 6, 7, 8, 12, 14] (276/1000) accuracy: 0.40208333333333335 =====
+
+Test set: Average loss: 1.7189, Accuracy: 5301/12000 (44%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 6, 8, 9, 10, 11, 12] (277/1000) accuracy: 0.44175 =====
+
+Test set: Average loss: 2.5853, Accuracy: 2897/12000 (24%)
+
+
+
+===== Computing accuracy for [0, 3, 8, 9, 10, 12] (278/1000) accuracy: 0.24141666666666667 =====
+
+Test set: Average loss: 1.6034, Accuracy: 5640/12000 (47%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 6, 8, 9, 11, 13, 14] (279/1000) accuracy: 0.47 =====
+
+Test set: Average loss: 2.5592, Accuracy: 2775/12000 (23%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 8, 9, 11] (280/1000) accuracy: 0.23125 =====
+
+Test set: Average loss: 2.4941, Accuracy: 3036/12000 (25%)
+
+
+
+===== Computing accuracy for [3, 4, 8, 9, 10, 14] (281/1000) accuracy: 0.253 =====
+
+Test set: Average loss: 2.0036, Accuracy: 4497/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 6, 7, 8, 9, 10, 11] (282/1000) accuracy: 0.37475 =====
+
+Test set: Average loss: 2.1231, Accuracy: 3839/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 7, 9, 11, 12] (283/1000) accuracy: 0.3199166666666667 =====
+
+Test set: Average loss: 2.0722, Accuracy: 4114/12000 (34%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 7, 8, 10, 14] (284/1000) accuracy: 0.3428333333333333 =====
+
+Test set: Average loss: 2.1271, Accuracy: 3820/12000 (32%)
+
+
+
+===== Computing accuracy for [2, 4, 5, 7, 9, 11, 12, 13] (285/1000) accuracy: 0.31833333333333336 =====
+
+Test set: Average loss: 2.1803, Accuracy: 3896/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 8, 11, 12, 13] (286/1000) accuracy: 0.32466666666666666 =====
+
+Test set: Average loss: 2.7234, Accuracy: 2539/12000 (21%)
+
+
+
+===== Computing accuracy for [3, 5, 6, 9, 10, 14] (287/1000) accuracy: 0.21158333333333335 =====
+
+Test set: Average loss: 2.4248, Accuracy: 3032/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 9, 11, 13] (288/1000) accuracy: 0.25266666666666665 =====
+
+Test set: Average loss: 2.1227, Accuracy: 4142/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 7, 9, 10, 12] (289/1000) accuracy: 0.3451666666666667 =====
+
+Test set: Average loss: 2.6812, Accuracy: 2640/12000 (22%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 7, 8, 9] (290/1000) accuracy: 0.22 =====
+
+Test set: Average loss: 2.1175, Accuracy: 4045/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 7, 8, 9, 10, 11] (291/1000) accuracy: 0.33708333333333335 =====
+
+Test set: Average loss: 2.1119, Accuracy: 4267/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 6, 7, 9, 10, 13, 14] (292/1000) accuracy: 0.3555833333333333 =====
+
+Test set: Average loss: 1.9290, Accuracy: 4364/12000 (36%)
+
+
+
+===== Computing accuracy for [1, 5, 8, 10, 11, 12, 14] (293/1000) accuracy: 0.3636666666666667 =====
+
+Test set: Average loss: 2.0647, Accuracy: 4097/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 5, 8, 9, 13, 14] (294/1000) accuracy: 0.34141666666666665 =====
+
+Test set: Average loss: 2.5094, Accuracy: 2893/12000 (24%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 8, 9, 10, 11] (295/1000) accuracy: 0.24108333333333334 =====
+
+Test set: Average loss: 2.6209, Accuracy: 3012/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 4, 7, 9, 12, 13] (296/1000) accuracy: 0.251 =====
+
+Test set: Average loss: 1.1241, Accuracy: 7506/12000 (63%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 7, 8, 10, 11, 12, 13, 14] (297/1000) accuracy: 0.6255 =====
+
+Test set: Average loss: 2.1410, Accuracy: 3773/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 8, 11, 14] (298/1000) accuracy: 0.3144166666666667 =====
+
+Test set: Average loss: 1.7338, Accuracy: 5228/12000 (44%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 6, 7, 8, 10, 12, 14] (299/1000) accuracy: 0.43566666666666665 =====
+
+Test set: Average loss: 1.7566, Accuracy: 4737/12000 (39%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 8, 9, 11, 12, 14] (300/1000) accuracy: 0.39475 =====
+
+Test set: Average loss: 2.7295, Accuracy: 2656/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 6, 9, 10] (301/1000) accuracy: 0.22133333333333333 =====
+
+Test set: Average loss: 2.2346, Accuracy: 3594/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 2, 8, 10, 12, 13, 14] (302/1000) accuracy: 0.2995 =====
+
+Test set: Average loss: 2.2917, Accuracy: 3565/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 5, 8, 9, 12, 13, 14] (303/1000) accuracy: 0.2970833333333333 =====
+
+Test set: Average loss: 1.9565, Accuracy: 4685/12000 (39%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 6, 7, 8, 9, 10, 12, 14] (304/1000) accuracy: 0.3904166666666667 =====
+
+Test set: Average loss: 2.3498, Accuracy: 3560/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 5, 6, 8, 9, 10] (305/1000) accuracy: 0.2966666666666667 =====
+
+Test set: Average loss: 2.6208, Accuracy: 2782/12000 (23%)
+
+
+
+===== Computing accuracy for [1, 3, 10, 11, 13] (306/1000) accuracy: 0.23183333333333334 =====
+
+Test set: Average loss: 2.1859, Accuracy: 3849/12000 (32%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 6, 7, 9, 14] (307/1000) accuracy: 0.32075 =====
+
+Test set: Average loss: 2.3002, Accuracy: 3683/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 5, 6, 7, 8, 9, 10, 14] (308/1000) accuracy: 0.30691666666666667 =====
+
+Test set: Average loss: 1.8766, Accuracy: 4687/12000 (39%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 6, 7, 9, 11, 14] (309/1000) accuracy: 0.39058333333333334 =====
+
+Test set: Average loss: 1.9304, Accuracy: 4593/12000 (38%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 6, 7, 8, 9, 13, 14] (310/1000) accuracy: 0.38275 =====
+
+Test set: Average loss: 1.9356, Accuracy: 4585/12000 (38%)
+
+
+
+===== Computing accuracy for [3, 5, 7, 8, 10, 11, 13, 14] (311/1000) accuracy: 0.38208333333333333 =====
+
+Test set: Average loss: 2.1910, Accuracy: 4114/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 6, 7, 8, 9, 10] (312/1000) accuracy: 0.3428333333333333 =====
+
+Test set: Average loss: 2.1123, Accuracy: 4017/12000 (33%)
+
+
+
+===== Computing accuracy for [0, 3, 6, 7, 9, 11, 14] (313/1000) accuracy: 0.33475 =====
+
+Test set: Average loss: 2.7722, Accuracy: 2599/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 8, 9, 14] (314/1000) accuracy: 0.21658333333333332 =====
+
+Test set: Average loss: 1.8411, Accuracy: 4661/12000 (39%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 7, 8, 10, 11, 12] (315/1000) accuracy: 0.3884166666666667 =====
+
+Test set: Average loss: 2.2978, Accuracy: 3303/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 6, 11, 12] (316/1000) accuracy: 0.27525 =====
+
+Test set: Average loss: 2.4858, Accuracy: 2848/12000 (24%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 6, 8, 13] (317/1000) accuracy: 0.23733333333333334 =====
+
+Test set: Average loss: 2.1583, Accuracy: 3907/12000 (33%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 6, 8, 11] (318/1000) accuracy: 0.32558333333333334 =====
+
+Test set: Average loss: 2.7352, Accuracy: 2644/12000 (22%)
+
+
+
+===== Computing accuracy for [4, 6, 7, 8, 10, 13] (319/1000) accuracy: 0.22033333333333333 =====
+
+Test set: Average loss: 2.0457, Accuracy: 4048/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 8, 10, 11] (320/1000) accuracy: 0.3373333333333333 =====
+
+Test set: Average loss: 1.8755, Accuracy: 5042/12000 (42%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 5, 9, 11, 12, 13, 14] (321/1000) accuracy: 0.4201666666666667 =====
+
+Test set: Average loss: 2.0248, Accuracy: 4363/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 7, 9, 10, 12] (322/1000) accuracy: 0.3635833333333333 =====
+
+Test set: Average loss: 1.6566, Accuracy: 5651/12000 (47%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 6, 7, 8, 9, 11, 12, 13] (323/1000) accuracy: 0.47091666666666665 =====
+
+Test set: Average loss: 2.6422, Accuracy: 2536/12000 (21%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 6, 10, 13] (324/1000) accuracy: 0.21133333333333335 =====
+
+Test set: Average loss: 2.9128, Accuracy: 2612/12000 (22%)
+
+
+
+===== Computing accuracy for [2, 3, 12, 13, 14] (325/1000) accuracy: 0.21766666666666667 =====
+
+Test set: Average loss: 2.4331, Accuracy: 3302/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 3, 7, 8, 10, 14] (326/1000) accuracy: 0.27516666666666667 =====
+
+Test set: Average loss: 2.8225, Accuracy: 2493/12000 (21%)
+
+
+
+===== Computing accuracy for [3, 9, 12, 14] (327/1000) accuracy: 0.20775 =====
+
+Test set: Average loss: 2.3025, Accuracy: 3101/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 10, 11, 12] (328/1000) accuracy: 0.2584166666666667 =====
+
+Test set: Average loss: 2.6368, Accuracy: 2510/12000 (21%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 7, 9, 14] (329/1000) accuracy: 0.20916666666666667 =====
+
+Test set: Average loss: 2.2959, Accuracy: 3415/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 6, 11, 12, 13] (330/1000) accuracy: 0.28458333333333335 =====
+
+Test set: Average loss: 2.8950, Accuracy: 2232/12000 (19%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 14] (331/1000) accuracy: 0.186 =====
+
+Test set: Average loss: 1.6361, Accuracy: 5585/12000 (47%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 7, 8, 9, 12, 13, 14] (332/1000) accuracy: 0.46541666666666665 =====
+
+Test set: Average loss: 2.3706, Accuracy: 3397/12000 (28%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 6, 8, 9, 10] (333/1000) accuracy: 0.28308333333333335 =====
+
+Test set: Average loss: 1.7549, Accuracy: 5094/12000 (42%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 6, 7, 8, 10, 12, 13, 14] (334/1000) accuracy: 0.4245 =====
+
+Test set: Average loss: 2.4123, Accuracy: 3080/12000 (26%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 8, 10, 11, 13] (335/1000) accuracy: 0.25666666666666665 =====
+
+Test set: Average loss: 2.5362, Accuracy: 2917/12000 (24%)
+
+
+
+===== Computing accuracy for [5, 6, 9, 11, 14] (336/1000) accuracy: 0.24308333333333335 =====
+
+Test set: Average loss: 2.1915, Accuracy: 3922/12000 (33%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 5, 7, 11, 12, 14] (337/1000) accuracy: 0.3268333333333333 =====
+
+Test set: Average loss: 2.0999, Accuracy: 4096/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 6, 8, 9, 11, 12, 13] (338/1000) accuracy: 0.3413333333333333 =====
+
+Test set: Average loss: 1.6436, Accuracy: 5202/12000 (43%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 7, 8, 11, 13, 14] (339/1000) accuracy: 0.4335 =====
+
+Test set: Average loss: 1.7511, Accuracy: 5097/12000 (42%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 6, 7, 8, 10, 12, 13, 14] (340/1000) accuracy: 0.42475 =====
+
+Test set: Average loss: 2.4956, Accuracy: 2785/12000 (23%)
+
+
+
+===== Computing accuracy for [2, 4, 7, 9, 11, 13] (341/1000) accuracy: 0.23208333333333334 =====
+
+Test set: Average loss: 2.7093, Accuracy: 2618/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 1, 9, 11] (342/1000) accuracy: 0.21816666666666668 =====
+
+Test set: Average loss: 2.6003, Accuracy: 2711/12000 (23%)
+
+
+
+===== Computing accuracy for [2, 4, 5, 6, 7, 14] (343/1000) accuracy: 0.22591666666666665 =====
+
+Test set: Average loss: 2.5952, Accuracy: 2931/12000 (24%)
+
+
+
+===== Computing accuracy for [1, 4, 6, 8, 9, 10] (344/1000) accuracy: 0.24425 =====
+
+Test set: Average loss: 2.6025, Accuracy: 2727/12000 (23%)
+
+
+
+===== Computing accuracy for [3, 5, 8, 11, 13] (345/1000) accuracy: 0.22725 =====
+
+Test set: Average loss: 1.9908, Accuracy: 4360/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 6, 7, 11, 14] (346/1000) accuracy: 0.36333333333333334 =====
+
+Test set: Average loss: 2.4983, Accuracy: 2988/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 3, 5, 7, 9, 12] (347/1000) accuracy: 0.249 =====
+
+Test set: Average loss: 2.3539, Accuracy: 3550/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 5, 7, 9, 10, 13] (348/1000) accuracy: 0.29583333333333334 =====
+
+Test set: Average loss: 2.0643, Accuracy: 4116/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 6, 8, 9, 10, 12, 14] (349/1000) accuracy: 0.343 =====
+
+Test set: Average loss: 2.1376, Accuracy: 3968/12000 (33%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 7, 9, 11, 14] (350/1000) accuracy: 0.33066666666666666 =====
+
+Test set: Average loss: 2.5480, Accuracy: 2853/12000 (24%)
+
+
+
+===== Computing accuracy for [0, 1, 6, 12, 13] (351/1000) accuracy: 0.23775 =====
+
+Test set: Average loss: 2.1598, Accuracy: 3814/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 3, 6, 11, 12, 14] (352/1000) accuracy: 0.31783333333333336 =====
+
+Test set: Average loss: 2.3190, Accuracy: 3434/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 5, 6, 11] (353/1000) accuracy: 0.2861666666666667 =====
+
+Test set: Average loss: 2.3236, Accuracy: 3382/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 2, 8, 9, 11, 12] (354/1000) accuracy: 0.2818333333333333 =====
+
+Test set: Average loss: 2.3816, Accuracy: 3397/12000 (28%)
+
+
+
+===== Computing accuracy for [3, 4, 9, 10, 12, 13, 14] (355/1000) accuracy: 0.28308333333333335 =====
+
+Test set: Average loss: 1.9400, Accuracy: 4552/12000 (38%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 6, 7, 8, 9, 12] (356/1000) accuracy: 0.37933333333333336 =====
+
+Test set: Average loss: 2.3662, Accuracy: 3439/12000 (29%)
+
+
+
+===== Computing accuracy for [3, 7, 8, 10, 12, 14] (357/1000) accuracy: 0.28658333333333336 =====
+
+Test set: Average loss: 1.2419, Accuracy: 7226/12000 (60%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 14] (358/1000) accuracy: 0.6021666666666666 =====
+
+Test set: Average loss: 2.4549, Accuracy: 2899/12000 (24%)
+
+
+
+===== Computing accuracy for [1, 5, 11, 12, 13] (359/1000) accuracy: 0.24158333333333334 =====
+
+Test set: Average loss: 2.0091, Accuracy: 4102/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 7, 8, 11] (360/1000) accuracy: 0.3418333333333333 =====
+
+Test set: Average loss: 1.5668, Accuracy: 5422/12000 (45%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 8, 10, 11, 12] (361/1000) accuracy: 0.4518333333333333 =====
+
+Test set: Average loss: 2.2743, Accuracy: 3316/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 4, 6, 7, 8, 11, 12] (362/1000) accuracy: 0.2763333333333333 =====
+
+Test set: Average loss: 2.4010, Accuracy: 3411/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 6, 7, 9, 10, 14] (363/1000) accuracy: 0.28425 =====
+
+Test set: Average loss: 1.8703, Accuracy: 4789/12000 (40%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 7, 11, 12, 13, 14] (364/1000) accuracy: 0.39908333333333335 =====
+
+Test set: Average loss: 2.4612, Accuracy: 3308/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 3, 7, 9, 10, 13, 14] (365/1000) accuracy: 0.27566666666666667 =====
+
+Test set: Average loss: 2.0771, Accuracy: 4143/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 5, 6, 7, 8, 10, 12, 13, 14] (366/1000) accuracy: 0.34525 =====
+
+Test set: Average loss: 1.8129, Accuracy: 5118/12000 (43%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 5, 6, 11, 12, 14] (367/1000) accuracy: 0.4265 =====
+
+Test set: Average loss: 1.8135, Accuracy: 5022/12000 (42%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 7, 9, 10, 12] (368/1000) accuracy: 0.4185 =====
+
+Test set: Average loss: 2.0443, Accuracy: 4178/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 7, 12] (369/1000) accuracy: 0.3481666666666667 =====
+
+Test set: Average loss: 2.4974, Accuracy: 2948/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 6, 9, 13] (370/1000) accuracy: 0.24566666666666667 =====
+
+Test set: Average loss: 1.9779, Accuracy: 4295/12000 (36%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 8, 9, 10, 11, 12, 13] (371/1000) accuracy: 0.35791666666666666 =====
+
+Test set: Average loss: 2.7086, Accuracy: 2636/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 2, 6, 8, 9, 11] (372/1000) accuracy: 0.21966666666666668 =====
+
+Test set: Average loss: 2.5923, Accuracy: 3189/12000 (27%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 7, 8, 9, 10, 13] (373/1000) accuracy: 0.26575 =====
+
+Test set: Average loss: 1.5241, Accuracy: 5967/12000 (50%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 6, 7, 10, 11, 12, 13, 14] (374/1000) accuracy: 0.49725 =====
+
+Test set: Average loss: 2.4851, Accuracy: 3093/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 6, 7, 8, 13] (375/1000) accuracy: 0.25775 =====
+
+Test set: Average loss: 2.1361, Accuracy: 4246/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 3, 5, 6, 7, 9, 10, 13, 14] (376/1000) accuracy: 0.35383333333333333 =====
+
+Test set: Average loss: 2.0052, Accuracy: 4228/12000 (35%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 7, 8, 12, 13, 14] (377/1000) accuracy: 0.35233333333333333 =====
+
+Test set: Average loss: 2.6788, Accuracy: 2581/12000 (22%)
+
+
+
+===== Computing accuracy for [3, 6, 9, 10, 12, 13] (378/1000) accuracy: 0.21508333333333332 =====
+
+Test set: Average loss: 1.6652, Accuracy: 5615/12000 (47%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 7, 8, 10, 12, 13, 14] (379/1000) accuracy: 0.46791666666666665 =====
+
+Test set: Average loss: 1.9792, Accuracy: 4368/12000 (36%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 7, 8, 9, 10, 11, 12] (380/1000) accuracy: 0.364 =====
+
+Test set: Average loss: 2.4807, Accuracy: 3197/12000 (27%)
+
+
+
+===== Computing accuracy for [0, 3, 6, 7, 9, 14] (381/1000) accuracy: 0.2664166666666667 =====
+
+Test set: Average loss: 1.9982, Accuracy: 4337/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 6, 9, 10, 12] (382/1000) accuracy: 0.36141666666666666 =====
+
+Test set: Average loss: 2.0078, Accuracy: 4448/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 7, 10, 11] (383/1000) accuracy: 0.37066666666666664 =====
+
+Test set: Average loss: 1.9194, Accuracy: 4534/12000 (38%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 6, 10, 12, 13, 14] (384/1000) accuracy: 0.37783333333333335 =====
+
+Test set: Average loss: 2.8857, Accuracy: 2088/12000 (17%)
+
+
+
+===== Computing accuracy for [3, 5, 11, 13] (385/1000) accuracy: 0.174 =====
+
+Test set: Average loss: 2.4913, Accuracy: 2921/12000 (24%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 11, 12, 13] (386/1000) accuracy: 0.24341666666666667 =====
+
+Test set: Average loss: 2.7979, Accuracy: 2292/12000 (19%)
+
+
+
+===== Computing accuracy for [0, 5, 8, 11] (387/1000) accuracy: 0.191 =====
+
+Test set: Average loss: 2.6603, Accuracy: 2701/12000 (23%)
+
+
+
+===== Computing accuracy for [0, 11, 12, 13] (388/1000) accuracy: 0.22508333333333333 =====
+
+Test set: Average loss: 2.3560, Accuracy: 3087/12000 (26%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 9, 11, 12] (389/1000) accuracy: 0.25725 =====
+
+Test set: Average loss: 2.5981, Accuracy: 2837/12000 (24%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 7, 13] (390/1000) accuracy: 0.23641666666666666 =====
+
+Test set: Average loss: 1.7772, Accuracy: 5105/12000 (43%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 5, 10, 11, 12, 13, 14] (391/1000) accuracy: 0.42541666666666667 =====
+
+Test set: Average loss: 2.4545, Accuracy: 3076/12000 (26%)
+
+
+
+===== Computing accuracy for [3, 5, 6, 8, 10, 11, 13] (392/1000) accuracy: 0.25633333333333336 =====
+
+Test set: Average loss: 1.7678, Accuracy: 5194/12000 (43%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 6, 7, 8, 10, 13, 14] (393/1000) accuracy: 0.43283333333333335 =====
+
+Test set: Average loss: 1.8455, Accuracy: 4977/12000 (41%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 7, 9, 12, 13, 14] (394/1000) accuracy: 0.41475 =====
+
+Test set: Average loss: 2.3245, Accuracy: 3232/12000 (27%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 8, 9, 10, 14] (395/1000) accuracy: 0.2693333333333333 =====
+
+Test set: Average loss: 1.7104, Accuracy: 5019/12000 (42%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 6, 9, 10, 11, 12, 13] (396/1000) accuracy: 0.41825 =====
+
+Test set: Average loss: 1.8426, Accuracy: 4673/12000 (39%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 8, 9, 11, 13, 14] (397/1000) accuracy: 0.3894166666666667 =====
+
+Test set: Average loss: 2.0360, Accuracy: 4375/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 6, 7, 9, 10, 11] (398/1000) accuracy: 0.3645833333333333 =====
+
+Test set: Average loss: 2.1432, Accuracy: 3968/12000 (33%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 6, 11, 13, 14] (399/1000) accuracy: 0.33066666666666666 =====
+
+Test set: Average loss: 2.1852, Accuracy: 3889/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 6, 7, 9, 12, 14] (400/1000) accuracy: 0.32408333333333333 =====
+
+Test set: Average loss: 2.6309, Accuracy: 2635/12000 (22%)
+
+
+
+===== Computing accuracy for [2, 4, 5, 7, 8, 9] (401/1000) accuracy: 0.21958333333333332 =====
+
+Test set: Average loss: 2.5458, Accuracy: 3007/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 4, 6, 9, 10, 11, 13] (402/1000) accuracy: 0.2505833333333333 =====
+
+Test set: Average loss: 2.1525, Accuracy: 3729/12000 (31%)
+
+
+
+===== Computing accuracy for [1, 3, 8, 10, 11, 14] (403/1000) accuracy: 0.31075 =====
+
+Test set: Average loss: 2.8896, Accuracy: 2180/12000 (18%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 11] (404/1000) accuracy: 0.18166666666666667 =====
+
+Test set: Average loss: 2.5777, Accuracy: 2787/12000 (23%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 6, 9, 11, 13] (405/1000) accuracy: 0.23225 =====
+
+Test set: Average loss: 2.3993, Accuracy: 3237/12000 (27%)
+
+
+
+===== Computing accuracy for [2, 4, 6, 7, 12, 14] (406/1000) accuracy: 0.26975 =====
+
+Test set: Average loss: 2.6853, Accuracy: 2574/12000 (21%)
+
+
+
+===== Computing accuracy for [1, 3, 8, 14] (407/1000) accuracy: 0.2145 =====
+
+Test set: Average loss: 2.0340, Accuracy: 3972/12000 (33%)
+
+
+
+===== Computing accuracy for [1, 2, 7, 8, 9, 11, 13] (408/1000) accuracy: 0.331 =====
+
+Test set: Average loss: 2.5871, Accuracy: 2750/12000 (23%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 6, 9, 11] (409/1000) accuracy: 0.22916666666666666 =====
+
+Test set: Average loss: 3.0254, Accuracy: 2098/12000 (17%)
+
+
+
+===== Computing accuracy for [0, 6, 8, 10, 13] (410/1000) accuracy: 0.17483333333333334 =====
+
+Test set: Average loss: 1.9668, Accuracy: 4506/12000 (38%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 5, 6, 8, 13, 14] (411/1000) accuracy: 0.3755 =====
+
+Test set: Average loss: 1.6589, Accuracy: 5288/12000 (44%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 7, 9, 11, 12, 14] (412/1000) accuracy: 0.44066666666666665 =====
+
+Test set: Average loss: 2.2080, Accuracy: 3699/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 10, 13, 14] (413/1000) accuracy: 0.30825 =====
+
+Test set: Average loss: 2.8572, Accuracy: 2222/12000 (19%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 9] (414/1000) accuracy: 0.18516666666666667 =====
+
+Test set: Average loss: 1.8272, Accuracy: 4880/12000 (41%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 7, 8, 9, 10, 12, 14] (415/1000) accuracy: 0.4066666666666667 =====
+
+Test set: Average loss: 2.2602, Accuracy: 3649/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 6, 8, 9, 10, 12] (416/1000) accuracy: 0.3040833333333333 =====
+
+Test set: Average loss: 1.7780, Accuracy: 4885/12000 (41%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 5, 6, 8, 10, 11, 13, 14] (417/1000) accuracy: 0.40708333333333335 =====
+
+Test set: Average loss: 1.5376, Accuracy: 5896/12000 (49%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 5, 7, 9, 10, 11, 12] (418/1000) accuracy: 0.49133333333333334 =====
+
+Test set: Average loss: 2.3858, Accuracy: 3001/12000 (25%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 10, 11, 12] (419/1000) accuracy: 0.2500833333333333 =====
+
+Test set: Average loss: 2.1990, Accuracy: 3653/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 5, 9, 10, 11, 13] (420/1000) accuracy: 0.30441666666666667 =====
+
+Test set: Average loss: 2.7116, Accuracy: 2484/12000 (21%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 6, 11] (421/1000) accuracy: 0.207 =====
+
+Test set: Average loss: 1.9951, Accuracy: 4222/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 7, 9, 10, 12, 14] (422/1000) accuracy: 0.35183333333333333 =====
+
+Test set: Average loss: 2.1690, Accuracy: 4058/12000 (34%)
+
+
+
+===== Computing accuracy for [3, 5, 7, 9, 10, 12, 13, 14] (423/1000) accuracy: 0.33816666666666667 =====
+
+Test set: Average loss: 2.5444, Accuracy: 2869/12000 (24%)
+
+
+
+===== Computing accuracy for [0, 1, 6, 7, 8, 13] (424/1000) accuracy: 0.23908333333333334 =====
+
+Test set: Average loss: 2.2529, Accuracy: 3624/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 1, 6, 7, 8, 9, 11] (425/1000) accuracy: 0.302 =====
+
+Test set: Average loss: 2.0744, Accuracy: 4001/12000 (33%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 10, 11, 12, 13] (426/1000) accuracy: 0.33341666666666664 =====
+
+Test set: Average loss: 2.4819, Accuracy: 3140/12000 (26%)
+
+
+
+===== Computing accuracy for [1, 5, 6, 7, 9, 10, 13] (427/1000) accuracy: 0.26166666666666666 =====
+
+Test set: Average loss: 2.2131, Accuracy: 3684/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 7, 9, 10, 13, 14] (428/1000) accuracy: 0.307 =====
+
+Test set: Average loss: 2.0025, Accuracy: 4087/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 6, 11, 12, 13] (429/1000) accuracy: 0.34058333333333335 =====
+
+Test set: Average loss: 1.9110, Accuracy: 4423/12000 (37%)
+
+
+
+===== Computing accuracy for [5, 6, 7, 9, 10, 11, 12, 14] (430/1000) accuracy: 0.3685833333333333 =====
+
+Test set: Average loss: 1.7563, Accuracy: 5408/12000 (45%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 6, 8, 9, 11, 12, 13] (431/1000) accuracy: 0.45066666666666666 =====
+
+Test set: Average loss: 2.1313, Accuracy: 3815/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 6, 10, 11, 12, 13] (432/1000) accuracy: 0.3179166666666667 =====
+
+Test set: Average loss: 2.6765, Accuracy: 2877/12000 (24%)
+
+
+
+===== Computing accuracy for [2, 4, 7, 8, 10, 13] (433/1000) accuracy: 0.23975 =====
+
+Test set: Average loss: 2.2004, Accuracy: 3742/12000 (31%)
+
+
+
+===== Computing accuracy for [2, 4, 7, 8, 12, 13, 14] (434/1000) accuracy: 0.31183333333333335 =====
+
+Test set: Average loss: 2.1379, Accuracy: 4137/12000 (34%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 7, 10, 12, 13, 14] (435/1000) accuracy: 0.34475 =====
+
+Test set: Average loss: 3.2595, Accuracy: 1769/12000 (15%)
+
+
+
+===== Computing accuracy for [6, 8, 13] (436/1000) accuracy: 0.14741666666666667 =====
+
+Test set: Average loss: 2.6820, Accuracy: 2337/12000 (19%)
+
+
+
+===== Computing accuracy for [2, 4, 5, 6, 10, 12] (437/1000) accuracy: 0.19475 =====
+
+Test set: Average loss: 1.6564, Accuracy: 5658/12000 (47%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 5, 6, 8, 11, 12, 14] (438/1000) accuracy: 0.4715 =====
+
+Test set: Average loss: 1.8381, Accuracy: 4739/12000 (39%)
+
+
+
+===== Computing accuracy for [0, 1, 6, 7, 8, 12, 13, 14] (439/1000) accuracy: 0.3949166666666667 =====
+
+Test set: Average loss: 2.8459, Accuracy: 2258/12000 (19%)
+
+
+
+===== Computing accuracy for [1, 2, 10, 11] (440/1000) accuracy: 0.18816666666666668 =====
+
+Test set: Average loss: 2.6616, Accuracy: 2670/12000 (22%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 5, 8, 14] (441/1000) accuracy: 0.2225 =====
+
+Test set: Average loss: 2.6914, Accuracy: 2605/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 8, 10, 13] (442/1000) accuracy: 0.21708333333333332 =====
+
+Test set: Average loss: 2.0092, Accuracy: 4390/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 7, 8, 11, 12, 13] (443/1000) accuracy: 0.36583333333333334 =====
+
+Test set: Average loss: 1.7682, Accuracy: 4830/12000 (40%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 7, 9, 11, 12, 14] (444/1000) accuracy: 0.4025 =====
+
+Test set: Average loss: 2.3928, Accuracy: 2974/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 5, 10, 11, 12] (445/1000) accuracy: 0.24783333333333332 =====
+
+Test set: Average loss: 2.4175, Accuracy: 3015/12000 (25%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 8, 12] (446/1000) accuracy: 0.25125 =====
+
+Test set: Average loss: 2.1824, Accuracy: 3771/12000 (31%)
+
+
+
+===== Computing accuracy for [4, 8, 11, 12, 13, 14] (447/1000) accuracy: 0.31425 =====
+
+Test set: Average loss: 1.8510, Accuracy: 4819/12000 (40%)
+
+
+
+===== Computing accuracy for [3, 4, 6, 8, 11, 12, 13, 14] (448/1000) accuracy: 0.40158333333333335 =====
+
+Test set: Average loss: 2.2026, Accuracy: 4203/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 6, 7, 8, 9, 10, 13] (449/1000) accuracy: 0.35025 =====
+
+Test set: Average loss: 2.2010, Accuracy: 3615/12000 (30%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 8, 10, 11, 13, 14] (450/1000) accuracy: 0.30125 =====
+
+Test set: Average loss: 1.9686, Accuracy: 4304/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 6, 8, 9, 12, 14] (451/1000) accuracy: 0.3586666666666667 =====
+
+Test set: Average loss: 2.6348, Accuracy: 2516/12000 (21%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 9, 12] (452/1000) accuracy: 0.20966666666666667 =====
+
+Test set: Average loss: 2.2102, Accuracy: 3727/12000 (31%)
+
+
+
+===== Computing accuracy for [2, 4, 6, 7, 12, 13, 14] (453/1000) accuracy: 0.3105833333333333 =====
+
+Test set: Average loss: 2.5921, Accuracy: 3046/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 3, 5, 7, 8, 9, 10] (454/1000) accuracy: 0.25383333333333336 =====
+
+Test set: Average loss: 1.2682, Accuracy: 7066/12000 (59%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 6, 7, 8, 11, 12, 13, 14] (455/1000) accuracy: 0.5888333333333333 =====
+
+Test set: Average loss: 2.0954, Accuracy: 3800/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 6, 11, 12] (456/1000) accuracy: 0.31666666666666665 =====
+
+Test set: Average loss: 2.6218, Accuracy: 2718/12000 (23%)
+
+
+
+===== Computing accuracy for [1, 5, 7, 9, 10, 13] (457/1000) accuracy: 0.2265 =====
+
+Test set: Average loss: 2.6458, Accuracy: 3050/12000 (25%)
+
+
+
+===== Computing accuracy for [2, 3, 6, 12, 13, 14] (458/1000) accuracy: 0.25416666666666665 =====
+
+Test set: Average loss: 2.1214, Accuracy: 3784/12000 (32%)
+
+
+
+===== Computing accuracy for [5, 6, 9, 11, 12, 13, 14] (459/1000) accuracy: 0.31533333333333335 =====
+
+Test set: Average loss: 1.8740, Accuracy: 4413/12000 (37%)
+
+
+
+===== Computing accuracy for [1, 7, 8, 9, 11, 14] (460/1000) accuracy: 0.36775 =====
+
+Test set: Average loss: 2.7519, Accuracy: 2459/12000 (20%)
+
+
+
+===== Computing accuracy for [2, 8, 12, 14] (461/1000) accuracy: 0.20491666666666666 =====
+
+Test set: Average loss: 2.3012, Accuracy: 3223/12000 (27%)
+
+
+
+===== Computing accuracy for [1, 3, 5, 6, 8, 12] (462/1000) accuracy: 0.26858333333333334 =====
+
+Test set: Average loss: 3.0680, Accuracy: 2092/12000 (17%)
+
+
+
+===== Computing accuracy for [1, 3, 14] (463/1000) accuracy: 0.17433333333333334 =====
+
+Test set: Average loss: 2.1554, Accuracy: 3902/12000 (33%)
+
+
+
+===== Computing accuracy for [5, 7, 9, 10, 11, 13, 14] (464/1000) accuracy: 0.32516666666666666 =====
+
+Test set: Average loss: 2.2292, Accuracy: 3630/12000 (30%)
+
+
+
+===== Computing accuracy for [2, 4, 5, 6, 9, 12, 13, 14] (465/1000) accuracy: 0.3025 =====
+
+Test set: Average loss: 2.4697, Accuracy: 3156/12000 (26%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 6, 8, 9, 10, 13] (466/1000) accuracy: 0.263 =====
+
+Test set: Average loss: 2.6612, Accuracy: 2629/12000 (22%)
+
+
+
+===== Computing accuracy for [2, 4, 8, 9, 14] (467/1000) accuracy: 0.21908333333333332 =====
+
+Test set: Average loss: 2.6336, Accuracy: 2841/12000 (24%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 6, 7, 9, 13] (468/1000) accuracy: 0.23675 =====
+
+Test set: Average loss: 2.0423, Accuracy: 4382/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 5, 7, 9, 10, 11, 13, 14] (469/1000) accuracy: 0.36516666666666664 =====
+
+Test set: Average loss: 2.3877, Accuracy: 3541/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 6, 7, 8, 9, 12] (470/1000) accuracy: 0.2950833333333333 =====
+
+Test set: Average loss: 2.5324, Accuracy: 2768/12000 (23%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 6, 7] (471/1000) accuracy: 0.23066666666666666 =====
+
+Test set: Average loss: 2.3624, Accuracy: 3237/12000 (27%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 6, 7, 10, 11] (472/1000) accuracy: 0.26975 =====
+
+Test set: Average loss: 3.0734, Accuracy: 1999/12000 (17%)
+
+
+
+===== Computing accuracy for [2, 10, 12, 13] (473/1000) accuracy: 0.16658333333333333 =====
+
+Test set: Average loss: 2.7347, Accuracy: 2510/12000 (21%)
+
+
+
+===== Computing accuracy for [0, 1, 12, 13] (474/1000) accuracy: 0.20916666666666667 =====
+
+Test set: Average loss: 1.9602, Accuracy: 4506/12000 (38%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 6, 7, 10, 13, 14] (475/1000) accuracy: 0.3755 =====
+
+Test set: Average loss: 1.6099, Accuracy: 5369/12000 (45%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 6, 7, 9, 11, 12, 13] (476/1000) accuracy: 0.4474166666666667 =====
+
+Test set: Average loss: 2.6962, Accuracy: 2563/12000 (21%)
+
+
+
+===== Computing accuracy for [1, 5, 6, 8, 10, 13] (477/1000) accuracy: 0.21358333333333332 =====
+
+Test set: Average loss: 2.2615, Accuracy: 3476/12000 (29%)
+
+
+
+===== Computing accuracy for [4, 8, 9, 10, 12, 13, 14] (478/1000) accuracy: 0.2896666666666667 =====
+
+Test set: Average loss: 1.9578, Accuracy: 4025/12000 (34%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 6, 10, 11, 12, 13] (479/1000) accuracy: 0.33541666666666664 =====
+
+Test set: Average loss: 2.0741, Accuracy: 3869/12000 (32%)
+
+
+
+===== Computing accuracy for [1, 3, 6, 7, 8, 9, 11] (480/1000) accuracy: 0.3224166666666667 =====
+
+Test set: Average loss: 1.7820, Accuracy: 4948/12000 (41%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 5, 6, 7, 8, 11, 12] (481/1000) accuracy: 0.41233333333333333 =====
+
+Test set: Average loss: 2.4782, Accuracy: 2902/12000 (24%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 9, 11] (482/1000) accuracy: 0.24183333333333334 =====
+
+Test set: Average loss: 1.9430, Accuracy: 4778/12000 (40%)
+
+
+
+===== Computing accuracy for [0, 4, 6, 9, 11, 12, 13, 14] (483/1000) accuracy: 0.39816666666666667 =====
+
+Test set: Average loss: 1.9412, Accuracy: 4524/12000 (38%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 8, 10, 11, 13, 14] (484/1000) accuracy: 0.377 =====
+
+Test set: Average loss: 2.1202, Accuracy: 3816/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 10, 11, 13, 14] (485/1000) accuracy: 0.318 =====
+
+Test set: Average loss: 2.4951, Accuracy: 3245/12000 (27%)
+
+
+
+===== Computing accuracy for [0, 1, 6, 7, 8, 9, 10] (486/1000) accuracy: 0.2704166666666667 =====
+
+Test set: Average loss: 2.1260, Accuracy: 4202/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 6, 8, 9, 11, 13] (487/1000) accuracy: 0.3501666666666667 =====
+
+Test set: Average loss: 1.9998, Accuracy: 4287/12000 (36%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 6, 8, 11, 14] (488/1000) accuracy: 0.35725 =====
+
+Test set: Average loss: 2.3647, Accuracy: 3543/12000 (30%)
+
+
+
+===== Computing accuracy for [2, 3, 6, 8, 9, 12, 14] (489/1000) accuracy: 0.29525 =====
+
+Test set: Average loss: 2.6386, Accuracy: 2679/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 11, 13] (490/1000) accuracy: 0.22325 =====
+
+Test set: Average loss: 2.0191, Accuracy: 4380/12000 (36%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 7, 9, 10, 11, 14] (491/1000) accuracy: 0.365 =====
+
+Test set: Average loss: 2.3304, Accuracy: 3234/12000 (27%)
+
+
+
+===== Computing accuracy for [0, 1, 6, 12, 14] (492/1000) accuracy: 0.2695 =====
+
+Test set: Average loss: 1.7341, Accuracy: 5079/12000 (42%)
+
+
+
+===== Computing accuracy for [2, 4, 6, 8, 9, 10, 11, 12, 13, 14] (493/1000) accuracy: 0.42325 =====
+
+Test set: Average loss: 1.2789, Accuracy: 6847/12000 (57%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 6, 8, 10, 11, 12, 13, 14] (494/1000) accuracy: 0.5705833333333333 =====
+
+Test set: Average loss: 2.6276, Accuracy: 2497/12000 (21%)
+
+
+
+===== Computing accuracy for [1, 2, 6, 9, 11] (495/1000) accuracy: 0.20808333333333334 =====
+
+Test set: Average loss: 1.6183, Accuracy: 5584/12000 (47%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 8, 9, 10, 11, 12, 13] (496/1000) accuracy: 0.4653333333333333 =====
+
+Test set: Average loss: 1.5240, Accuracy: 6018/12000 (50%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 6, 7, 8, 12, 13, 14] (497/1000) accuracy: 0.5015 =====
+
+Test set: Average loss: 2.2488, Accuracy: 3794/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 3, 5, 6, 9, 11, 14] (498/1000) accuracy: 0.31616666666666665 =====
+
+Test set: Average loss: 2.0724, Accuracy: 3942/12000 (33%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 6, 11, 12, 14] (499/1000) accuracy: 0.3285 =====
+
+Test set: Average loss: 1.9914, Accuracy: 4297/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 5, 6, 8, 10, 11] (500/1000) accuracy: 0.3580833333333333 =====
+
+Test set: Average loss: 2.3604, Accuracy: 3327/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 5, 11, 13] (501/1000) accuracy: 0.27725 =====
+
+Test set: Average loss: 2.2641, Accuracy: 3812/12000 (32%)
+
+
+
+===== Computing accuracy for [1, 3, 9, 11, 13, 14] (502/1000) accuracy: 0.31766666666666665 =====
+
+Test set: Average loss: 2.9108, Accuracy: 2114/12000 (18%)
+
+
+
+===== Computing accuracy for [4, 7, 8, 9] (503/1000) accuracy: 0.17616666666666667 =====
+
+Test set: Average loss: 2.1886, Accuracy: 4035/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 5, 6, 7, 12, 14] (504/1000) accuracy: 0.33625 =====
+
+Test set: Average loss: 1.8134, Accuracy: 4616/12000 (38%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 6, 9, 11, 12, 14] (505/1000) accuracy: 0.38466666666666666 =====
+
+Test set: Average loss: 2.0795, Accuracy: 4277/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 7, 12, 13, 14] (506/1000) accuracy: 0.35641666666666666 =====
+
+Test set: Average loss: 2.7613, Accuracy: 2339/12000 (19%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 9] (507/1000) accuracy: 0.19491666666666665 =====
+
+Test set: Average loss: 2.0912, Accuracy: 3832/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 6, 7, 12, 14] (508/1000) accuracy: 0.31933333333333336 =====
+
+Test set: Average loss: 1.7247, Accuracy: 5266/12000 (44%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 7, 8, 10, 11, 12, 13, 14] (509/1000) accuracy: 0.43883333333333335 =====
+
+Test set: Average loss: 2.1511, Accuracy: 3769/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 8, 11, 12] (510/1000) accuracy: 0.3140833333333333 =====
+
+Test set: Average loss: 2.3586, Accuracy: 3732/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 5, 6, 12, 13, 14] (511/1000) accuracy: 0.311 =====
+
+Test set: Average loss: 2.4963, Accuracy: 3021/12000 (25%)
+
+
+
+===== Computing accuracy for [3, 4, 6, 8, 10, 14] (512/1000) accuracy: 0.25175 =====
+
+Test set: Average loss: 2.2706, Accuracy: 3746/12000 (31%)
+
+
+
+===== Computing accuracy for [1, 3, 6, 9, 11, 14] (513/1000) accuracy: 0.31216666666666665 =====
+
+Test set: Average loss: 2.5156, Accuracy: 3079/12000 (26%)
+
+
+
+===== Computing accuracy for [2, 3, 8, 9, 12, 14] (514/1000) accuracy: 0.25658333333333333 =====
+
+Test set: Average loss: 2.0596, Accuracy: 4208/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 6, 8, 9, 10, 14] (515/1000) accuracy: 0.3506666666666667 =====
+
+Test set: Average loss: 2.7786, Accuracy: 2666/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 6, 8, 9, 10, 13] (516/1000) accuracy: 0.22216666666666668 =====
+
+Test set: Average loss: 2.2712, Accuracy: 3408/12000 (28%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 6, 7, 9, 11, 13] (517/1000) accuracy: 0.284 =====
+
+Test set: Average loss: 0.9932, Accuracy: 8116/12000 (68%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] (518/1000) accuracy: 0.6763333333333333 =====
+
+Test set: Average loss: 2.1931, Accuracy: 3600/12000 (30%)
+
+
+
+===== Computing accuracy for [4, 5, 7, 8, 9, 11, 12, 13] (519/1000) accuracy: 0.3 =====
+
+Test set: Average loss: 2.3875, Accuracy: 3050/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 6, 10, 12, 14] (520/1000) accuracy: 0.25416666666666665 =====
+
+Test set: Average loss: 1.7878, Accuracy: 4709/12000 (39%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 8, 9, 11, 12] (521/1000) accuracy: 0.3924166666666667 =====
+
+Test set: Average loss: 2.4123, Accuracy: 3501/12000 (29%)
+
+
+
+===== Computing accuracy for [3, 6, 9, 12, 13, 14] (522/1000) accuracy: 0.29175 =====
+
+Test set: Average loss: 2.5501, Accuracy: 3036/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 3, 5, 6, 8, 14] (523/1000) accuracy: 0.253 =====
+
+Test set: Average loss: 2.5119, Accuracy: 3115/12000 (26%)
+
+
+
+===== Computing accuracy for [3, 5, 7, 9, 10, 13, 14] (524/1000) accuracy: 0.25958333333333333 =====
+
+Test set: Average loss: 2.5642, Accuracy: 2892/12000 (24%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 5, 6, 9, 11] (525/1000) accuracy: 0.241 =====
+
+Test set: Average loss: 2.5136, Accuracy: 3133/12000 (26%)
+
+
+
+===== Computing accuracy for [2, 3, 6, 7, 10, 12, 13] (526/1000) accuracy: 0.26108333333333333 =====
+
+Test set: Average loss: 1.9041, Accuracy: 4432/12000 (37%)
+
+
+
+===== Computing accuracy for [1, 4, 6, 8, 11, 12, 14] (527/1000) accuracy: 0.36933333333333335 =====
+
+Test set: Average loss: 2.9222, Accuracy: 2343/12000 (20%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 9, 14] (528/1000) accuracy: 0.19525 =====
+
+Test set: Average loss: 2.1582, Accuracy: 3824/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 3, 5, 6, 9, 11, 12] (529/1000) accuracy: 0.31866666666666665 =====
+
+Test set: Average loss: 1.8956, Accuracy: 4673/12000 (39%)
+
+
+
+===== Computing accuracy for [2, 4, 6, 7, 8, 10, 12, 13, 14] (530/1000) accuracy: 0.3894166666666667 =====
+
+Test set: Average loss: 2.0825, Accuracy: 4144/12000 (35%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 7, 8, 9, 12] (531/1000) accuracy: 0.3453333333333333 =====
+
+Test set: Average loss: 1.6711, Accuracy: 5524/12000 (46%)
+
+
+
+===== Computing accuracy for [1, 3, 5, 6, 7, 9, 10, 11, 13, 14] (532/1000) accuracy: 0.4603333333333333 =====
+
+Test set: Average loss: 1.8753, Accuracy: 4459/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 6, 10, 11, 12, 14] (533/1000) accuracy: 0.3715833333333333 =====
+
+Test set: Average loss: 2.1993, Accuracy: 3750/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 4, 6, 7, 8, 11, 12, 13] (534/1000) accuracy: 0.3125 =====
+
+Test set: Average loss: 2.7274, Accuracy: 2490/12000 (21%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 13, 14] (535/1000) accuracy: 0.2075 =====
+
+Test set: Average loss: 2.2688, Accuracy: 3450/12000 (29%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 7, 9, 13, 14] (536/1000) accuracy: 0.2875 =====
+
+Test set: Average loss: 2.7171, Accuracy: 2374/12000 (20%)
+
+
+
+===== Computing accuracy for [4, 5, 11, 12] (537/1000) accuracy: 0.19783333333333333 =====
+
+Test set: Average loss: 2.3799, Accuracy: 3193/12000 (27%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 7, 11] (538/1000) accuracy: 0.26608333333333334 =====
+
+Test set: Average loss: 2.8486, Accuracy: 2273/12000 (19%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 6, 9, 10, 13] (539/1000) accuracy: 0.18941666666666668 =====
+
+Test set: Average loss: 2.1843, Accuracy: 3827/12000 (32%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 9, 10, 11, 13, 14] (540/1000) accuracy: 0.3189166666666667 =====
+
+Test set: Average loss: 2.5377, Accuracy: 2862/12000 (24%)
+
+
+
+===== Computing accuracy for [5, 6, 7, 8, 10, 11] (541/1000) accuracy: 0.2385 =====
+
+Test set: Average loss: 2.2237, Accuracy: 3842/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 7, 10, 11, 13] (542/1000) accuracy: 0.32016666666666665 =====
+
+Test set: Average loss: 1.7710, Accuracy: 4902/12000 (41%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 8, 11, 12, 13, 14] (543/1000) accuracy: 0.4085 =====
+
+Test set: Average loss: 2.1260, Accuracy: 3711/12000 (31%)
+
+
+
+===== Computing accuracy for [2, 6, 7, 8, 9, 11, 14] (544/1000) accuracy: 0.30925 =====
+
+Test set: Average loss: 2.1689, Accuracy: 3891/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 3, 8, 9, 11, 14] (545/1000) accuracy: 0.32425 =====
+
+Test set: Average loss: 2.2771, Accuracy: 3739/12000 (31%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 6, 7, 9, 10] (546/1000) accuracy: 0.3115833333333333 =====
+
+Test set: Average loss: 2.5006, Accuracy: 2874/12000 (24%)
+
+
+
+===== Computing accuracy for [1, 2, 6, 10, 12, 13] (547/1000) accuracy: 0.2395 =====
+
+Test set: Average loss: 2.2549, Accuracy: 3764/12000 (31%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 7, 12, 13, 14] (548/1000) accuracy: 0.31366666666666665 =====
+
+Test set: Average loss: 1.4895, Accuracy: 6136/12000 (51%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 6, 7, 8, 10, 11, 14] (549/1000) accuracy: 0.5113333333333333 =====
+
+Test set: Average loss: 2.0686, Accuracy: 4063/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 8, 9, 11, 13] (550/1000) accuracy: 0.33858333333333335 =====
+
+Test set: Average loss: 1.9893, Accuracy: 4207/12000 (35%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 7, 8, 9, 12, 14] (551/1000) accuracy: 0.35058333333333336 =====
+
+Test set: Average loss: 2.2423, Accuracy: 3279/12000 (27%)
+
+
+
+===== Computing accuracy for [6, 7, 11, 12, 14] (552/1000) accuracy: 0.27325 =====
+
+Test set: Average loss: 2.6770, Accuracy: 2628/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 10, 12, 13] (553/1000) accuracy: 0.219 =====
+
+Test set: Average loss: 2.3593, Accuracy: 3117/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 5, 8, 9, 11, 12] (554/1000) accuracy: 0.25975 =====
+
+Test set: Average loss: 1.4387, Accuracy: 6026/12000 (50%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 7, 8, 9, 11, 13, 14] (555/1000) accuracy: 0.5021666666666667 =====
+
+Test set: Average loss: 1.6614, Accuracy: 5342/12000 (45%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 6, 7, 8, 9, 11, 12] (556/1000) accuracy: 0.44516666666666665 =====
+
+Test set: Average loss: 2.5804, Accuracy: 2970/12000 (25%)
+
+
+
+===== Computing accuracy for [3, 4, 6, 9, 12, 13] (557/1000) accuracy: 0.2475 =====
+
+Test set: Average loss: 2.1187, Accuracy: 3765/12000 (31%)
+
+
+
+===== Computing accuracy for [3, 6, 7, 9, 10, 11, 12] (558/1000) accuracy: 0.31375 =====
+
+Test set: Average loss: 2.4715, Accuracy: 2701/12000 (23%)
+
+
+
+===== Computing accuracy for [1, 2, 7, 11, 13] (559/1000) accuracy: 0.22508333333333333 =====
+
+Test set: Average loss: 1.9090, Accuracy: 4599/12000 (38%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 5, 6, 9, 11, 12, 14] (560/1000) accuracy: 0.38325 =====
+
+Test set: Average loss: 1.9930, Accuracy: 4465/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 5, 6, 7, 12, 13] (561/1000) accuracy: 0.3720833333333333 =====
+
+Test set: Average loss: 1.9980, Accuracy: 4291/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 6, 7, 9, 11, 14] (562/1000) accuracy: 0.3575833333333333 =====
+
+Test set: Average loss: 2.1687, Accuracy: 3749/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 2, 8, 10, 11, 13, 14] (563/1000) accuracy: 0.3124166666666667 =====
+
+Test set: Average loss: 2.6242, Accuracy: 2871/12000 (24%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 7, 12] (564/1000) accuracy: 0.23925 =====
+
+Test set: Average loss: 1.5569, Accuracy: 5901/12000 (49%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 6, 7, 8, 10, 11, 14] (565/1000) accuracy: 0.49175 =====
+
+Test set: Average loss: 2.1901, Accuracy: 3751/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 7, 9, 12, 13] (566/1000) accuracy: 0.3125833333333333 =====
+
+Test set: Average loss: 2.3079, Accuracy: 3749/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 7, 12, 13] (567/1000) accuracy: 0.3124166666666667 =====
+
+Test set: Average loss: 1.4224, Accuracy: 6430/12000 (54%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 6, 7, 8, 9, 12, 13, 14] (568/1000) accuracy: 0.5358333333333334 =====
+
+Test set: Average loss: 1.7796, Accuracy: 4853/12000 (40%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 8, 11, 12, 13, 14] (569/1000) accuracy: 0.40441666666666665 =====
+
+Test set: Average loss: 2.7038, Accuracy: 2757/12000 (23%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 6, 9, 12] (570/1000) accuracy: 0.22975 =====
+
+Test set: Average loss: 1.8935, Accuracy: 4586/12000 (38%)
+
+
+
+===== Computing accuracy for [1, 4, 8, 9, 10, 12, 13, 14] (571/1000) accuracy: 0.38216666666666665 =====
+
+Test set: Average loss: 2.7760, Accuracy: 2235/12000 (19%)
+
+
+
+===== Computing accuracy for [4, 5, 8, 11] (572/1000) accuracy: 0.18625 =====
+
+Test set: Average loss: 2.5774, Accuracy: 3100/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 4, 7, 8, 12, 13] (573/1000) accuracy: 0.25833333333333336 =====
+
+Test set: Average loss: 1.9554, Accuracy: 4455/12000 (37%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 8, 10, 11, 13, 14] (574/1000) accuracy: 0.37125 =====
+
+Test set: Average loss: 2.2494, Accuracy: 3419/12000 (28%)
+
+
+
+===== Computing accuracy for [1, 3, 6, 7, 9, 14] (575/1000) accuracy: 0.28491666666666665 =====
+
+Test set: Average loss: 1.9405, Accuracy: 4410/12000 (37%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 6, 7, 8, 9, 11, 13] (576/1000) accuracy: 0.3675 =====
+
+Test set: Average loss: 2.3270, Accuracy: 3623/12000 (30%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 6, 7, 10, 12, 14] (577/1000) accuracy: 0.30191666666666667 =====
+
+Test set: Average loss: 2.4269, Accuracy: 3155/12000 (26%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 7, 12] (578/1000) accuracy: 0.2629166666666667 =====
+
+Test set: Average loss: 2.3146, Accuracy: 3344/12000 (28%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 6, 9, 13, 14] (579/1000) accuracy: 0.2786666666666667 =====
+
+Test set: Average loss: 3.0270, Accuracy: 2015/12000 (17%)
+
+
+
+===== Computing accuracy for [2, 10, 12, 14] (580/1000) accuracy: 0.16791666666666666 =====
+
+Test set: Average loss: 1.7269, Accuracy: 5162/12000 (43%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 7, 8, 10, 11, 13, 14] (581/1000) accuracy: 0.43016666666666664 =====
+
+Test set: Average loss: 2.1759, Accuracy: 3669/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 7, 10, 11, 12, 14] (582/1000) accuracy: 0.30575 =====
+
+Test set: Average loss: 2.3855, Accuracy: 3364/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 2, 7, 8, 13, 14] (583/1000) accuracy: 0.2803333333333333 =====
+
+Test set: Average loss: 2.0800, Accuracy: 4031/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 3, 5, 8, 9, 10, 12, 14] (584/1000) accuracy: 0.33591666666666664 =====
+
+Test set: Average loss: 1.7814, Accuracy: 5102/12000 (43%)
+
+
+
+===== Computing accuracy for [1, 3, 6, 8, 9, 11, 13, 14] (585/1000) accuracy: 0.4251666666666667 =====
+
+Test set: Average loss: 2.5479, Accuracy: 2604/12000 (22%)
+
+
+
+===== Computing accuracy for [1, 3, 6, 7, 13] (586/1000) accuracy: 0.217 =====
+
+Test set: Average loss: 1.5048, Accuracy: 6017/12000 (50%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 6, 7, 8, 9, 12, 13, 14] (587/1000) accuracy: 0.5014166666666666 =====
+
+Test set: Average loss: 2.7600, Accuracy: 2328/12000 (19%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 7, 13] (588/1000) accuracy: 0.194 =====
+
+Test set: Average loss: 2.6882, Accuracy: 2619/12000 (22%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 5, 7, 9, 13] (589/1000) accuracy: 0.21825 =====
+
+Test set: Average loss: 2.3408, Accuracy: 3652/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 6, 7, 9, 12, 13] (590/1000) accuracy: 0.30433333333333334 =====
+
+Test set: Average loss: 2.0600, Accuracy: 4064/12000 (34%)
+
+
+
+===== Computing accuracy for [3, 4, 6, 7, 8, 12, 14] (591/1000) accuracy: 0.33866666666666667 =====
+
+Test set: Average loss: 2.7071, Accuracy: 2482/12000 (21%)
+
+
+
+===== Computing accuracy for [0, 6, 7, 8, 12] (592/1000) accuracy: 0.20683333333333334 =====
+
+Test set: Average loss: 1.5193, Accuracy: 6057/12000 (50%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 7, 9, 10, 11, 12, 14] (593/1000) accuracy: 0.50475 =====
+
+Test set: Average loss: 2.1567, Accuracy: 3945/12000 (33%)
+
+
+
+===== Computing accuracy for [0, 1, 7, 8, 10, 13, 14] (594/1000) accuracy: 0.32875 =====
+
+Test set: Average loss: 2.6808, Accuracy: 2563/12000 (21%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 6, 11] (595/1000) accuracy: 0.21358333333333332 =====
+
+Test set: Average loss: 2.1702, Accuracy: 3931/12000 (33%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 6, 7, 9, 10, 12] (596/1000) accuracy: 0.32758333333333334 =====
+
+Test set: Average loss: 2.3365, Accuracy: 3425/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 7, 9, 11, 13] (597/1000) accuracy: 0.28541666666666665 =====
+
+Test set: Average loss: 2.6575, Accuracy: 2583/12000 (22%)
+
+
+
+===== Computing accuracy for [3, 4, 9, 10, 12, 13] (598/1000) accuracy: 0.21525 =====
+
+Test set: Average loss: 1.9414, Accuracy: 4292/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 5, 9, 10, 11, 12, 13] (599/1000) accuracy: 0.3576666666666667 =====
+
+Test set: Average loss: 2.2765, Accuracy: 3657/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 8, 9, 10, 13] (600/1000) accuracy: 0.30475 =====
+
+Test set: Average loss: 2.8321, Accuracy: 2224/12000 (19%)
+
+
+
+===== Computing accuracy for [2, 6, 7, 14] (601/1000) accuracy: 0.18533333333333332 =====
+
+Test set: Average loss: 2.3092, Accuracy: 3932/12000 (33%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 7, 12, 13, 14] (602/1000) accuracy: 0.32766666666666666 =====
+
+Test set: Average loss: 2.3252, Accuracy: 3634/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 7, 10, 12] (603/1000) accuracy: 0.30283333333333334 =====
+
+Test set: Average loss: 2.3551, Accuracy: 3363/12000 (28%)
+
+
+
+===== Computing accuracy for [1, 6, 8, 9, 10, 14] (604/1000) accuracy: 0.28025 =====
+
+Test set: Average loss: 3.0539, Accuracy: 1895/12000 (16%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 10, 13] (605/1000) accuracy: 0.15791666666666668 =====
+
+Test set: Average loss: 2.4037, Accuracy: 3053/12000 (25%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 7, 8] (606/1000) accuracy: 0.2544166666666667 =====
+
+Test set: Average loss: 2.3417, Accuracy: 3176/12000 (26%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 7, 8, 14] (607/1000) accuracy: 0.26466666666666666 =====
+
+Test set: Average loss: 1.8396, Accuracy: 4845/12000 (40%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 6, 9, 11, 12, 13] (608/1000) accuracy: 0.40375 =====
+
+Test set: Average loss: 2.7451, Accuracy: 2752/12000 (23%)
+
+
+
+===== Computing accuracy for [2, 6, 8, 9, 12, 13] (609/1000) accuracy: 0.22933333333333333 =====
+
+Test set: Average loss: 1.8543, Accuracy: 4586/12000 (38%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 7, 8, 11, 14] (610/1000) accuracy: 0.38216666666666665 =====
+
+Test set: Average loss: 1.7365, Accuracy: 5106/12000 (43%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 5, 7, 8, 9, 11, 14] (611/1000) accuracy: 0.4255 =====
+
+Test set: Average loss: 2.0355, Accuracy: 4262/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 5, 6, 10, 12, 13] (612/1000) accuracy: 0.3551666666666667 =====
+
+Test set: Average loss: 1.9574, Accuracy: 4334/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 8, 10, 11, 14] (613/1000) accuracy: 0.3611666666666667 =====
+
+Test set: Average loss: 1.8775, Accuracy: 4421/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 5, 7, 9, 10, 11, 12, 14] (614/1000) accuracy: 0.36841666666666667 =====
+
+Test set: Average loss: 2.1763, Accuracy: 3584/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 6, 9, 11, 12, 13] (615/1000) accuracy: 0.2986666666666667 =====
+
+Test set: Average loss: 1.4339, Accuracy: 6326/12000 (53%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 6, 7, 8, 9, 11, 12, 13, 14] (616/1000) accuracy: 0.5271666666666667 =====
+
+Test set: Average loss: 2.3974, Accuracy: 3179/12000 (26%)
+
+
+
+===== Computing accuracy for [1, 7, 8, 10, 14] (617/1000) accuracy: 0.2649166666666667 =====
+
+Test set: Average loss: 1.0441, Accuracy: 7756/12000 (65%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 5, 7, 8, 9, 11, 12, 13, 14] (618/1000) accuracy: 0.6463333333333333 =====
+
+Test set: Average loss: 1.9379, Accuracy: 4243/12000 (35%)
+
+
+
+===== Computing accuracy for [4, 5, 6, 7, 9, 11, 12, 14] (619/1000) accuracy: 0.35358333333333336 =====
+
+Test set: Average loss: 2.3688, Accuracy: 3036/12000 (25%)
+
+
+
+===== Computing accuracy for [2, 4, 5, 6, 7, 8, 11] (620/1000) accuracy: 0.253 =====
+
+Test set: Average loss: 1.9587, Accuracy: 4233/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 8, 11, 12] (621/1000) accuracy: 0.35275 =====
+
+Test set: Average loss: 2.1438, Accuracy: 3973/12000 (33%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 6, 8, 9, 10, 11] (622/1000) accuracy: 0.33108333333333334 =====
+
+Test set: Average loss: 2.9329, Accuracy: 2081/12000 (17%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5] (623/1000) accuracy: 0.17341666666666666 =====
+
+Test set: Average loss: 1.5232, Accuracy: 5740/12000 (48%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 5, 7, 8, 9, 11, 14] (624/1000) accuracy: 0.47833333333333333 =====
+
+Test set: Average loss: 2.4642, Accuracy: 2974/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 6, 8, 13, 14] (625/1000) accuracy: 0.24783333333333332 =====
+
+Test set: Average loss: 2.0685, Accuracy: 4174/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 7, 8, 12, 13, 14] (626/1000) accuracy: 0.3478333333333333 =====
+
+Test set: Average loss: 2.3867, Accuracy: 3539/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 3, 6, 7, 9, 10, 12, 13] (627/1000) accuracy: 0.29491666666666666 =====
+
+Test set: Average loss: 2.4272, Accuracy: 3398/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 6, 7, 9, 12] (628/1000) accuracy: 0.2831666666666667 =====
+
+Test set: Average loss: 2.7527, Accuracy: 2413/12000 (20%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 6, 7, 8, 13] (629/1000) accuracy: 0.20108333333333334 =====
+
+Test set: Average loss: 2.3725, Accuracy: 3193/12000 (27%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 8, 10, 12] (630/1000) accuracy: 0.26608333333333334 =====
+
+Test set: Average loss: 1.8114, Accuracy: 4783/12000 (40%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 6, 9, 11, 12, 13, 14] (631/1000) accuracy: 0.39858333333333335 =====
+
+Test set: Average loss: 1.6214, Accuracy: 5233/12000 (44%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 6, 7, 9, 11, 12, 14] (632/1000) accuracy: 0.4360833333333333 =====
+
+Test set: Average loss: 1.9954, Accuracy: 4347/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 8, 9, 10, 11, 13] (633/1000) accuracy: 0.36225 =====
+
+Test set: Average loss: 2.5130, Accuracy: 2986/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 4, 7, 9, 13, 14] (634/1000) accuracy: 0.24883333333333332 =====
+
+Test set: Average loss: 2.3866, Accuracy: 3447/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 4, 6, 7, 9, 10, 14] (635/1000) accuracy: 0.28725 =====
+
+Test set: Average loss: 1.1672, Accuracy: 7016/12000 (58%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 6, 7, 8, 10, 11, 12, 14] (636/1000) accuracy: 0.5846666666666667 =====
+
+Test set: Average loss: 2.1362, Accuracy: 3791/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 1, 9, 10, 12, 13, 14] (637/1000) accuracy: 0.3159166666666667 =====
+
+Test set: Average loss: 2.8442, Accuracy: 2284/12000 (19%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 6, 9, 10, 13] (638/1000) accuracy: 0.19033333333333333 =====
+
+Test set: Average loss: 2.8168, Accuracy: 2429/12000 (20%)
+
+
+
+===== Computing accuracy for [0, 4, 6, 7, 8, 9] (639/1000) accuracy: 0.20241666666666666 =====
+
+Test set: Average loss: 2.6649, Accuracy: 2544/12000 (21%)
+
+
+
+===== Computing accuracy for [0, 1, 7, 14] (640/1000) accuracy: 0.212 =====
+
+Test set: Average loss: 2.4572, Accuracy: 2845/12000 (24%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 7, 9, 14] (641/1000) accuracy: 0.23708333333333334 =====
+
+Test set: Average loss: 1.8425, Accuracy: 4843/12000 (40%)
+
+
+
+===== Computing accuracy for [0, 1, 6, 7, 8, 10, 11, 14] (642/1000) accuracy: 0.40358333333333335 =====
+
+Test set: Average loss: 2.9361, Accuracy: 2015/12000 (17%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 9, 10] (643/1000) accuracy: 0.16791666666666666 =====
+
+Test set: Average loss: 2.5871, Accuracy: 2943/12000 (25%)
+
+
+
+===== Computing accuracy for [3, 4, 6, 8, 12, 13] (644/1000) accuracy: 0.24525 =====
+
+Test set: Average loss: 2.8779, Accuracy: 2628/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 8, 9, 13] (645/1000) accuracy: 0.219 =====
+
+Test set: Average loss: 2.4953, Accuracy: 3011/12000 (25%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 6, 8, 10] (646/1000) accuracy: 0.2509166666666667 =====
+
+Test set: Average loss: 1.7778, Accuracy: 5379/12000 (45%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 7, 8, 9, 12] (647/1000) accuracy: 0.44825 =====
+
+Test set: Average loss: 1.7974, Accuracy: 4692/12000 (39%)
+
+
+
+===== Computing accuracy for [3, 4, 6, 7, 8, 11, 13, 14] (648/1000) accuracy: 0.391 =====
+
+Test set: Average loss: 1.9326, Accuracy: 4760/12000 (40%)
+
+
+
+===== Computing accuracy for [3, 5, 6, 7, 8, 9, 10, 12, 14] (649/1000) accuracy: 0.39666666666666667 =====
+
+Test set: Average loss: 2.7152, Accuracy: 2437/12000 (20%)
+
+
+
+===== Computing accuracy for [0, 3, 7, 11] (650/1000) accuracy: 0.20308333333333334 =====
+
+Test set: Average loss: 2.5827, Accuracy: 2717/12000 (23%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 11, 13] (651/1000) accuracy: 0.22641666666666665 =====
+
+Test set: Average loss: 2.9618, Accuracy: 2147/12000 (18%)
+
+
+
+===== Computing accuracy for [7, 10, 11] (652/1000) accuracy: 0.17891666666666667 =====
+
+Test set: Average loss: 2.5164, Accuracy: 2845/12000 (24%)
+
+
+
+===== Computing accuracy for [5, 6, 11, 13, 14] (653/1000) accuracy: 0.23708333333333334 =====
+
+Test set: Average loss: 2.0093, Accuracy: 4557/12000 (38%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 6, 7, 8, 9, 10, 11, 13] (654/1000) accuracy: 0.37975 =====
+
+Test set: Average loss: 1.8689, Accuracy: 5048/12000 (42%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 8, 9, 10, 11, 13] (655/1000) accuracy: 0.4206666666666667 =====
+
+Test set: Average loss: 2.9383, Accuracy: 2231/12000 (19%)
+
+
+
+===== Computing accuracy for [2, 5, 6, 8, 9, 13] (656/1000) accuracy: 0.18591666666666667 =====
+
+Test set: Average loss: 1.4835, Accuracy: 6155/12000 (51%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 6, 7, 8, 9, 10, 12, 14] (657/1000) accuracy: 0.5129166666666667 =====
+
+Test set: Average loss: 1.7006, Accuracy: 5508/12000 (46%)
+
+
+
+===== Computing accuracy for [1, 4, 6, 7, 8, 9, 10, 12, 14] (658/1000) accuracy: 0.459 =====
+
+Test set: Average loss: 2.0316, Accuracy: 4152/12000 (35%)
+
+
+
+===== Computing accuracy for [3, 5, 6, 8, 10, 11, 13, 14] (659/1000) accuracy: 0.346 =====
+
+Test set: Average loss: 1.8653, Accuracy: 4885/12000 (41%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 6, 7, 8, 9, 12, 14] (660/1000) accuracy: 0.40708333333333335 =====
+
+Test set: Average loss: 1.7488, Accuracy: 5093/12000 (42%)
+
+
+
+===== Computing accuracy for [0, 5, 6, 7, 8, 10, 11, 12, 13, 14] (661/1000) accuracy: 0.42441666666666666 =====
+
+Test set: Average loss: 2.2490, Accuracy: 3268/12000 (27%)
+
+
+
+===== Computing accuracy for [0, 6, 10, 11, 12, 14] (662/1000) accuracy: 0.2723333333333333 =====
+
+Test set: Average loss: 2.6580, Accuracy: 2740/12000 (23%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 6, 7, 10] (663/1000) accuracy: 0.22833333333333333 =====
+
+Test set: Average loss: 2.8221, Accuracy: 2324/12000 (19%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 7, 14] (664/1000) accuracy: 0.19366666666666665 =====
+
+Test set: Average loss: 2.0605, Accuracy: 4093/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 1, 6, 8, 10, 11, 14] (665/1000) accuracy: 0.34108333333333335 =====
+
+Test set: Average loss: 2.4386, Accuracy: 2836/12000 (24%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 9, 10, 12] (666/1000) accuracy: 0.23633333333333334 =====
+
+Test set: Average loss: 2.1986, Accuracy: 3811/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 7, 10, 12, 14] (667/1000) accuracy: 0.31758333333333333 =====
+
+Test set: Average loss: 2.0010, Accuracy: 4233/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 6, 11, 12, 14] (668/1000) accuracy: 0.35275 =====
+
+Test set: Average loss: 1.8016, Accuracy: 4962/12000 (41%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 6, 7, 12, 13, 14] (669/1000) accuracy: 0.4135 =====
+
+Test set: Average loss: 2.4447, Accuracy: 3398/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 3, 6, 8, 9, 10, 14] (670/1000) accuracy: 0.2831666666666667 =====
+
+Test set: Average loss: 2.2625, Accuracy: 3413/12000 (28%)
+
+
+
+===== Computing accuracy for [2, 4, 8, 9, 11, 14] (671/1000) accuracy: 0.28441666666666665 =====
+
+Test set: Average loss: 2.8461, Accuracy: 2329/12000 (19%)
+
+
+
+===== Computing accuracy for [4, 5, 7, 10, 14] (672/1000) accuracy: 0.19408333333333333 =====
+
+Test set: Average loss: 2.2227, Accuracy: 3690/12000 (31%)
+
+
+
+===== Computing accuracy for [2, 4, 5, 7, 11, 12, 14] (673/1000) accuracy: 0.3075 =====
+
+Test set: Average loss: 2.0548, Accuracy: 4552/12000 (38%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 5, 6, 7, 9, 10, 13] (674/1000) accuracy: 0.37933333333333336 =====
+
+Test set: Average loss: 1.4151, Accuracy: 6126/12000 (51%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 6, 7, 9, 11, 12, 13, 14] (675/1000) accuracy: 0.5105 =====
+
+Test set: Average loss: 2.3510, Accuracy: 3426/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 2, 6, 8, 11, 12, 13] (676/1000) accuracy: 0.2855 =====
+
+Test set: Average loss: 2.3234, Accuracy: 3415/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 8, 10, 11, 13] (677/1000) accuracy: 0.28458333333333335 =====
+
+Test set: Average loss: 2.7133, Accuracy: 2448/12000 (20%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 6, 8, 13] (678/1000) accuracy: 0.204 =====
+
+Test set: Average loss: 2.1824, Accuracy: 4425/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 5, 7, 8, 9, 10, 12, 13] (679/1000) accuracy: 0.36875 =====
+
+Test set: Average loss: 3.0767, Accuracy: 1828/12000 (15%)
+
+
+
+===== Computing accuracy for [2, 6, 10, 14] (680/1000) accuracy: 0.15233333333333332 =====
+
+Test set: Average loss: 1.3049, Accuracy: 6634/12000 (55%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 6, 7, 9, 10, 11, 12, 13, 14] (681/1000) accuracy: 0.5528333333333333 =====
+
+Test set: Average loss: 1.8094, Accuracy: 4828/12000 (40%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 6, 8, 9, 10, 12, 14] (682/1000) accuracy: 0.4023333333333333 =====
+
+Test set: Average loss: 2.1499, Accuracy: 3447/12000 (29%)
+
+
+
+===== Computing accuracy for [1, 5, 6, 7, 12, 14] (683/1000) accuracy: 0.28725 =====
+
+Test set: Average loss: 2.0735, Accuracy: 4150/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 7, 9, 11, 12, 13] (684/1000) accuracy: 0.3458333333333333 =====
+
+Test set: Average loss: 1.6255, Accuracy: 5351/12000 (45%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 7, 8, 11, 13, 14] (685/1000) accuracy: 0.4459166666666667 =====
+
+Test set: Average loss: 2.0837, Accuracy: 3737/12000 (31%)
+
+
+
+===== Computing accuracy for [3, 5, 8, 10, 11, 12, 14] (686/1000) accuracy: 0.3114166666666667 =====
+
+Test set: Average loss: 2.0524, Accuracy: 4292/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 8, 9, 10, 12, 13] (687/1000) accuracy: 0.3576666666666667 =====
+
+Test set: Average loss: 1.9588, Accuracy: 4493/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 7, 9, 11, 12, 13] (688/1000) accuracy: 0.3744166666666667 =====
+
+Test set: Average loss: 2.4928, Accuracy: 2973/12000 (25%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 10, 12, 14] (689/1000) accuracy: 0.24775 =====
+
+Test set: Average loss: 2.0623, Accuracy: 3871/12000 (32%)
+
+
+
+===== Computing accuracy for [4, 5, 7, 8, 11, 13, 14] (690/1000) accuracy: 0.32258333333333333 =====
+
+Test set: Average loss: 2.0581, Accuracy: 3999/12000 (33%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 6, 7, 8, 12] (691/1000) accuracy: 0.33325 =====
+
+Test set: Average loss: 2.2519, Accuracy: 3935/12000 (33%)
+
+
+
+===== Computing accuracy for [3, 4, 6, 7, 8, 9, 10, 12] (692/1000) accuracy: 0.3279166666666667 =====
+
+Test set: Average loss: 1.8724, Accuracy: 4777/12000 (40%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 7, 8, 10, 11, 12] (693/1000) accuracy: 0.39808333333333334 =====
+
+Test set: Average loss: 2.1380, Accuracy: 3981/12000 (33%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 7, 9, 12, 13] (694/1000) accuracy: 0.33175 =====
+
+Test set: Average loss: 1.7134, Accuracy: 5484/12000 (46%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 5, 8, 9, 11, 12, 13, 14] (695/1000) accuracy: 0.457 =====
+
+Test set: Average loss: 2.2139, Accuracy: 3221/12000 (27%)
+
+
+
+===== Computing accuracy for [1, 3, 6, 11, 12] (696/1000) accuracy: 0.2684166666666667 =====
+
+Test set: Average loss: 2.2568, Accuracy: 3500/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 6, 7, 9, 11, 14] (697/1000) accuracy: 0.2916666666666667 =====
+
+Test set: Average loss: 1.9910, Accuracy: 4197/12000 (35%)
+
+
+
+===== Computing accuracy for [4, 7, 8, 9, 10, 11, 14] (698/1000) accuracy: 0.34975 =====
+
+Test set: Average loss: 2.3413, Accuracy: 3161/12000 (26%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 8, 10, 11] (699/1000) accuracy: 0.2634166666666667 =====
+
+Test set: Average loss: 2.0221, Accuracy: 4327/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 8, 11, 13, 14] (700/1000) accuracy: 0.3605833333333333 =====
+
+Test set: Average loss: 2.0416, Accuracy: 4335/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 8, 10, 12, 13, 14] (701/1000) accuracy: 0.36125 =====
+
+Test set: Average loss: 1.5725, Accuracy: 5659/12000 (47%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 8, 9, 10, 11, 12] (702/1000) accuracy: 0.47158333333333335 =====
+
+Test set: Average loss: 1.8309, Accuracy: 5157/12000 (43%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 6, 7, 8, 9, 10, 11, 12] (703/1000) accuracy: 0.42975 =====
+
+Test set: Average loss: 1.5434, Accuracy: 5813/12000 (48%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 6, 7, 8, 9, 12, 14] (704/1000) accuracy: 0.48441666666666666 =====
+
+Test set: Average loss: 2.3784, Accuracy: 3354/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 8, 11, 12, 13] (705/1000) accuracy: 0.2795 =====
+
+Test set: Average loss: 2.6686, Accuracy: 2520/12000 (21%)
+
+
+
+===== Computing accuracy for [6, 7, 8, 14] (706/1000) accuracy: 0.21 =====
+
+Test set: Average loss: 2.2471, Accuracy: 3626/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 7, 9, 10, 13, 14] (707/1000) accuracy: 0.30216666666666664 =====
+
+Test set: Average loss: 2.3143, Accuracy: 3449/12000 (29%)
+
+
+
+===== Computing accuracy for [1, 4, 7, 9, 12, 13] (708/1000) accuracy: 0.28741666666666665 =====
+
+Test set: Average loss: 1.8579, Accuracy: 4892/12000 (41%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 7, 10, 11, 12, 14] (709/1000) accuracy: 0.4076666666666667 =====
+
+Test set: Average loss: 2.0535, Accuracy: 3963/12000 (33%)
+
+
+
+===== Computing accuracy for [2, 3, 6, 9, 10, 11, 12, 13, 14] (710/1000) accuracy: 0.33025 =====
+
+Test set: Average loss: 2.3604, Accuracy: 3354/12000 (28%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 7, 9, 10, 14] (711/1000) accuracy: 0.2795 =====
+
+Test set: Average loss: 2.5206, Accuracy: 2792/12000 (23%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 12, 14] (712/1000) accuracy: 0.23266666666666666 =====
+
+Test set: Average loss: 1.9948, Accuracy: 4257/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 6, 7, 9, 11, 13] (713/1000) accuracy: 0.35475 =====
+
+Test set: Average loss: 2.7597, Accuracy: 2386/12000 (20%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 8, 10] (714/1000) accuracy: 0.19883333333333333 =====
+
+Test set: Average loss: 2.2145, Accuracy: 3603/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 6, 7, 8, 11, 13] (715/1000) accuracy: 0.30025 =====
+
+Test set: Average loss: 2.9408, Accuracy: 2213/12000 (18%)
+
+
+
+===== Computing accuracy for [3, 5, 10, 13, 14] (716/1000) accuracy: 0.18441666666666667 =====
+
+Test set: Average loss: 2.1302, Accuracy: 3689/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 7, 8, 13, 14] (717/1000) accuracy: 0.30741666666666667 =====
+
+Test set: Average loss: 2.1725, Accuracy: 3776/12000 (31%)
+
+
+
+===== Computing accuracy for [3, 4, 10, 11, 12, 13, 14] (718/1000) accuracy: 0.31466666666666665 =====
+
+Test set: Average loss: 2.2941, Accuracy: 3788/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 5, 11, 13, 14] (719/1000) accuracy: 0.31566666666666665 =====
+
+Test set: Average loss: 2.1616, Accuracy: 3677/12000 (31%)
+
+
+
+===== Computing accuracy for [1, 5, 7, 9, 11, 14] (720/1000) accuracy: 0.30641666666666667 =====
+
+Test set: Average loss: 2.4708, Accuracy: 3412/12000 (28%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 11, 14] (721/1000) accuracy: 0.2843333333333333 =====
+
+Test set: Average loss: 1.7873, Accuracy: 4666/12000 (39%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 6, 10, 11, 12, 14] (722/1000) accuracy: 0.3888333333333333 =====
+
+Test set: Average loss: 1.2730, Accuracy: 6821/12000 (57%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 6, 7, 9, 10, 11, 12, 13, 14] (723/1000) accuracy: 0.5684166666666667 =====
+
+Test set: Average loss: 2.1197, Accuracy: 3958/12000 (33%)
+
+
+
+===== Computing accuracy for [1, 4, 6, 10, 11, 13, 14] (724/1000) accuracy: 0.3298333333333333 =====
+
+Test set: Average loss: 2.4705, Accuracy: 3283/12000 (27%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 11, 14] (725/1000) accuracy: 0.27358333333333335 =====
+
+Test set: Average loss: 2.5827, Accuracy: 2848/12000 (24%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 6, 7, 10] (726/1000) accuracy: 0.23733333333333334 =====
+
+Test set: Average loss: 1.9375, Accuracy: 4462/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 5, 7, 10, 11, 12] (727/1000) accuracy: 0.37183333333333335 =====
+
+Test set: Average loss: 1.6843, Accuracy: 5275/12000 (44%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 5, 6, 8, 9, 10, 12, 14] (728/1000) accuracy: 0.4395833333333333 =====
+
+Test set: Average loss: 2.2351, Accuracy: 3699/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 5, 7, 8, 13] (729/1000) accuracy: 0.30825 =====
+
+Test set: Average loss: 2.1974, Accuracy: 3539/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 10, 11, 12] (730/1000) accuracy: 0.29491666666666666 =====
+
+Test set: Average loss: 2.0463, Accuracy: 3945/12000 (33%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 6, 7, 8, 13, 14] (731/1000) accuracy: 0.32875 =====
+
+Test set: Average loss: 2.3307, Accuracy: 3359/12000 (28%)
+
+
+
+===== Computing accuracy for [1, 3, 6, 9, 12, 13] (732/1000) accuracy: 0.27991666666666665 =====
+
+Test set: Average loss: 2.3403, Accuracy: 3435/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 6, 8, 9, 10, 14] (733/1000) accuracy: 0.28625 =====
+
+Test set: Average loss: 2.5450, Accuracy: 2780/12000 (23%)
+
+
+
+===== Computing accuracy for [4, 5, 6, 7, 10, 12] (734/1000) accuracy: 0.23166666666666666 =====
+
+Test set: Average loss: 0.9894, Accuracy: 8049/12000 (67%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 14] (735/1000) accuracy: 0.67075 =====
+
+Test set: Average loss: 1.9487, Accuracy: 4489/12000 (37%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 6, 9, 11, 13, 14] (736/1000) accuracy: 0.3740833333333333 =====
+
+Test set: Average loss: 2.6343, Accuracy: 2619/12000 (22%)
+
+
+
+===== Computing accuracy for [4, 6, 7, 10, 12] (737/1000) accuracy: 0.21825 =====
+
+Test set: Average loss: 2.1498, Accuracy: 4171/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 5, 7, 9, 10, 14] (738/1000) accuracy: 0.34758333333333336 =====
+
+Test set: Average loss: 2.1662, Accuracy: 3978/12000 (33%)
+
+
+
+===== Computing accuracy for [2, 5, 6, 7, 8, 10, 13, 14] (739/1000) accuracy: 0.3315 =====
+
+Test set: Average loss: 2.3278, Accuracy: 3633/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 5, 6, 8, 9, 10, 14] (740/1000) accuracy: 0.30275 =====
+
+Test set: Average loss: 1.8254, Accuracy: 4948/12000 (41%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 6, 9, 11, 12, 14] (741/1000) accuracy: 0.41233333333333333 =====
+
+Test set: Average loss: 1.7919, Accuracy: 4960/12000 (41%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 8, 9, 10, 11, 14] (742/1000) accuracy: 0.41333333333333333 =====
+
+Test set: Average loss: 2.4593, Accuracy: 2916/12000 (24%)
+
+
+
+===== Computing accuracy for [4, 7, 11, 12, 13] (743/1000) accuracy: 0.243 =====
+
+Test set: Average loss: 2.2300, Accuracy: 3848/12000 (32%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 7, 8, 10, 12] (744/1000) accuracy: 0.32066666666666666 =====
+
+Test set: Average loss: 1.9569, Accuracy: 4783/12000 (40%)
+
+
+
+===== Computing accuracy for [3, 6, 7, 8, 9, 10, 12, 13, 14] (745/1000) accuracy: 0.39858333333333335 =====
+
+Test set: Average loss: 1.9294, Accuracy: 4407/12000 (37%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 8, 9, 11, 14] (746/1000) accuracy: 0.36725 =====
+
+Test set: Average loss: 2.3390, Accuracy: 3333/12000 (28%)
+
+
+
+===== Computing accuracy for [2, 5, 6, 8, 12, 13, 14] (747/1000) accuracy: 0.27775 =====
+
+Test set: Average loss: 1.9048, Accuracy: 4745/12000 (40%)
+
+
+
+===== Computing accuracy for [1, 3, 5, 7, 8, 9, 10, 11, 13] (748/1000) accuracy: 0.3954166666666667 =====
+
+Test set: Average loss: 2.3237, Accuracy: 3547/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 5, 7, 12, 13] (749/1000) accuracy: 0.2955833333333333 =====
+
+Test set: Average loss: 2.6451, Accuracy: 2662/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 6, 8, 12] (750/1000) accuracy: 0.22183333333333333 =====
+
+Test set: Average loss: 1.5338, Accuracy: 5863/12000 (49%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 6, 7, 8, 9, 11, 14] (751/1000) accuracy: 0.4885833333333333 =====
+
+Test set: Average loss: 1.7495, Accuracy: 4721/12000 (39%)
+
+
+
+===== Computing accuracy for [1, 3, 6, 7, 8, 12, 14] (752/1000) accuracy: 0.3934166666666667 =====
+
+Test set: Average loss: 1.9811, Accuracy: 4247/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 7, 8, 9, 13, 14] (753/1000) accuracy: 0.35391666666666666 =====
+
+Test set: Average loss: 1.7305, Accuracy: 5350/12000 (45%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 6, 7, 8, 9, 10, 12, 14] (754/1000) accuracy: 0.44583333333333336 =====
+
+Test set: Average loss: 2.3140, Accuracy: 3270/12000 (27%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 6, 10, 12, 13] (755/1000) accuracy: 0.2725 =====
+
+Test set: Average loss: 2.3343, Accuracy: 3208/12000 (27%)
+
+
+
+===== Computing accuracy for [1, 9, 10, 12, 13, 14] (756/1000) accuracy: 0.2673333333333333 =====
+
+Test set: Average loss: 2.3898, Accuracy: 3278/12000 (27%)
+
+
+
+===== Computing accuracy for [3, 5, 6, 7, 8, 9, 12] (757/1000) accuracy: 0.27316666666666667 =====
+
+Test set: Average loss: 2.2967, Accuracy: 3295/12000 (27%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 5, 6, 7, 14] (758/1000) accuracy: 0.27458333333333335 =====
+
+Test set: Average loss: 2.3140, Accuracy: 3687/12000 (31%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 7, 10, 11, 13, 14] (759/1000) accuracy: 0.30725 =====
+
+Test set: Average loss: 2.4303, Accuracy: 3032/12000 (25%)
+
+
+
+===== Computing accuracy for [2, 5, 6, 7, 12, 14] (760/1000) accuracy: 0.25266666666666665 =====
+
+Test set: Average loss: 2.2606, Accuracy: 3606/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 8, 9, 11, 12, 13] (761/1000) accuracy: 0.3005 =====
+
+Test set: Average loss: 2.4358, Accuracy: 3099/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 5, 8, 11, 12, 13] (762/1000) accuracy: 0.25825 =====
+
+Test set: Average loss: 1.4432, Accuracy: 6036/12000 (50%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 6, 7, 9, 10, 11, 12, 14] (763/1000) accuracy: 0.503 =====
+
+Test set: Average loss: 2.0801, Accuracy: 4223/12000 (35%)
+
+
+
+===== Computing accuracy for [1, 2, 6, 7, 8, 9, 12, 13] (764/1000) accuracy: 0.35191666666666666 =====
+
+Test set: Average loss: 2.0367, Accuracy: 4194/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 5, 7, 8, 10, 11] (765/1000) accuracy: 0.3495 =====
+
+Test set: Average loss: 1.9560, Accuracy: 4387/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 7, 8, 11, 14] (766/1000) accuracy: 0.3655833333333333 =====
+
+Test set: Average loss: 2.4271, Accuracy: 3365/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 6, 7, 9, 12] (767/1000) accuracy: 0.28041666666666665 =====
+
+Test set: Average loss: 1.8635, Accuracy: 4882/12000 (41%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 9, 11, 12, 13, 14] (768/1000) accuracy: 0.4068333333333333 =====
+
+Test set: Average loss: 3.1000, Accuracy: 1858/12000 (15%)
+
+
+
+===== Computing accuracy for [0, 4, 6, 13] (769/1000) accuracy: 0.15483333333333332 =====
+
+Test set: Average loss: 2.1723, Accuracy: 3943/12000 (33%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 6, 7, 8, 10, 13, 14] (770/1000) accuracy: 0.32858333333333334 =====
+
+Test set: Average loss: 2.0632, Accuracy: 3839/12000 (32%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 6, 7, 11, 13] (771/1000) accuracy: 0.3199166666666667 =====
+
+Test set: Average loss: 2.7667, Accuracy: 2615/12000 (22%)
+
+
+
+===== Computing accuracy for [1, 2, 7, 10, 14] (772/1000) accuracy: 0.21791666666666668 =====
+
+Test set: Average loss: 2.3679, Accuracy: 3089/12000 (26%)
+
+
+
+===== Computing accuracy for [1, 3, 5, 6, 7, 14] (773/1000) accuracy: 0.2574166666666667 =====
+
+Test set: Average loss: 2.3635, Accuracy: 3421/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 10, 11, 14] (774/1000) accuracy: 0.28508333333333336 =====
+
+Test set: Average loss: 2.1387, Accuracy: 3832/12000 (32%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 6, 7, 10, 12, 13] (775/1000) accuracy: 0.31933333333333336 =====
+
+Test set: Average loss: 3.0821, Accuracy: 1853/12000 (15%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 10] (776/1000) accuracy: 0.15441666666666667 =====
+
+Test set: Average loss: 2.1601, Accuracy: 3688/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 5, 8, 10, 12, 14] (777/1000) accuracy: 0.30733333333333335 =====
+
+Test set: Average loss: 1.6071, Accuracy: 5346/12000 (45%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 6, 7, 8, 11, 14] (778/1000) accuracy: 0.4455 =====
+
+Test set: Average loss: 2.2155, Accuracy: 3499/12000 (29%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 6, 9, 10, 11, 13] (779/1000) accuracy: 0.29158333333333336 =====
+
+Test set: Average loss: 2.4704, Accuracy: 2918/12000 (24%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 7, 8] (780/1000) accuracy: 0.24316666666666667 =====
+
+Test set: Average loss: 2.7125, Accuracy: 2452/12000 (20%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 10, 11] (781/1000) accuracy: 0.20433333333333334 =====
+
+Test set: Average loss: 2.4649, Accuracy: 3202/12000 (27%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 8, 9] (782/1000) accuracy: 0.2668333333333333 =====
+
+Test set: Average loss: 1.7011, Accuracy: 5041/12000 (42%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 6, 9, 10, 11, 12] (783/1000) accuracy: 0.4200833333333333 =====
+
+Test set: Average loss: 3.3060, Accuracy: 1782/12000 (15%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 6] (784/1000) accuracy: 0.1485 =====
+
+Test set: Average loss: 1.9728, Accuracy: 4105/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 1, 9, 11, 12, 14] (785/1000) accuracy: 0.34208333333333335 =====
+
+Test set: Average loss: 2.6403, Accuracy: 2692/12000 (22%)
+
+
+
+===== Computing accuracy for [1, 3, 5, 9, 10, 14] (786/1000) accuracy: 0.22433333333333333 =====
+
+Test set: Average loss: 1.8298, Accuracy: 4830/12000 (40%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 7, 9, 10, 11, 12, 13] (787/1000) accuracy: 0.4025 =====
+
+Test set: Average loss: 2.5311, Accuracy: 2883/12000 (24%)
+
+
+
+===== Computing accuracy for [3, 5, 8, 9, 10, 11] (788/1000) accuracy: 0.24025 =====
+
+Test set: Average loss: 1.6634, Accuracy: 5384/12000 (45%)
+
+
+
+===== Computing accuracy for [3, 7, 8, 9, 11, 12, 13, 14] (789/1000) accuracy: 0.44866666666666666 =====
+
+Test set: Average loss: 2.2818, Accuracy: 3373/12000 (28%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 5, 7, 9, 11, 13] (790/1000) accuracy: 0.28108333333333335 =====
+
+Test set: Average loss: 2.2894, Accuracy: 3087/12000 (26%)
+
+
+
+===== Computing accuracy for [5, 9, 10, 11, 12, 14] (791/1000) accuracy: 0.25725 =====
+
+Test set: Average loss: 2.2925, Accuracy: 3537/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 7, 8, 12] (792/1000) accuracy: 0.29475 =====
+
+Test set: Average loss: 1.8248, Accuracy: 4937/12000 (41%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 8, 9, 11, 14] (793/1000) accuracy: 0.41141666666666665 =====
+
+Test set: Average loss: 2.8260, Accuracy: 2129/12000 (18%)
+
+
+
+===== Computing accuracy for [5, 7, 9, 14] (794/1000) accuracy: 0.17741666666666667 =====
+
+Test set: Average loss: 2.5388, Accuracy: 3107/12000 (26%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 6, 7, 8, 9, 13] (795/1000) accuracy: 0.2589166666666667 =====
+
+Test set: Average loss: 2.0761, Accuracy: 4177/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 5, 6, 9, 10, 12, 14] (796/1000) accuracy: 0.34808333333333336 =====
+
+Test set: Average loss: 2.4506, Accuracy: 3155/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 6, 9, 10, 13] (797/1000) accuracy: 0.2629166666666667 =====
+
+Test set: Average loss: 2.2586, Accuracy: 3543/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 4, 6, 7, 8, 12, 13] (798/1000) accuracy: 0.29525 =====
+
+Test set: Average loss: 2.4757, Accuracy: 3097/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 5, 10, 11, 13, 14] (799/1000) accuracy: 0.25808333333333333 =====
+
+Test set: Average loss: 2.4134, Accuracy: 3328/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 1, 6, 9, 10, 11, 13] (800/1000) accuracy: 0.2773333333333333 =====
+
+Test set: Average loss: 1.7435, Accuracy: 5102/12000 (43%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 8, 9, 10, 12, 13, 14] (801/1000) accuracy: 0.4251666666666667 =====
+
+Test set: Average loss: 3.0620, Accuracy: 1900/12000 (16%)
+
+
+
+===== Computing accuracy for [0, 4, 7, 13] (802/1000) accuracy: 0.15833333333333333 =====
+
+Test set: Average loss: 1.9951, Accuracy: 4158/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 6, 9, 10, 13, 14] (803/1000) accuracy: 0.3465 =====
+
+Test set: Average loss: 2.4738, Accuracy: 3095/12000 (26%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 8, 10, 13] (804/1000) accuracy: 0.2579166666666667 =====
+
+Test set: Average loss: 1.9276, Accuracy: 4586/12000 (38%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 6, 8, 11, 14] (805/1000) accuracy: 0.38216666666666665 =====
+
+Test set: Average loss: 2.4633, Accuracy: 3290/12000 (27%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 7, 9, 10, 14] (806/1000) accuracy: 0.27416666666666667 =====
+
+Test set: Average loss: 1.3242, Accuracy: 6721/12000 (56%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 6, 7, 8, 9, 10, 12, 14] (807/1000) accuracy: 0.5600833333333334 =====
+
+Test set: Average loss: 1.8389, Accuracy: 5259/12000 (44%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 7, 8, 9, 12, 13] (808/1000) accuracy: 0.43825 =====
+
+Test set: Average loss: 2.4249, Accuracy: 3330/12000 (28%)
+
+
+
+===== Computing accuracy for [1, 3, 5, 6, 7, 9, 10] (809/1000) accuracy: 0.2775 =====
+
+Test set: Average loss: 2.9575, Accuracy: 2325/12000 (19%)
+
+
+
+===== Computing accuracy for [3, 4, 7, 10, 13] (810/1000) accuracy: 0.19375 =====
+
+Test set: Average loss: 2.4332, Accuracy: 3040/12000 (25%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 8, 10, 12, 14] (811/1000) accuracy: 0.25333333333333335 =====
+
+Test set: Average loss: 2.3450, Accuracy: 3513/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 7, 8, 9, 10, 13] (812/1000) accuracy: 0.29275 =====
+
+Test set: Average loss: 1.8692, Accuracy: 4661/12000 (39%)
+
+
+
+===== Computing accuracy for [0, 4, 7, 8, 9, 11, 13, 14] (813/1000) accuracy: 0.3884166666666667 =====
+
+Test set: Average loss: 2.7144, Accuracy: 2477/12000 (21%)
+
+
+
+===== Computing accuracy for [1, 4, 7, 11] (814/1000) accuracy: 0.20641666666666666 =====
+
+Test set: Average loss: 1.8969, Accuracy: 4528/12000 (38%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 8, 9, 12, 14] (815/1000) accuracy: 0.37733333333333335 =====
+
+Test set: Average loss: 1.7159, Accuracy: 5198/12000 (43%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 5, 8, 9, 10, 12, 13, 14] (816/1000) accuracy: 0.43316666666666664 =====
+
+Test set: Average loss: 2.5449, Accuracy: 2734/12000 (23%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 8, 9, 11] (817/1000) accuracy: 0.22783333333333333 =====
+
+Test set: Average loss: 1.7016, Accuracy: 5190/12000 (43%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 6, 8, 9, 10, 11, 13, 14] (818/1000) accuracy: 0.4325 =====
+
+Test set: Average loss: 2.0386, Accuracy: 4122/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 6, 8, 10, 12] (819/1000) accuracy: 0.3435 =====
+
+Test set: Average loss: 2.0662, Accuracy: 3775/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 7, 8, 9, 14] (820/1000) accuracy: 0.3145833333333333 =====
+
+Test set: Average loss: 2.3145, Accuracy: 3393/12000 (28%)
+
+
+
+===== Computing accuracy for [2, 6, 8, 9, 10, 11, 14] (821/1000) accuracy: 0.28275 =====
+
+Test set: Average loss: 2.1746, Accuracy: 3851/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 6, 8, 10, 11, 14] (822/1000) accuracy: 0.3209166666666667 =====
+
+Test set: Average loss: 2.3649, Accuracy: 3323/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 3, 5, 7, 11, 14] (823/1000) accuracy: 0.27691666666666664 =====
+
+Test set: Average loss: 1.9118, Accuracy: 4679/12000 (39%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 8, 9, 11, 13, 14] (824/1000) accuracy: 0.3899166666666667 =====
+
+Test set: Average loss: 2.6515, Accuracy: 2538/12000 (21%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 7, 14] (825/1000) accuracy: 0.2115 =====
+
+Test set: Average loss: 1.8505, Accuracy: 4733/12000 (39%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 8, 10, 13, 14] (826/1000) accuracy: 0.3944166666666667 =====
+
+Test set: Average loss: 3.0361, Accuracy: 1961/12000 (16%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3] (827/1000) accuracy: 0.16341666666666665 =====
+
+Test set: Average loss: 1.8107, Accuracy: 4872/12000 (41%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 7, 8, 12, 14] (828/1000) accuracy: 0.406 =====
+
+Test set: Average loss: 2.0341, Accuracy: 4340/12000 (36%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 5, 6, 8, 11, 12, 13] (829/1000) accuracy: 0.3616666666666667 =====
+
+Test set: Average loss: 1.3730, Accuracy: 6322/12000 (53%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 8, 9, 11, 12, 13, 14] (830/1000) accuracy: 0.5268333333333334 =====
+
+Test set: Average loss: 2.6159, Accuracy: 2409/12000 (20%)
+
+
+
+===== Computing accuracy for [0, 2, 10, 11, 12] (831/1000) accuracy: 0.20075 =====
+
+Test set: Average loss: 1.9251, Accuracy: 4538/12000 (38%)
+
+
+
+===== Computing accuracy for [0, 4, 6, 8, 9, 11, 12, 14] (832/1000) accuracy: 0.37816666666666665 =====
+
+Test set: Average loss: 2.5779, Accuracy: 2935/12000 (24%)
+
+
+
+===== Computing accuracy for [1, 3, 5, 7, 10, 14] (833/1000) accuracy: 0.24458333333333335 =====
+
+Test set: Average loss: 1.2617, Accuracy: 6838/12000 (57%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 6, 7, 8, 9, 10, 11, 12, 14] (834/1000) accuracy: 0.5698333333333333 =====
+
+Test set: Average loss: 2.3929, Accuracy: 2991/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 11, 12] (835/1000) accuracy: 0.24925 =====
+
+Test set: Average loss: 1.9800, Accuracy: 4292/12000 (36%)
+
+
+
+===== Computing accuracy for [2, 3, 7, 8, 11, 12, 14] (836/1000) accuracy: 0.3576666666666667 =====
+
+Test set: Average loss: 3.2906, Accuracy: 1665/12000 (14%)
+
+
+
+===== Computing accuracy for [0, 10, 13] (837/1000) accuracy: 0.13875 =====
+
+Test set: Average loss: 2.4593, Accuracy: 2945/12000 (25%)
+
+
+
+===== Computing accuracy for [2, 4, 7, 11, 12] (838/1000) accuracy: 0.24541666666666667 =====
+
+Test set: Average loss: 2.5984, Accuracy: 3120/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 3, 5, 12, 13, 14] (839/1000) accuracy: 0.26 =====
+
+Test set: Average loss: 2.5605, Accuracy: 2690/12000 (22%)
+
+
+
+===== Computing accuracy for [2, 4, 5, 8, 10, 12, 13] (840/1000) accuracy: 0.22416666666666665 =====
+
+Test set: Average loss: 1.9998, Accuracy: 4461/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 6, 7, 8, 11, 12, 13] (841/1000) accuracy: 0.37175 =====
+
+Test set: Average loss: 2.4433, Accuracy: 2931/12000 (24%)
+
+
+
+===== Computing accuracy for [2, 5, 6, 11, 13, 14] (842/1000) accuracy: 0.24425 =====
+
+Test set: Average loss: 1.8676, Accuracy: 4931/12000 (41%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 5, 7, 8, 11, 12, 13] (843/1000) accuracy: 0.41091666666666665 =====
+
+Test set: Average loss: 2.5000, Accuracy: 2804/12000 (23%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 8, 12] (844/1000) accuracy: 0.23366666666666666 =====
+
+Test set: Average loss: 2.9897, Accuracy: 2038/12000 (17%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 9, 10] (845/1000) accuracy: 0.16983333333333334 =====
+
+Test set: Average loss: 1.9586, Accuracy: 4455/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 6, 8, 9, 10, 13, 14] (846/1000) accuracy: 0.37125 =====
+
+Test set: Average loss: 2.5578, Accuracy: 2671/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 1, 6, 8, 12] (847/1000) accuracy: 0.22258333333333333 =====
+
+Test set: Average loss: 2.3525, Accuracy: 3102/12000 (26%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 6, 10, 12] (848/1000) accuracy: 0.2585 =====
+
+Test set: Average loss: 2.1344, Accuracy: 3976/12000 (33%)
+
+
+
+===== Computing accuracy for [0, 4, 7, 9, 10, 11, 14] (849/1000) accuracy: 0.3313333333333333 =====
+
+Test set: Average loss: 1.8722, Accuracy: 4945/12000 (41%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 6, 7, 8, 9, 10, 12, 14] (850/1000) accuracy: 0.41208333333333336 =====
+
+Test set: Average loss: 2.2473, Accuracy: 3834/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 7, 10, 12, 13] (851/1000) accuracy: 0.3195 =====
+
+Test set: Average loss: 1.9111, Accuracy: 4544/12000 (38%)
+
+
+
+===== Computing accuracy for [0, 1, 8, 9, 10, 11, 14] (852/1000) accuracy: 0.37866666666666665 =====
+
+Test set: Average loss: 2.2796, Accuracy: 3324/12000 (28%)
+
+
+
+===== Computing accuracy for [1, 3, 5, 6, 8, 10, 12] (853/1000) accuracy: 0.277 =====
+
+Test set: Average loss: 2.1950, Accuracy: 3989/12000 (33%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 7, 10, 11, 14] (854/1000) accuracy: 0.3324166666666667 =====
+
+Test set: Average loss: 2.4507, Accuracy: 3133/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 5, 6, 9, 13] (855/1000) accuracy: 0.26108333333333333 =====
+
+Test set: Average loss: 1.6210, Accuracy: 5826/12000 (49%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 7, 10, 12, 13, 14] (856/1000) accuracy: 0.4855 =====
+
+Test set: Average loss: 2.3801, Accuracy: 3048/12000 (25%)
+
+
+
+===== Computing accuracy for [2, 5, 6, 9, 11, 12, 13] (857/1000) accuracy: 0.254 =====
+
+Test set: Average loss: 2.3834, Accuracy: 3611/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 11, 13, 14] (858/1000) accuracy: 0.30091666666666667 =====
+
+Test set: Average loss: 2.5299, Accuracy: 2733/12000 (23%)
+
+
+
+===== Computing accuracy for [3, 4, 6, 8, 10, 12] (859/1000) accuracy: 0.22775 =====
+
+Test set: Average loss: 1.9670, Accuracy: 4603/12000 (38%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 6, 7, 10, 12] (860/1000) accuracy: 0.38358333333333333 =====
+
+Test set: Average loss: 2.8189, Accuracy: 2362/12000 (20%)
+
+
+
+===== Computing accuracy for [5, 8, 9, 10, 12] (861/1000) accuracy: 0.19683333333333333 =====
+
+Test set: Average loss: 2.8456, Accuracy: 2199/12000 (18%)
+
+
+
+===== Computing accuracy for [0, 4, 9, 11] (862/1000) accuracy: 0.18325 =====
+
+Test set: Average loss: 1.9583, Accuracy: 4457/12000 (37%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 7, 8, 12, 14] (863/1000) accuracy: 0.3714166666666667 =====
+
+Test set: Average loss: 2.4902, Accuracy: 2731/12000 (23%)
+
+
+
+===== Computing accuracy for [1, 3, 6, 10, 12] (864/1000) accuracy: 0.22758333333333333 =====
+
+Test set: Average loss: 1.2303, Accuracy: 6955/12000 (58%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 6, 7, 9, 10, 11, 12, 14] (865/1000) accuracy: 0.5795833333333333 =====
+
+Test set: Average loss: 1.8384, Accuracy: 5013/12000 (42%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 6, 7, 8, 9, 10, 13, 14] (866/1000) accuracy: 0.41775 =====
+
+Test set: Average loss: 1.9132, Accuracy: 4393/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 5, 7, 8, 9, 14] (867/1000) accuracy: 0.3660833333333333 =====
+
+Test set: Average loss: 1.2574, Accuracy: 6809/12000 (57%)
+
+
+
+===== Computing accuracy for [1, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14] (868/1000) accuracy: 0.5674166666666667 =====
+
+Test set: Average loss: 2.4533, Accuracy: 3022/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 6, 10, 12] (869/1000) accuracy: 0.25183333333333335 =====
+
+Test set: Average loss: 1.8766, Accuracy: 4354/12000 (36%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 7, 8, 11, 12] (870/1000) accuracy: 0.36283333333333334 =====
+
+Test set: Average loss: 1.7452, Accuracy: 5210/12000 (43%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 7, 8, 9, 12, 14] (871/1000) accuracy: 0.43416666666666665 =====
+
+Test set: Average loss: 2.2025, Accuracy: 3847/12000 (32%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 8, 12, 14] (872/1000) accuracy: 0.32058333333333333 =====
+
+Test set: Average loss: 1.6263, Accuracy: 5457/12000 (45%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 6, 8, 9, 11, 12, 13, 14] (873/1000) accuracy: 0.45475 =====
+
+Test set: Average loss: 2.1600, Accuracy: 3794/12000 (32%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 6, 7, 12] (874/1000) accuracy: 0.31616666666666665 =====
+
+Test set: Average loss: 2.5052, Accuracy: 3306/12000 (28%)
+
+
+
+===== Computing accuracy for [3, 7, 8, 9, 12, 13] (875/1000) accuracy: 0.2755 =====
+
+Test set: Average loss: 2.2910, Accuracy: 3300/12000 (28%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 9, 11, 12] (876/1000) accuracy: 0.275 =====
+
+Test set: Average loss: 1.5706, Accuracy: 5603/12000 (47%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 6, 7, 8, 11, 12, 13, 14] (877/1000) accuracy: 0.46691666666666665 =====
+
+Test set: Average loss: 2.6259, Accuracy: 2738/12000 (23%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 6, 9, 10] (878/1000) accuracy: 0.22816666666666666 =====
+
+Test set: Average loss: 1.5421, Accuracy: 5608/12000 (47%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 5, 7, 8, 11, 13, 14] (879/1000) accuracy: 0.4673333333333333 =====
+
+Test set: Average loss: 1.6665, Accuracy: 5442/12000 (45%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 8, 9, 10, 11, 13, 14] (880/1000) accuracy: 0.4535 =====
+
+Test set: Average loss: 1.4623, Accuracy: 6103/12000 (51%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 13, 14] (881/1000) accuracy: 0.5085833333333334 =====
+
+Test set: Average loss: 2.0128, Accuracy: 4721/12000 (39%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 7, 8, 9, 10, 13] (882/1000) accuracy: 0.3934166666666667 =====
+
+Test set: Average loss: 2.2685, Accuracy: 3166/12000 (26%)
+
+
+
+===== Computing accuracy for [4, 5, 9, 10, 11, 12, 13] (883/1000) accuracy: 0.2638333333333333 =====
+
+Test set: Average loss: 2.5566, Accuracy: 3053/12000 (25%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 6, 7, 9, 13] (884/1000) accuracy: 0.2544166666666667 =====
+
+Test set: Average loss: 2.1862, Accuracy: 3639/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 5, 7, 11, 12] (885/1000) accuracy: 0.30325 =====
+
+Test set: Average loss: 2.0353, Accuracy: 4333/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 5, 6, 8, 11, 12, 13] (886/1000) accuracy: 0.3610833333333333 =====
+
+Test set: Average loss: 2.1875, Accuracy: 3421/12000 (29%)
+
+
+
+===== Computing accuracy for [3, 6, 7, 8, 11, 12] (887/1000) accuracy: 0.28508333333333336 =====
+
+Test set: Average loss: 2.2808, Accuracy: 3743/12000 (31%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 7, 10, 12, 13] (888/1000) accuracy: 0.3119166666666667 =====
+
+Test set: Average loss: 2.4606, Accuracy: 3086/12000 (26%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 8, 10] (889/1000) accuracy: 0.25716666666666665 =====
+
+Test set: Average loss: 2.2574, Accuracy: 3945/12000 (33%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 7, 10, 13] (890/1000) accuracy: 0.32875 =====
+
+Test set: Average loss: 2.2078, Accuracy: 3473/12000 (29%)
+
+
+
+===== Computing accuracy for [2, 4, 7, 8, 11, 12] (891/1000) accuracy: 0.28941666666666666 =====
+
+Test set: Average loss: 2.5277, Accuracy: 2598/12000 (22%)
+
+
+
+===== Computing accuracy for [3, 6, 7, 8, 11] (892/1000) accuracy: 0.2165 =====
+
+Test set: Average loss: 2.2027, Accuracy: 3817/12000 (32%)
+
+
+
+===== Computing accuracy for [3, 8, 9, 11, 13, 14] (893/1000) accuracy: 0.31808333333333333 =====
+
+Test set: Average loss: 2.3796, Accuracy: 3247/12000 (27%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 6, 9, 11] (894/1000) accuracy: 0.27058333333333334 =====
+
+Test set: Average loss: 1.6081, Accuracy: 5742/12000 (48%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 6, 8, 9, 10, 11, 14] (895/1000) accuracy: 0.4785 =====
+
+Test set: Average loss: 2.7084, Accuracy: 2820/12000 (24%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 6, 8, 9, 13] (896/1000) accuracy: 0.235 =====
+
+Test set: Average loss: 2.0484, Accuracy: 4310/12000 (36%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 6, 7, 8, 9, 10, 13, 14] (897/1000) accuracy: 0.3591666666666667 =====
+
+Test set: Average loss: 1.3101, Accuracy: 6882/12000 (57%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 7, 8, 9, 10, 11, 12, 13] (898/1000) accuracy: 0.5735 =====
+
+Test set: Average loss: 2.4384, Accuracy: 3185/12000 (27%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 6, 9, 11, 14] (899/1000) accuracy: 0.2654166666666667 =====
+
+Test set: Average loss: 1.8869, Accuracy: 4673/12000 (39%)
+
+
+
+===== Computing accuracy for [1, 2, 5, 6, 7, 10, 11, 13, 14] (900/1000) accuracy: 0.3894166666666667 =====
+
+Test set: Average loss: 2.0834, Accuracy: 4168/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 5, 6, 8, 9, 10, 11, 13, 14] (901/1000) accuracy: 0.3473333333333333 =====
+
+Test set: Average loss: 2.9579, Accuracy: 2094/12000 (17%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 6, 7] (902/1000) accuracy: 0.1745 =====
+
+Test set: Average loss: 2.5640, Accuracy: 3002/12000 (25%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 8, 9, 12] (903/1000) accuracy: 0.25016666666666665 =====
+
+Test set: Average loss: 1.4148, Accuracy: 6141/12000 (51%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 6, 8, 9, 10, 11, 12, 14] (904/1000) accuracy: 0.51175 =====
+
+Test set: Average loss: 3.0445, Accuracy: 1828/12000 (15%)
+
+
+
+===== Computing accuracy for [4, 6, 11] (905/1000) accuracy: 0.15233333333333332 =====
+
+Test set: Average loss: 1.4718, Accuracy: 6034/12000 (50%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 5, 8, 9, 10, 11, 13, 14] (906/1000) accuracy: 0.5028333333333334 =====
+
+Test set: Average loss: 2.0282, Accuracy: 4427/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 7, 10, 11, 13, 14] (907/1000) accuracy: 0.36891666666666667 =====
+
+Test set: Average loss: 1.9890, Accuracy: 4422/12000 (37%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 7, 11, 12, 13, 14] (908/1000) accuracy: 0.3685 =====
+
+Test set: Average loss: 2.2958, Accuracy: 3293/12000 (27%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 6, 9, 12] (909/1000) accuracy: 0.27441666666666664 =====
+
+Test set: Average loss: 2.2382, Accuracy: 3625/12000 (30%)
+
+
+
+===== Computing accuracy for [1, 5, 7, 10, 12, 13, 14] (910/1000) accuracy: 0.3020833333333333 =====
+
+Test set: Average loss: 2.3131, Accuracy: 3608/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 8, 12, 14] (911/1000) accuracy: 0.3006666666666667 =====
+
+Test set: Average loss: 1.5083, Accuracy: 6022/12000 (50%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 7, 10, 11, 12, 13] (912/1000) accuracy: 0.5018333333333334 =====
+
+Test set: Average loss: 2.0956, Accuracy: 3935/12000 (33%)
+
+
+
+===== Computing accuracy for [0, 4, 6, 7, 10, 11, 12, 13] (913/1000) accuracy: 0.3279166666666667 =====
+
+Test set: Average loss: 1.6470, Accuracy: 5416/12000 (45%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 6, 9, 10, 12, 13, 14] (914/1000) accuracy: 0.4513333333333333 =====
+
+Test set: Average loss: 1.6845, Accuracy: 5104/12000 (43%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 8, 10, 11, 12, 14] (915/1000) accuracy: 0.42533333333333334 =====
+
+Test set: Average loss: 2.4595, Accuracy: 3455/12000 (29%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 5, 9, 12, 13, 14] (916/1000) accuracy: 0.28791666666666665 =====
+
+Test set: Average loss: 3.0965, Accuracy: 2191/12000 (18%)
+
+
+
+===== Computing accuracy for [3, 8, 9, 13] (917/1000) accuracy: 0.18258333333333332 =====
+
+Test set: Average loss: 1.6380, Accuracy: 5711/12000 (48%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 7, 8, 10, 11, 12, 13, 14] (918/1000) accuracy: 0.47591666666666665 =====
+
+Test set: Average loss: 1.7232, Accuracy: 5509/12000 (46%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 7, 8, 9, 10, 11] (919/1000) accuracy: 0.45908333333333334 =====
+
+Test set: Average loss: 2.2886, Accuracy: 3337/12000 (28%)
+
+
+
+===== Computing accuracy for [2, 4, 8, 9, 10, 12, 14] (920/1000) accuracy: 0.27808333333333335 =====
+
+Test set: Average loss: 2.7985, Accuracy: 2302/12000 (19%)
+
+
+
+===== Computing accuracy for [3, 6, 10, 12, 13] (921/1000) accuracy: 0.19183333333333333 =====
+
+Test set: Average loss: 2.6509, Accuracy: 2720/12000 (23%)
+
+
+
+===== Computing accuracy for [1, 2, 6, 8, 9, 10] (922/1000) accuracy: 0.22666666666666666 =====
+
+Test set: Average loss: 2.6580, Accuracy: 2484/12000 (21%)
+
+
+
+===== Computing accuracy for [0, 7, 8, 11] (923/1000) accuracy: 0.207 =====
+
+Test set: Average loss: 2.1821, Accuracy: 3811/12000 (32%)
+
+
+
+===== Computing accuracy for [1, 3, 6, 10, 11, 13, 14] (924/1000) accuracy: 0.31758333333333333 =====
+
+Test set: Average loss: 1.4574, Accuracy: 6316/12000 (53%)
+
+
+
+===== Computing accuracy for [3, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] (925/1000) accuracy: 0.5263333333333333 =====
+
+Test set: Average loss: 3.4312, Accuracy: 1515/12000 (13%)
+
+
+
+===== Computing accuracy for [12] (926/1000) accuracy: 0.12625 =====
+
+Test set: Average loss: 2.1606, Accuracy: 3792/12000 (32%)
+
+
+
+===== Computing accuracy for [4, 5, 7, 8, 10, 11, 12, 13] (927/1000) accuracy: 0.316 =====
+
+Test set: Average loss: 2.2107, Accuracy: 3354/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 8, 10, 14] (928/1000) accuracy: 0.2795 =====
+
+Test set: Average loss: 2.4905, Accuracy: 3191/12000 (27%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 5, 6, 9, 12] (929/1000) accuracy: 0.2659166666666667 =====
+
+Test set: Average loss: 1.8530, Accuracy: 5045/12000 (42%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 6, 7, 8, 12, 13] (930/1000) accuracy: 0.42041666666666666 =====
+
+Test set: Average loss: 2.3668, Accuracy: 3732/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 6, 8, 9, 10, 12, 13] (931/1000) accuracy: 0.311 =====
+
+Test set: Average loss: 2.1191, Accuracy: 4094/12000 (34%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 6, 7, 8, 10, 11, 13] (932/1000) accuracy: 0.3411666666666667 =====
+
+Test set: Average loss: 1.6484, Accuracy: 5464/12000 (46%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 6, 7, 8, 9, 10, 12, 13, 14] (933/1000) accuracy: 0.4553333333333333 =====
+
+Test set: Average loss: 2.4331, Accuracy: 3298/12000 (27%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 6, 7, 10, 13] (934/1000) accuracy: 0.2748333333333333 =====
+
+Test set: Average loss: 2.1635, Accuracy: 3857/12000 (32%)
+
+
+
+===== Computing accuracy for [1, 4, 5, 6, 7, 9, 10, 14] (935/1000) accuracy: 0.3214166666666667 =====
+
+Test set: Average loss: 2.4434, Accuracy: 3193/12000 (27%)
+
+
+
+===== Computing accuracy for [2, 6, 7, 10, 11, 14] (936/1000) accuracy: 0.26608333333333334 =====
+
+Test set: Average loss: 1.8348, Accuracy: 5091/12000 (42%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 4, 6, 7, 10, 11, 13, 14] (937/1000) accuracy: 0.42425 =====
+
+Test set: Average loss: 1.4656, Accuracy: 6141/12000 (51%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 6, 7, 9, 10, 11, 12, 13, 14] (938/1000) accuracy: 0.51175 =====
+
+Test set: Average loss: 1.8469, Accuracy: 4767/12000 (40%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 5, 7, 8, 11, 14] (939/1000) accuracy: 0.39725 =====
+
+Test set: Average loss: 1.9336, Accuracy: 4244/12000 (35%)
+
+
+
+===== Computing accuracy for [5, 8, 9, 10, 11, 12, 13, 14] (940/1000) accuracy: 0.3536666666666667 =====
+
+Test set: Average loss: 2.3263, Accuracy: 3505/12000 (29%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 6, 7, 10, 13, 14] (941/1000) accuracy: 0.2920833333333333 =====
+
+Test set: Average loss: 3.2372, Accuracy: 1848/12000 (15%)
+
+
+
+===== Computing accuracy for [0, 2, 6, 9] (942/1000) accuracy: 0.154 =====
+
+Test set: Average loss: 2.6432, Accuracy: 2740/12000 (23%)
+
+
+
+===== Computing accuracy for [2, 6, 7, 10, 12, 13] (943/1000) accuracy: 0.22833333333333333 =====
+
+Test set: Average loss: 1.9910, Accuracy: 4385/12000 (37%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 4, 5, 7, 11, 12, 13] (944/1000) accuracy: 0.36541666666666667 =====
+
+Test set: Average loss: 2.7289, Accuracy: 2502/12000 (21%)
+
+
+
+===== Computing accuracy for [3, 4, 5, 9, 12] (945/1000) accuracy: 0.2085 =====
+
+Test set: Average loss: 2.1096, Accuracy: 3625/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 9, 10, 11, 12] (946/1000) accuracy: 0.3020833333333333 =====
+
+Test set: Average loss: 1.9762, Accuracy: 4096/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 9, 11, 12] (947/1000) accuracy: 0.3413333333333333 =====
+
+Test set: Average loss: 2.4133, Accuracy: 2945/12000 (25%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 6, 7, 13] (948/1000) accuracy: 0.24541666666666667 =====
+
+Test set: Average loss: 1.3491, Accuracy: 6427/12000 (54%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 5, 7, 8, 9, 11, 12, 14] (949/1000) accuracy: 0.5355833333333333 =====
+
+Test set: Average loss: 2.1237, Accuracy: 4056/12000 (34%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 5, 8, 11, 12, 13] (950/1000) accuracy: 0.338 =====
+
+Test set: Average loss: 2.6205, Accuracy: 2868/12000 (24%)
+
+
+
+===== Computing accuracy for [1, 2, 4, 7, 10, 13] (951/1000) accuracy: 0.239 =====
+
+Test set: Average loss: 2.3817, Accuracy: 3140/12000 (26%)
+
+
+
+===== Computing accuracy for [4, 5, 6, 7, 8, 9, 14] (952/1000) accuracy: 0.26166666666666666 =====
+
+Test set: Average loss: 1.9164, Accuracy: 4819/12000 (40%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 4, 6, 7, 9, 10, 11, 13] (953/1000) accuracy: 0.40158333333333335 =====
+
+Test set: Average loss: 2.1427, Accuracy: 3824/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 4, 10, 11, 12, 13, 14] (954/1000) accuracy: 0.31866666666666665 =====
+
+Test set: Average loss: 2.1383, Accuracy: 4137/12000 (34%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 7, 8, 9, 10, 12] (955/1000) accuracy: 0.34475 =====
+
+Test set: Average loss: 2.2636, Accuracy: 3824/12000 (32%)
+
+
+
+===== Computing accuracy for [0, 3, 4, 5, 6, 8, 9, 10, 12] (956/1000) accuracy: 0.31866666666666665 =====
+
+Test set: Average loss: 1.6743, Accuracy: 5363/12000 (45%)
+
+
+
+===== Computing accuracy for [0, 2, 5, 7, 8, 11, 12, 13, 14] (957/1000) accuracy: 0.4469166666666667 =====
+
+Test set: Average loss: 1.5380, Accuracy: 5729/12000 (48%)
+
+
+
+===== Computing accuracy for [0, 1, 5, 8, 9, 11, 12, 13, 14] (958/1000) accuracy: 0.47741666666666666 =====
+
+Test set: Average loss: 2.0451, Accuracy: 4162/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 4, 5, 6, 8, 11, 12, 14] (959/1000) accuracy: 0.3468333333333333 =====
+
+Test set: Average loss: 2.2786, Accuracy: 3630/12000 (30%)
+
+
+
+===== Computing accuracy for [0, 5, 6, 7, 10, 11, 14] (960/1000) accuracy: 0.3025 =====
+
+Test set: Average loss: 1.9376, Accuracy: 4454/12000 (37%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 6, 7, 8, 11, 12, 13] (961/1000) accuracy: 0.37116666666666664 =====
+
+Test set: Average loss: 2.1918, Accuracy: 3750/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 6, 8, 11, 12] (962/1000) accuracy: 0.3125 =====
+
+Test set: Average loss: 3.0146, Accuracy: 2111/12000 (18%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 8, 10] (963/1000) accuracy: 0.17591666666666667 =====
+
+Test set: Average loss: 1.8568, Accuracy: 4530/12000 (38%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 8, 10, 11, 12, 13] (964/1000) accuracy: 0.3775 =====
+
+Test set: Average loss: 2.7541, Accuracy: 2597/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 4, 8, 12, 13] (965/1000) accuracy: 0.21641666666666667 =====
+
+Test set: Average loss: 3.1161, Accuracy: 1867/12000 (16%)
+
+
+
+===== Computing accuracy for [0, 4, 14] (966/1000) accuracy: 0.15558333333333332 =====
+
+Test set: Average loss: 2.1682, Accuracy: 3609/12000 (30%)
+
+
+
+===== Computing accuracy for [3, 6, 7, 9, 11, 12] (967/1000) accuracy: 0.30075 =====
+
+Test set: Average loss: 2.6969, Accuracy: 2807/12000 (23%)
+
+
+
+===== Computing accuracy for [2, 3, 5, 7, 10, 12] (968/1000) accuracy: 0.23391666666666666 =====
+
+Test set: Average loss: 2.7342, Accuracy: 2319/12000 (19%)
+
+
+
+===== Computing accuracy for [4, 6, 7, 12] (969/1000) accuracy: 0.19325 =====
+
+Test set: Average loss: 2.3777, Accuracy: 3416/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 5, 6, 7, 10, 12] (970/1000) accuracy: 0.2846666666666667 =====
+
+Test set: Average loss: 1.7435, Accuracy: 5077/12000 (42%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 5, 6, 8, 9, 10, 11, 13, 14] (971/1000) accuracy: 0.4230833333333333 =====
+
+Test set: Average loss: 2.8511, Accuracy: 2500/12000 (21%)
+
+
+
+===== Computing accuracy for [0, 6, 8, 9, 12] (972/1000) accuracy: 0.20833333333333334 =====
+
+Test set: Average loss: 1.4622, Accuracy: 5787/12000 (48%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 3, 4, 5, 8, 10, 11, 12, 14] (973/1000) accuracy: 0.48225 =====
+
+Test set: Average loss: 2.2501, Accuracy: 3699/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 6, 7, 8, 9, 10, 11] (974/1000) accuracy: 0.30825 =====
+
+Test set: Average loss: 1.6956, Accuracy: 5403/12000 (45%)
+
+
+
+===== Computing accuracy for [0, 2, 3, 7, 8, 10, 11, 12, 13, 14] (975/1000) accuracy: 0.45025 =====
+
+Test set: Average loss: 1.9000, Accuracy: 4827/12000 (40%)
+
+
+
+===== Computing accuracy for [0, 4, 7, 10, 11, 12, 13, 14] (976/1000) accuracy: 0.40225 =====
+
+Test set: Average loss: 3.1393, Accuracy: 1869/12000 (16%)
+
+
+
+===== Computing accuracy for [4, 8, 9] (977/1000) accuracy: 0.15575 =====
+
+Test set: Average loss: 1.5029, Accuracy: 5940/12000 (50%)
+
+
+
+===== Computing accuracy for [1, 3, 7, 8, 10, 11, 12, 13, 14] (978/1000) accuracy: 0.495 =====
+
+Test set: Average loss: 2.3588, Accuracy: 3219/12000 (27%)
+
+
+
+===== Computing accuracy for [2, 5, 8, 9, 10, 12, 14] (979/1000) accuracy: 0.26825 =====
+
+Test set: Average loss: 2.0730, Accuracy: 4114/12000 (34%)
+
+
+
+===== Computing accuracy for [1, 3, 4, 5, 6, 7, 8, 12, 13] (980/1000) accuracy: 0.3428333333333333 =====
+
+Test set: Average loss: 1.9670, Accuracy: 4250/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 1, 4, 5, 7, 8, 12, 14] (981/1000) accuracy: 0.3541666666666667 =====
+
+Test set: Average loss: 2.0330, Accuracy: 4013/12000 (33%)
+
+
+
+===== Computing accuracy for [1, 3, 5, 8, 11, 12, 13] (982/1000) accuracy: 0.33441666666666664 =====
+
+Test set: Average loss: 1.5299, Accuracy: 6219/12000 (52%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 6, 7, 9, 10, 11, 13, 14] (983/1000) accuracy: 0.51825 =====
+
+Test set: Average loss: 2.2078, Accuracy: 3939/12000 (33%)
+
+
+
+===== Computing accuracy for [2, 3, 4, 6, 7, 8, 9, 14] (984/1000) accuracy: 0.32825 =====
+
+Test set: Average loss: 1.7416, Accuracy: 5331/12000 (44%)
+
+
+
+===== Computing accuracy for [0, 1, 3, 5, 7, 9, 10, 12, 13, 14] (985/1000) accuracy: 0.44425 =====
+
+Test set: Average loss: 2.0577, Accuracy: 4158/12000 (35%)
+
+
+
+===== Computing accuracy for [0, 3, 5, 6, 8, 10, 11, 14] (986/1000) accuracy: 0.3465 =====
+
+Test set: Average loss: 2.3002, Accuracy: 3736/12000 (31%)
+
+
+
+===== Computing accuracy for [0, 7, 8, 12, 13, 14] (987/1000) accuracy: 0.31133333333333335 =====
+
+Test set: Average loss: 2.6423, Accuracy: 2622/12000 (22%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 9, 11] (988/1000) accuracy: 0.2185 =====
+
+Test set: Average loss: 2.1263, Accuracy: 3807/12000 (32%)
+
+
+
+===== Computing accuracy for [4, 5, 6, 8, 11, 12, 14] (989/1000) accuracy: 0.31725 =====
+
+Test set: Average loss: 2.0810, Accuracy: 4132/12000 (34%)
+
+
+
+===== Computing accuracy for [1, 2, 7, 9, 10, 11, 13, 14] (990/1000) accuracy: 0.3443333333333333 =====
+
+Test set: Average loss: 2.3292, Accuracy: 3372/12000 (28%)
+
+
+
+===== Computing accuracy for [0, 3, 5, 7, 9, 11, 13] (991/1000) accuracy: 0.281 =====
+
+Test set: Average loss: 1.5642, Accuracy: 5863/12000 (49%)
+
+
+
+===== Computing accuracy for [0, 1, 7, 8, 10, 11, 12, 13, 14] (992/1000) accuracy: 0.4885833333333333 =====
+
+Test set: Average loss: 2.0408, Accuracy: 4215/12000 (35%)
+
+
+
+===== Computing accuracy for [1, 2, 3, 4, 9, 11, 12, 14] (993/1000) accuracy: 0.35125 =====
+
+Test set: Average loss: 1.1691, Accuracy: 7226/12000 (60%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 6, 7, 8, 9, 10, 11, 12, 13, 14] (994/1000) accuracy: 0.6021666666666666 =====
+
+Test set: Average loss: 1.5969, Accuracy: 5326/12000 (44%)
+
+
+
+===== Computing accuracy for [0, 1, 2, 6, 8, 11, 12, 14] (995/1000) accuracy: 0.44383333333333336 =====
+
+Test set: Average loss: 1.7999, Accuracy: 4808/12000 (40%)
+
+
+
+===== Computing accuracy for [0, 2, 4, 5, 6, 7, 9, 10, 11, 12] (996/1000) accuracy: 0.40066666666666667 =====
+
+Test set: Average loss: 2.1339, Accuracy: 3806/12000 (32%)
+
+
+
+===== Computing accuracy for [2, 5, 6, 7, 8, 9, 11, 12] (997/1000) accuracy: 0.31716666666666665 =====
+
+Test set: Average loss: 2.8394, Accuracy: 2156/12000 (18%)
+
+
+
+===== Computing accuracy for [2, 5, 6, 9, 11] (998/1000) accuracy: 0.17966666666666667 =====
+
+Test set: Average loss: 2.6256, Accuracy: 2824/12000 (24%)
+
+
+
+===== Computing accuracy for [0, 2, 6, 11, 14] (999/1000) accuracy: 0.23533333333333334 =====
 Linux idun-04-11 5.14.0-427.13.1.el9_4.x86_64 #1 SMP PREEMPT_DYNAMIC Wed May 1 19:11:28 UTC 2024 x86_64 x86_64 x86_64 GNU/Linux
