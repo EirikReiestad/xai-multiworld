@@ -277,8 +277,6 @@ def calculate_shapley_values(
     shapley_values = {
         c: (sum(vs) / len(vs) if vs else 0.0) for c, vs in shapley_values.items()
     }
-    if shapley_values == {}:
-        raise ValueError("No Shapley values:(")
     return shapley_values
 
 

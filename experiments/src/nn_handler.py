@@ -90,8 +90,8 @@ def get_neural_network_feature_importance(
     best_test_acc = 0
     combs = get_combinations(list(range(M)))
     shuffle(combs)
-    max_combs = 10
-    n_subsets = 2
+    max_combs = 200
+    n_subsets = 5
     combinations = []
     for comb in combs[:max_combs]:
         for _ in range(n_subsets):
@@ -121,6 +121,8 @@ def get_neural_network_feature_importance(
         json_results = {str(key): value for key, value in results.items()}
         json.dump(json_results, f, indent=4)
     shapley_values = calculate_shapley_values(results, list(range(M)))
+    if shapley_values == {}:
+        return None, None
     shapley_values_results = {}
     for key, value in sorted(shapley_values.items()):
         shapley_values_results[key] = [value, 0]
