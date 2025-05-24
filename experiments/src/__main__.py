@@ -62,7 +62,7 @@ def main():
     )
 
     # --- Experiment Parameters ---
-    M_values = [15] * 5
+    M_values = [15] * 6
     max_depth_values = [15]
     lambda_1 = 0.1
     lambda_2 = 0.1
