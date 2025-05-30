@@ -1,0 +1,47 @@
+\begin{table}
+\caption{Results: Ordinary least squares}
+\label{}
+\begin{center}
+\begin{tabular}{llll}
+\hline
+Model:              & OLS              & Adj. R-squared:     & 0.066      \\
+Dependent Variable: & importance       & AIC:                & -258.6635  \\
+Date:               & 2025-05-27 07:55 & BIC:                & -232.7370  \\
+No. Observations:   & 300              & Log-Likelihood:     & 136.33     \\
+Df Model:           & 6                & F-statistic:        & 4.506      \\
+Df Residuals:       & 293              & Prob (F-statistic): & 0.000220   \\
+R-squared:          & 0.084            & Scale:              & 0.024158   \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{lrrrrrr}
+\hline
+          &   Coef. & Std.Err. &       t & P$> |$t$|$ &  [0.025 & 0.975]  \\
+\hline
+const     &  0.0719 &   0.0794 &  0.9059 &      0.3657 & -0.0843 & 0.2281  \\
+range     &  0.1245 &   0.0593 &  2.1011 &      0.0365 &  0.0079 & 0.2411  \\
+iq\_range & -0.0239 &   0.0492 & -0.4872 &      0.6264 & -0.1207 & 0.0728  \\
+density   &  0.0357 &   0.0587 &  0.6070 &      0.5443 & -0.0800 & 0.1513  \\
+accuracy  & -0.0067 &   0.0212 & -0.3182 &      0.7505 & -0.0485 & 0.0350  \\
+distance  & -0.0561 &   0.0490 & -1.1446 &      0.2533 & -0.1526 & 0.0404  \\
+splits    &  0.2706 &   0.0631 &  4.2887 &      0.0000 &  0.1464 & 0.3948  \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{llll}
+\hline
+Omnibus:       & 41.872 & Durbin-Watson:    & 1.931   \\
+Prob(Omnibus): & 0.000  & Jarque-Bera (JB): & 60.027  \\
+Skew:          & 0.890  & Prob(JB):         & 0.000   \\
+Kurtosis:      & 4.278  & Condition No.:    & 19      \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\bigskip
+Notes: \newline 
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.

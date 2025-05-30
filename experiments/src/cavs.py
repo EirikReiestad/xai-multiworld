@@ -34,8 +34,10 @@ def get_cavs(
     (
         cavs,
         positive_observations,
+        positive_labels,
         positive_activations,
         negative_observations,
+        negative_labels,
         similarity_weights,
     ) = calculate_cavs(
         model=model,
@@ -63,6 +65,7 @@ def get_cavs(
     stats = calculate_statistics(
         list(positive_activations.keys()),
         positive_activations,
+        positive_labels,
         probes,
         result_path=result_path,
         filename=f"cav_statistics_{iteration}.json",
@@ -220,14 +223,17 @@ def calculate_cavs(
 
     test_batch = next(iter(test_loader))
     test_data = test_batch[0]
+    test_labels = test_batch[1]
     acts = get_activations(model, test_data, layer_name)
     acts = F.normalize(acts, p=2, dim=1)
     acts = acts.view(acts.size(0), -1)
     similarity_matrix = torch.matmul(acts, cavs.T)  # [batch_size, M]
 
     positive_observations = {}
+    positive_labels = {}
     positive_activations = {}
     negative_observations = {}
+    negative_labels = {}
     negative_activation_data = {}
     similarity_weights = {}
     for m in range(M):
@@ -235,6 +241,7 @@ def calculate_cavs(
         _, indices = torch.topk(similarity_matrix[:, m], k)
         m_observation = test_data[indices]
         positive_observations[str(m)] = m_observation
+        positive_labels[str(m)] = test_labels[indices]
         positive_activations[str(m)] = acts[indices]
         similarity_weights[str(m)] = (
             similarity_matrix[indices, m].detach().cpu().numpy()
@@ -258,8 +265,10 @@ def calculate_cavs(
     return (
         cavs,
         positive_observations,
+        positive_labels,
         positive_activations,
         negative_observations,
+        negative_labels,
         similarity_weights,
     )
 

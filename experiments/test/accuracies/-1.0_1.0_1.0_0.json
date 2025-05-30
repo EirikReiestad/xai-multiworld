@@ -1,0 +1,9 @@
+{
+    "decision_tree": 0.595,
+    "xgboost": 0.663,
+    "random_forest": 0.687,
+    "elasticnet": 0.079,
+    "svm_linear": 0.624,
+    "logistic_regesssion": 0.612,
+    "nn": 0.674
+}

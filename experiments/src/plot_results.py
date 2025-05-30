@@ -8,7 +8,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import plotly.express as px
-import plotly.graph_objects as go
 import seaborn as sns
 from sklearn.preprocessing import MinMaxScaler
 
@@ -243,7 +242,6 @@ def plot_compare_json_files(json_files, labels=None, save_path=None, plot_splits
 
 
 def create_visualizations(
-    results_file="experiments/results/cav_experiment_results_mnist.json",
     plots_dir="experiments/plots",
     compare_json_files=None,
     compare_labels=None,
@@ -277,10 +275,14 @@ def create_visualizations(
 
 
 def plot_variance_stats(
-    stats_file="experiments/results/importance_variance_stats.pkl",
-    save_path="experiments/plots/importance_variance_plot.png",
+    result_dir: str = "experiments/results/",
+    filename: str = "importance_variance_stats.pkl",
+    save_filename: str = "importance_variance_plot.png",
+    drop: list[str] = [],
 ):
-    with open(stats_file, "rb") as f:
+    load_path = os.path.join(result_dir, filename)
+    save_path = os.path.join(result_dir, save_filename)
+    with open(load_path, "rb") as f:
         stats = pickle.load(f)
     grouped = defaultdict(list)
     for s in stats:
@@ -299,21 +301,23 @@ def plot_variance_stats(
         label_converter = {
             "feature_importances": "decision tree",
             "feature_importances_15": "decision tree",
-            "randomforest_feature_importances": "randomforest",
+            "randomforest_feature_importances": "random forest",
             "xgboost_feature_importances": "xgboost",
             "elasticnet_feature_importances": "elasticnet",
             "logistic_regression_feature_importances": "logistic regression",
-            "svm_feature_importances": "svm",
+            "svm_linear_feature_importances": "svm",
+            "nn_feature_importances": "neural network",
         }
+        label_group = [label_converter[g] for g in group]
+        if any([d.lower() in label_group for d in drop]):
+            continue
         mean_variance = [v["mean_variance"] for v in values]
         mean = np.mean([v["mean_variance"] for v in values])
         lower = np.mean([v["ci_lower"] for v in values])
         upper = np.mean([v["ci_upper"] for v in values])
         spread = [upper - lower for lower, upper in zip(lowers, uppers)]
-        labels.append(" + ".join([label_converter[g] for g in group]))
-        group_labels.extend(
-            [" + ".join([label_converter[g] for g in group])] for _ in values
-        )
+        labels.append(" + ".join(label_group))
+        group_labels.extend([" + ".join(label_group)] for _ in values)
         mean_variances.extend(mean_variance)
         means.append(mean)
         lowers.append(lower)
@@ -359,6 +363,79 @@ def plot_variance_stats(
     print(f"Plot saved to {save_path}")
 
 
+def plot_agreement_stats(
+    result_dir: str = "experiments/results/",
+    filename: str = "importance_agreement_stats.pkl",
+    save_filename: str = "importance_agreement_plot.png",
+    drop: list[str] = [],
+):
+    load_path = os.path.join(result_dir, filename)
+    save_path = os.path.join(result_dir, save_filename)
+    with open(load_path, "rb") as f:
+        stats = pickle.load(f)
+    grouped = defaultdict(list)
+    for s in stats:
+        key = tuple(sorted(s["group_methods"]))
+        grouped[key].append(s)
+    labels = []
+    group_labels = []
+    mean_agreements = []
+    means = []
+    lowers = []
+    uppers = []
+    for group, values in grouped.items():
+        if len(group) > 2:
+            continue
+        label_converter = {
+            "feature_importances": "decision tree",
+            "feature_importances_15": "decision tree",
+            "randomforest_feature_importances": "random forest",
+            "xgboost_feature_importances": "xgboost",
+            "elasticnet_feature_importances": "elasticnet",
+            "logistic_regression_feature_importances": "logistic regression",
+            "svm_linear_feature_importances": "svm",
+            "nn_feature_importances": "neural network",
+        }
+        label_group = [label_converter.get(g, g) for g in group]
+        if any([d.lower() in label_group for d in drop]):
+            continue
+        mean_agreement = [v["mean_agreement"] for v in values]
+        mean = np.mean(mean_agreement)
+        lower = np.mean([v["ci_lower"] for v in values])
+        upper = np.mean([v["ci_upper"] for v in values])
+        labels.append(" + ".join(label_group))
+        group_labels.extend([" + ".join(label_group)] * len(values))
+        mean_agreements.extend(mean_agreement)
+        means.append(mean)
+        lowers.append(lower)
+        uppers.append(upper)
+    data = np.array(mean_agreements).flatten()
+    group_labels = np.array(group_labels).flatten()
+
+    palette = get_palette(labels)
+    colors = [palette[i] for i in labels]
+
+    fig, ax = plt.subplots(figsize=(16, 6))
+    sns.boxplot(x=group_labels, y=data, ax=ax, hue=group_labels, palette=palette)
+    ax.set_xticks(range(len(labels)))
+    ax.set_xticklabels(range(1, len(labels) + 1), fontsize=12)
+    ax.set_ylabel("Mean Agreement Score")
+    ax.set_title("Agreement in Feature Importance Rankings across Method Combinations")
+    legend_handles = [
+        mpatches.Patch(color=colors[i], label=f"{i+1}: {labels[i]}")
+        for i in range(len(labels))
+    ]
+    ax.legend(
+        handles=legend_handles,
+        loc="center left",
+        bbox_to_anchor=(1, 0.5),
+        title="Method Group",
+    )
+    plt.tight_layout(rect=[0, 0, 1, 1])
+    plt.savefig(save_path)
+    print(f"Plot saved to {save_path}")
+
+
 def plot_accuracy(
     file="accuracies.json",
     plot_model="decision_tree",
@@ -375,9 +452,9 @@ def plot_accuracy(
         "random_forest": "Random Forest",
         "xgboost": "XGBoost",
         "elasticnet": "Elasticnet",
-        "logistic_regression": "Logistic Regression",
-        "svm": "SVM",
-        "nn": "NN",
+        "logistic_regesssion": "Logistic Regression",
+        "svm_linear": "Support Vector Machine",
+        "nn": "Neural Network",
     }
 
     records = {"lambda": [], "model": [], "value": []}
@@ -402,28 +479,31 @@ def plot_accuracy(
         ("lambda2", ["lambda1", "lambda3"]),
         ("lambda3", ["lambda1", "lambda2"]),
     ]
+
+    """
     for fixed, (var1, var2) in slices:
         subdf = mean_df[mean_df[fixed] == 0]
         if not subdf.empty:
-            pivot = subdf.pivot(index=var2, columns=var1, values="value")
-            plt.figure(figsize=(6, 5))
-            sns.heatmap(
-                pivot,
-                annot=True,
-                fmt=".3f",
-                cmap=get_colormap(),
-                cbar_kws={"label": "Mean Accuracy"},
-            )
-            plt.title(
-                f"{plot_model_to_title[plot_model]}: Mean Accuracy (when {fixed}=0)"
-            )
-            plt.xlabel(var1)
-            plt.ylabel(var2)
-            out_path = os.path.join(save_path, f"heatmap_{fixed}_{plot_model}.png")
-            plt.tight_layout()
-            plt.savefig(out_path)
-            plt.close()
-            print(f"Saved {out_path}")
+    """
+
+    # pivot = subdf.pivot(index=var2, columns=var1, values="value")
+    pivot = df.pivot_table(index=["lambda1"], columns="lambda2", values="value")
+    plt.figure(figsize=(6, 5))
+    sns.heatmap(
+        pivot,
+        annot=True,
+        fmt=".3f",
+        cmap=get_colormap(),
+        cbar_kws={"label": "Mean Accuracy"},
+    )
+    plt.title(f"{plot_model_to_title[plot_model]}: Mean Accuracy of lambda combination")
+    plt.xlabel("Lambda 1")
+    plt.ylabel("Lambda 2")
+    out_path = os.path.join(save_path, f"heatmap_{plot_model}.png")
+    plt.tight_layout()
+    plt.savefig(out_path)
+    plt.close()
+    print(f"Saved {out_path}")
 
 
 def plot_accuracy_all(
@@ -436,6 +516,16 @@ def plot_accuracy_all(
     path = os.path.join(folder, file)
     with open(path) as f:
         data = json.load(f)
+
+    label_converter = {
+        "decision_tree": "decision tree",
+        "random_forest": "random forest",
+        "xgboost": "xgboost",
+        "elasticnet": "elasticnet",
+        "logistic_regesssion": "logistic regression",
+        "svm_linear": "svm",
+        "nn": "neural network",
+    }
 
     records = {
         "lambda": [],
@@ -455,8 +545,9 @@ def plot_accuracy_all(
 
     if avg:
         df = df.drop(columns=["lambda"])
+        labels = labels or df["model"].unique().tolist()
+        df["model"] = df["model"].map(label_converter).fillna(df["model"])
         color_labels = df["model"].unique().tolist()
-        labels = labels or color_labels
         palette = get_palette(list(color_labels))
         colors = [palette[label] for label in color_labels]
 
@@ -475,8 +566,9 @@ def plot_accuracy_all(
             },
         )
     else:
-        color_labels = df["lambda"].unique().tolist()
+        color_labels = df["model"].unique().tolist()
         labels = labels or color_labels
+        labels = [label_converter[l] if l in label_converter else l for l in labels]
         palette = get_palette(list(color_labels))
         colors = [palette[label] for label in color_labels]
 
@@ -485,7 +577,8 @@ def plot_accuracy_all(
             data=df,
             x="model",
             y="value",
-            hue="lambda",
+            hue="model",
+            palette=palette,
             dodge=0.3,
             linestyle="none",
             errorbar="sd",
@@ -507,17 +600,22 @@ def plot_accuracy_all(
         },
     )
     """
-    plt.title("CAV Experiment Accuracy")
-    plt.xticks(rotation=20)
+    plt.xlabel("Model", fontsize=16)
+    plt.ylabel("Accuracy", fontsize=16)
+    plt.title("CAV Experiment Accuracy", fontsize=18)
+    plt.xticks(rotation=20, fontsize=14)
+    plt.yticks(fontsize=14)
     legend_handles = [
-        mpatches.Patch(color=colors[i], label=f"{i+1}: {labels[i]}")
-        for i in range(len(labels))
+        mpatches.Patch(color=colors[i], label=f"{i+1}: {color_labels[i]}")
+        for i in range(len(color_labels))
     ]
     plt.legend(
         handles=legend_handles,
         loc="center left",
         bbox_to_anchor=(1, 0.5),
         title="Experiment",
+        fontsize=14,
+        title_fontsize=16,
     )
     if avg:
         plt.legend(
@@ -525,6 +623,8 @@ def plot_accuracy_all(
             loc="center left",
             bbox_to_anchor=(1, 0.5),
             title="Model",
+            fontsize=14,
+            title_fontsize=16,
         )
 
     plt.tight_layout(rect=[0, 0, 1, 1])
@@ -582,13 +682,23 @@ def plot_accuracy_ternary(
 
 if __name__ == "__main__":
     # Example usage for the comparison plot:
+    base_dirs = [
+        "experiments/results_completeness_15",
+        # "experiments/results_importance_15",
+        # "experiments/results_completeness_lambda_0_1_5_15",
+        # "experiments/results_completeness_lambda_0_-1_5_15",
+        # "experiments/results_completeness_lambda_-1_1_5_15",
+        # "experiments/results_completeness_lambda_-1_1_10_15",
+    ]
+
     compare_json_files = [
-        "experiments/results/feature_importances_15_0.json",
-        "experiments/results/randomforest_feature_importances_0.json",
-        "experiments/results/xgboost_feature_importances_0.json",
-        "experiments/results/elasticnet_feature_importances_0.json",
-        "experiments/results/logistic_regression_feature_importances_0.json",
-        "experiments/results/svm_feature_importances_0.json",
+        "feature_importances_15_0.json",
+        "randomforest_feature_importances_0.json",
+        "xgboost_feature_importances_0.json",
+        "elasticnet_feature_importances_0.json",
+        "logistic_regression_feature_importances_0.json",
+        "svm_linear_feature_importances_0.json",
+        # "nn_feature_importances_0.json",
     ]
     compare_labels = [
         "decision tree",
@@ -596,12 +706,64 @@ if __name__ == "__main__":
         "xgboost",
         "elasticnet",
         "logistic regression",
-        "svm",
+        "svm linear",
+        "neural network",
     ]
-    create_visualizations(
-        results_file="experiments/results/cav_experiment_results_mnist.json",
-        plots_dir="experiments/plots",
-        compare_json_files=compare_json_files,
-        compare_labels=compare_labels,
-    )
-    plot_variance_stats()
+
+    for base in base_dirs:
+        json_files = [os.path.join(base, json_file) for json_file in compare_json_files]
+        create_visualizations(
+            plots_dir=base,
+            compare_json_files=json_files,
+            compare_labels=compare_labels,
+        )
+        plot_variance_stats(
+            result_dir=base,
+            drop=["elasticnet"],
+            filename="importance_variance_stats.pkl",
+            save_filename="importance_variance_plot.png",
+        )
+        plot_agreement_stats(
+            result_dir=base,
+            filename="rbo_importance_agreement_stats.pkl",
+            drop=["elasticnet"],
+            save_filename="rbo_importance_variance_plot.png",
+        )
+        plot_agreement_stats(
+            result_dir=base,
+            drop=["elasticnet"],
+            filename="topk_importance_agreement_stats.pkl",
+            save_filename="topk_importance_variance_plot.png",
+        )
+        for model in [
+            "decision_tree",
+            "xgboost",
+            "random_forest",
+            "svm_linear",
+            "logistic_regesssion",
+            "nn",
+        ]:
+            plot_accuracy(
+                file="accuracies.json",
+                plot_model=model,
+                folder=base,
+                save_path=base,
+            )
+            continue
+            plot_accuracy_ternary(
+                file="accuracies.json",
+                plot_model=model,
+                folder=base,
+                save_path=base,
+            )
+        plot_accuracy_all(
+            file="accuracies.json",
+            folder=base,
+            save_path=os.path.join(base, "accuracies_avg.png"),
+            avg=True,
+        )
+        plot_accuracy_all(
+            file="accuracies.json",
+            folder=base,
+            save_path=os.path.join(base, "accuracies.png"),
+        )

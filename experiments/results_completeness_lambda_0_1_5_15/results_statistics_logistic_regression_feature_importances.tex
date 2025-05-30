@@ -1,0 +1,48 @@
+\begin{table}
+\caption{Results: Ordinary least squares}
+\label{}
+\begin{center}
+\begin{tabular}{llll}
+\hline
+Model:              & OLS              & Adj. R-squared:     & 0.060      \\
+Dependent Variable: & importance       & AIC:                & -170.7274  \\
+Date:               & 2025-05-27 07:55 & BIC:                & -148.5047  \\
+No. Observations:   & 300              & Log-Likelihood:     & 91.364     \\
+Df Model:           & 5                & F-statistic:        & 4.846      \\
+Df Residuals:       & 294              & Prob (F-statistic): & 0.000283   \\
+R-squared:          & 0.076            & Scale:              & 0.032492   \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{lrrrrrr}
+\hline
+          &   Coef. & Std.Err. &       t & P$> |$t$|$ &  [0.025 &  0.975]  \\
+\hline
+const     &  0.5633 &   0.0589 &  9.5664 &      0.0000 &  0.4474 &  0.6791  \\
+range     & -0.0496 &   0.0409 & -1.2105 &      0.2271 & -0.1302 &  0.0310  \\
+iq\_range & -0.0518 &   0.0603 & -0.8603 &      0.3903 & -0.1705 &  0.0668  \\
+density   & -0.2608 &   0.0703 & -3.7085 &      0.0002 & -0.3992 & -0.1224  \\
+accuracy  & -0.0364 &   0.0232 & -1.5688 &      0.1178 & -0.0821 &  0.0093  \\
+distance  & -0.0935 &   0.0546 & -1.7120 &      0.0880 & -0.2010 &  0.0140  \\
+splits    &  0.0000 &   0.0000 &     nan &         nan &  0.0000 &  0.0000  \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{llll}
+\hline
+Omnibus:       & 13.817 & Durbin-Watson:    & 2.109   \\
+Prob(Omnibus): & 0.001  & Jarque-Bera (JB): & 14.465  \\
+Skew:          & 0.527  & Prob(JB):         & 0.001   \\
+Kurtosis:      & 3.211  & Condition No.:    & inf     \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\bigskip
+Notes: \newline 
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified. \newline 
+[2] The smallest eigenvalue is      0. This might indicate that                there are strong multicollinearity problems or that the design                matrix is singular.

@@ -6,10 +6,10 @@ import pandas as pd
 from torchvision.utils import save_image
 
 
-def read_multi_files(filename: str, n: int):
+def read_multi_files(filename: str, n: int, result_dir: str = "experiments/results"):
     dfs = []
     for i in range(n):
-        df = pd.read_json(f"experiments/results/{filename}_{i}.json").T
+        df = pd.read_json(os.path.join(result_dir, f"{filename}_{i}.json")).T
         dfs.append(df)
     df = pd.concat(dfs)
     df.index = range(len(df))

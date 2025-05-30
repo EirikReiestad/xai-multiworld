@@ -1,0 +1,48 @@
+\begin{table}
+\caption{Results: Ordinary least squares}
+\label{}
+\begin{center}
+\begin{tabular}{llll}
+\hline
+Model:              & OLS              & Adj. R-squared:     & 0.066      \\
+Dependent Variable: & importance       & AIC:                & -145.9875  \\
+Date:               & 2025-05-27 07:55 & BIC:                & -123.7648  \\
+No. Observations:   & 300              & Log-Likelihood:     & 78.994     \\
+Df Model:           & 5                & F-statistic:        & 5.256      \\
+Df Residuals:       & 294              & Prob (F-statistic): & 0.000122   \\
+R-squared:          & 0.082            & Scale:              & 0.035285   \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{lrrrrrr}
+\hline
+          &   Coef. & Std.Err. &       t & P$> |$t$|$ &  [0.025 &  0.975]  \\
+\hline
+const     &  0.5839 &   0.0603 &  9.6847 &      0.0000 &  0.4653 &  0.7026  \\
+range     & -0.0073 &   0.0505 & -0.1449 &      0.8849 & -0.1067 &  0.0920  \\
+iq\_range &  0.0105 &   0.0581 &  0.1803 &      0.8570 & -0.1038 &  0.1247  \\
+density   & -0.2291 &   0.0761 & -3.0122 &      0.0028 & -0.3788 & -0.0794  \\
+accuracy  & -0.0588 &   0.0241 & -2.4395 &      0.0153 & -0.1062 & -0.0114  \\
+distance  & -0.0924 &   0.0655 & -1.4111 &      0.1593 & -0.2213 &  0.0365  \\
+splits    &  0.0000 &   0.0000 &     nan &         nan &  0.0000 &  0.0000  \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{llll}
+\hline
+Omnibus:       & 4.923 & Durbin-Watson:    & 2.063  \\
+Prob(Omnibus): & 0.085 & Jarque-Bera (JB): & 4.278  \\
+Skew:          & 0.213 & Prob(JB):         & 0.118  \\
+Kurtosis:      & 2.599 & Condition No.:    & inf    \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\bigskip
+Notes: \newline 
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified. \newline 
+[2] The smallest eigenvalue is      0. This might indicate that                there are strong multicollinearity problems or that the design                matrix is singular.

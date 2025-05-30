@@ -46,7 +46,9 @@ def main(
     os.makedirs(result_path, exist_ok=True)
 
     # --- Data Preparation ---
-    train_loader, test_loader = prepare_data(dataset_name, batch_size, test_batch_size)
+    train_loader, test_loader = prepare_data(
+        dataset_name, batch_size, test_batch_size, n_train=5_000, n_test=1_000
+    )
     output_size = 10
 
     # --- Model Loading/Training ---
@@ -83,7 +85,7 @@ def main(
     # --- Storage for all results ---
     results = []
 
-    lambdas = np.linspace(1, -1, 5)
+    lambdas = np.linspace(-1, 1, 5)
     lambda_combinations = [
         (l1, l2, l3)
         for l1, l2, l3 in itertools.product(lambdas, repeat=3)
@@ -92,7 +94,7 @@ def main(
 
     print(lambda_combinations)
     print(f"Number of combinations: {len(lambda_combinations)}")
-    lambda_combinations = [[1 / 3, 1 / 3, 1 / 3]]
+    # lambda_combinations = [[1 / 3, 1 / 3, 1 / 3]]
 
     # --- Main Experiment Loop ---
     for M in M_values:
