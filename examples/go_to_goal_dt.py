@@ -22,23 +22,26 @@ from xailib.common.train_model import train_decision_tree
 logging.basicConfig(level=logging.INFO)
 
 
-def main():
+def main(
+    n: int = 1000,
+    force_update: bool = False,
+    filename: str = "decision_tree_human.json",
+):
     concepts = [
         "random",
-        "goal_in_view",
-        "goal_to_right",
-        "goal_to_left",
         "goal_in_front",
+        "goal_in_view",
+        "goal_to_left",
+        "goal_to_right",
         "goal_at_top",
         "goal_at_bottom",
-        "goal_around_middle_front",
         "next_to_goal",
-        # "agent_in_view",
-        # "agent_to_right",
-        # "agent_to_left",
-        # "agent_in_front",
-        "rotated_right",
+        "agent_in_view",
+        "agent_to_right",
+        "agent_to_left",
+        "agent_in_front",
         "rotated_left",
+        "rotated_right",
         "rotated_up",
         "rotated_down",
         "wall_in_view",
@@ -56,14 +59,14 @@ def main():
     )
 
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
-    environment = create_environment(artifact, static=True)
+    environment = create_environment(artifact)
     observations = collect_rollouts(
         env=environment,
         artifact=artifact,
-        n=5000,
+        n=n,
         sample_rate=0.1,
         method="policy",
-        force_update=False,
+        force_update=force_update,
     )
     observations = filter_observations(observations)
 
@@ -91,9 +94,14 @@ def main():
         test_split=test_split,
         feature_names=concepts.copy(),
         epochs=epochs,
+        filename=filename,
     )
 
-    environment = create_environment(artifact, static=True, render_mode="human")
+    render = False
+    if not render:
+        return
+
+    environment = create_environment(artifact, render_mode="human")
     while True:
         observations, _ = environment.reset()
         for i in count():
@@ -119,4 +127,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    for i in range(10):
+        main(filename=f"decision_tree_human_{i}.json")

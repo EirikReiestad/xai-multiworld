@@ -1,7 +1,6 @@
 import logging
 import os
 from collections import defaultdict
-from functools import partial
 from itertools import count
 from typing import Dict, List
 
@@ -11,10 +10,6 @@ import torch
 from sklearn.tree import DecisionTreeClassifier
 from torch.utils.data.dataset import TensorDataset
 
-from multiworld.multigrid.core.concept import get_concept_check_bitmap
-from multiworld.multigrid.utils.decoder import decode_observation
-from multiworld.multigrid.utils.ohe import decode_direction
-from multiworld.multigrid.utils.preprocessing import PreprocessingEnum
 from utils.common.collect_rollouts import collect_rollouts
 from utils.common.environment import create_environment
 from utils.common.model import get_models
@@ -26,7 +21,9 @@ from xailib.core.calculate_cavs.calculate_cavs import calculate_cavs
 logging.basicConfig(level=logging.INFO)
 
 
-def main():
+def main(
+    n: int = 1000, force_update: bool = False, filename: str = "decision_tree.json"
+):
     artifact_path = "artifacts"
     model_type = "dqn"
     eval = True
@@ -34,11 +31,12 @@ def main():
     result_path = os.path.join("assets", "results")
     method = "policy"
 
-    M = 10
-    lambda_1 = 0.1
-    lambda_2 = 0.1
+    M = 15
+    lambda_1 = 1 / 3
+    lambda_2 = 1 / 3
+    lambda_3 = 1 / 3
     batch_size = 128
-    lr = 1e-3
+    lr = 1e-1
     epochs = 1
 
     artifact = ModelLoader.load_latest_model_artifacts_from_path(artifact_path)
@@ -55,10 +53,10 @@ def main():
     observations = collect_rollouts(
         env=environment,
         artifact=artifact,
-        n=5000,
+        n=n,
         sample_rate=0.1,
         method=method,
-        force_update=False,
+        force_update=force_update,
     )
     observations = filter_observations(observations)
 
@@ -80,11 +78,12 @@ def main():
         model=model,
         env=environment,
         artifact=artifact,
-        method="random",
+        method="policy",
         M=M,
         K=K,
         lambda_1=lambda_1,
         lambda_2=lambda_2,
+        lambda_3=lambda_3,
         batch_size=batch_size,
         lr=lr,
         epochs=epochs,
@@ -156,9 +155,14 @@ def main():
         test_split=test_split,
         feature_names=feature_names,
         epochs=epochs,
+        filename=filename,
     )
 
-    environment = create_environment(artifact, static=True, render_mode="human")
+    render = False
+    if not render:
+        return
+
+    environment = create_environment(artifact, static=False, render_mode="human")
     while True:
         observations, _ = environment.reset()
         for i in count():
@@ -181,4 +185,6 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    main(force_update=True, filename="decision_tree_0.json")
+    for i in range(1, 10):
+        main(filename=f"decision_tree_{i}.json")

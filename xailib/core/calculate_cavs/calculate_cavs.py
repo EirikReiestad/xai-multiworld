@@ -46,6 +46,7 @@ class CAVTrainingStats:
             "objective_value": [],
             "coherence_term": [],
             "separation_term": [],
+            "information_gain_term": [],
             "grad_norm": [],
             "timestamp": [],
             "elapsed_time": [],
@@ -59,6 +60,7 @@ class CAVTrainingStats:
         objective: float,
         coherence: float,
         separation: float,
+        information_gain: float,
         grad_norm: Optional[float] = None,
     ):
         """Record stats for a training step"""
@@ -68,6 +70,7 @@ class CAVTrainingStats:
         self.stats["objective_value"].append(objective)
         self.stats["coherence_term"].append(coherence)
         self.stats["separation_term"].append(separation)
+        self.stats["information_gain_term"].append(information_gain)
         self.stats["grad_norm"].append(
             grad_norm if grad_norm is not None else float("nan")
         )
@@ -86,6 +89,7 @@ class CAVTrainingStats:
                 f"Objective: {self.stats['objective_value'][idx]:.4f} | "
                 f"Coherence: {self.stats['coherence_term'][idx]:.4f} | "
                 f"Separation: {self.stats['separation_term'][idx]:.4f}"
+                f"Information gain: {self.stats['information_gain_term'][idx]:.4f}"
             )
 
             if not np.isnan(self.stats["grad_norm"][idx]):
@@ -133,6 +137,7 @@ def calculate_cavs(
     K: int,
     lambda_1: float,
     lambda_2: float,
+    lambda_3: float,
     batch_size: int = 128,
     lr: float = 1e-3,
     epochs: int = 10,
@@ -157,8 +162,9 @@ def calculate_cavs(
         method: Method for collecting rollouts ("policy" or "random")
         M: Number of concepts/CAVs to train
         K: Number of top observations to use for each concept
-        lambda_1: Weight for coherence term (positive)
-        lambda_2: Weight for separation term (negative)
+        lambda_1: Weight for coherence term
+        lambda_2: Weight for separation term
+        lambda_3: Weight for information gain term
         batch_size: Batch size for training
         lr: Learning rate
         epochs: Number of epochs per step
@@ -238,6 +244,9 @@ def calculate_cavs(
         activations, input, output = get_activations(
             {"latest": model}, observation, ignore_layers=ignore_layers
         )
+        labels = np.array(
+            [np.argmax(pred.detach().numpy(), axis=0) for pred in output["latest"]]
+        )
         latest_activations = activations["latest"]
         last_layer_values = list(latest_activations.values())[-1]["output"]
 
@@ -268,16 +277,27 @@ def calculate_cavs(
         avg_objective = 0
         avg_coherence = 0
         avg_separation = 0
+        avg_information_gain = 0
 
         for epoch in range(epochs):
             # Optimize CAVs for one step
-            objective, coherence, separation, grad_norm = optimize_cavs_with_stats(
-                cavs, data, top_k_indices, optimizer, lambda_1, lambda_2
+            objective, coherence, separation, information_gain, grad_norm = (
+                optimize_cavs_with_stats(
+                    cavs,
+                    data,
+                    top_k_indices,
+                    labels,
+                    optimizer,
+                    lambda_1,
+                    lambda_2,
+                    lambda_3,
+                )
             )
 
             avg_objective += objective
             avg_coherence += coherence
             avg_separation += separation
+            avg_information_gain += information_gain
 
             # After each epoch, re-normalize the CAVs to keep them unit length
             with torch.no_grad():
@@ -287,6 +307,7 @@ def calculate_cavs(
         avg_objective /= epochs
         avg_coherence /= epochs
         avg_separation /= epochs
+        avg_information_gain /= epochs
 
         # Update and log statistics
         stats.update(
@@ -295,6 +316,7 @@ def calculate_cavs(
             objective=avg_objective,
             coherence=avg_coherence,
             separation=avg_separation,
+            information_gain=avg_information_gain,
             grad_norm=grad_norm,
         )
         stats.log_progress(step, epochs, frequency=log_frequency)
@@ -399,9 +421,11 @@ def optimize_cavs_with_stats(
     cavs: torch.Tensor,
     data: torch.Tensor,
     top_k_indices: torch.Tensor,
+    labels: torch.Tensor,
     optimizer: torch.optim.Optimizer,
     lambda_1: float,
     lambda_2: float,
+    lambda_3: float,
 ):
     """Optimize CAVs and return detailed statistics about the optimization step"""
     optimizer.zero_grad()
@@ -423,8 +447,20 @@ def optimize_cavs_with_stats(
     # Sum all pairwise similarities (excluding self-similarities)
     separation_term = torch.sum(torch.abs(cav_similarities * mask))
 
+    information_gain_term = 0
+    for m in range(cavs.shape[0]):
+        top_k_data = data[top_k_indices[:, m]]
+        top_k_labels = torch.tensor(labels[top_k_indices[:, m]])
+        unique_labels, counts = torch.unique(top_k_labels, return_counts=True)
+        max_count = max(counts)
+        information_gain_term += max_count / top_k_labels.numel()
+
     # Our objective (what we want to maximize)
-    objective = lambda_1 * coherence_term - lambda_2 * separation_term
+    objective = (
+        lambda_1 * coherence_term
+        - lambda_2 * separation_term
+        + lambda_3 * information_gain_term
+    )
 
     # For maximization with PyTorch optimizers, negate the objective
     loss = -objective  # This is what we'll actually minimize
@@ -443,4 +479,10 @@ def optimize_cavs_with_stats(
     optimizer.step()
 
     # Return detailed statistics
-    return objective.item(), coherence_term.item(), separation_term.item(), grad_norm
+    return (
+        objective.item(),
+        coherence_term.item(),
+        separation_term.item(),
+        information_gain_term.item(),
+        grad_norm,
+    )

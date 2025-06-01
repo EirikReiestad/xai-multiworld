@@ -4,8 +4,8 @@ from rllib.algorithms.dqn.dqn import DQN
 from rllib.algorithms.dqn.dqn_config import DQNConfig
 from rllib.core.network.network import NetworkType
 
-agents = 15
-size = 20
+agents = 1
+size = 10
 env = GoToGoalEnv(
     goals=1,
     static=True,
@@ -34,11 +34,11 @@ config = (
     )
     .network(network_type=NetworkType.MULTI_INPUT)
     .environment(env=env)
-    .model("model_0_400:v0")
+    .model("model_500:v0")
     # .training()
     .debugging(log_level="INFO")
     .rendering()
-    # .wandb(project=f"go-to-goal-{agents}", log_interval=100)
+    # .wandb(project=f"gtg-{agents}", log_interval=100)
 )
 
 dqn = DQN(config)

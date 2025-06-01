@@ -1,0 +1,48 @@
+\begin{table}
+\caption{Results: Ordinary least squares}
+\label{}
+\begin{center}
+\begin{tabular}{llll}
+\hline
+Model:              & OLS              & Adj. R-squared:     & 0.070      \\
+Dependent Variable: & importance       & AIC:                & -112.2114  \\
+Date:               & 2025-05-31 14:50 & BIC:                & -82.5812   \\
+No. Observations:   & 300              & Log-Likelihood:     & 64.106     \\
+Df Model:           & 7                & F-statistic:        & 4.209      \\
+Df Residuals:       & 292              & Prob (F-statistic): & 0.000194   \\
+R-squared:          & 0.092            & Scale:              & 0.039234   \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{lrrrrrr}
+\hline
+                  &   Coef. & Std.Err. &       t & P$> |$t$|$ &  [0.025 &  0.975]  \\
+\hline
+const             &  0.0395 &   0.0967 &  0.4084 &      0.6833 & -0.1508 &  0.2297  \\
+mean              &  0.7910 &   0.1764 &  4.4830 &      0.0000 &  0.4437 &  1.1382  \\
+range             & -0.0295 &   0.0700 & -0.4207 &      0.6743 & -0.1673 &  0.1084  \\
+iq\_range         & -0.6102 &   0.1390 & -4.3908 &      0.0000 & -0.8837 & -0.3367  \\
+density           &  0.0452 &   0.0959 &  0.4710 &      0.6380 & -0.1435 &  0.2339  \\
+coherence         &  0.0395 &   0.0552 &  0.7158 &      0.4747 & -0.0691 &  0.1482  \\
+separation        & -0.0771 &   0.0727 & -1.0599 &      0.2901 & -0.2202 &  0.0661  \\
+information\_gain &  0.1661 &   0.0773 &  2.1484 &      0.0325 &  0.0139 &  0.3183  \\
+\hline
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{llll}
+\hline
+Omnibus:       & 47.752 & Durbin-Watson:    & 2.198   \\
+Prob(Omnibus): & 0.000  & Jarque-Bera (JB): & 68.134  \\
+Skew:          & 1.016  & Prob(JB):         & 0.000   \\
+Kurtosis:      & 4.151  & Condition No.:    & 34      \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+\bigskip
+Notes: \newline 
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.

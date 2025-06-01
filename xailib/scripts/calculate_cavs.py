@@ -10,7 +10,6 @@ from utils.common.model import get_models
 from utils.common.observation import filter_observations
 from utils.core.model_loader import ModelLoader
 from xailib.common.completeness_score import get_completeness_score
-from xailib.common.lucid import lucid_visualization
 from xailib.core.calculate_cavs.calculate_cavs import calculate_cavs
 from xailib.utils.metrics import (
     calculate_cav_similarity,
@@ -41,6 +40,7 @@ def main():
     M = 10
     lambda_1 = 0.1
     lambda_2 = 0.1
+    lambda_3 = 0.1
     batch_size = 128
     lr = 1e-3
     epochs = 1
@@ -67,6 +67,7 @@ def main():
         K=K,
         lambda_1=lambda_1,
         lambda_2=lambda_2,
+        lambda_3=lambda_3,
         batch_size=batch_size,
         lr=lr,
         epochs=epochs,
