@@ -211,7 +211,7 @@ def main():
         positive_cav_observations,
         negative_cav_observations,
         positive_cav_activations,
-        negative_cav_observations,
+        negative_cav_activations,
         similarity_weights,
     ) = calculate_cavs(
         model=latest_model,
@@ -222,6 +222,7 @@ def main():
         K=K,
         lambda_1=config["calculate_cavs"]["lambda_1"],
         lambda_2=config["calculate_cavs"]["lambda_2"],
+        lambda_3=config["calculate_cavs"]["lambda_3"],
         batch_size=config["calculate_cavs"]["batch_size"],
         lr=config["calculate_cavs"]["lr"],
         epochs=config["calculate_cavs"]["epochs"],

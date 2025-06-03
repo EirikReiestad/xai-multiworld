@@ -82,6 +82,9 @@ def main(
         concept_scores.append(concept_score)
     concept_scores = np.array(concept_scores)
     labels = np.array(observations[..., Observation.LABEL], dtype=np.float32)
+    unique, counts = np.unique(labels, return_counts=True)
+    print(unique, counts)
+    return
 
     dataset = TensorDataset(
         torch.from_numpy(concept_scores), torch.tensor(labels, dtype=torch.long)
@@ -129,3 +132,4 @@ def main(
 if __name__ == "__main__":
     for i in range(10):
         main(filename=f"decision_tree_human_{i}.json")
+        break

@@ -1,0 +1,104 @@
+[
+    {
+        "epoch": 1,
+        "train_accuracy": 0.5120625,
+        "test_accuracy": 0.6095,
+        "epoch_time": 0.34412479400634766
+    },
+    {
+        "epoch": 2,
+        "train_accuracy": 0.71575,
+        "test_accuracy": 0.719,
+        "epoch_time": 0.3421652317047119
+    },
+    {
+        "epoch": 3,
+        "train_accuracy": 0.77975,
+        "test_accuracy": 0.7805,
+        "epoch_time": 0.3465259075164795
+    },
+    {
+        "epoch": 4,
+        "train_accuracy": 0.8089375,
+        "test_accuracy": 0.8055,
+        "epoch_time": 0.34342265129089355
+    },
+    {
+        "epoch": 5,
+        "train_accuracy": 0.825375,
+        "test_accuracy": 0.8185,
+        "epoch_time": 0.34238529205322266
+    },
+    {
+        "epoch": 6,
+        "train_accuracy": 0.8331875,
+        "test_accuracy": 0.82325,
+        "epoch_time": 0.33840465545654297
+    },
+    {
+        "epoch": 7,
+        "train_accuracy": 0.837625,
+        "test_accuracy": 0.828,
+        "epoch_time": 0.3437812328338623
+    },
+    {
+        "epoch": 8,
+        "train_accuracy": 0.8399375,
+        "test_accuracy": 0.83275,
+        "epoch_time": 0.34690237045288086
+    },
+    {
+        "epoch": 9,
+        "train_accuracy": 0.84225,
+        "test_accuracy": 0.837,
+        "epoch_time": 0.3442959785461426
+    },
+    {
+        "epoch": 10,
+        "train_accuracy": 0.8438125,
+        "test_accuracy": 0.837,
+        "epoch_time": 0.3402996063232422
+    },
+    {
+        "epoch": 11,
+        "train_accuracy": 0.8448125,
+        "test_accuracy": 0.83775,
+        "epoch_time": 0.3446493148803711
+    },
+    {
+        "epoch": 12,
+        "train_accuracy": 0.8454375,
+        "test_accuracy": 0.838,
+        "epoch_time": 0.34852170944213867
+    },
+    {
+        "epoch": 13,
+        "train_accuracy": 0.8465,
+        "test_accuracy": 0.8375,
+        "epoch_time": 0.3475055694580078
+    },
+    {
+        "epoch": 14,
+        "train_accuracy": 0.846625,
+        "test_accuracy": 0.83725,
+        "epoch_time": 0.3477449417114258
+    },
+    {
+        "epoch": 15,
+        "train_accuracy": 0.8469375,
+        "test_accuracy": 0.83675,
+        "epoch_time": 0.34914374351501465
+    },
+    {
+        "epoch": 16,
+        "train_accuracy": 0.84675,
+        "test_accuracy": 0.836,
+        "epoch_time": 0.3487088680267334
+    },
+    {
+        "epoch": 17,
+        "train_accuracy": 0.8471875,
+        "test_accuracy": 0.8365,
+        "epoch_time": 0.34708142280578613
+    }
+]

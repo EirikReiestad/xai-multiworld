@@ -39,11 +39,15 @@ def main(path: str = os.path.join("assets", "results")):
             data = json.load(f)
         df, latex = tabulate_data(data, filename)
         if df is None or latex is None:
+            logging.warning("No file/concent found:(")
             return
         latex_filename = filename.replace(".json", ".tex")
         latex_filepath = os.path.join(path, latex_filename)
         with open(latex_filepath, "w") as f:
             f.write(latex)
+        figure_filename = filename.replace(".json", ".png")
+        figure_filepath = os.path.join(path, figure_filename)
+        plot_data(df, filename, figure_filepath)
     else:
         for filename in os.listdir(path):
             if not filename.endswith(".json"):
@@ -99,6 +103,8 @@ def tabulate_data(data: Dict, filename: str, verbose: bool = False):
 
 def plot_data(df: pd.DataFrame, filename: str, savepath: str, verbose: bool = True):
     files = {
+        "concept_scores.json": plot_concept_score,
+        "tcav_scores.json": plot_tcav_score,
         "cav_similarity.json": plot_similarity_matrix,
         "concept_cav_similarity.json": plot_similarity_matrix,
         "probe_similarities.json": plot_similarity_matrix,
@@ -124,6 +130,25 @@ def tabulate_generic(data: Dict) -> Tuple[pd.DataFrame, str]:
     df = pd.DataFrame(data)
     latex = df.to_latex()
     return df, latex
+
+
+def plot_tcav_score(df: pd.DataFrame, savepath: str = ""):
+    folder_path = "/".join(savepath.split("/")[:-1])
+    for concept in df.columns:
+        concept_scores = {}
+        models = sorted(df.index, key=lambda x: int(x.split("_")[2].split(":")[0]))
+        for model in models:
+            concept_scores[model] = df.loc[model, concept]
+        plot_3d(
+            concept_scores,
+            label=concept,
+            folder_path=folder_path,
+            filename="tcav_" + concept,
+            title="TCAV score",
+            min=0,
+            max=1,
+            show=False,
+        )
 
 
 def plot_generic(df: pd.DataFrame, savepath: str = ""):
@@ -276,8 +301,23 @@ def tabulate_concept_score_network(data: Dict) -> Tuple[pd.DataFrame, str]:
     return df, latex
 
 
-def plot_concept_score_network(df: pd.DataFrame, savepath: str = ""):
-    pass
+def plot_concept_score(df: pd.DataFrame, savepath: str = ""):
+    folder_path = "/".join(savepath.split("/")[:-1])
+    for concept in df.columns:
+        concept_scores = {}
+        models = sorted(df.index, key=lambda x: int(x.split("_")[2].split(":")[0]))
+        for model in models:
+            concept_scores[model] = df.loc[model, concept]
+        plot_3d(
+            concept_scores,
+            label=concept,
+            folder_path=folder_path,
+            filename="concept_score_" + concept,
+            title="Concept score",
+            min=0,
+            max=1,
+            show=False,
+        )
 
 
 def tabulate_training_stats(data: Dict) -> Tuple[pd.DataFrame, str]:
@@ -398,6 +438,9 @@ def tabulate_similarity_matrix(data: Dict) -> Tuple[pd.DataFrame, str]:
 
 
 def plot_similarity_matrix(df: pd.DataFrame, savepath: str = ""):
+    # df = pd.concat([df.iloc[:15], df.iloc[20:]]).reset_index(drop=True)
+    df = df.drop(df.columns[15:20], axis=1)
+    df = df.drop(df.index[15:20], axis=0)
     plt.figure(figsize=(12, 10))
     sns.heatmap(df, annot=False, fmt=".3f", cmap=get_colormap(), linewidths=0.5)
     # annot=True: show values in cells
@@ -405,9 +448,9 @@ def plot_similarity_matrix(df: pd.DataFrame, savepath: str = ""):
     # cmap="viridis": choose a color map (many options available, e.g., "coolwarm", "YlGnBu")
     # linewidths: add lines between cells
 
-    plt.title("Data Matrix Heatmap", fontsize=16)
-    plt.xlabel("Column Index", fontsize=12)
-    plt.ylabel("Row Index", fontsize=12)
+    plt.title("Concept similarity heatmap", fontsize=16)
+    plt.xlabel("Concepts", fontsize=12)
+    plt.ylabel("Concepts", fontsize=12)
     plt.tight_layout()
 
 
@@ -497,5 +540,5 @@ def highlight_nan_values(s, props: str):
 
 
 if __name__ == "__main__":
-    path = os.path.join("archive", "gtgv5", "results")
+    path = os.path.join("archive", "gtgv4", "results")
     main(path)

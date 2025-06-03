@@ -122,7 +122,7 @@ def plot_heatmap(
 
 
 def plot_3d(
-    X: Dict[str, Dict[str, Any]],
+    X: dict[str, dict[str, float]],
     filename: str = "plot3d",
     folder_path: str = "assets/figures",
     label: str = "",
@@ -133,18 +133,18 @@ def plot_3d(
 ):
     X = {
         key: X[key]
-        for key in sorted(
-            X.keys(), key=lambda x: [int(i) for i in re.findall(r"\d+", x)]
-        )
+        for key in sorted(X.keys(), key=lambda x: int(re.findall(r"_(\d+):", x)[-1]))
     }
     os.makedirs(folder_path, exist_ok=True)
     save_path = f"{folder_path}/{filename}.png"
 
-    x_keys = X.keys()
-    y_keys = next(iter(X.values())).keys()
-    matrix = np.array([[X[x][y] for y in y_keys] for x in x_keys])
+    x_keys = list(next(iter(X.values())).keys())
+    x_keys = sorted(x_keys, key=lambda x: int(x.split("-")[0]))
+    y_keys = list(X.keys())
 
-    fig = plt.figure(figsize=(10, 7))
+    matrix = np.array([[X[y][x] for x in x_keys] for y in y_keys])
+
+    fig = plt.figure(figsize=(14, 9))
     ax = fig.add_subplot(111, projection="3d")
 
     _x = np.arange(matrix.shape[1])
@@ -164,17 +164,23 @@ def plot_3d(
         shade=True,
     )
 
-    ax.set_title(f"{title} - {label}", fontsize=16)
-    ax.set_xlabel("Layer", fontsize=14)
-    ax.set_ylabel("Steps", fontsize=14)
-    ax.set_zlabel("Score", fontsize=14)
+    label_fontsize = 18
+    labelpad = 10
+    ax.set_title(f"{title} - {label}", fontsize=26)
+    ax.set_xlabel("Layer", fontsize=label_fontsize, labelpad=labelpad)
     ax.set_xticks(np.arange(matrix.shape[1]))
-    ax.set_xticklabels(y_keys, rotation=45)
+    ax.set_xticklabels([x.split("-")[0] for x in x_keys])
+
+    ax.set_ylabel("Checkpoint", fontsize=label_fontsize, labelpad=labelpad)
     ax.set_yticks(np.arange(matrix.shape[0]))
-    ax.set_yticklabels(x_keys)
+    ax.set_yticklabels([re.findall(r"_(\d+):", y)[-1] for y in y_keys])
+
+    ax.set_zlabel("Score", fontsize=label_fontsize, labelpad=labelpad)
     ax.set_zlim(min, max)
+    ax.tick_params(labelsize=18)
 
     if show:
         plt.show()
-    fig.savefig(save_path)
+    fig.tight_layout()
+    fig.savefig(save_path, bbox_inches="tight", pad_inches=0.3)
     plt.close(fig)

@@ -2,7 +2,7 @@
     "wandb": {
         "project_folder": "multi-gtg-15-20",
         "models": {
-            "name": "model_0",
+            "name": "model_12",
             "low": 0,
             "high": 1000,
             "step": 100
@@ -13,16 +13,17 @@
         "method": "policy"
     },
     "collect_rollouts": {
-        "observations": 100,
+        "observations": 2000,
         "sample_rate": 0.01
     },
     "generate_concepts": {
         "observations": 1000
     },
     "calculate_cavs": {
-        "M": 20,
-        "lambda_1": 0.1,
-        "lambda_2": 0.1,
+        "M": 15,
+        "lambda_1": 0.33,
+        "lambda_2": 0.33,
+        "lambda_3": 0.33,
         "batch_size": 128,
         "lr": 1e-3,
         "epochs": 10,

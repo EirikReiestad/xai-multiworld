@@ -1,0 +1,86 @@
+[
+    {
+        "epoch": 1,
+        "train_accuracy": 0.5149375,
+        "test_accuracy": 0.6645,
+        "epoch_time": 0.34073400497436523
+    },
+    {
+        "epoch": 2,
+        "train_accuracy": 0.730375,
+        "test_accuracy": 0.73525,
+        "epoch_time": 0.33654093742370605
+    },
+    {
+        "epoch": 3,
+        "train_accuracy": 0.77825,
+        "test_accuracy": 0.77625,
+        "epoch_time": 0.33576178550720215
+    },
+    {
+        "epoch": 4,
+        "train_accuracy": 0.8045,
+        "test_accuracy": 0.8085,
+        "epoch_time": 0.338118314743042
+    },
+    {
+        "epoch": 5,
+        "train_accuracy": 0.8195,
+        "test_accuracy": 0.81825,
+        "epoch_time": 0.33855557441711426
+    },
+    {
+        "epoch": 6,
+        "train_accuracy": 0.8298125,
+        "test_accuracy": 0.82625,
+        "epoch_time": 0.3383479118347168
+    },
+    {
+        "epoch": 7,
+        "train_accuracy": 0.835875,
+        "test_accuracy": 0.8325,
+        "epoch_time": 0.3410067558288574
+    },
+    {
+        "epoch": 8,
+        "train_accuracy": 0.8384375,
+        "test_accuracy": 0.8365,
+        "epoch_time": 0.3359375
+    },
+    {
+        "epoch": 9,
+        "train_accuracy": 0.8406875,
+        "test_accuracy": 0.841,
+        "epoch_time": 0.33735156059265137
+    },
+    {
+        "epoch": 10,
+        "train_accuracy": 0.841875,
+        "test_accuracy": 0.84075,
+        "epoch_time": 0.3403289318084717
+    },
+    {
+        "epoch": 11,
+        "train_accuracy": 0.8444375,
+        "test_accuracy": 0.8405,
+        "epoch_time": 0.33905458450317383
+    },
+    {
+        "epoch": 12,
+        "train_accuracy": 0.8453125,
+        "test_accuracy": 0.8405,
+        "epoch_time": 0.33748841285705566
+    },
+    {
+        "epoch": 13,
+        "train_accuracy": 0.8461875,
+        "test_accuracy": 0.8405,
+        "epoch_time": 0.3412342071533203
+    },
+    {
+        "epoch": 14,
+        "train_accuracy": 0.846625,
+        "test_accuracy": 0.841,
+        "epoch_time": 0.3398590087890625
+    }
+]
